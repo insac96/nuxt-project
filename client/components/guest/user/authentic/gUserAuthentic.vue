@@ -4,10 +4,11 @@
     <v-card flat class="px-4 px-md-10 py-8 py-md-10">
         <!--Form-->
         <v-card-text class="py-4 px-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
+                <!--Username-->
                 <v-text-field
                     v-model="Authentic.username"
-                    :rules="Validate.username"
+                    :rules="[$Rules.required, $Rules.min, $Rules.max, $Rules.specialCharacters, $Rules.multiSpace]"
                     label="Username"
                     counter
                     maxlength="15"
@@ -23,9 +24,10 @@
                     </template>
                 </v-text-field>
 
+                <!--Password-->
                 <v-text-field
                     v-model="Authentic.password"
-                    :rules="Validate.password"
+                    :rules="[$Rules.required, $Rules.min, $Rules.multiSpace]"
                     label="Password"
                     type="password"
                     rounded outlined
@@ -40,10 +42,11 @@
                     </template>
                 </v-text-field>
 
+                <!--Email-->
                 <v-text-field
                     v-if="!SigninNow"
                     v-model="Authentic.email"
-                    :rules="Validate.email"
+                    :rules="[$Rules.required, $Rules.email, $Rules.multiSpace]"
                     label="Email"
                     type="email"
                     rounded outlined
@@ -101,25 +104,7 @@ export default {
                 password: null,
                 email: null
             },
-            Validate: {
-                form: true,
-                username: [
-                    v => !!v || 'Tên đăng nhập không để trống',
-                    v => (v && v.length >= 5 ) || 'Độ dài tối thiểu 5 ký tự',
-                    v => !(/!|@|%|\_|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|`|-|{|}|\||\\/.test(v)) || 'Ký tự đặc biệt không được phép',
-                    v => !(/\s/.test(v)) || 'Phát hiện khoảng trống liên tiếp',
-                ],
-                password: [
-                    v => !!v || 'Mật khẩu không để trống',
-                    v => (v && v.length >= 6 ) || 'Độ dài tối thiểu 6 ký tự',
-                    v => !(/\s/.test(v)) || 'Phát hiện khoảng trống liên tiếp',
-                ],
-                email: [
-                    v => !!v || 'Email không để trống',
-                    v => /.+@.+\..+/.test(v) || 'Định dạng Email không đúng',
-                    v => !(/\s/.test(v)) || 'Phát hiện khoảng trống liên tiếp',
-                ]
-            },
+            Validate: true,
             Loading: {
                 signin: false,
                 signup: false

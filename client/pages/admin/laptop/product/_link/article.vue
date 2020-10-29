@@ -54,7 +54,12 @@ export default {
         return {
             Article: this.product.article,
             Content: this.product.article ? this.product.article.content : '',
-            NewArticle: {},
+            NewArticle: {
+                company: null,
+                trademark: null,
+                product: null,
+                content: null
+            },
             Loading: {
                 edit: false,
                 create: false
@@ -78,13 +83,11 @@ export default {
 
                 let NewArticle = await this.$axios.$post(LaptopAPI.admin.CreateNewArticle, this.NewArticle);
 
-                this.Article = NewArticle;
                 this.Loading.create = false;
+                this.Article = NewArticle;
             }
             catch(e){
-                console.log(e)
-
-                return false;
+                this.Loading.create = false;
             }   
         },
 
@@ -94,12 +97,15 @@ export default {
             try {
                 this.Article.content = this.Content;
 
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditArticle, this.Article);
+                let Edit = await this.$axios.$post(LaptopAPI.admin.EditArticle, {
+                    _id: this.Article._id,
+                    content: this.Article.content
+                });
 
                 this.Loading.edit = false;
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }   
         },
     }
@@ -107,11 +113,6 @@ export default {
 </script>
 
 <style lang="scss">
-    .BottomSticky {
-        position: sticky;
-        bottom: 0;
-    }
-
     .quill-editor {
         .ql-editor {
             font-size: 1.3em;

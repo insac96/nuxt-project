@@ -20,8 +20,9 @@ export default {
 
   plugins: [
     {src: '~/plugins/axios.js'},
-    {src: '~/plugins/image.js'},
     {src: '~/plugins/date.js'},
+    {src: '~/plugins/validator.js'},
+    {src: '~/plugins/image.js', mode: 'client'},
     {src: '~/plugins/editor.js', mode: 'client'}
   ],
 

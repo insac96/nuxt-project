@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 
 const ConfigurationSchema = new Schema(
     {
+        company: { type: Schema.Types.ObjectId, ref: 'LaptopCompany', required: true },
+        trademark: { type: Schema.Types.ObjectId, ref: 'LaptopTrademark', required: true },
         product: { type: Schema.Types.ObjectId, ref: 'LaptopProduct', required: true },
         default: {
             screen: [{ type: String }],

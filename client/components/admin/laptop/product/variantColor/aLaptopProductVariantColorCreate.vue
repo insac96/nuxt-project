@@ -7,11 +7,11 @@
         <v-card-subtitle>Thêm màu sắc cho biến thể</v-card-subtitle>
 
         <!--Body-->
-        <v-form class="pa-4 pb-0" ref="form" v-model="Validate.form">
+        <v-form class="pa-4 pb-0" ref="form" v-model="Validate">
             <!--Color Name-->
             <v-text-field
                 v-model="NewVariantColor.name"
-                :rules="Validate.name"
+                :rules="[ $Rules.required ]"
                 label="Color Name"                    
                 placeholder="Tên màu sắc"
                 color="primary_admin"
@@ -32,7 +32,7 @@
                 <template v-slot:activator="{ on }">
                     <v-text-field
                         v-model="NewVariantColor.code"
-                        :rules="Validate.code"
+                        :rules="[ $Rules.required ]"
                         label="Color Code"           
                         placeholder="Mã màu sắc"
                         color="primary_admin"
@@ -68,7 +68,7 @@
             <!--Color Up Price-->
             <v-text-field
                 v-model="NewVariantColor.upprice"
-                :rules="Validate.upprice"
+                :rules="[ $Rules.price ]"
                 label="Color Up Price"                    
                 placeholder="Tăng giá so với giá gốc"
                 color="primary_admin"
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     props: ['variant'],
@@ -111,23 +111,16 @@ export default {
     data () {
         return {
             NewVariantColor: {
+                company: null,
+                trademark: null,
+                product: null,
+                variant: null,
                 name: null,
                 code: null,
                 image: null,
                 upprice: null
             },
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                code: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                upprice: [
-                    v => !!(v >= 0) || 'Số tiền không thể nhỏ hơn 0',
-                ]
-            },
+            Validate: true,
             Loading: {
                 create: false
             }
@@ -147,17 +140,18 @@ export default {
 
                 let NewVariantColor = await this.$axios.$post(LaptopAPI.admin.CreateVariantColor, this.NewVariantColor);
 
+                this.Loading.create = false;
                 this.Update(NewVariantColor);
-                this.Cancel();
             }
             catch(e){
-                return false;
+                this.Loading.create = false;
             }
         },
 
         Update (NewVariantColor) {
-            this.Loading.create = false;
             this.variant.colors.push(NewVariantColor);
+
+            this.Cancel();
         },
 
         Cancel () {

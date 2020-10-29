@@ -8,15 +8,16 @@
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <v-text-field
                     v-model="CloneTrademark.name"
-                    :rules="Validate.name"
+                    :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Trademark Name"
                     outlined
                     placeholder="Tên thương hiệu nhánh"
                     append-icon="account_balance_wallet"
                     color="info"
+                    autocomplete="off"
                 ></v-text-field>
             </v-form>
 
@@ -33,15 +34,15 @@
                 class="mx-0"
                 :loading="Loading.delete"
                 :disabled="Loading.delete || Loading.edit"
-                @click="DeleteTrademark
-            ">
+                @click="DeleteTrademark()"
+            >
                 Xóa
             </v-btn>
 
             <v-spacer></v-spacer>
             <v-btn 
                 tile elevation="0" large 
-                @click="$emit('cancel')"
+                @click="Cancel()"
                 :disabled="Loading.delete || Loading.edit"
             >
                 Hủy
@@ -52,7 +53,7 @@
                 tile elevation="0" large 
                 class="mx-0"
                 :loading="Loading.delete || Loading.edit"
-                @click="EditTrademark"
+                @click="EditTrademark()"
             >
                 Lưu
             </v-btn>
@@ -69,12 +70,7 @@ export default {
     data () {
         return {
             CloneTrademark: JSON.parse(JSON.stringify(this.trademark)),
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên không được để trống',
-                ]
-            },
+            Validate: true,
             Loading: {
                 delete: false,
                 edit: false
@@ -93,13 +89,15 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteTrademark, this.trademark);
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteTrademark, {
+                    _id: this.trademark._id
+                });
 
-                this.Loading.delete = false;
-                this.$emit('cancel');
-                this.$emit('delete');
+                this.Delete();
             }
             catch(e){
+                this.Loading.delete = false;
+                
                 return false;
             }      
         },
@@ -109,19 +107,32 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditTrademark, this.CloneTrademark);
+                let Edit = await this.$axios.$post(LaptopAPI.admin.EditTrademark, {
+                    _id: this.CloneTrademark._id,
+                    name: this.CloneTrademark.name
+                });
 
                 this.Update();
-                this.Cancel();
             }
             catch(e){
+                this.Loading.edit = false;
+                
                 return false;
             }  
         },
 
+        Delete () {
+            this.Loading.delete = false;
+            this.$emit('delete');
+
+            this.Cancel();
+        },
+
         Update () {
-            Object.assign(this.trademark, this.CloneTrademark);
             this.Loading.edit = false;
+            Object.assign(this.trademark, this.CloneTrademark);
+            
+            this.Cancel();
         },
 
         Cancel () {

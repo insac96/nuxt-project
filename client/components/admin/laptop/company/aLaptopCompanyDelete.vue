@@ -56,14 +56,17 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteCompany, this.company);
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteCompany, {
+                    _id: this.company._id
+                });
 
                 this.Loading.delete = false;
+
                 this.$emit('delete');
                 this.$emit('cancel');
             }
             catch(e){
-                return false;
+                this.Loading.delete = false;
             }   
         }
     },

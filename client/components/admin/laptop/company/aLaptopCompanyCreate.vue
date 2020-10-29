@@ -8,11 +8,11 @@
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <!--Company Name-->
                 <v-combobox
                     v-model="NewCompany.name"
-                    :rules="Validate.name"
+                    :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     :items="CompanySelectSetting"
                     label="Company Name"
                     outlined
@@ -46,7 +46,7 @@
                 <!--Company Logo-->
                 <v-text-field
                     v-model="NewCompany.logo"
-                    :rules="Validate.logo"
+                    :rules="[ $Rules.required ]"
                     label="Company Logo"
                     outlined
                     placeholder="Nhập link hoặc chọn file"
@@ -55,6 +55,7 @@
                     @click:append="$refs.File.click()"
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
+                    autocomplete="off"
                 ></v-text-field>
                 <input type="file" ref="File" hidden @change="Upload">
             </v-form>
@@ -86,13 +87,11 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 import CompanySelectSetting from '@/setting/laptop/company';
 import TrademarkSelectSetting from '@/setting/laptop/trademark';
 
 export default {
-    scrollToTop: true,
-
     props : ['companyes'],
 
     data () {
@@ -104,15 +103,7 @@ export default {
                 logo: null,
             },
             NewTrademark: null,
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên không được để trống',
-                ],
-                logo: [
-                    v => !!v || 'Logo không được để trống',
-                ],
-            },
+            Validate: true,
             Loading: {
                 upload: false,
                 create: false
@@ -126,7 +117,10 @@ export default {
             this.Loading.create = true;
             
             try {
-                let NewCompany = await this.$axios.$post(LaptopAPI.admin.CreateNewCompany, this.NewCompany);
+                let NewCompany = await this.$axios.$post(LaptopAPI.admin.CreateNewCompany, {
+                    name: this.NewCompany.name,
+                    logo: this.NewCompany.logo
+                });
 
                 NewCompany.trademarks = [];
                 NewCompany.productCount = 0;
@@ -141,16 +135,32 @@ export default {
                 });
 
                 this.Update(NewCompany);
-                this.Cancel();
             }
             catch(e){
-                return false;
+                this.Loading.create = false;
             }   
+        },
+
+        async Upload (event) {
+            let File = event.target.files[0];
+            this.Loading.upload = true;
+
+            try {
+                let ImageData = await this.$Image.Upload(File);
+
+                this.NewCompany.logo = ImageData.link;
+                this.Loading.upload = false;
+            }
+            catch(e){
+                this.Loading.upload = false;
+            }
         },
 
         Update (NewCompany) {
             this.Loading.create = false;
             this.companyes.push(NewCompany);
+
+            this.Cancel();
         },
 
         Cancel () {
@@ -158,21 +168,6 @@ export default {
             this.$refs.form.resetValidation();
 
             this.$emit('cancel');
-        },
-
-        Upload (event) {
-            let File = event.target.files[0];
-
-            this.Loading.upload = true;
-
-            this.$Image.Upload(File)
-            .then(image => {
-                this.NewCompany.logo = image.link;
-                this.Loading.upload = false;
-            })
-            .catch(error => {
-                console.log(error.toString());
-            });
         }
     }
 }

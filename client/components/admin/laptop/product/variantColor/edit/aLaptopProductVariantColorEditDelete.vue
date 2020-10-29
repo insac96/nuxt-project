@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     props: ['color'],
@@ -52,13 +52,15 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariantColor, this.color);
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariantColor, {
+                    _id: this.color._id
+                });
 
-                this.$emit('done');
                 this.Loading.delete = false;
+                this.$emit('done');
             }
             catch(e){
-                return false;
+                this.Loading.delete = false;
             }
         }
     }

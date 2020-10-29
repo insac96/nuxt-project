@@ -46,7 +46,9 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteProduct, this.product);
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteProduct, {
+                    _id: this.product._id
+                });
 
                 this.Loading.delete = false;
                 
@@ -54,8 +56,7 @@ export default {
                 this.$emit('cancel');
             }
             catch(e){
-                console.log(e)
-                return false;
+                this.Loading.delete = false;
             }
         }
     },

@@ -1,13 +1,6 @@
 //FOR LAPTOP - GUEST
 
-import CompanyDB from '../../model/company';
-import TrademarkDB from '../../model/trademark';
-import ProductDB from '../../model/product';
-import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
-import ArticleDB from '../../model/article';
-
 import { ErrorHandler } from '../../../../plugins/error';
 
 //Get All Variant Discount For Home Page
@@ -71,7 +64,6 @@ export const Test = async (req, res, next) => {
     }
 };
 
-
 //Get All Variant Discount For Home Page
 export const GetByDiscount = async (req, res, next) => {
     let { skip, limit } = req.body;
@@ -118,9 +110,9 @@ export const GetByDiscount = async (req, res, next) => {
 export const GetByStatus = async (req, res, next) => {
     let { skip, limit, status } = req.body;
 
+    if(!status) next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    
     try {
-        if(!status) next(new ErrorHandler(400, 'Unsuitable Upload Data'));
-
         let Variants = await VariantDB
         .aggregate([
             { 

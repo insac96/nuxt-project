@@ -141,6 +141,7 @@
                                 <v-btn 
                                     :color="product.visibility ? 'primary_admin' : 'grey'" 
                                     icon small elevation="0"
+                                    :disabled="Loading.visibility"
                                     @click="EditVisibilityProduct(product)"
                                 >
                                     <v-icon>{{product.visibility ? 'visibility' : 'visibility_off'}}</v-icon>
@@ -232,6 +233,10 @@ export default {
                     index: null,
                     select: null
                 }
+            },
+
+            Loading: {
+                visibility: false
             }
         }
     },
@@ -303,13 +308,19 @@ export default {
 
         //Change Visibility
         async EditVisibilityProduct (product) {
+            this.Loading.visibility = true;
+
             try {
-                let Change = await this.$axios.$post(LaptopAPI.admin.EditVisibilityProduct, product);
+                let Change = await this.$axios.$post(LaptopAPI.admin.EditVisibilityProduct, {
+                    _id: product._id,
+                    visibility: product.visibility
+                });
 
                 product.visibility = !product.visibility;
+                this.Loading.visibility = false;
             }
             catch(e){
-                return false;
+                this.Loading.visibility = false;
             }
         }
     }

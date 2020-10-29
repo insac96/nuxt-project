@@ -1,18 +1,31 @@
 //FOR LAPTOP - ADMIN
 
-import CompanyDB from '../../model/company';
-import TrademarkDB from '../../model/trademark';
-import ProductDB from '../../model/product';
-import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
 import ColorDB from '../../model/color';
 
 import { ErrorHandler } from '../../../../plugins/error';
 
-//Add a New Variant
+//Create a New Variant
 export const Create = async (req, res, next) => {
+    let { company, trademark, product, code, screen, cpu, ram, gpu, harddrive, price, status } = req.body;
+
+    if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
     try {
-        let NewVariant = new VariantDB(req.body);
+        let NewVariant = new VariantDB({
+            company: company,
+            trademark: trademark,
+            product: product,
+            code: code,
+            screen: screen,
+            cpu: cpu,
+            ram: ram,
+            gpu: gpu,
+            harddrive: harddrive,
+            price: price,
+            status: status
+        });
+
         await NewVariant.save();
 
         res.json(NewVariant);
@@ -26,9 +39,9 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    try {
-        if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
+    try {
         await VariantDB.deleteOne({ '_id': req.body._id });
         await ColorDB.deleteMany({ 'variant': req.body._id });
 
@@ -43,9 +56,9 @@ export const Delete = async (req, res, next) => {
 export const Edit = async (req, res, next) => {
     let { _id, code, screen, cpu, ram, gpu, harddrive, price, status } = req.body;
 
+    if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    
     try {
-        if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
-
         await VariantDB.updateOne({ '_id': _id }, { 
             code: code,
             screen: screen,
@@ -67,12 +80,17 @@ export const Edit = async (req, res, next) => {
 export const EditDiscount = async (req, res, next) => {
     let { _id, discount } = req.body;
 
+    if(!_id || !discount) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
     try {
-        if(!_id || !discount) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+        if(discount.type === false) {
+            discount.amount = 0;
+        }
 
         await VariantDB.updateOne({ '_id': _id }, { 
             discount: discount
         });
+
         res.send(true);
     }
     catch(e) {

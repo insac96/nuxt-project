@@ -8,16 +8,17 @@
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <!--Trademark Name-->
                 <v-text-field
                     v-model="NewTrademark.name"
-                    :rules="Validate.name"
+                    :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Trademark Name"
                     outlined
                     placeholder="Tên thương hiệu nhánh"
                     append-icon="account_balance_wallet"
                     color="teal"
+                    autocomplete="off"
                 ></v-text-field>
             </v-form>
         </v-card-text>
@@ -58,12 +59,7 @@ export default {
                 name : null,
                 company: null
             },
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên không được để trống',
-                ]
-            },
+            Validate: true,
             Loading: {
                 create: false
             }
@@ -77,6 +73,7 @@ export default {
 
             try {
                 this.NewTrademark.company = this.company.id;
+
                 let NewTrademark = await this.$axios.$post(LaptopAPI.admin.CreateNewTrademark, this.NewTrademark);
 
                 this.Update(NewTrademark);

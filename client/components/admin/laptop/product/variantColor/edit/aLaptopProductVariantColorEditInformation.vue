@@ -1,11 +1,11 @@
 <template>
     <!--a_laptop_product_variantColor_edit_information-->
 
-    <v-form ref="form" v-model="Validate.form">
+    <v-form ref="form" v-model="Validate">
         <!--Color Name-->
         <v-text-field
             v-model="color.name"
-            :rules="Validate.name"
+            :rules="[ $Rules.required ]"
             label="Color Name"                    
             placeholder="Tên màu sắc"
             color="primary_admin"
@@ -26,7 +26,7 @@
             <template v-slot:activator="{ on }">
                 <v-text-field
                     v-model="color.code"
-                    :rules="Validate.code"
+                    :rules="[ $Rules.required ]"
                     label="Color Code"           
                     placeholder="Mã màu sắc"
                     color="primary_admin"
@@ -62,7 +62,7 @@
         <!--Color Up Price-->
         <v-text-field
             v-model="color.upprice"
-            :rules="Validate.upprice"
+            :rules="[ $Rules.price ]"
             label="Color Up Price"                    
             placeholder="Tăng giá so với giá gốc"
             color="primary_admin"
@@ -98,25 +98,14 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     props: ['color'],
     
     data () {
         return {
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên màu sắc không để trống',
-                ],
-                code: [
-                    v => !!v || 'Mã code màu sắc không để trống',
-                ],
-                upprice: [
-                    v => !!(v >= 0) || 'Số tiền không thể nhỏ hơn 0',
-                ]
-            },
+            Validate: true,
             Loading: {
                 edit: false
             }
@@ -131,12 +120,11 @@ export default {
             try {
                 let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantColor, this.color);
 
-                this.$emit('done', this.color);
-
                 this.Loading.edit = false;
+                this.$emit('done', this.color);
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }
         },
 

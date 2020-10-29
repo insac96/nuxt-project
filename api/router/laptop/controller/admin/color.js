@@ -1,19 +1,25 @@
 //FOR LAPTOP - ADMIN
 
-import CompanyDB from '../../model/company';
-import TrademarkDB from '../../model/trademark';
-import ProductDB from '../../model/product';
-import ConfigurationDB from '../../model/configuration';
-import VariantDB from '../../model/variant';
 import ColorDB from '../../model/color';
-import ArticleDB from '../../model/article';
-
 import { ErrorHandler } from '../../../../plugins/error';
 
 //Create Color
 export const Create = async (req, res, next) => {
+    let { company, trademark, product, variant, name, code, image, upprice } = req.body;
+
+    if(!company || !trademark || !product || !variant || !name || !code) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
     try {
-        let NewVariantColor = new ColorDB(req.body);
+        let NewVariantColor = new ColorDB({
+            company: company,
+            trademark: trademark,
+            product: product,
+            variant: variant,
+            name: name,
+            code: code,
+            image: image,
+            upprice: upprice ? upprice : 0
+        });
 
         await NewVariantColor.save();
 
@@ -24,13 +30,13 @@ export const Create = async (req, res, next) => {
     }
 };
 
-//Edit Information Color
+//Edit Color
 export const Edit = async (req, res, next) => {
     let { _id, name, code, image, upprice } = req.body;
 
-    try {
-        if(!_id || !name || !code) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !name || !code) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
+    try {
         await ColorDB.updateOne({'_id': _id}, {
             name: name,
             code: code,
@@ -49,9 +55,9 @@ export const Edit = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    try {
-        if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
+    try {
         await ColorDB.deleteOne({'_id': _id});
 
         res.json(true);

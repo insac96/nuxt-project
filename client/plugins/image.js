@@ -2,18 +2,16 @@ import Vue from 'vue';
 
 import Config from '../../config/app.config';
 
-const ImgurID = 'Client-ID 1c3db41bb73b992';
-
 const Upload = (File) => {
     let formData = new FormData();
     formData.append('image', File);
 
     return new Promise((res, rej) => {
-        fetch(Config.imgur, {
+        fetch('https://api.imgur.com/3/image', {
             redirect: 'follow',
             method: 'POST',
             headers: new Headers({
-                Authorization: ImgurID
+                Authorization: Config.imgur
             }),
             body: formData
         })

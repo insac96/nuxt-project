@@ -3,37 +3,40 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
+        <v-sheet color="heading" class="px-4 pt-2 Sticky_Top">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
             
             <!--Input Comment-->
-            <div v-if="UserStore.authentic" class="d-flex pt-4 pb-1">
+            <div v-if="UserStore.authentic" class="d-flex pt-4">
                 <v-avatar size="56">
                     <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
                 </v-avatar>
 
-                <v-text-field
-                    full-width
-                    class="ml-3"
-                    v-model="Content"
-                    placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
-                    :disabled="Loading.add"
-                    outlined rounded
-                    color="primary"
-                    hide-details
-                    autocomplete="off"
-                    @keyup.enter="AddComment"
-                ></v-text-field>
+                <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-3">
+                    <v-text-field
+                        v-model="Content"
+                        :rules="[ $Rules.required, $Rules.multiSpace ]"
+                        placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
+                        :disabled="Loading.add"
+                        outlined rounded
+                        color="primary"
+                        maxlength="200"
+                        counter
+                        autocomplete="off"
+                    ></v-text-field>
+                </v-form>
             </div>
         </v-sheet>
 
         <!--Body-->
         <v-card-text class="pt-8 pb-2" v-if="Comments.length > 0">
-            <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">               
+            <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
+                <!--Avatar User - Left-->        
                 <v-avatar size="56">
                     <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
                 </v-avatar>
 
+                <!--Comment - Right-->  
                 <v-sheet class="ml-3">
                     <!--Content-->
                     <v-card min-height="56" flat class="d-inline-flex align-center rounded-pill py-2 px-6" color="heading">
@@ -51,10 +54,12 @@
 
                     <!--Replys-->
                     <div class="d-flex pl-6 mt-2" v-for="(reply, indexReply) in comment.reply" :key="indexReply">
+                        <!--Avatar User - Left-->  
                         <v-avatar size="40">
                             <v-img :src="reply.user.profile.avatar" :alt="reply.user.profile.name"></v-img>
                         </v-avatar>
 
+                        <!--Reply - Right-->
                         <v-sheet class="ml-2">
                             <!--Content-->
                             <v-card flat class="d-inline-block rounded-pill py-2 px-4" color="heading">
@@ -121,6 +126,7 @@ export default {
             Reply: '',
             Comments: this.product.comments,
             CommentCount: this.product.commentCount,
+            Validate: true,
             Loading: {
                 add: false,
                 more: false,
@@ -149,6 +155,7 @@ export default {
     methods: {
         //Comment
         async AddComment () {
+            if(!this.$refs.form.validate()) return false;
             this.Loading.add = true;
 
             try {
@@ -176,7 +183,8 @@ export default {
             
             this.Comments.push(NewComment);
             this.CommentCount ++;
-            this.Content = '';
+            
+            this.$refs.form.reset();
         },
 
         async MoreComment () {
@@ -206,6 +214,9 @@ export default {
 
             try {
                 let NewReply = await this.$axios.$post(LaptopAPI.guest.AddReplyForComment, {
+                    company: this.product.company._id,
+                    trademark: this.product.trademark._id,
+                    product: this.product._id,
                     comment: comment._id,
                     content: this.Reply
                 });

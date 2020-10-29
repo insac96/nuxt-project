@@ -8,22 +8,23 @@
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <!--Company Name-->
                 <v-text-field
                     v-model="CloneCompany.name"
-                    :rules="Validate.name"
+                    :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Company Name"
                     outlined
                     placeholder="Tên hãng sản xuất"
                     append-icon="apartment"
                     color="primary_admin"
+                    autocomplete="off"
                 ></v-text-field>
 
                 <!--Company Logo-->
                 <v-text-field
                     v-model="CloneCompany.logo"
-                    :rules="Validate.logo"
+                    :rules="[ $Rules.required ]"
                     label="Company Logo"
                     outlined
                     placeholder="Logo hãng sản xuất"
@@ -32,6 +33,7 @@
                     @click:append="$refs.File.click()"
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
+                    autocomplete="off"
                 ></v-text-field>
                 <input type="file" ref="File" hidden @change="Upload">
             </v-form>
@@ -70,15 +72,7 @@ export default {
     data () {
         return {
             CloneCompany: JSON.parse(JSON.stringify(this.company)),
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên không được để trống',
-                ],
-                logo: [
-                    v => !!v || 'Logo không được để trống',
-                ],
-            },
+            Validate: true,
             Loading: {
                 upload: false,
                 edit: false
@@ -98,35 +92,44 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditCompany, this.CloneCompany);
+                let Edit = await this.$axios.$post(LaptopAPI.admin.EditCompany, {
+                    _id: this.CloneCompany._id,
+                    name: this.CloneCompany.name,
+                    logo: this.CloneCompany.logo,
+                });
 
                 this.Update();
-                this.Cancel();
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }   
+        },
+
+        async Upload (event) {
+            let File = event.target.files[0];
+            this.Loading.upload = true;
+
+            try {
+                let ImageData = await this.$Image.Upload(File);
+
+                this.CloneCompany.logo = ImageData.link;
+                this.Loading.upload = false;
+            }
+            catch(e){
+                this.Loading.upload = false;
+            }
         },
 
         Update () {
             this.Loading.edit = false;
             Object.assign(this.company, this.CloneCompany);
+
+            this.Cancel();
         },
 
         Cancel () {
             this.$refs.form.resetValidation();
             this.$emit('cancel');
-        },
-
-        async Upload (event) {
-            const File = event.target.files[0];
-
-            this.Loading.upload = true;
-
-            let ImageData = await this.$Image.Upload(File);
-            
-            this.CloneCompany.logo = ImageData.link;
-            this.Loading.upload = false;
         }
     }
 }

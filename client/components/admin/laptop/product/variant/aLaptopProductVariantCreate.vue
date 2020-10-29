@@ -8,7 +8,7 @@
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <v-row>
                     <!--Inputs-1-->
                     <v-col :cols="6">
@@ -17,7 +17,7 @@
                             <v-combobox
                                 v-if="item.combobox"
                                 v-model="NewVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -33,7 +33,7 @@
                             <v-text-field
                                 v-else
                                 v-model="NewVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -52,7 +52,7 @@
                             <v-combobox
                                 v-if="item.combobox"
                                 v-model="NewVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -68,7 +68,7 @@
                             <v-select
                                 v-else-if="item.select"
                                 v-model="NewVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :items="VariantSelectConfiguration[item.name]"
@@ -83,7 +83,7 @@
                             <v-text-field
                                 v-else
                                 v-model="NewVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ (item.name == 'price' ? $Rules.price : $Rules.required) ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -136,6 +136,8 @@ export default {
                 create: false
             },
             NewVariant: {
+                company: null,
+                trademark: null,
                 product: null,
                 code: null,
                 screen: null,
@@ -146,33 +148,7 @@ export default {
                 price: null,
                 status: null
             },
-            Validate: {
-                form: true,
-                code: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                screen: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                cpu: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                ram: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                gpu: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                harddrive: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                price: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                status: [
-                    v => !!v || 'Must not be left blank',
-                ],
-            },
+            Validate: true,
             Input_1 : [
                 {name: 'code', label: 'Code', placeholder: 'Mã số cấu hình'},
                 {name: 'screen', label: 'Screen', placeholder: 'ex: 14" FHD', combobox: true},
@@ -200,19 +176,19 @@ export default {
 
                 let NewVariant = await this.$axios.$post(LaptopAPI.admin.CreateNewVariant, this.NewVariant);
 
-                this.Update(NewVariant);
-                this.Cancel();
+                this.Loading.create = false;
+                this.Update(NewVariant);    
             }
             catch(e){
-                return false;
+                this.Loading.create = false;
             }    
         },
 
         Update (NewVariant) {
-            this.Loading.create = false;
-
             NewVariant.colors = [];
             this.product.variants.push(NewVariant);
+
+            this.Cancel();
         },
 
         Cancel () {

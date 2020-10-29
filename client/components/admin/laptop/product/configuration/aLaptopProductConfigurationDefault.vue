@@ -14,7 +14,7 @@
                     <v-combobox v-if="item.select"
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelect[item.model]"
+                        outlined :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
                         color="primary_admin"
                         item-color="primary_admin"
@@ -41,7 +41,7 @@
                     <v-combobox v-if="item.select"
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelect[item.model]"
+                        outlined :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
                         color="primary_admin"
                         item-color="primary_admin"
@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-import ConfigurationSelect from '@/setting/laptop/configuration';
+import LaptopAPI from '@/setting/laptop/api';
+import ConfigurationSelectSetting from '@/setting/laptop/configuration';
 
 export default {
     props: ['product'],
@@ -90,7 +90,7 @@ export default {
         return {
             ID: this.product.configuration._id,
             ConfigurationDefault: this.product.configuration.default,
-            ConfigurationSelect: ConfigurationSelect,
+            ConfigurationSelectSetting: ConfigurationSelectSetting,
             Input_1: [
                 {label: 'Màn Hình', placeholder: 'Thông tin màn hình', model: 'screen', select: true, multiple: true},
                 {label: 'CPU', placeholder: 'Thế hệ CPU', model: 'cpu', select: true},
@@ -132,7 +132,7 @@ export default {
                 this.Loading.edit = false;
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }   
         }
     }

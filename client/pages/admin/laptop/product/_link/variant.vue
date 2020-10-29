@@ -235,10 +235,14 @@ export default {
                     discount: variant.discount
                 });
 
+                if(variant.discount.type === false){
+                    variant.discount.amount = 0;
+                }
+
                 this.Loading.edit = false;
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             } 
         }
     }

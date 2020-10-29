@@ -1,8 +1,6 @@
 //FOR LAPTOP - GUEST
 
 import CompanyDB from '../../model/company';
-import ProductDB from '../../model/product';
-import ConfigurationDB from '../../model/configuration';
 
 import { ErrorHandler } from '../../../../plugins/error';
 

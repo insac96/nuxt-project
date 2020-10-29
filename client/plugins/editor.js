@@ -1,5 +1,5 @@
-import Vue from 'vue' 
-import VueQuillEditor from 'vue-quill-editor'
+import Vue from 'vue';
+import VueQuillEditor from 'vue-quill-editor';
 
 Vue.use(VueQuillEditor, { 
     placeholder: 'Nhập văn bản...',
@@ -26,4 +26,4 @@ Vue.use(VueQuillEditor, {
         },
         
     }
-})
+});

@@ -106,7 +106,7 @@ export default {
                 this.Loading.upload = false;
             }
             catch(e){
-                return false;
+                this.Loading.upload = false;
             }            
         },
 

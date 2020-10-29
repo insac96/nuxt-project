@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     props: ['product'],
@@ -140,7 +140,7 @@ export default {
                 this.Loading.edit = false;
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }   
         }
     }

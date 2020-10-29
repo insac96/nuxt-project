@@ -7,11 +7,11 @@
         <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>
 
         <!--Body-->
-        <v-form ref="form" v-model="Validate.form" class="pa-4">
+        <v-form ref="form" v-model="Validate" class="pa-4">
             <!--Name-->
             <v-text-field
                 v-model="product.name"
-                :rules="Validate.name"
+                :rules="[ $Rules.required, $Rules.multiSpace ]"
                 label="Laptop Name"
                 outlined
                 placeholder="Tên sản phẩm"
@@ -23,7 +23,7 @@
             <!--Company-->
             <v-select
                 v-model="product.company._id"
-                :rules="Validate.company"
+                :rules="[ $Rules.required ]"
                 :items="Companyes"
                 item-text="name"
                 item-value="_id"
@@ -40,7 +40,7 @@
             <v-select
                 v-if="CompanySelect"
                 v-model="product.trademark._id"
-                :rules="Validate.trademark"
+                :rules="[ $Rules.required ]"
                 :items="CompanySelect.trademarks"
                 item-text="name"
                 item-value="_id"
@@ -79,18 +79,7 @@ export default {
         return {
             Companyes: [],
             CompanySelect: null,
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên sản phẩm không được để trống',
-                ],
-                company: [
-                    v => !!v || 'Tên hãng sản xuất không được để trống',
-                ],
-                trademark: [
-                    v => !!v || 'Tên thương hiệu con không được để trống',
-                ]
-            },
+            Validate: true,
             Loading: {
                 edit: false
             }
@@ -136,7 +125,7 @@ export default {
                 this.Loading.edit = false;
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             }    
         }
     }

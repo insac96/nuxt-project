@@ -4,11 +4,11 @@
     <v-card>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary_admin--text">Edit Variant</v-card-title>
-        <v-card-subtitle>Cài đặtđặt biến thể sản phẩm</v-card-subtitle>
+        <v-card-subtitle>Cài đặt biến thể sản phẩm</v-card-subtitle>
 
         <!--Body-->
         <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate.form">
+            <v-form ref="form" v-model="Validate">
                 <v-row>
                     <!--Inputs-1-->
                     <v-col :cols="6">
@@ -18,7 +18,7 @@
                                 v-if="item.combobox"
                                 :items="VariantSelectConfiguration[item.name]"
                                 v-model="CloneVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -33,7 +33,7 @@
                             <v-text-field
                                 v-else
                                 v-model="CloneVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -53,7 +53,7 @@
                                 v-if="item.combobox"
                                 :items="VariantSelectConfiguration[item.name]"
                                 v-model="CloneVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -68,7 +68,7 @@
                             <v-select
                                 v-else-if="item.select"
                                 v-model="CloneVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ $Rules.required ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :items="VariantSelectConfiguration[item.name]"
@@ -83,7 +83,7 @@
                             <v-text-field
                                 v-else
                                 v-model="CloneVariant[item.name]"
-                                :rules="Validate[item.name]"
+                                :rules="[ (item.name == 'price' ? $Rules.price : $Rules.required) ]"
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 import * as VariantSetting from '@/setting/laptop/variant';
 
 export default {
@@ -150,33 +150,7 @@ export default {
                 edit: false,
                 delete: false
             },
-            Validate: {
-                form: true,
-                code: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                screen: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                cpu: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                ram: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                gpu: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                harddrive: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                price: [
-                    v => !!v || 'Must not be left blank',
-                ],
-                status: [
-                    v => !!v || 'Must not be left blank',
-                ],
-            },
+            Validate: true,
             Input_1 : [
                 {name: 'code', label: 'Code', placeholder: 'Mã số cấu hình'},
                 {name: 'screen', label: 'Screen', placeholder: 'ex: 14" FHD', combobox: true},
@@ -212,7 +186,7 @@ export default {
                 this.Cancel();
             }
             catch(e){
-                return false;
+                this.Loading.edit = false;
             } 
         },
 
@@ -220,7 +194,9 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariant, this.CloneVariant);
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariant, {
+                    _id: this.CloneVariant._id
+                });
 
                 this.Loading.delete = false;
                 this.$emit('delete');
@@ -228,7 +204,7 @@ export default {
                 this.Cancel();
             }
             catch(e){
-                return false;
+                this.Loading.delete = false;
             } 
         },
 

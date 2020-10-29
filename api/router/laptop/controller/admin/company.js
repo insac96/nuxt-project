@@ -8,6 +8,7 @@ import VariantDB from '../../model/variant';
 import ColorDB from '../../model/color';
 import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
+import ReplyDB from '../../model/commentReply';
 
 import { ErrorHandler } from '../../../../plugins/error';
 
@@ -27,7 +28,7 @@ export const Get = async (req, res, next) => {
     }
 };
 
-//Get All Company For Product Create
+//Get Mini Company
 export const GetMini = async (req, res, next) => {
     try {
         let Companyes = await CompanyDB
@@ -41,10 +42,18 @@ export const GetMini = async (req, res, next) => {
     }
 };
 
-//Add a New Company
+//Create a New Company
 export const Create = async (req, res, next) => {
+    let { name, logo } = req.body;
+    
+    if(!name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
     try {
-        let NewCompany = new CompanyDB(req.body);
+        let NewCompany = new CompanyDB({
+            name: name,
+            logo: logo
+        });
+
         await NewCompany.save();
 
         res.json(NewCompany);
@@ -58,9 +67,9 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    try {
-        if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
+    try {
         await CompanyDB.deleteOne({ '_id': _id });
         await TrademarkDB.deleteMany({ 'company': _id });
         await ProductDB.deleteMany({ 'company': _id });
@@ -69,6 +78,7 @@ export const Delete = async (req, res, next) => {
         await ColorDB.deleteMany({ 'company': _id });
         await ArticleDB.deleteMany({ 'company': _id });
         await CommentDB.deleteMany({ 'company': _id });
+        await ReplyDB.deleteMany({ 'company': _id });
 
         res.send(true);
     }
@@ -80,10 +90,10 @@ export const Delete = async (req, res, next) => {
 //Edit a Company
 export const Edit = async (req, res, next) => {
     let { _id, name, logo } = req.body;
+
+    if(!_id || !name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
     try {
-        if(!_id || !name || !logo) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
-
         await CompanyDB.updateOne({ '_id': _id }, { 
             name: name,
             logo: logo

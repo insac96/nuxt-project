@@ -1,14 +1,6 @@
 //FOR LAPTOP - GUEST
 
-import CompanyDB from '../../model/company';
-import TrademarkDB from '../../model/trademark';
 import ProductDB from '../../model/product';
-import ConfigurationDB from '../../model/configuration';
-import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
-import ArticleDB from '../../model/article';
-import CommentDB from '../../model/comment';
-
 import { ErrorHandler } from '../../../../plugins/error';
 
 export const GetByLink = async (req, res, next) => {
@@ -29,10 +21,16 @@ export const GetByLink = async (req, res, next) => {
         })
         .populate({
             path: 'comments', 
-            select: 'user content reply create',
+            select: 'user content create',
             populate: [
                 { path: 'user', select: 'profile' },
-                { path: 'reply.user', select: 'profile' }
+                { 
+                    path: 'reply', 
+                    select: 'user content create', 
+                    populate: [ 
+                        { path: 'user', select: 'profile' }
+                    ]
+                }
             ],
             options: {
                 sort: { 'create': -1 },
@@ -42,7 +40,7 @@ export const GetByLink = async (req, res, next) => {
         })
         .populate({ path: 'commentCount' });
 
-        if(!Product) throw 'Product Data Not Found';
+        if(!Product) return next(new ErrorHandler(404, 'Product Data Not Found'));
         
         res.json(Product);
     }
