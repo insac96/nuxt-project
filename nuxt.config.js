@@ -40,8 +40,8 @@ export default {
   ],
 
   axios: {
-    baseURL: 'https://thinkpro.herokuapp.com',
-    prefix: '/api',
+    baseURL: 'https://thinkpro.herokuapp.com/api',
+    //prefix: '/api',
   },
 
   vuetify: {
