@@ -40,6 +40,7 @@ export default {
   ],
 
   axios: {
+    baseURL: 'https://thinkpro.herokuapp.com',
     prefix: '/api',
   },
 
@@ -62,11 +63,5 @@ export default {
 
   serverMiddleware: [
     { path: '/api', handler: path.resolve('./api/index.js') },
-  ],
-
-  server: {
-    port: 80,
-    host: '0.0.0.0',
-    timing: false
-  }
+  ]
 }
