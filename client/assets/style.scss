@@ -1,0 +1,30 @@
+.theme--dark.v-application {
+    .v-image__image {
+        filter: brightness(.8) contrast(1.2);
+    }
+
+    .BoxShadow {
+        box-shadow: none !important;
+
+        &:hover {
+            box-shadow: none !important;
+        }
+    }
+}
+
+.Sticky_Top {
+    position: sticky !important;
+    top: 64px !important;
+    z-index: 2;
+
+    &--xl {
+        top: 112px !important;
+        z-index: 1;
+    }
+}
+
+.Sticky_Bottom {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 2;
+}

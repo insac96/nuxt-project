@@ -1,0 +1,144 @@
+<template>
+    <!--Laptop Product Link Information-->
+
+    <v-card flat tile class="BoxShadow">
+        <!--Header-->
+        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Information</v-card-title>
+        <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>
+
+        <!--Body-->
+        <v-form ref="form" v-model="Validate.form" class="pa-4">
+            <!--Name-->
+            <v-text-field
+                v-model="product.name"
+                :rules="Validate.name"
+                label="Laptop Name"
+                outlined
+                placeholder="Tên sản phẩm"
+                append-icon="laptop"
+                color="primary_admin"
+                autocomplete="off"
+            ></v-text-field>
+
+            <!--Company-->
+            <v-select
+                v-model="product.company._id"
+                :rules="Validate.company"
+                :items="Companyes"
+                item-text="name"
+                item-value="_id"
+                label="Laptop Company"
+                outlined
+                placeholder="Chọn hãng sản xuất"
+                append-icon="apartment"
+                color="primary_admin"
+                item-color="primary_admin"
+                @change="SetCompanySelect"
+            ></v-select>
+
+            <!--Trademark-->
+            <v-select
+                v-if="CompanySelect"
+                v-model="product.trademark._id"
+                :rules="Validate.trademark"
+                :items="CompanySelect.trademarks"
+                item-text="name"
+                item-value="_id"
+                label="Laptop Trademark"
+                outlined
+                placeholder="Chọn thương hiệu nhánh"
+                append-icon="account_balance_wallet"
+                color="primary_admin"
+                item-color="primary_admin"
+            ></v-select>
+        </v-form>
+
+        <!--Footer-->
+        <v-card-actions class="pa-4 pt-0">
+            <v-spacer></v-spacer>
+
+            <v-btn 
+                color="primary_admin" dark 
+                elevation="0" tile large 
+                :loading="Loading.edit"
+                @click="EditInformation"
+            >
+                Lưu
+            </v-btn>
+        </v-card-actions>
+    </v-card>
+</template>
+
+<script>
+import LaptopAPI from '@/setting/laptop/api';
+
+export default {
+    props: ['product'],
+
+    data () {
+        return {
+            Companyes: [],
+            CompanySelect: null,
+            Validate: {
+                form: true,
+                name: [
+                    v => !!v || 'Tên sản phẩm không được để trống',
+                ],
+                company: [
+                    v => !!v || 'Tên hãng sản xuất không được để trống',
+                ],
+                trademark: [
+                    v => !!v || 'Tên thương hiệu con không được để trống',
+                ]
+            },
+            Loading: {
+                edit: false
+            }
+        }
+    },
+
+    created (){
+        this.GetCompanyes();
+    },
+
+    methods: {
+        async GetCompanyes () {
+            if(this.Companyes.length > 0) return false;
+
+            try {
+                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetAllMiniCompany);
+
+                this.Companyes = Companyes;
+                this.CompanySelect = this.Companyes.find(i => i.id == this.product.company._id);
+            }
+            catch(e){
+                return false;
+            }
+        },
+
+        SetCompanySelect (id) {
+            let CompanySelect = this.Companyes.find(i => i.id == id);
+            this.CompanySelect = CompanySelect;
+        },
+
+        async EditInformation () {
+            if(!this.$refs.form.validate()) return false;
+            this.Loading.edit = true;
+
+            try {
+                let Edit = await this.$axios.$post(LaptopAPI.admin.EditInformationProduct, {
+                    _id: this.product._id,
+                    company: this.product.company._id,
+                    trademark: this.product.trademark._id,
+                    name: this.product.name
+                });
+
+                this.Loading.edit = false;
+            }
+            catch(e){
+                return false;
+            }    
+        }
+    }
+}
+</script>

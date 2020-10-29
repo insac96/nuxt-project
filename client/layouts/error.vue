@@ -1,0 +1,62 @@
+<template>
+    <v-container :class="`Error ${Class} fill-height`">
+        <v-row align="center" justify="center">
+            <v-col cols="12" class="text-center">
+                <h1 :class="`${Color}--text`">{{error.statusCode}}</h1>
+                <p class="text-h4 grey--text">{{error.message}}</p>
+            </v-col>
+        </v-row>
+    </v-container>
+</template>
+
+<script>
+export default {
+    scrollToTop: true,
+
+    layout({route}) {
+        let Get = route.path.substring(1, 6);
+        if(Get == 'admin') return 'admin';
+        return 'guest';
+    },
+
+    props: {
+        error: {
+            type: Object,
+            default: null
+        }
+    },
+
+    data () {
+        return {
+            Color: 'secondary',
+            Class: 'Error--guest'
+        }
+    },
+
+    created () {
+        let Get = this.$route.path.substring(1, 6);
+
+        if(Get == 'admin') {
+            this.Color = 'primary_admin';
+            this.Class = 'Error--admin';
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+    .Error {
+        &--guest {
+            height: calc(100vh - 64px);
+        }
+
+        &--admin {
+            height: calc(100vh - 88px);
+        }
+
+        h1 {
+            font-size: 8em;
+            line-height: 1em;
+        }
+    }
+</style>

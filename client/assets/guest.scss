@@ -1,0 +1,16 @@
+.Guest_Layout {
+    background: var(--v-background-base) !important;
+
+    .BoxShadow {
+        box-shadow: 0px 0px 20px rgba(141, 153, 206, 0.2) !important;
+        
+        &--hover {
+            transition: box-shadow 0.3s;
+
+            &:hover {
+                z-index: 1;
+                box-shadow: 0px 0px 20px 10px rgba(172, 177, 197, 0.2), 0px 0px 15px 1px rgba(177, 177, 177, 0.4) !important;
+            }
+        } 
+    }
+}
