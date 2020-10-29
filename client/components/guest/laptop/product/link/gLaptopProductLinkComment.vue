@@ -18,9 +18,11 @@
                         :rules="[ $Rules.required, $Rules.multiSpace ]"
                         placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
                         :disabled="Loading.add"
-                        outlined rounded
+                        rounded solo flat
+                        background-color="input_heading"
                         color="primary"
                         maxlength="200"
+                        height="56"
                         counter
                         autocomplete="off"
                     ></v-text-field>
@@ -39,7 +41,7 @@
                 <!--Comment - Right-->  
                 <v-sheet class="ml-3">
                     <!--Content-->
-                    <v-card min-height="56" flat class="d-inline-flex align-center rounded-pill py-2 px-6" color="heading">
+                    <v-card min-height="56" flat class="d-inline-flex align-center rounded-xl py-2 px-6" color="heading">
                         <span class="text-subtitle-1">{{comment.content}}</span>
                     </v-card>
 
@@ -52,48 +54,8 @@
                         <v-btn text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
                     </div>
 
-                    <!--Replys-->
-                    <div class="d-flex pl-6 mt-2" v-for="(reply, indexReply) in comment.reply" :key="indexReply">
-                        <!--Avatar User - Left-->  
-                        <v-avatar size="40">
-                            <v-img :src="reply.user.profile.avatar" :alt="reply.user.profile.name"></v-img>
-                        </v-avatar>
-
-                        <!--Reply - Right-->
-                        <v-sheet class="ml-2">
-                            <!--Content-->
-                            <v-card flat class="d-inline-block rounded-pill py-2 px-4" color="heading">
-                                <span class="text-subtitle-1">{{reply.content}}</span>
-                            </v-card>
-                            
-                            <!--Information-->
-                            <div class="pl-4 mt-1">
-                                <span class="text-capitalize font-weight-bold">{{reply.user.profile.name}}</span>
-                                <span>-</span>  
-                                <span>{{$dayjs(reply.create).fromNow()}}</span>
-                            </div>
-                        </v-sheet>
-                    </div>
-
-                    <!--Input Reply-->
-                    <div class="d-flex pl-6 mt-2" v-if="comment.showInputReply">
-                        <v-avatar size="40">
-                            <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
-                        </v-avatar>
-
-                        <v-text-field
-                            v-model="Reply"
-                            full-width dense
-                            class="ml-3"
-                            placeholder="Trả lời bình luận"
-                            :disabled="Loading.reply"
-                            outlined rounded
-                            color="primary"
-                            hide-details
-                            autocomplete="off"
-                            @keyup.enter="AddReply(comment)"
-                        ></v-text-field>
-                    </div>
+                    <!--Reply-->
+                    <GLaptopProductLinkReplyOfComment :product="product" :comment="comment"></GLaptopProductLinkReplyOfComment>
                 </v-sheet>
             </v-sheet>
         </v-card-text>
@@ -123,14 +85,12 @@ export default {
     data () {
         return {
             Content: '',
-            Reply: '',
             Comments: this.product.comments,
             CommentCount: this.product.commentCount,
             Validate: true,
             Loading: {
                 add: false,
-                more: false,
-                reply: false
+                more: false
             }
         }
     },
@@ -140,10 +100,6 @@ export default {
             return this.$store.state.user;
         },
         CommentsMap() {
-            this.Comments.map(obj => {
-                if(obj.showInputReply == null) return obj.showInputReply = false;
-            });
-
             this.Comments.sort((x,y) => { 
                 return new Date(y.create) - new Date(x.create)
             });
@@ -153,7 +109,7 @@ export default {
     },
 
     methods: {
-        //Comment
+        //Add
         async AddComment () {
             if(!this.$refs.form.validate()) return false;
             this.Loading.add = true;
@@ -175,6 +131,7 @@ export default {
             }
         },
 
+        //Done Add
         DoneAddComment (NewComment) {
             NewComment.user = {
                 _id: this.UserStore.id,
@@ -187,6 +144,7 @@ export default {
             this.$refs.form.reset();
         },
 
+        //More
         async MoreComment () {
             this.Loading.more = true;
 
@@ -206,39 +164,7 @@ export default {
                 this.Loading.more = false;
                 return false;
             }
-        },
-
-        //Reply
-        async AddReply (comment) {
-            this.Loading.reply = true;
-
-            try {
-                let NewReply = await this.$axios.$post(LaptopAPI.guest.AddReplyForComment, {
-                    company: this.product.company._id,
-                    trademark: this.product.trademark._id,
-                    product: this.product._id,
-                    comment: comment._id,
-                    content: this.Reply
-                });
-
-                this.DoneAddReply(comment, NewReply);
-                this.Loading.reply = false;
-            }
-            catch(e){
-                this.Loading.reply = false;
-                return false;
-            }
-        },
-
-        DoneAddReply (comment, NewReply) {
-            NewReply.user = {
-                _id: this.UserStore.id,
-                profile: this.UserStore.profile
-            };
-
-            comment.reply.push(NewReply);
-            this.Reply = '';
-        },
+        }
     }
 }
 </script>

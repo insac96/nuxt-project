@@ -1,7 +1,7 @@
 <template>
     <v-sheet>
         <!--Header-->
-        <v-sheet  color="heading" class="px-4 py-2 Sticky_Top">
+        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Thông Tin</span>
         </v-sheet>
 

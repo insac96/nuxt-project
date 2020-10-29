@@ -1,7 +1,5 @@
 export default {
     theme: {
-        dark: false,
-
         options: {
             customProperties: true,
         },
@@ -15,10 +13,11 @@ export default {
                 input_header: "#313131",
                 nav: "#1E1E1E",
                 heading: "#272727",
+                input_heading: "#3a3a3a",
 
                 primary_admin: "#00BCD4",
                 background_admin: "#121212",
-                header_admin: "#2d2d2d",
+                header_admin: "#191919",
                 heading_admin: "#272727",
                 heading_admin_text: "#ffffff"
             },
@@ -31,10 +30,11 @@ export default {
                 input_header: "#FFFFFF",
                 nav: "#FFFFFF",
                 heading: "#f0f0f0",
+                input_heading: "#fbfbfb",
 
                 primary_admin: '#3F51B5',
                 background_admin: "#f4f5f9",
-                header_admin: '#3F51B5',
+                header_admin: '#05042c',
                 heading_admin: "#e4e4e4",
                 heading_admin_text: "#616161"
             }

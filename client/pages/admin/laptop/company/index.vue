@@ -45,7 +45,7 @@
                         <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany" class="TR TR_Hover">
                             <!-- Company Logo -->
                             <td class="TD">
-                                <v-card outlined tile style="border-color: var(--v-primary_admin-base)" width="100">
+                                <v-card flat width="100">
                                     <v-img :src="company.logo" :alt="company.name" max-width="100%">
                                     </v-img>
                                 </v-card>

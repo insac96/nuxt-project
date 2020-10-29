@@ -37,7 +37,7 @@ export const More = async (req, res, next) => {
     try {
         let MoreComment = await CommentDB
         .find({ 'product' : product })
-        .select('user content create')
+        .select('user content create showInputReply')
         .populate({ path: 'user', select: 'profile' })
         .populate({ 
             path: 'reply',

@@ -21,7 +21,7 @@ export const GetByLink = async (req, res, next) => {
         })
         .populate({
             path: 'comments', 
-            select: 'user content create',
+            select: 'user content create showInputReply',
             populate: [
                 { path: 'user', select: 'profile' },
                 { 

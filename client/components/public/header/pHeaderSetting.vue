@@ -60,17 +60,25 @@ export default {
     },
 
     mounted () {
-        this.SetTheme();
+        let vm = this;
+
+        setTimeout(() => {
+            vm.SetTheme();
+        }, 100);
     },
 
     methods: {
-        //Theme
         SetTheme () {
             let Theme = JSON.parse(localStorage.getItem('theme'));
             if(!Theme) return false;
 
-            this.ChangeTheme(Theme.dark);
-            this.ChangeColor(Theme.color);
+            this.$vuetify.theme.dark = Theme.dark;
+
+            this.$vuetify.theme.themes.dark.primary = Theme.color;
+            this.$vuetify.theme.themes.dark.primary_admin = Theme.color;
+
+            this.$vuetify.theme.themes.light.primary = Theme.color;
+            this.$vuetify.theme.themes.light.primary_admin = Theme.color;
         },
 
         ChangeTheme (type) {
@@ -80,11 +88,11 @@ export default {
         },
 
         ChangeColor (color) {
-            this.$vuetify.theme.themes.light.primary_admin = color;
-            this.$vuetify.theme.themes.dark.primary_admin = color;
-            
-            this.$vuetify.theme.themes.light.primary = color;
             this.$vuetify.theme.themes.dark.primary = color;
+            this.$vuetify.theme.themes.dark.primary_admin = color;
+
+            this.$vuetify.theme.themes.light.primary = color;
+            this.$vuetify.theme.themes.light.primary_admin = color;       
 
             this.SaveLocalStorage();
         },

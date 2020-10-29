@@ -10,7 +10,8 @@ const CommentSchema = new Schema(
         product: { type: Schema.Types.ObjectId, ref: 'LaptopProduct', required: true },
         user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         content: { type: String, required: true },
-        create: { type: Date, default: Date.now }
+        create: { type: Date, default: Date.now },
+        showInputReply: { type: Boolean, default: false }
     }, 
     { 
         toJSON: { virtuals: true } 
