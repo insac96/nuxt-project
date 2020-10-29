@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import Config from '../../app.config';
+import Config from '../../config/app.config';
 
 const ImgurID = 'Client-ID 1c3db41bb73b992';
 

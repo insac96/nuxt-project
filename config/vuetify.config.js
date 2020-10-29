@@ -1,11 +1,11 @@
-import colors from 'vuetify/es5/util/colors';
-
 export default {
     theme: {
-        //dark: false,
+        dark: false,
+
         options: {
             customProperties: true,
         },
+
         themes: {
             dark: {
                 primary: "#00BCD4",
@@ -22,6 +22,7 @@ export default {
                 heading_admin: "#272727",
                 heading_admin_text: "#ffffff"
             },
+            
             light: {
                 primary: "#00BCD4",
                 secondary: "#05042c",
@@ -31,9 +32,9 @@ export default {
                 nav: "#FFFFFF",
                 heading: "#f0f0f0",
 
-                primary_admin: colors.indigo,
+                primary_admin: '#3F51B5',
                 background_admin: "#f4f5f9",
-                header_admin: colors.indigo,
+                header_admin: '#3F51B5',
                 heading_admin: "#e4e4e4",
                 heading_admin_text: "#616161"
             }

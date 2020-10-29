@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ErrorHandler } from '../plugins/error';
-import Config from '../../app.config';
+import Config from '../../config/app.config';
 
 export const Authentic_Guest = (req, res, next) => {
     if(!req.cookies.token) return next(new ErrorHandler(403, 'Deny Access'));

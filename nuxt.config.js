@@ -51,7 +51,7 @@ export default {
       },
       icons: 'md'
     },
-    optionsPath: path.resolve('./vuetify.config.js'),
+    optionsPath: path.resolve('./config/vuetify.config.js'),
   },
 
   build: {

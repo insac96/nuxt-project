@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import md5 from 'md5';
 import { CaseString } from '../../../../plugins/string';
 import { ErrorHandler } from '../../../../plugins/error';
-import Config from '../../../../../app.config';
+import Config from '../../../../../config/app.config';
 
 import UserDB from '../../model/user';
 
@@ -99,7 +99,7 @@ export const SignUp = async (req, res) => {
 };
 
 //Get Authentic
-export const Get = async (req, res) => {
+export const Get = async (req, res, next) => {
     if(!req.authentic) return next(new ErrorHandler(403, 'Deny Access'));
 
     try {

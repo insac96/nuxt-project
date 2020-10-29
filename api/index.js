@@ -1,5 +1,7 @@
-import { ExpressInit } from './lib/express';
-import { MongoInit } from './lib/mongo';
+import { ExpressInit } from './core/express';
+import { MongoInit } from './core/mongo';
+import DatabaseMiddleware from './middleware/database';
+import EmptyMiddleware from './middleware/empty';
 
 //Router
 import LaptopRouter from './router/laptop/index';
@@ -10,26 +12,13 @@ MongoInit();
 
 //App Init
 let App = ExpressInit();
+App.use(DatabaseMiddleware);
 
+//App Router
 App.use('/laptop', LaptopRouter);
 App.use('/user', UserRouter);
 
-App.use((req, res, next) => {
-    if(!global.DBConnect) return res.status(502).json({
-        error: true,
-        message: global.StatusMongo
-    });
-
-    next();
-});
-
-App.get('*', (req, res) => {
-    console.log(req.originalUrl)
-    res.status(502).json({
-        error: true,
-        message: `Path ${req.originalUrl} Does Not Exist`
-    });
-});
+App.get('*', EmptyMiddleware);
 
 //Export
 export default App;
