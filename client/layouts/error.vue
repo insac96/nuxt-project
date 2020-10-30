@@ -1,9 +1,9 @@
 <template>
     <v-container :class="`Error ${Class} fill-height`">
         <v-row align="center" justify="center">
-            <v-col cols="12" class="text-center">
+            <v-col cols="12" class="text-center px-6 px-sm-0">
                 <h1 :class="`${Color}--text`">{{error.statusCode}}</h1>
-                <p class="text-h4 grey--text">{{error.message}}</p>
+                <p class="text-h5 text-sm-h4 grey--text">{{error.message}}</p>
             </v-col>
         </v-row>
     </v-container>
@@ -55,7 +55,7 @@ export default {
         }
 
         h1 {
-            font-size: 8em;
+            font-size: 6em;
             line-height: 1em;
         }
     }
