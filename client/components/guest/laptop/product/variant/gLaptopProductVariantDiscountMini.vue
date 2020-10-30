@@ -47,7 +47,7 @@
             <v-row dense align="stretch" v-else>
                 <v-col 
                     cols="6" md="3"
-                    class="d-flex child-flex pa-1 pa-sm-2"
+                    class="d-flex child-flex"
                     v-for="(variant, indexVariant) in variants" :key="indexVariant"
                 >
                     <v-card 
