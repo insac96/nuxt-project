@@ -1,6 +1,7 @@
 <template>
     <v-sheet class="pa-0 px-md-4" color="transparent">
         <v-carousel
+            class="BoxShadow"
             cycle height="auto"
             hide-delimiters
             hide-delimiter-background
@@ -8,18 +9,13 @@
         >
             <v-carousel-item v-for="item in News" :key="item">
                 <v-img :src="item" :aspect-ratio="1682/599" contain>
+                    <!--Lazy Load-->
                     <template v-slot:placeholder>
-                        <v-sheet width="100%" height="100%" color="card">
-                            <v-row
-                                class="fill-height ma-0"
-                                align="center"
-                                justify="center"
-                            >
-                                    <v-progress-circular
-                                        indeterminate
-                                        color="primary"
-                                    ></v-progress-circular>
-                            </v-row>
+                        <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
+                            <v-progress-circular
+                                indeterminate
+                                color="primary"
+                            ></v-progress-circular>
                         </v-sheet>
                     </template>
                 </v-img>
