@@ -1,6 +1,5 @@
-export default (req, res) => {
-    res.status(404).json({
-        error: true,
-        message: `Path ${req.originalUrl} Does Not Exist`
-    });
+import { ErrorHandler } from '../plugins/error';
+
+export default (req, res, next) => {
+    next(new ErrorHandler(404, `Path (${req.originalUrl}) Does Not Exist`));
 };

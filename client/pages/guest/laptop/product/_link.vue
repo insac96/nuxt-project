@@ -1,5 +1,11 @@
 <template>
-    <v-container class="pa-0">
+    <v-container v-if="$fetchState.pending">
+        <v-card flat tile>
+            <v-skeleton-loader type="image, article"></v-skeleton-loader>
+        </v-card>
+    </v-container>
+
+    <v-container class="pa-0" v-else-if="!$fetchState.pending && !$fetchState.error">
         <!--Product Information-->
         <v-card tile flat>
             <!--Header-->
@@ -33,22 +39,29 @@ import LaptopAPI from '@/setting/laptop/api';
 export default {
     scrollToTop: true,
 
-    async asyncData({$axios, route}){
+    data () {
+        return {
+            Product: null,
+            VariantQuery: null
+        }
+    },
+
+    async fetch(){
         try {
-            let Product = await $axios.$post(LaptopAPI.guest.GetProductByLink, {
-                link: route.params.link
+            let Product = await this.$axios.$post(LaptopAPI.guest.GetProductByLink, {
+                link: this.$route.params.link
             });
 
-            let Query = Product.variants.find(i => i._id == route.query.variant);
+            let VariantQuery = Product.variants.find(i => i._id == this.$route.query.variant);
 
-            return { 
-                Product: Product,
-                VariantQuery: Query ? Query : null
-            };
+            this.Product = Product;
+            this.VariantQuery = VariantQuery ? VariantQuery : null;
         }
         catch(e){
-            return false;
+            throw new Error(e.toString());
         }
-    }
+    },
+
+    fetchOnServer: false
 }
 </script>

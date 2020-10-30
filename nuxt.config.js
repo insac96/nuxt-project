@@ -17,6 +17,11 @@ export default {
     '~/assets/style.scss'
   ],
 
+  loading: {
+    color: 'white',
+    height: '2px'
+  },
+
   components: true,
 
   plugins: [

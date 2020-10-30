@@ -18,7 +18,8 @@ App.use(DatabaseMiddleware);
 App.use('/laptop', LaptopRouter);
 App.use('/user', UserRouter);
 
-App.get('*', EmptyMiddleware);
+//App Empty
+App.use(EmptyMiddleware);
 
 //Export
 export default App;
