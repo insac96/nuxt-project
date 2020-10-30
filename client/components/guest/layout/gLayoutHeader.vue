@@ -67,8 +67,7 @@ export default {
             BottomMenu: false,
             Menu: [
                 {title: 'Home', icon: 'home', path: '/'},
-                {title: 'Laptop', icon: 'laptop', path: '/guest/laptop'},
-                {title: 'Phụ Kiện', icon: 'widgets', path: '', disabled: true}
+                {title: 'Laptop', icon: 'laptop', path: '/guest/laptop'}
             ]
         }
     }
