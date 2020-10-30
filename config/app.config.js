@@ -1,6 +1,6 @@
 let Production = {
     database: 'mongodb://admin:cf1996@ds363088.mlab.com:63088/thinkpro',
-    baseUrl: 'https://thinkpro.herokuapp.com'
+    baseUrl: 'https://anio.herokuapp.com'
 };
 
 let Development = {
