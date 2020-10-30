@@ -48,7 +48,7 @@ export default {
 
   pwa: {
     meta: {
-      theme_color: "#191919",
+      theme_color: "#3F51B5",
     },
     manifest: {
       short_name: "Anio",
