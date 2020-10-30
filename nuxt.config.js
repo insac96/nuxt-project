@@ -47,12 +47,14 @@ export default {
   ],
 
   pwa: {
+    meta: {
+      theme_color: "#191919",
+    },
     manifest: {
       short_name: "Anio",
       name: "Anio",
       display: 'fullscreen',
-      theme_color: "#191919",
-      background_color: "#191919",
+      background_color: "#ffffff",
       categories: ["laptop", "shop"],
     }
   },

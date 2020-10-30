@@ -8,7 +8,7 @@ export default {
             //Dark Time
             dark: {
                 //Guest
-                primary: "#00BCD4",
+                primary: "#3F51B5",
                 secondary: "#d2d2d2",
                 background: "#121212",
                 header: "#191919",
@@ -20,7 +20,7 @@ export default {
                 card: "#1E1E1E",
 
                 //Admin
-                primary_admin: "#00BCD4",
+                primary_admin: "#3F51B5",
                 background_admin: "#121212",
                 header_admin: "#191919",
                 heading_admin: "#272727",
@@ -33,7 +33,7 @@ export default {
             
             light: {
                 //Guest
-                primary: "#00BCD4",
+                primary: "#3F51B5",
                 secondary: "#05042c",
                 background: "#f4f5f9",
                 header: "#05042c",
