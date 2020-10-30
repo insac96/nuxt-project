@@ -12,9 +12,13 @@
     }
 }
 
+a {
+    text-decoration: none;
+}
+
 .Sticky_Top {
     position: sticky !important;
-    top: 64px !important;
+    top: 60px !important;
     z-index: 2;
 
     &--xl {

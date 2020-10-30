@@ -3,13 +3,11 @@
         <GLayoutHeader></GLayoutHeader>
 
         <v-main>
-            <v-container class="pa-0">
-                <v-row no-gutters justify="center">
-                    <v-col cols="12" lg="10" xl="8">
-                        <nuxt />
-                    </v-col>
-                </v-row>
-            </v-container>
+            <v-row no-gutters justify="center">
+                <div class="Screen">
+                    <nuxt></nuxt>
+                </div>
+            </v-row>
         </v-main>
     </v-app>
 </template>
@@ -25,7 +23,7 @@ export default {
             titleTemplate: 'ThinkPro',
             title: 'ThinkPro',
             meta: [
-                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'},
             ],
         }
     }

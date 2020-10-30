@@ -3,31 +3,8 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet color="heading" class="px-4 pt-2 Sticky_Top">
+        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
-            
-            <!--Input Comment-->
-            <div v-if="UserStore.authentic" class="d-flex pt-4">
-                <v-avatar size="56">
-                    <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
-                </v-avatar>
-
-                <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-3">
-                    <v-text-field
-                        v-model="Content"
-                        :rules="[ $Rules.required, $Rules.multiSpace ]"
-                        placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
-                        :disabled="Loading.add"
-                        rounded solo flat
-                        background-color="input_heading"
-                        color="primary"
-                        maxlength="200"
-                        height="56"
-                        counter
-                        autocomplete="off"
-                    ></v-text-field>
-                </v-form>
-            </div>
         </v-sheet>
 
         <!--Body-->
@@ -35,7 +12,7 @@
             <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
                 <!--Avatar User - Left-->        
                 <v-avatar size="56">
-                    <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
+                    <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>-
                 </v-avatar>
 
                 <!--Comment - Right-->  
@@ -47,7 +24,10 @@
 
                     <!--Information-->
                     <div class="pl-6 my-1">
-                        <span class="text-capitalize font-weight-bold">{{comment.user.profile.name}}</span>
+                        <div class="d-inline-block text-capitalize font-weight-bold">
+                            <span v-if="comment.user.role == 'ADMIN'" class="admin--text">{{comment.user.profile.name}}</span>
+                            <span v-else class="guest--text">{{comment.user.profile.name}}</span>
+                        </div>
                         <span>-</span>  
                         <span>{{$dayjs(comment.create).fromNow()}}</span>
 
@@ -73,6 +53,29 @@
                 Hiển Thị Thêm
             </v-btn>
         </v-card-actions>
+
+        <!--Input Comment-->
+        <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
+            <v-avatar size="56">
+                <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
+            </v-avatar>
+
+            <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-3">
+                <v-text-field
+                    v-model="Content"
+                    :rules="[ $Rules.required, $Rules.multiSpace ]"
+                    placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
+                    :disabled="Loading.add"
+                    rounded solo flat
+                    background-color="heading_input"
+                    color="primary"
+                    maxlength="200"
+                    height="56"
+                    hide-details
+                    autocomplete="off"
+                ></v-text-field>
+            </v-form>
+        </v-sheet>
     </v-card>
 </template>
 
@@ -135,7 +138,8 @@ export default {
         DoneAddComment (NewComment) {
             NewComment.user = {
                 _id: this.UserStore.id,
-                profile: this.UserStore.profile
+                profile: this.UserStore.profile,
+                role: this.UserStore.role,
             };
             
             this.Comments.push(NewComment);

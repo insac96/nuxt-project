@@ -1,9 +1,14 @@
 <template>
-    <!--g_layout_header_user-->
+    <!--p_header_user-->
 
     <div>
         <!--If Authentic False-->
-        <v-btn icon @click="Dialog = true" v-if="!UserStore.authentic">
+        <v-btn 
+            v-if="!UserStore.authentic"
+            fab elevation="0" small 
+            color="header_button" class="ml-1" 
+            @click="Dialog = true"       
+        >
             <v-icon>person</v-icon>
         </v-btn>
 
@@ -16,7 +21,7 @@
             nudge-bottom="3"
         >
             <template v-slot:activator="{ on }">
-                <v-btn icon v-on="on">
+                <v-btn fab elevation="0" small color="header_button" class="ml-1" v-on="on">
                     <v-icon>person</v-icon>
                 </v-btn>
             </template>
@@ -31,7 +36,7 @@
                     <v-list-item-content>
                         <v-list-item-title class="text-capitalize text-h6 font-weight-bold">{{UserStore.profile.name}}</v-list-item-title>
                         <v-list-item-subtitle class="text-caption font-weight-bold">
-                            <span :class="UserStore.role == 'ADMIN' ? 'error--text' : 'teal--text'">{{UserStore.role}}</span>
+                            <span :class="UserStore.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{UserStore.role}}</span>
                         </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -67,9 +72,9 @@
 
         <!--Dialog Authentic-->
         <v-dialog v-model="Dialog" max-width="450">
-            <GUserAuthentic 
+            <PDialogAuthentic 
                 @cancel="Dialog = false" 
-            ></GUserAuthentic>
+            ></PDialogAuthentic>
         </v-dialog>
     </div>
 </template>

@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
 
@@ -118,6 +118,8 @@ export default {
     },
 
     async fetch () {
+        console.log(LaptopAPI.guest.GetVariantByDiscount)
+
         try {
             this.variants = await this.$axios.$post(LaptopAPI.guest.GetVariantByDiscount, {
                 skip: this.skip,
@@ -125,9 +127,12 @@ export default {
             });
         }
         catch(e) {
+            //console.log(e)
             throw new Error(e.toString());
         }
     },
+
+    fetchOnServer: false,
 
     computed: {
         SmallButton () {

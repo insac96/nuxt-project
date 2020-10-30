@@ -145,7 +145,7 @@ export default {
         }
     },
 
-    //fetchOnServer: false,
+    fetchOnServer: false,
     
     computed: {
         SmallButton () {

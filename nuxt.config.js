@@ -1,4 +1,5 @@
-import * as path from 'path';
+import path from 'path';
+import Config from './config/app.config';
 
 export default {
   srcDir: 'client/',
@@ -40,8 +41,7 @@ export default {
   ],
 
   axios: {
-    baseURL: 'https://thinkpro.herokuapp.com/api',
-    //prefix: '/api',
+    baseURL: `${Config.baseUrl}/api`,
   },
 
   vuetify: {

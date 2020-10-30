@@ -16,7 +16,10 @@
                 
                 <!--Information-->
                 <div class="pl-4 mt-1">
-                    <span class="text-capitalize font-weight-bold">{{reply.user.profile.name}}</span>
+                    <div class="d-inline-block text-capitalize font-weight-bold">
+                        <span v-if="reply.user.role == 'ADMIN'" class="admin--text">{{reply.user.profile.name}}</span>
+                        <span v-else class="guest--text">{{reply.user.profile.name}}</span>
+                    </div>
                     <span>-</span>  
                     <span>{{$dayjs(reply.create).fromNow()}}</span>
                 </div>
@@ -98,7 +101,8 @@ export default {
         DoneAddReply (comment, NewReply) {
             NewReply.user = {
                 _id: this.UserStore.id,
-                profile: this.UserStore.profile
+                profile: this.UserStore.profile,
+                role: this.UserStore.role,
             };
 
             comment.reply.push(NewReply);

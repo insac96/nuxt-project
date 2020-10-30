@@ -1,25 +1,20 @@
 <template>
-    <v-app-bar app fixed dark flat color="header" height="64">
+    <v-app-bar app fixed flat color="header" height="60">
         <!--Button Bar
         <v-btn icon height="48" width="48">
             <v-icon>reorder</v-icon>
         </v-btn>-->
 
         <!--Logo-->
-        <nuxt-link to="/">
-            <v-img 
-                src="https://thinkpro.vn/images/logo2.svg" 
-                alt="logo" 
-                width="130" max-width="150" 
-                class="ml-0"
-            ></v-img>
+        <nuxt-link to="/" class="white--text text-h4 font-weight-bold">
+            Pro<span class="primary--text">ject</span>
         </nuxt-link>
 
         <v-spacer></v-spacer>
 
         <!--Buttons Funciton-->
         <!--Search-->
-        <v-btn icon>
+        <v-btn fab elevation="0" small color="header_button" class="ml-1">
             <v-icon>search</v-icon>
         </v-btn>
 

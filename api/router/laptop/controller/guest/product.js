@@ -23,12 +23,12 @@ export const GetByLink = async (req, res, next) => {
             path: 'comments', 
             select: 'user content create showInputReply',
             populate: [
-                { path: 'user', select: 'profile' },
+                { path: 'user', select: 'profile role' },
                 { 
                     path: 'reply', 
                     select: 'user content create', 
                     populate: [ 
-                        { path: 'user', select: 'profile' }
+                        { path: 'user', select: 'profile role' }
                     ]
                 }
             ],

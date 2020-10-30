@@ -8,7 +8,7 @@
         </v-sheet>
 
         <!--Body-->
-        <v-card-text class="QuillContent mt-4">
+        <v-card-text class="QuillContent">
             <div v-html="Article.content" :class="ShowAll ? '' : 'MiniArticle'"></div>
         </v-card-text>
 
@@ -46,13 +46,13 @@ export default {
     }
 
     .QuillContent /deep/ .ql-size-small {
-        font-size: 0.75em;
-        
+        font-size: 1em;
+        line-height: 1.4em;
     }
 
     .QuillContent /deep/ .ql-size-large {
-        font-size: 1.5em;
-        line-height: 1.17em;
+        font-size: 1.4em;
+        line-height: 1.4em;
     }
 
     .QuillContent /deep/ img {
@@ -69,5 +69,22 @@ export default {
 
     .QuillContent /deep/ .ql-align-right {
         text-align: right;
+    }
+
+    @media (max-width: 600px){
+        .QuillContent {
+            font-size: 1.2em;
+            line-height: 1.4em;
+        }
+
+        .QuillContent /deep/ .ql-size-small {
+            font-size: 0.9em;
+            line-height: 1.4em;
+        }
+
+        .QuillContent /deep/ .ql-size-large {
+            font-size: 1.3em;
+            line-height: 1.4em;
+        }
     }
 </style>

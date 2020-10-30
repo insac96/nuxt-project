@@ -38,12 +38,12 @@ export const More = async (req, res, next) => {
         let MoreComment = await CommentDB
         .find({ 'product' : product })
         .select('user content create showInputReply')
-        .populate({ path: 'user', select: 'profile' })
+        .populate({ path: 'user', select: 'profile role' })
         .populate({ 
             path: 'reply',
             select: 'user content create',
             populate: [ 
-                { path: 'user', select: 'profile' } 
+                { path: 'user', select: 'profile role' } 
             ]
         })
         .sort({ 'create': -1 })

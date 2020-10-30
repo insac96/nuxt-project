@@ -1,16 +1,20 @@
 <template>
+    <!--p_header_setting-->
+
     <v-menu 
         attach left offset-y
         transition="slide-y-transition" 
         min-width="250"
         nudge-bottom="3"
-    >
+    >   
+        <!--Button-->
         <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
+            <v-btn fab elevation="0" small color="header_button" class="ml-1" v-on="on">
                 <v-icon>settings</v-icon>
             </v-btn>
         </template>
 
+        <!--Menu-->
         <v-list subheader>
             <!--Theme-->
             <v-subheader>Theme</v-subheader>
@@ -26,6 +30,7 @@
                 </v-btn>
             </v-list-item>
 
+            <!--Color-->
             <v-subheader>Color</v-subheader>
             <v-list-item>
                 <v-btn 

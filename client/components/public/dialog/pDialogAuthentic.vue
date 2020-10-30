@@ -1,5 +1,5 @@
 <template>
-    <!--g_user_authentic-->
+    <!--p_dialog_authentic-->
     
     <v-card flat class="px-4 px-md-10 py-8 py-md-10">
         <!--Form-->

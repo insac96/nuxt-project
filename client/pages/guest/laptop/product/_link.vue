@@ -1,32 +1,34 @@
 <template>
-    <v-sheet>
-        <!--Header-->
-        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
-            <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Thông Tin</span>
-        </v-sheet>
+    <v-container class="pa-0">
+        <!--Product Information-->
+        <v-card tile flat>
+            <!--Header-->
+            <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
+                <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Thông Tin</span>
+            </v-sheet>
 
-        <!--Body-->
-        <v-row dense class="mb-3 mb-sm-0">
-            <v-col cols="12" md="5" class="pa-0 pa-sm-1">
-                <GLaptopProductLinkImages :images="Product.images"></GLaptopProductLinkImages>
-            </v-col>
+            <!--Body-->
+            <v-row no-gutters>
+                <v-col cols="12" md="5">
+                    <GLaptopProductLinkImages :images="Product.images"></GLaptopProductLinkImages>
+                </v-col>
 
-            <v-col cols="12" md="7" class="pa-0 pa-sm-1">
-                <GLaptopProductLinkInformarion :product="Product" :variantQuery="VariantQuery"></GLaptopProductLinkInformarion>
-            </v-col>
-        </v-row>
+                <v-col cols="12" md="7">
+                    <GLaptopProductLinkInformarion :product="Product" :variantQuery="VariantQuery"></GLaptopProductLinkInformarion>
+                </v-col>
+            </v-row>
+        </v-card>
 
         <!--Product Article-->
         <GLaptopProductLinkArticle :article="Product.article"></GLaptopProductLinkArticle>
 
-
         <!--Product Comment-->
         <GLaptopProductLinkComment :product="Product"></GLaptopProductLinkComment>
-    </v-sheet>
+    </v-container>
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     scrollToTop: true,
