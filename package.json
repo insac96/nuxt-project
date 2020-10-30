@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
-    "core-js": "^3.6.5",
-    "nuxt": "^2.14.6",
+    "@nuxtjs/pwa": "^3.2.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "cookie-universal-nuxt": "^2.1.4",
+    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "dayjs": "^1.9.4",
     "express": "^4.17.1",
@@ -29,6 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
     "mongoose": "^5.10.8",
+    "nuxt": "^2.14.6",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {

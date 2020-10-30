@@ -37,13 +37,25 @@ export default {
   },
 
   buildModules: [
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/pwa',
   ],
 
   modules: [
     'cookie-universal-nuxt',
     '@nuxtjs/axios',
   ],
+
+  pwa: {
+    manifest: {
+      short_name: "Anio",
+      name: "Anio",
+      display: 'fullscreen',
+      theme_color: "#191919",
+      background_color: "#191919",
+      categories: ["laptop", "shop"],
+    }
+  },
 
   axios: {
     baseURL: `${Config.baseUrl}/api`,
