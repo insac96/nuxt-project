@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/html-minifier": "^0.1.2",
     "@nuxtjs/pwa": "^3.2.2",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",

@@ -42,8 +42,9 @@ export default {
   ],
 
   modules: [
-    'cookie-universal-nuxt',
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
+    ['@nuxtjs/html-minifier', { log: 'once', logHtml: true }]
   ],
 
   pwa: {
