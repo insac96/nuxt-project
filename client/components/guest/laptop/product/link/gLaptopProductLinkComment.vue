@@ -8,17 +8,17 @@
         </v-sheet>
 
         <!--Body-->
-        <v-card-text class="pt-8 pb-2" v-if="Comments.length > 0">
+        <v-card-text class="pt-6 pb-0" v-if="Comments.length > 0">
             <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
                 <!--Avatar User - Left-->        
-                <v-avatar size="56">
-                    <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>-
+                <v-avatar :size="SizeComment">
+                    <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
                 </v-avatar>
 
                 <!--Comment - Right-->  
-                <v-sheet class="ml-3">
+                <v-sheet class="ml-2">
                     <!--Content-->
-                    <v-card min-height="56" flat class="d-inline-flex align-center rounded-xl py-2 px-6" color="heading">
+                    <v-card :min-height="SizeComment" flat class="d-inline-flex align-center rounded-xl py-2 px-6" color="heading">
                         <span class="text-subtitle-1">{{comment.content}}</span>
                     </v-card>
 
@@ -56,11 +56,11 @@
 
         <!--Input Comment-->
         <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
-            <v-avatar size="56">
+            <v-avatar :size="SizeComment">
                 <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
             </v-avatar>
 
-            <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-3">
+            <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-2">
                 <v-text-field
                     v-model="Content"
                     :rules="[ $Rules.required, $Rules.multiSpace ]"
@@ -70,7 +70,7 @@
                     background-color="heading_input"
                     color="primary"
                     maxlength="200"
-                    height="56"
+                    :height="SizeComment"
                     hide-details
                     autocomplete="off"
                 ></v-text-field>
@@ -108,7 +108,16 @@ export default {
             });
 
             return this.Comments;
-        }
+        },
+        SizeComment () {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return 48
+                case 'sm': return 56
+                case 'md': return 56
+                case 'lg': return 56
+                case 'xl': return 56
+            }
+        },
     },
 
     methods: {

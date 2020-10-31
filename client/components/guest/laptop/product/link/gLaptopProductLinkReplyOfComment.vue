@@ -3,14 +3,14 @@
         <!--Replys-->
         <div class="d-flex pl-6 mt-2" v-for="(reply, indexReply) in comment.reply" :key="indexReply">
             <!--Avatar User - Left-->  
-            <v-avatar size="40">
+            <v-avatar :size="SizeReply">
                 <v-img :src="reply.user.profile.avatar" :alt="reply.user.profile.name"></v-img>
             </v-avatar>
 
             <!--Reply - Right-->
             <v-sheet class="ml-2">
                 <!--Content-->
-                <v-card flat class="d-inline-block rounded-xl py-2 px-4" color="heading">
+                <v-card flat class="d-inline-flex align-center rounded-xl py-2 px-4" color="heading" min-height="40">
                     <span class="text-subtitle-1">{{reply.content}}</span>
                 </v-card>
                 
@@ -28,15 +28,14 @@
 
         <!--Input Reply-->
         <div v-if="comment.showInputReply" class="d-flex pl-6 mt-2">
-            <v-avatar size="40">
+            <v-avatar :size="SizeReply">
                 <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
             </v-avatar>
 
-            <v-form ref="form" style="width: 100%" @submit.prevent="AddReply(comment)" v-model="Validate">
+            <v-form ref="form" class="ml-2" style="width: 100%" @submit.prevent="AddReply(comment)" v-model="Validate">
                 <v-text-field
                     v-model="Reply"
                     full-width dense
-                    class="ml-3"
                     :rules="[ $Rules.required, $Rules.multiSpace ]"
                     counter
                     maxlength="200"
@@ -70,6 +69,16 @@ export default {
     computed: {
         UserStore() {
             return this.$store.state.user;
+        },
+
+        SizeReply () {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return 30
+                case 'sm': return 44
+                case 'md': return 44
+                case 'lg': return 44
+                case 'xl': return 44
+            }
         }
     },
 

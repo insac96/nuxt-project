@@ -42,12 +42,12 @@
                 <v-divider class="my-4"></v-divider>
 
                 <!-- Head -->
-                <div class="d-flex justify-space-between align-center mb-3">
+                <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
                     <span class="text-subtitle-1 text-sm-h6 font-weight-bold">1. CẤU HÌNH</span>
 
-                    <v-chip 
+                    <v-chip
                         v-if="Select.variant['discount'].type"
-                        color="error" 
+                        color="error"
                         class="font-weight-bold"
                     >
                         - {{Select.variant['discount'].amount.toLocaleString('vi-VN')}}đ
@@ -55,21 +55,20 @@
                 </div>
                 
                 <!-- Select Button -->
-                <v-btn-toggle 
-                    style="width: 100%" 
-                    mandatory dense
-                    group 
+                <v-chip-group
+                    mandatory
                     v-for="type in ListType" :key="type" 
                     v-model="Select.variant[type]"
                 >
-                    <v-btn
+                    <v-chip
                         v-for="name in GetListByType(type)" :key="name"
-                        :value="name" active-class="active-button-select"
+                        :value="name" label
+                        active-class="active-select active-select--chip"
                         @click="SelectVariant(name, type)"
                     >
                         {{name}}
-                    </v-btn>
-                </v-btn-toggle>
+                    </v-chip>
+                </v-chip-group>
             </div>
 
             <!-- Color -->
@@ -77,12 +76,12 @@
                 <v-divider class="my-4"></v-divider>
 
                 <!-- Head -->
-                <div class="d-flex justify-space-between align-center mb-3">
+                <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
                     <span class="text-subtitle-1 text-sm-h6 font-weight-bold">2. MÀU SẮC</span>
 
                     <v-chip 
                         v-if="Select.color['upprice'] > 0"
-                        color="info" 
+                        color="info"
                         class="font-weight-bold"
                     >
                         + {{Select.color['upprice'].toLocaleString('vi-VN')}}đ
@@ -93,7 +92,7 @@
                 <v-btn-toggle>
                     <v-btn 
                         v-for="(color, indexColor) in Select.variant.colors" :key="indexColor"    
-                        :color="color.code" fab
+                        :color="color.code" fab :ripple="false" active-class="active-select"
                         @click="SelectColor(color)"
                     >
                         <v-icon v-if="Select.color._id == color._id" color="white">check</v-icon>
@@ -246,10 +245,12 @@ export default {
 </script>
 
 <style lang="scss">
-    .active-button-select {
-        font-weight: bold !important;
-        color: var(--v-primary-base) !important;
-        border: 1px solid var(--v-primary-base) !important;
+    .active-select {
+        &--chip {
+            font-weight: bold !important;
+            background: var(--v-primary-base) !important;
+            color: #ffffff !important;
+        }
 
         &::before {
             opacity: 0 !important;
