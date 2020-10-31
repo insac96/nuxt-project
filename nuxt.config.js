@@ -82,5 +82,13 @@ export default {
 
   serverMiddleware: [
     { path: '/api', handler: path.resolve('./api/index.js') },
-  ]
+  ],
+
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style', 'font'].includes(type)
+      },
+    },
+  }
 }
