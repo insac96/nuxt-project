@@ -4,7 +4,7 @@
     <v-row no-gutters justify="center">
         <!--Menu-->
         <v-col cols="3" class="pr-3">
-            <v-navigation-drawer width="auto" height="auto" permanent class="Nav_Child Sticky_Top BoxShadow" color="nav">
+            <v-navigation-drawer width="auto" height="auto" permanent class="Sticky_Top HiddenNavBorder BoxShadow-Hover" color="nav">
                 <v-list nav >
                     <!--List Header-->
                     <v-list-item>
@@ -22,7 +22,7 @@
                     <v-list-item
                         v-for="item in Menu"
                         :key="item.title"
-                        link color="primary_admin"
+                        link color="primary"
                         :to="`/admin/laptop/product/${$route.params.link}/${item.path}`"
                     >
                         <v-list-item-icon>

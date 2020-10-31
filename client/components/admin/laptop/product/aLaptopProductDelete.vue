@@ -3,12 +3,12 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 error--text">Delete</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 delete--text">Delete</v-card-title>
         <v-card-subtitle>Xóa Dữ Liệu Sản Phẩm</v-card-subtitle>
 
         <!--Body-->
         <v-card-text>
-            <v-alert outlined tile border="right" type="info" color="error" prominent class="ma-0 text-subtitle-1">
+            <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 text-subtitle-1">
                 Chức năng này sẽ xóa sản phẩm <strong>{{product.name}}</strong> và tất cả các cấu hình liên quan. Bạn có chắc chắn muốn xóa.
             </v-alert>
         </v-card-text>
@@ -20,7 +20,7 @@
                 Hủy
             </v-btn>
             
-            <v-btn color="error" tile elevation="0" large dark class="mx-0" @click="DeleteProduct">
+            <v-btn color="delete" tile elevation="0" large dark class="mx-0" @click="DeleteProduct">
                 Xóa
             </v-btn>
         </v-card-actions>

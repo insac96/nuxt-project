@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 info--text">Edit Company</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 edit--text">Edit Company</v-card-title>
         <v-card-subtitle>Sửa thông tin hãng sản xuất</v-card-subtitle>
 
         <!--Body-->
@@ -17,7 +17,7 @@
                     outlined
                     placeholder="Tên hãng sản xuất"
                     append-icon="apartment"
-                    color="primary_admin"
+                    color="edit"
                     autocomplete="off"
                 ></v-text-field>
 
@@ -29,7 +29,7 @@
                     outlined
                     placeholder="Logo hãng sản xuất"
                     append-icon="image"
-                    color="primary_admin"
+                    color="edit"
                     @click:append="$refs.File.click()"
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
@@ -51,7 +51,8 @@
             </v-btn>
             
             <v-btn 
-                color="info" tile elevation="0" 
+                color="edit" dark
+                tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.edit || Loading.upload" 
                 @click="EditCompany"

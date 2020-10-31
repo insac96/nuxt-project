@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-list color="header_admin" dark dense height="64">
+        <v-list color="header" dark dense height="64">
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="title">
@@ -15,7 +15,7 @@
 
         <v-list nav>
             <div v-for="item in items" :key="item.title">
-                <v-list-item v-if="!item.child" :to="item.path" color="primary_admin" class="mb-2">
+                <v-list-item v-if="!item.child" :to="item.path" color="primary" class="mb-2">
                     <v-list-item-icon>
                         <v-icon v-text="item.icon"></v-icon>
                     </v-list-item-icon>
@@ -26,7 +26,7 @@
                 <v-list-group
                     v-else
                     :prepend-icon="item.icon"
-                    color="primary_admin"
+                    color="primary"
                     no-action
                     class="mb-2"
                 >

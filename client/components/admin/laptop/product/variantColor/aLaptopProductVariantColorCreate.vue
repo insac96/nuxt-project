@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 teal--text">Create Color</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 create--text">Create Color</v-card-title>
         <v-card-subtitle>Thêm màu sắc cho biến thể</v-card-subtitle>
 
         <!--Body-->
@@ -14,7 +14,7 @@
                 :rules="[ $Rules.required ]"
                 label="Color Name"                    
                 placeholder="Tên màu sắc"
-                color="primary_admin"
+                color="create"
                 autocomplete="off"
                 outlined
                 :disabled="Loading.create"
@@ -35,7 +35,7 @@
                         :rules="[ $Rules.required ]"
                         label="Color Code"           
                         placeholder="Mã màu sắc"
-                        color="primary_admin"
+                        color="create"
                         autocomplete="off"
                         outlined
                         :disabled="Loading.create"
@@ -58,7 +58,7 @@
                 v-model="NewVariantColor.image"
                 label="Color Image"                    
                 placeholder="Hình ảnh sản phẩm"
-                color="primary_admin"
+                color="create"
                 append-icon="image"
                 autocomplete="off"
                 outlined
@@ -71,7 +71,7 @@
                 :rules="[ $Rules.price ]"
                 label="Color Up Price"                    
                 placeholder="Tăng giá so với giá gốc"
-                color="primary_admin"
+                color="create"
                 autocomplete="off"
                 outlined
                 :disabled="Loading.edit"
@@ -90,7 +90,7 @@
             </v-btn>
             
             <v-btn 
-                color="teal" dark 
+                color="create" dark 
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create" 

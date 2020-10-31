@@ -1,18 +1,18 @@
 <template>
     <!--Laptop Product Link Image-->
 
-    <v-card flat tile class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center pr-4">
+        <v-sheet class="d-flex justify-space-between align-center pr-4" color="heading">
             <!--Left-->
             <div>
-                <v-card-title class="font-weight-bold text-h4 primary_admin--text">Images</v-card-title>
+                <v-card-title class="font-weight-bold text-h4 primary--text">Images</v-card-title>
                 <v-card-subtitle>Các hình ảnh của sản phẩm</v-card-subtitle>
             </div>
 
             <!--Right-->
             <v-btn 
-                fab color="primary_admin" 
+                fab color="primary" 
                 dark elevation="0" 
                 :loading="Loading.upload"
                 @click="$refs.File.click()"
@@ -23,11 +23,11 @@
         </v-sheet>
 
         <!--Body-->
-        <v-sheet class="pa-4" color="heading_admin">
+        <v-sheet class="pa-4">
             <!--Alert if Image List Empty-->
             <v-alert 
                 v-if="product.images.length < 1"
-                color="primary_admin" outlined
+                color="primary" outlined
                 type="info" tile border="right"
                 class="ma-0"
             >

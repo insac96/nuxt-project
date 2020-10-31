@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 teal--text">Create Trademark</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 create--text">Create Trademark</v-card-title>
         <v-card-subtitle>Tạo thương hiệu nhánh</v-card-subtitle>
 
         <!--Body-->
@@ -17,7 +17,7 @@
                     outlined
                     placeholder="Tên thương hiệu nhánh"
                     append-icon="account_balance_wallet"
-                    color="teal"
+                    color="create"
                     autocomplete="off"
                 ></v-text-field>
             </v-form>
@@ -35,13 +35,14 @@
             </v-btn>
             
             <v-btn 
-                color="teal" 
+                color="create" 
+                dark
                 tile elevation="0" large 
                 class="mx-0" 
                 @click="CreateNewTrademark"
                 :loading="Loading.create" 
             >
-                <span :class="(Loading.create) ? '' : 'white--text'">Thêm Mới</span>
+                Thêm Mới
             </v-btn>
         </v-card-actions>
     </v-card>

@@ -19,12 +19,12 @@
             <!--Theme-->
             <v-subheader>Theme</v-subheader>
             <v-list-item class="justify-center">
-                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == false ? Color : ''" @click="ChangeTheme(false)" dark>
+                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == false ? 'primary' : ''" @click="ChangeTheme(false)" dark>
                     Light
                     <v-icon class="ml-2">wb_sunny</v-icon>
                 </v-btn>
 
-                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == true ? Color : ''" @click="ChangeTheme(true)">
+                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == true ? 'primary' : ''" @click="ChangeTheme(true)">
                     Dark
                     <v-icon class="ml-2">brightness_2</v-icon>
                 </v-btn>
@@ -32,11 +32,12 @@
 
             <!--Color-->
             <v-subheader>Color</v-subheader>
-            <v-list-item>
+            <v-list-item class="justify-center">
                 <v-btn 
                     v-for="color in ListColor" :key="color"
                     fab small 
                     elevation="0" 
+                    class="mx-1"
                     :color="color"
                     @click="ChangeColor(color)"
                 ></v-btn>
@@ -56,10 +57,9 @@ export default {
 
     data () {
         return {
-            Color: this.admin ? 'primary_admin' : 'primary',
+            Color: 'primary',
             ListColor: [
-                '#00BCD4', '#009688', '#3F51B5',
-                '#EF6C00', '#C62828', '#B388FF'
+                '#1976d2', '#a26c10', '#099487', '#b55165'
             ]
         }
     },
@@ -78,12 +78,8 @@ export default {
             if(!Theme) return false;
 
             this.$vuetify.theme.dark = Theme.dark;
-
             this.$vuetify.theme.themes.dark.primary = Theme.color;
-            this.$vuetify.theme.themes.dark.primary_admin = Theme.color;
-
             this.$vuetify.theme.themes.light.primary = Theme.color;
-            this.$vuetify.theme.themes.light.primary_admin = Theme.color;
         },
 
         ChangeTheme (type) {
@@ -94,10 +90,7 @@ export default {
 
         ChangeColor (color) {
             this.$vuetify.theme.themes.dark.primary = color;
-            this.$vuetify.theme.themes.dark.primary_admin = color;
-
-            this.$vuetify.theme.themes.light.primary = color;
-            this.$vuetify.theme.themes.light.primary_admin = color;       
+            this.$vuetify.theme.themes.light.primary = color;   
 
             this.SaveLocalStorage();
         },

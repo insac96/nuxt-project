@@ -7,49 +7,73 @@ export default {
         themes: {
             //Dark Time
             dark: {
-                //Guest
-                primary: "#3F51B5",
+                //Color
+                primary: "#2196f3",
                 secondary: "#d2d2d2",
+
+                //Background
                 background: "#121212",
+
+                //Header
                 header: "#191919",
                 header_button: "#313131",
                 header_input: "#313131",
+
+                //Nav
                 nav: "#1E1E1E",
+
+                //Heading
                 heading: "#272727",
                 heading_input: "#3a3a3a",
+                heading_text: "#ffffff",
+
+                //Card
                 card: "#1E1E1E",
 
-                //Admin
-                primary_admin: "#3F51B5",
-                background_admin: "#121212",
-                header_admin: "#191919",
-                heading_admin: "#272727",
-                heading_admin_text: "#ffffff",
-                
+                //Box
+                box: "#232323",
+
+                //Action Color
+                delete: "#ff5252",
+                edit: "#2196F3",
+                create: "#009688",
+
                 //Role Color
                 admin: '#ff5252',
                 guest: '#009688'
             },
             
             light: {
-                //Guest
-                primary: "#3F51B5",
+                //Color
+                primary: "#2196f3",
                 secondary: "#05042c",
+
+                //Background
                 background: "#f4f5f9",
+
+                //Header
                 header: "#05042c",
                 header_button: "#FFFFFF",
                 header_input: "#FFFFFF",
+
+                //Nav
                 nav: "#FFFFFF",
-                heading: "#f0f0f0",
+
+                //Heading
+                heading: "#e8e8e8",
                 heading_input: "#fbfbfb",
+                heading_text: "#828282",
+
+                //Card
                 card: "#FFFFFF",
 
-                //Admin
-                primary_admin: '#3F51B5',
-                background_admin: "#f4f5f9",
-                header_admin: '#05042c',
-                heading_admin: "#e4e4e4",
-                heading_admin_text: "#616161",
+                //Box
+                box: "#f3f3f3",
+
+                //Action Color
+                delete: "#ff5252",
+                edit: "#2196F3",
+                create: "#009688",
 
                 //Role Color
                 admin: '#ff5252',

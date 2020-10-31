@@ -3,12 +3,12 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 error--text">Delete Company</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 delete--text">Delete Company</v-card-title>
         <v-card-subtitle>Xóa dữ liệu hãng sản xuất</v-card-subtitle>
 
         <!--Body-->
         <v-card-text>
-            <v-alert outlined tile border="right" type="info" color="error" prominent class="ma-0 text-subtitle-1">
+            <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 text-subtitle-1">
                 Chức năng này sẽ xóa hãng sản xuất <strong>{{company.name}}</strong> và tất cả thương hiệu nhánh, sản phẩm liên quan. Bạn có chắc chắn muốn xóa.
             </v-alert>
         </v-card-text>
@@ -25,7 +25,8 @@
             </v-btn>
             
             <v-btn 
-                color="error" 
+                color="delete"
+                dark
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.delete" 

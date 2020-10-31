@@ -6,7 +6,7 @@
             <!--Card-->
             <v-card tile flat outlined class="mb-4">
                 <!--Card Header-->
-                <v-card-title class="pb-3 font-weight-bold primary_admin--text">Nâng Cấp</v-card-title>
+                <v-card-title class="pb-3 font-weight-bold create--text">Nâng Cấp</v-card-title>
                 <v-card-subtitle>Chọn mục có khả năng nâng cấp</v-card-subtitle>
 
                 <!--Card Body-->
@@ -14,26 +14,26 @@
                     <!--CPU-->
                     <v-sheet class="d-flex justify-space-between">
                         <span class="font-weight-bold">CPU</span>
-                        <v-switch v-model="Upgrade.cpu" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                        <v-switch v-model="Upgrade.cpu" color="create" class="ma-0 pa-0"></v-switch>
                     </v-sheet>
 
                     <!--GPU-->
                     <v-sheet class="d-flex justify-space-between">
                         <span class="font-weight-bold">GPU</span>
-                        <v-switch v-model="Upgrade.gpu" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                        <v-switch v-model="Upgrade.gpu" color="create" class="ma-0 pa-0"></v-switch>
                     </v-sheet>
 
                     <!--Wifi-->
                     <v-sheet class="d-flex justify-space-between">
                         <span class="font-weight-bold">Wifi</span>
-                        <v-switch v-model="Upgrade.wifi" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                        <v-switch v-model="Upgrade.wifi" color="create" class="ma-0 pa-0"></v-switch>
                     </v-sheet>
 
                     <!--Ram-->
                     <v-sheet>
                         <div class="d-flex justify-space-between">
                             <span class="font-weight-bold">RAM</span>
-                            <v-switch v-model="Upgrade.ram.type" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                            <v-switch v-model="Upgrade.ram.type" color="create" class="ma-0 pa-0"></v-switch>
                         </div>
                         
                         <div class="d-flex justify-end align-center" v-if="Upgrade.ram.type">
@@ -42,7 +42,7 @@
                                 label="Max"
                                 outlined dense
                                 placeholder="Dung lượng tối đa"
-                                color="primary_admin"
+                                color="create"
                                 class="mr-1"
                                 type="number"
                                 autocomplete="off"
@@ -53,7 +53,7 @@
                                 label="Slot"
                                 outlined dense
                                 placeholder="Số khe cắm ngoài"
-                                color="primary_admin"
+                                color="create"
                                 class="ml-1" type="number"
                                 autocomplete="off"
                             ></v-text-field>
@@ -64,7 +64,7 @@
                     <v-sheet>
                         <div class="d-flex justify-space-between">
                             <span class="font-weight-bold">Hard Drive</span>
-                            <v-switch v-model="Upgrade.harddrive.type" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                            <v-switch v-model="Upgrade.harddrive.type" color="create" class="ma-0 pa-0"></v-switch>
                         </div>
                         
                         <div class="d-flex justify-end align-center" v-if="Upgrade.harddrive.type">
@@ -73,7 +73,7 @@
                                 label="Max"
                                 outlined dense
                                 placeholder="Dung lượng tối đa"
-                                color="primary_admin"
+                                color="create"
                                 class="mr-1"
                                 autocomplete="off"
                             ></v-text-field>
@@ -83,7 +83,7 @@
                                 label="Slot"
                                 outlined dense
                                 placeholder="Các khe hỗ trợ"
-                                color="primary_admin"
+                                color="create"
                                 class="ml-1"
                                 autocomplete="off"
                             ></v-text-field>
@@ -98,7 +98,7 @@
                     Back
                 </v-btn>
 
-                <v-btn color="primary_admin" tile elevation="0" large dark @click="NextStep()">
+                <v-btn color="create" tile elevation="0" large dark @click="NextStep()">
                     Next
                 </v-btn>
             </v-sheet>

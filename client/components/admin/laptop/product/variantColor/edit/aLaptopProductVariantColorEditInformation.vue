@@ -8,7 +8,7 @@
             :rules="[ $Rules.required ]"
             label="Color Name"                    
             placeholder="Tên màu sắc"
-            color="primary_admin"
+            color="edit"
             autocomplete="off"
             outlined
             :disabled="Loading.edit"
@@ -29,7 +29,7 @@
                     :rules="[ $Rules.required ]"
                     label="Color Code"           
                     placeholder="Mã màu sắc"
-                    color="primary_admin"
+                    color="edit"
                     autocomplete="off"
                     outlined
                     :disabled="Loading.edit"
@@ -52,7 +52,7 @@
             v-model="color.image"
             label="Color Image"                    
             placeholder="Hình ảnh sản phẩm"
-            color="primary_admin"
+            color="edit"
             append-icon="image"
             autocomplete="off"
             outlined
@@ -65,7 +65,7 @@
             :rules="[ $Rules.price ]"
             label="Color Up Price"                    
             placeholder="Tăng giá so với giá gốc"
-            color="primary_admin"
+            color="edit"
             autocomplete="off"
             outlined
             :disabled="Loading.edit"
@@ -85,7 +85,7 @@
             <v-spacer></v-spacer>
             
             <v-btn 
-                color="info" 
+                color="edit" dark
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.edit"

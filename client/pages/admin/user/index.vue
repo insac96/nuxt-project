@@ -1,29 +1,28 @@
 <template>
     <!--User Admin Index-->
 
-    <v-card tile flat class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Users</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Users</v-card-title>
         <v-card-subtitle>Danh sách tài khoản</v-card-subtitle>
 
         <!--Body-->
         <v-sheet>
             <!--Option Search-->
-            <v-sheet class="d-flex align-center pa-3" color="heading_admin">
+            <v-sheet class="d-flex align-center pa-3" color="heading">
                 <!--Input Search-->
-                <div>
+                <v-form ref="form" @submit.prevent="ShowUserByQuery" >
                     <v-text-field
                         v-model="KeySearch"
                         outlined dense rounded
                         placeholder="Tìm theo tên thành viên"
                         append-icon="search"
-                        color="primary_admin"
+                        color="primary"
                         hide-details
                         autocomplete="off"
                         @click:append="ShowUserByQuery"
-                        @change="ShowUserByQuery"
                     ></v-text-field>
-                </div>
+                </v-form>
 
                 <v-spacer></v-spacer>
 
@@ -34,7 +33,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
                                 height="40" 
-                                color="primary_admin" outlined
+                                color="primary" outlined
                                 rounded elevation="0" class="pr-2"
                                 v-bind="attrs" v-on="on"
                             >
@@ -60,36 +59,36 @@
             </v-sheet>
 
             <!--Table-->
-            <v-simple-table class="Table_Laptop">
+            <v-simple-table class="Table">
                 <template v-slot:default>
                     <!--Table Header-->
                     <thead>
-                        <tr class="TR THead">
-                            <th class="TH" width="100">Avatar</th>
-                            <th class="TH">Tên Thành Viên</th>
-                            <th class="TH text-center" width="120">Chức Vụ</th>
-                            <th class="TH text-center" width="160">Trạng Thái</th>
+                        <tr>
+                            <th width="100">Avatar</th>
+                            <th>Tên Thành Viên</th>
+                            <th class="text-center" width="120">Chức Vụ</th>
+                            <th class="text-center" width="160">Trạng Thái</th>
                         </tr>
                     </thead>
 
                     <!--Table Body-->
                     <tbody>
-                        <tr v-for="(user, indexUser) in Users" :key="indexUser" class="TR TR_Hover">
+                        <tr v-for="(user, indexUser) in Users" :key="indexUser">
                             <!--1 - User Avatar-->
-                            <td class="TD py-2">
-                                <v-avatar><v-img :src="user.profile.avatar" :alt="user.profile.name"></v-img></v-avatar>
+                            <td class="py-2">
+                                <v-avatar size="50"><v-img :src="user.profile.avatar" :alt="user.profile.name"></v-img></v-avatar>
                             </td>
 
                             <!--2 - User Name-->
-                            <td class="TD text-uppercase font-weight-bold primary_admin--text">{{ user.profile.name }}</td>
+                            <td class="text-uppercase font-weight-bold primary--text">{{ user.profile.name }}</td>
 
                             <!--3 - User Role-->
-                            <td class="TD text-center font-weight-bold text-subtitle-1">
-                                <span :class="user.role == 'ADMIN' ? 'error--text' : 'teal--text'">{{ user.role }}</span>
+                            <td class="text-center font-weight-bold">
+                                <span :class="user.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{ user.role }}</span>
                             </td>
 
                             <!--4 - User Verification-->
-                            <td class="TD text-center font-weight-bold text-subtitle-1">
+                            <td class="text-center font-weight-bold">
                                 <span v-if="user.verification" class="info--text">Đã Xác Minh</span>
                                 <span v-else class="grey--text">Chưa Xác Minh</span>
                             </td>
@@ -107,7 +106,7 @@
             </v-alert>
 
             <!--Body Footer-->
-            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading_admin">
+            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                 <!--Count-->
                 <v-chip> 
                     <span>{{Users.length}} / {{Count}}</span>
@@ -143,7 +142,8 @@ export default {
         }
         catch(e){
             return {
-                Users: []
+                Users: [],
+                Count: 0
             }
         }
     },

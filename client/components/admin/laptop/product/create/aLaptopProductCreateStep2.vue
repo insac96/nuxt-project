@@ -11,8 +11,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
-                        color="primary_admin"
-                        item-color="primary_admin"
+                        color="create"
+                        item-color="create"
                         :multiple="item.multiple"
                         autocomplete="off"
                     ></v-combobox>
@@ -22,7 +22,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="primary_admin"
+                        color="create"
                         autocomplete="off"
                     ></v-text-field>
                 </div>
@@ -36,8 +36,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
-                        color="primary_admin"
-                        item-color="primary_admin"
+                        color="create"
+                        item-color="create"
                         :multiple="item.multiple"
                         autocomplete="off"
                     ></v-combobox>
@@ -47,7 +47,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="primary_admin"
+                        color="create"
                         autocomplete="off"
                     ></v-text-field>
                 </div>
@@ -60,7 +60,7 @@
                 Back
             </v-btn>
             
-            <v-btn color="primary_admin" tile elevation="0" large dark @click="NextStep()">
+            <v-btn color="create" tile elevation="0" large dark @click="NextStep()">
                 Next
             </v-btn>
         </v-sheet>

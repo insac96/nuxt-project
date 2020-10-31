@@ -18,7 +18,7 @@
                 <!--Comment - Right-->  
                 <v-sheet class="ml-2">
                     <!--Content-->
-                    <v-card :min-height="SizeComment" flat class="d-inline-flex align-center rounded-xl py-2 px-6" color="heading">
+                    <v-card :min-height="SizeComment" flat class="d-inline-flex align-center rounded-xl py-2 px-6" color="box">
                         <span class="text-subtitle-1">{{comment.content}}</span>
                     </v-card>
 
@@ -43,7 +43,7 @@
         <!--Footer-->
         <v-card-actions class="justify-center pt-0 pb-4" v-if="Comments.length != CommentCount">
             <v-btn 
-                rounded outlined 
+                rounded 
                 elevation="0" 
                 color="primary" 
                 class="px-6" 

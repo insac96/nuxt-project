@@ -10,7 +10,7 @@
             <!--Reply - Right-->
             <v-sheet class="ml-2">
                 <!--Content-->
-                <v-card flat class="d-inline-flex align-center rounded-xl py-2 px-4" color="heading" min-height="40">
+                <v-card flat class="d-inline-flex align-center rounded-xl py-2 px-4" color="box" min-height="40">
                     <span class="text-subtitle-1">{{reply.content}}</span>
                 </v-card>
                 

@@ -1,19 +1,72 @@
-.theme--dark.v-application {
-    .v-image__image {
-        filter: brightness(.8) contrast(1.2);
+a {
+    text-decoration: none;
+}
+
+.v-application {
+    background: var(--v-background-base) !important;
+}
+
+.Screen {
+    width: 1000px;
+    max-width: 1000px;
+    padding: 0;
+    margin: 0;
+
+    @media only screen and (max-width: 1000px) {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+.BoxShadow {
+    box-shadow: 0px 0px 20px rgba(141, 153, 206, 0.2) !important;
+}
+
+.BoxShadow-Hover {
+    box-shadow: 0px 0px 20px rgba(141, 153, 206, 0.2) !important;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+        z-index: 1;
+        box-shadow: 0px 0px 20px 10px rgba(172, 177, 197, 0.2), 0px 0px 15px 1px rgba(177, 177, 177, 0.4) !important;
+    }
+}
+
+.Table {
+    thead {
+        tr {
+            th {
+                background: var(--v-heading-base) !important;
+                font-size: 1em !important;
+                font-weight: bold !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+        }
     }
 
-    .BoxShadow {
-        box-shadow: none !important;
+    tbody {
+        tr {
+            td {
+                font-size: 1.1em !important;
 
-        &:hover {
-            box-shadow: none !important;
+                a {
+                    color: var(--v-primary-base);
+                    font-weight: bold !important;
+                }
+            }
+
+            &:hover {
+                background: none !important;
+            }
         }
     }
 }
 
-a {
-    text-decoration: none;
+.HiddenNavBorder {
+    .v-navigation-drawer__border {
+        display: none;
+    }
 }
 
 .Sticky_Top {
@@ -31,4 +84,18 @@ a {
     position: sticky !important;
     bottom: 0 !important;
     z-index: 2;
+}
+
+.theme--dark.v-application {
+    .v-image__image {
+        filter: brightness(.8) contrast(1.2);
+    }
+
+    .BoxShadow, .BoxShadow-Hover {
+        box-shadow: none !important;
+
+        &:hover {
+            box-shadow: none !important;
+        }
+    }
 }

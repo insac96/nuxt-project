@@ -1,5 +1,5 @@
 <template>
-    <v-app class="Admin_Layout">
+    <v-app>
         <v-navigation-drawer
             app fixed
             width="300"
@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import '@/assets/admin.scss';
-
 export default {
     middleware: 'isAdmin',
+
+    name: 'admin_layout',
     
     head () {
         return {

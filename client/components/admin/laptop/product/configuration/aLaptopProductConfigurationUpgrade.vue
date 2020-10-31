@@ -1,9 +1,9 @@
 <template>
     <!--a_laptop_product_configuration_default-->
 
-    <v-card tile flat class="mt-4">
+    <v-card tile flat>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Upgrade</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Upgrade</v-card-title>
         <v-card-subtitle>Khả năng nâng cấp của sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -11,26 +11,26 @@
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">CPU</span>
-                <v-switch v-model="ConfigurationUpgrade.cpu" color="primary_admin" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.cpu" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">GPU</span>
-                <v-switch v-model="ConfigurationUpgrade.gpu" color="primary_admin" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.gpu" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">Wifi</span>
-                <v-switch v-model="ConfigurationUpgrade.wifi" color="primary_admin" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.wifi" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">RAM</span>
-                    <v-switch v-model="ConfigurationUpgrade.ram.type" color="primary_admin" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                    <v-switch v-model="ConfigurationUpgrade.ram.type" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
                 </div>
                 
                 <!--Show, if Type of Ram is True-->
@@ -40,7 +40,7 @@
                         label="Max"
                         outlined dense
                         placeholder="Dung lượng tối đa"
-                        color="primary_admin"
+                        color="primary"
                         class="mr-1"
                         type="number"
                         autocomplete="off"
@@ -52,7 +52,7 @@
                         label="Slot"
                         outlined dense
                         placeholder="Số khe cắm ngoài"
-                        color="primary_admin"
+                        color="primary"
                         class="ml-1" type="number"
                         autocomplete="off"
                         :disabled="Loading.edit"
@@ -64,7 +64,7 @@
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">Hard Drive</span>
-                    <v-switch v-model="ConfigurationUpgrade.harddrive.type" color="primary_admin" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="ConfigurationUpgrade.harddrive.type" color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
                 <!--Show, if Type of Hard Drive is True-->
@@ -74,7 +74,7 @@
                         label="Max"
                         outlined dense
                         placeholder="Dung lượng tối đa"
-                        color="primary_admin"
+                        color="primary"
                         class="mr-1"
                         autocomplete="off"
                         :disabled="Loading.edit"
@@ -85,7 +85,7 @@
                         label="Slot"
                         outlined dense
                         placeholder="Các khe hỗ trợ"
-                        color="primary_admin"
+                        color="primary"
                         class="ml-1"
                         autocomplete="off"
                         :disabled="Loading.edit"
@@ -100,7 +100,7 @@
             <v-spacer></v-spacer>
 
             <v-btn 
-                color="primary_admin" dark 
+                color="primary" dark 
                 elevation="0" tile large
                 :loading="Loading.edit"
                 @click="EditUpgrade"

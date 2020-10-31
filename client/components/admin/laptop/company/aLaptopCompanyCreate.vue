@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Create Company</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 create--text">Create Company</v-card-title>
         <v-card-subtitle>Tạo hãng sản xuất mới</v-card-subtitle>
 
         <!--Body-->
@@ -18,8 +18,8 @@
                     outlined
                     placeholder="Tên hãng sản xuất"
                     append-icon="apartment"
-                    color="primary_admin"
-                    item-color="primary_admin"
+                    color="create"
+                    item-color="create"
                 ></v-combobox>
 
                 <!--Company Trademark-->
@@ -31,12 +31,12 @@
                     outlined
                     placeholder="Các thương hiệu nhánh"
                     append-icon="account_balance_wallet"
-                    color="primary_admin"
-                    item-color="primary_admin"
+                    color="create"
+                    item-color="create"
                     multiple small-chips
                 >
                     <template v-slot:selection="{ attrs, item, parent, selected }">
-                        <v-chip v-bind="attrs" :input-value="selected" label color="primary_admin" dark class="mt-2 mb-0">
+                        <v-chip v-bind="attrs" :input-value="selected" label color="create" dark class="mt-2 mb-0">
                             <span class="pr-2">{{ item }}</span>
                             <v-icon small @click="parent.selectItem(item)">close</v-icon>
                         </v-chip>
@@ -51,7 +51,7 @@
                     outlined
                     placeholder="Nhập link hoặc chọn file"
                     append-icon="image"
-                    color="primary_admin"
+                    color="create"
                     @click:append="$refs.File.click()"
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
@@ -74,7 +74,8 @@
             </v-btn>
             
             <v-btn 
-                color="primary_admin" dark 
+                color="create" 
+                dark
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create || Loading.upload" 

@@ -3,11 +3,11 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 info--text">Setting Color</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 edit--text">Setting Color</v-card-title>
         <v-card-subtitle>Cài đặt màu sắc cho biến thể</v-card-subtitle>
 
         <!--Body-->
-        <v-tabs background-color="info" dark v-model="Tab" class="rounded-0">
+        <v-tabs background-color="edit" dark v-model="Tab" class="rounded-0">
             <v-tab>Thông Tin</v-tab>
             <v-tab>Xóa</v-tab>
 

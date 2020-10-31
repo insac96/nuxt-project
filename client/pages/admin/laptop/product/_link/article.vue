@@ -1,7 +1,7 @@
 <template>
-    <v-card flat tile class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Article</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Article</v-card-title>
         <v-card-subtitle>Bài đánh giá của sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -17,12 +17,12 @@
         </client-only>
 
         <!--Footer-->
-        <v-sheet class="Sticky_Bottom d-flex px-4 py-2" color="heading_admin">
+        <v-sheet class="Sticky_Bottom d-flex px-4 py-2" color="heading">
             <v-spacer></v-spacer>
 
             <v-btn 
                 v-if="!Article"
-                color="primary_admin" dark 
+                color="primary" dark 
                 elevation="0" tile 
                 :loading="Loading.create"
                 @click="CreateNewArticle"
@@ -32,7 +32,7 @@
 
             <v-btn
                 v-else
-                color="primary_admin" dark 
+                color="primary" dark 
                 elevation="0" tile 
                 :loading="Loading.edit"
                 @click="EditArticle"
@@ -131,7 +131,8 @@ export default {
                 color: #b6b6b6 !important;
             }  
         }
-
+        
+        //Tollbar
         .ql-toolbar {
             position: sticky;
             top: 64px;
@@ -139,7 +140,7 @@ export default {
             display: flex;
             align-items: center;
             height: 50px !important;
-            background: var(--v-heading_admin-base) !important;
+            background: var(--v-heading-base) !important;
             border-width: 0 !important;
             
             button {
@@ -147,22 +148,30 @@ export default {
             }
         }
 
+        //Main
         .ql-container {
             font-family: Quicksand, sans-serif;
             border-width: 0 !important;
             padding: 16px !important;
         }
 
+        //Stoke and Fill
         .ql-stroke {
-            stroke: var(--v-heading_admin_text-base) !important;
-            width: 100px;     
+            stroke: var(--v-heading_text-base) !important;
+        }
+        .ql-fill {
+            fill: var(--v-heading_text-base) !important;
         }
         .ql-active {
             .ql-stroke {
-                stroke: var(--v-primary_admin-base) !important;
+                stroke: var(--v-primary-base) !important;
+            }
+            .ql-fill {
+                fill: var(--v-primary-base) !important;
             }
         }
         
+        //Tooltip
         .ql-tooltip {
             font-size: 1.2em;
             font-weight: bold;
@@ -171,8 +180,8 @@ export default {
             box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
 
             input[type=text] {
-                background: var(--v-heading_admin-base) !important;
-                color: var(--v-heading_admin_text-base) !important;
+                background: var(--v-heading-base) !important;
+                color: var(--v-heading_text-base) !important;
                 border-width: 0 !important;
                 border-radius: 15px;
                 padding: 5px 10px !important ;
@@ -180,28 +189,57 @@ export default {
             }
         }
 
+        //Picker
         .ql-picker {
             &.ql-size {
-                background: var(--v-heading_admin-base) !important;
+                background: var(--v-heading-base) !important;
+
+                .ql-picker-label {
+                    outline: none !important;
+                    border-color: var(--v-heading_text-base) !important;
+
+                    &::before {
+                        color: var(--v-primary-base) !important;
+                    }
+                }
             }
 
-            .ql-picker-label {
-                outline: none !important;
-                border-width: 0 !important;
+            &.ql-align, &.ql-color {
+                background: var(--v-heading-base) !important;
+
+                .ql-picker-label {
+                    outline: none !important;
+                    border: none !important;
+                }
             }
+
+
             .ql-picker-options {
                 transform: translateY(5px);
                 border-width: 0 !important;
                 box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
 
-                .ql-stroke {
-                    stroke: grey !important;
-                    width: 100px;     
-                }
-
                 .ql-picker-item {
                     outline: none !important;
+                    margin: 0 !important;
+
+                    &:hover {
+                        color: var(--v-primary-base) !important;
+
+                        .ql-stroke {
+                            stroke: var(--v-primary-base) !important;
+                        }
+                    }
                 }
+
+                .ql-stroke {
+                    stroke: grey !important;
+                }
+            }
+
+            .ql-active {
+                color: var(--v-primary-base) !important;
+                border-color: var(--v-primary-base) !important;
             }
             
         }

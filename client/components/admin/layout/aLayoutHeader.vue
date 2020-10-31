@@ -1,11 +1,12 @@
 <template>
-    <v-app-bar app tile flat height="64" color="header_admin" fixed>
+    <v-app-bar app tile flat height="64" color="header" fixed>
         <v-app-bar-nav-icon class="white--text" @click="$emit('toggle-nav-left')"></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="text-h5">
-            <div class="Breadcrumbs d-inline-block mr-2 text-capitalize white--text" v-for="(item, index) in path" :key="index">
-                <span  v-if="item != path[0] && (index + 1) != path.length">
-                    <nuxt-link :to="PathRoute(index)">
+        <!--Breadcrumbs-->
+        <div class="ml-4 text-h5">
+            <div class="d-inline-block mr-2 text-capitalize white--text" v-for="(item, index) in path" :key="index">
+                <span v-if="item != path[0] && (index + 1) != path.length">
+                    <nuxt-link class="white--text" :to="PathRoute(index)">
                         {{item}}
                     </nuxt-link>
                 </span>
@@ -14,12 +15,14 @@
 
                 <span v-if="(index + 1) < path.length">/</span>
             </div>
-        </v-toolbar-title>
+        </div>
 
         <v-spacer></v-spacer>
 
+        <!--Setting-->
         <PHeaderSetting admin></PHeaderSetting>
         
+        <!--Power Off-->
         <v-btn fab elevation="0" small color="header_button" class="ml-1" to="/">
             <v-icon>power_settings_new</v-icon>
         </v-btn>

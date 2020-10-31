@@ -1,16 +1,16 @@
 <template>
     <!--Laptop Product Index-->
 
-    <v-card tile flat class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center">
             <div>
-                <v-card-title class="font-weight-bold text-h4 primary_admin--text">Products</v-card-title>
+                <v-card-title class="font-weight-bold text-h4 primary--text">Products</v-card-title>
                 <v-card-subtitle>Danh sách các sản phẩm</v-card-subtitle>
             </div>
 
             <v-btn 
-                color="primary_admin" dark 
+                color="primary" dark 
                 tile elevation="0" large class="mr-4"
                 to="/admin/laptop/product/create"
             >
@@ -22,21 +22,20 @@
         <!--Body-->
         <v-sheet>
             <!--Option Search-->
-            <v-sheet class="d-flex align-center pa-3" color="heading_admin">
+            <v-sheet class="d-flex align-center pa-3" color="heading">
                 <!--Input Search-->
-                <div>
+                <v-form ref="form" @submit.prevent="ShowProductByQuery">
                     <v-text-field
-                        v-model="KeySearchShow"
+                        v-model="KeySearch"
                         outlined dense rounded
                         placeholder="Tìm theo tên sản phẩm"
                         append-icon="search"
-                        color="primary_admin"
+                        color="primary"
                         hide-details
                         autocomplete="off"
                         @click:append="ShowProductByQuery"
-                        @change="ShowProductByQuery"
                     ></v-text-field>
-                </div>
+                </v-form>
 
                 <v-spacer></v-spacer>
 
@@ -47,7 +46,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn 
                                 height="40" 
-                                color="primary_admin" outlined
+                                color="primary" outlined
                                 rounded elevation="0" class="pr-2"
                                 @click="GetCompanyes"
                                 v-bind="attrs" v-on="on"
@@ -76,7 +75,7 @@
                             <v-btn 
                                 :disabled="!ComanySelectShow"
                                 height="40"
-                                color="primary_admin" outlined
+                                color="primary" outlined
                                 rounded elevation="0" class="pr-2"
                                 v-bind="attrs" v-on="on"
                             >
@@ -102,27 +101,27 @@
             </v-sheet>
 
             <!--Table-->
-            <v-simple-table class="Table_Laptop">
+            <v-simple-table class="Table">
                 <template v-slot:default>
                     <!--Table Header-->
                     <thead>
-                        <tr class="TR THead">
-                            <th class="TH" width="100">Hãng</th>
-                            <th class="TH">Tên Sản Phẩm</th>
-                            <th class="TH text-center" width="150">Thương Hiệu</th>
-                            <th class="TH text-center" width="120">Cấu Hình</th>
-                            <th class="TH text-right" width="150">Chức Năng</th>
+                        <tr>
+                            <th width="100">Hãng</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th class="text-center" width="150">Thương Hiệu</th>
+                            <th class="text-center" width="120">Cấu Hình</th>
+                            <th class="text-right" width="150">Chức Năng</th>
                         </tr>
                     </thead>
 
                     <!--Table Body-->
                     <tbody>
-                        <tr v-for="(product, indexProduct) in Products" :key="indexProduct" class="TR TR_Hover">
+                        <tr v-for="(product, indexProduct) in Products" :key="indexProduct">
                             <!--1 - Company Name-->
-                            <td class="TD text-uppercase">{{ product.company ? product.company.name : 'Null' }}</td>
+                            <td class="text-uppercase">{{ product.company ? product.company.name : 'Null' }}</td>
 
                             <!--2 - Product Name-->
-                            <td class="TD">
+                            <td>
                                 <nuxt-link
                                     :to="`/admin/laptop/product/${product.link}/Information`"
                                 >
@@ -131,15 +130,15 @@
                             </td>
 
                             <!--3 - Trademark-->
-                            <td class="TD text-center text-uppercase">{{ product.trademark.name }}</td>
+                            <td class="text-center text-uppercase">{{ product.trademark.name }}</td>
 
                             <!--4 - Varian Count-->
-                            <td class="TD text-center">{{ product.variantCount }}</td>
+                            <td class="text-center">{{ product.variantCount }}</td>
 
                             <!--5 - Funtion-->
-                            <td class="TD text-right">
+                            <td class="text-right">
                                 <v-btn 
-                                    :color="product.visibility ? 'primary_admin' : 'grey'" 
+                                    :color="product.visibility ? 'primary' : 'grey'" 
                                     icon small elevation="0"
                                     :disabled="Loading.visibility"
                                     @click="EditVisibilityProduct(product)"
@@ -169,7 +168,7 @@
             </v-alert>
 
             <!--Body Footer-->
-            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading_admin">
+            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                 <!--Count-->
                 <v-chip> 
                     <span>{{Products.length}} / {{Count}}</span>
@@ -178,7 +177,7 @@
                 <!--Button Next Previous-->
                 <v-btn 
                     elevation="0" rounded 
-                    color="primary_admin"
+                    color="primary"
                     v-if="(Products.length < Count)" 
                     @click="ShowProductByQuery('more');"
                 >
@@ -214,7 +213,8 @@ export default {
         }
         catch(e){
             return {
-                Products: []
+                Products: [],
+                Count: 0
             }
         }
     },
@@ -223,7 +223,7 @@ export default {
         return {
             Companyes: [],
 
-            KeySearchShow: null,
+            KeySearch: null,
             ComanySelectShow: null,
             TrademarkSelectShow: null,
 
@@ -280,7 +280,7 @@ export default {
                     skip: (type === 'more') ? this.Products.length : 0,
                     company: this.ComanySelectShow ? this.ComanySelectShow._id : null,
                     trademark: this.TrademarkSelectShow ? this.TrademarkSelectShow._id : null,
-                    key: this.KeySearchShow ? this.KeySearchShow : null,
+                    key: this.KeySearch ? this.KeySearch : null,
                 });
 
                 if(type === 'more') return this.Products = this.Products.concat(Search.products);

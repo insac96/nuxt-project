@@ -1,16 +1,16 @@
 <template>
     <!--Laptop Product Link Variant-->
 
-    <v-card flat tile class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center pr-4">
             <div>
-                <v-card-title class="font-weight-bold text-h4 primary_admin--text">Variant</v-card-title>
+                <v-card-title class="font-weight-bold text-h4 primary--text">Variant</v-card-title>
                 <v-card-subtitle>Các biến thể cấu hình của sản phẩm</v-card-subtitle>
             </div>
 
             <v-btn 
-                color="primary_admin" 
+                color="primary" 
                 dark elevation="0" 
                 tile large
                 @click="VariantDialog.create = true"
@@ -23,7 +23,7 @@
         <!--If Variant List Empty-->
         <v-card-text v-if="Variants.length < 1">
             <v-alert 
-                color="primary_admin" outlined
+                color="primary" outlined
                 type="info" tile border="right"
                 class="ma-0"
             >
@@ -41,18 +41,18 @@
                     <!--Header-->
                     <v-sheet class="d-flex justify-space-between align-center pr-4">
                         <div>
-                            <v-card-title class="primary_admin--text font-weight-bold pb-2">{{variant.code}}</v-card-title>
+                            <v-card-title class="primary--text font-weight-bold pb-2">{{variant.code}}</v-card-title>
                             <v-card-subtitle>Variant Code</v-card-subtitle>     
                         </div>
 
-                        <v-chip color="primary_admin" dark class="font-weight-bold text-h6">
+                        <v-chip color="primary" dark class="font-weight-bold text-h6">
                             {{ variant.price.toLocaleString('vi-VN') }}
                         </v-chip>
                     </v-sheet>
                     
                     <!--Information-->
                     <v-sheet>
-                        <div class="heading_admin d-flex justify-space-between align-center px-4 py-2">
+                        <div class="heading d-flex justify-space-between align-center px-4 py-2">
                             <span class="grey--text text-subtitle font-weight-bold">Thông Tin</span>
                             <v-btn icon small color="grey" @click="ShowVariantDialogEdit(indexVariant, variant)"><v-icon>edit</v-icon></v-btn>
                         </div>
@@ -79,7 +79,7 @@
 
                     <!--Color-->
                     <v-sheet>
-                        <div class="heading_admin d-flex justify-space-between align-center px-4 py-2">
+                        <div class="heading d-flex justify-space-between align-center px-4 py-2">
                             <span class="grey--text text-subtitle font-weight-bold">Màu Sắc</span>
                             <v-btn icon small color="grey" @click="ShowVariantDialogCreateColor(variant)"><v-icon>add</v-icon></v-btn>
                         </div>
@@ -96,13 +96,13 @@
 
                     <!--Discount-->
                     <v-sheet>
-                        <div class="heading_admin d-flex justify-space-between align-center px-4">
+                        <div class="heading d-flex justify-space-between align-center px-4">
                             <span class="grey--text text-subtitle font-weight-bold">Giảm Giá</span>
 
                             <v-switch 
                                 v-model="variant.discount.type" :disabled="Loading.edit"
                                 @change="EditVariantDiscount(variant)"
-                                color="primary_admin" class="SwitchDiscountVariant ma-0 pa-0"
+                                color="primary" class="SwitchDiscountVariant ma-0 pa-0"
                             ></v-switch>
                         </div>
 
@@ -115,7 +115,7 @@
                                     outlined type="number"
                                     placeholder="Số tiền giảm giá"
                                     append-icon="save"
-                                    color="primary_admin"
+                                    color="primary"
                                     :disabled="Loading.edit"
                                     autocomplete="off"
                                     @click:append="EditVariantDiscount(variant)"

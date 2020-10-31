@@ -11,7 +11,6 @@
                     class="BoxShadow"
                     :disabled="(this.skip == 0)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
-                    elevation="0"
                     @click="Before"
                 >
                     <v-icon>navigate_before</v-icon>
@@ -20,7 +19,6 @@
                 <v-btn 
                     class="BoxShadow"
                     fab :small="!SmallButton" :x-small="SmallButton"
-                    elevation="0"
                     @click="Next"
                 >
                     <v-icon>navigate_next</v-icon>
@@ -51,7 +49,7 @@
                     v-for="(variant, indexVariant) in variants" :key="indexVariant"
                 >
                     <v-card 
-                        flat class="d-flex flex-column BoxShadow"
+                        class="d-flex flex-column BoxShadow"
                         :ripple="false"
                         :to="`/guest/laptop/product/${variant.product.link}?variant=${variant._id}`"
                     >

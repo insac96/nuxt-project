@@ -1,16 +1,16 @@
 <template>
     <!--Laptop Company Index-->
 
-    <v-card tile flat class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center">
             <div>
-                <v-card-title class="font-weight-bold text-h4 primary_admin--text">Companyes</v-card-title>
+                <v-card-title class="font-weight-bold text-h4 primary--text">Companyes</v-card-title>
                 <v-card-subtitle>Danh sách các hãng sản xuất</v-card-subtitle>
             </div>
 
             <v-btn 
-                color="primary_admin" dark tile 
+                color="primary" dark tile 
                 elevation="0" large class="mr-4" 
                 @click="ShowCompanyDialogCreate"
             >
@@ -19,32 +19,26 @@
             </v-btn>
         </v-sheet>
 
-        <!-- No Company-->
-        <v-card-text v-if="!this.Companyes || this.Companyes.length < 1">
-            <v-alert type="info" outlined prominent color="primary_admin" class="mb-0 text-h6" tile border="right">
-                Hiện tại chưa có hãng sản xuất
-            </v-alert>
-        </v-card-text>
-    
-        <!--Table-->
-        <v-sheet v-else>
-            <v-simple-table class="Table_Laptop" fixed-header>
+        <!--Body-->
+        <v-sheet>
+            <!--Table-->
+            <v-simple-table class="Table" fixed-header>
                 <template v-slot:default>
                     <!--Table Header-->
                     <thead>
-                        <tr class="TR THead">
-                            <th class="TH" width="100" >Logo</th>
-                            <th class="TH">Tên Hãng</th>
-                            <th class="TH text-center" width="150">Sản Phẩm</th>
-                            <th class="TH text-right" width="150" >Chức Năng</th>
+                        <tr>
+                            <th width="100" >Logo</th>
+                            <th >Tên Hãng</th>
+                            <th class="text-center" width="150">Sản Phẩm</th>
+                            <th class="text-right" width="150" >Chức Năng</th>
                         </tr>
                     </thead>
 
                     <!--Table Body-->
                     <tbody>
-                        <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany" class="TR TR_Hover">
+                        <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany">
                             <!-- Company Logo -->
-                            <td class="TD">
+                            <td>
                                 <v-card flat width="100">
                                     <v-img :src="company.logo" :alt="company.name" max-width="100%">
                                     </v-img>
@@ -52,8 +46,8 @@
                             </td>
 
                             <!-- Company Name -->
-                            <td class="TD py-5">
-                                <span class="text-uppercase font-weight-bold text-h6 primary_admin--text">{{ company.name }}</span>
+                            <td class="py-5">
+                                <span class="text-uppercase font-weight-bold text-h6 primary--text">{{ company.name }}</span>
 
                                 <!-- Trademark -->
                                 <div class="mt-1">
@@ -73,10 +67,10 @@
                             </td>
                             
                             <!-- Company Product Count -->
-                            <td class="TD text-center">{{ company.productCount }}</td>
+                            <td class="text-center">{{ company.productCount }}</td>
 
                             <!-- Function -->
-                            <td class="TD text-right">
+                            <td class="text-right">
                                 <v-btn 
                                     color="info" dark fab small elevation="0" 
                                     @click="ShowCompanyDialogEdit(company)"
@@ -95,6 +89,22 @@
                     </tbody>
                 </template>
             </v-simple-table>
+
+            <!--If List Companyes Empty-->
+            <v-alert
+                v-if="Companyes.length < 1" 
+                class="mb-0" tile
+            >
+                Không có công ty nào hiển thị
+            </v-alert>
+
+            <!--Body Footer-->
+            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
+                <!--Count-->
+                <v-chip> 
+                    <span>{{Companyes.length}} / {{Companyes.length}}</span>
+                </v-chip>
+            </v-sheet>
         </v-sheet>
 
         <!--Dialog Create Company-->
@@ -155,7 +165,7 @@ export default {
         }
         catch(e){
             return {
-                Companyes: null
+                Companyes: []
             }
         }
     },

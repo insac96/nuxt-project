@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Create Variant</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 create--text">Create Variant</v-card-title>
         <v-card-subtitle>Tạo biến thể mới cho sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -22,8 +22,8 @@
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
                                 :items="VariantSelectConfiguration[item.name]"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="create"
+                                item-color="create"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.create"
@@ -37,7 +37,7 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
+                                color="create"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.create"
@@ -57,8 +57,8 @@
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
                                 :items="VariantSelectConfiguration[item.name]"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="create"
+                                item-color="create"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.create"
@@ -72,8 +72,8 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :items="VariantSelectConfiguration[item.name]"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="create"
+                                item-color="create"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.create"
@@ -87,7 +87,7 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
+                                color="create"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.create"
@@ -110,7 +110,7 @@
             </v-btn>
             
             <v-btn 
-                color="primary_admin" dark 
+                color="create" dark 
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create" 

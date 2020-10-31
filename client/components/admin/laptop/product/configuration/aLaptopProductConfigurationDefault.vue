@@ -1,9 +1,9 @@
 <template>
     <!--a_laptop_product_configuration_default-->
 
-    <v-card tile flat class="mt-4">
+    <v-card tile flat>
         <!--Header-->
-        <v-card-title class="font-weight-bold primary_admin--text text-h4">Default</v-card-title>
+        <v-card-title class="font-weight-bold primary--text text-h4">Default</v-card-title>
         <v-card-subtitle>Cấu hình cơ bản của sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -16,8 +16,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
-                        color="primary_admin"
-                        item-color="primary_admin"
+                        color="primary"
+                        item-color="primary"
                         :multiple="item.multiple"
                         autocomplete="off"
                         :disabled="Loading.edit"
@@ -28,7 +28,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="primary_admin"
+                        color="primary"
                         autocomplete="off"
                         :disabled="Loading.edit"
                     ></v-text-field>
@@ -43,8 +43,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
-                        color="primary_admin"
-                        item-color="primary_admin"
+                        color="primary"
+                        item-color="primary"
                         :multiple="item.multiple"
                         autocomplete="off"
                         :disabled="Loading.edit"
@@ -55,7 +55,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="primary_admin"
+                        color="primary"
                         autocomplete="off"
                         :disabled="Loading.edit"
                     ></v-text-field>
@@ -68,7 +68,7 @@
             <v-spacer></v-spacer>
 
             <v-btn 
-                color="primary_admin" dark 
+                color="primary" dark 
                 elevation="0" tile large
                 :loading="Loading.edit"
                 @click="EditDefault"

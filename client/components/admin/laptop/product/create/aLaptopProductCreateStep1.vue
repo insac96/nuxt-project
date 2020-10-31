@@ -6,7 +6,7 @@
             <v-col cols="12" lg="8" xl="7">
                 <!--Information-->
                 <v-card flat tile outlined class="mb-4">
-                    <v-card-title class="font-weight-bold primary_admin--text">Thông Tin</v-card-title>
+                    <v-card-title class="font-weight-bold create--text">Thông Tin</v-card-title>
 
                     <v-card-text class="pt-4">
                         <v-text-field
@@ -16,7 +16,7 @@
                             outlined
                             placeholder="Tên sản phẩm"
                             append-icon="laptop"
-                            color="primary_admin"
+                            color="create"
                             autocomplete="off"
                         ></v-text-field>
 
@@ -30,8 +30,8 @@
                             outlined
                             placeholder="Chọn hãng sản xuất"
                             append-icon="apartment"
-                            color="primary_admin"
-                            item-color="primary_admin"
+                            color="create"
+                            item-color="create"
                             @click="GetCompanyes"
                             @change="SetCompanySelect"
                         ></v-select>
@@ -47,8 +47,8 @@
                             outlined
                             placeholder="Chọn thương hiệu nhánh"
                             append-icon="account_balance_wallet"
-                            color="primary_admin"
-                            item-color="primary_admin"
+                            color="create"
+                            item-color="create"
                         ></v-select>
                     </v-card-text>
                 </v-card>
@@ -58,12 +58,12 @@
                     <!--Header-->
                     <v-sheet class="d-flex justify-space-between align-center pr-4">
                         <div>
-                            <v-card-title class="font-weight-bold primary_admin--text">Hình Ảnh</v-card-title>
+                            <v-card-title class="font-weight-bold create--text">Hình Ảnh</v-card-title>
                             <v-card-subtitle>Tải Hình Ảnh Cho Sản Phẩm</v-card-subtitle>
                         </div>
 
                         <v-btn 
-                            fab color="primary_admin" 
+                            fab color="create" 
                             dark elevation="0"
                             :loading="Loading.upload"
                             @click="$refs.File.click()"
@@ -100,8 +100,9 @@
                 <!--Button-->
                 <v-sheet class="d-flex justify-end mt-4">
                     <v-btn 
-                        color="primary_admin" tile elevation="0" 
-                        large dark 
+                        color="create" dark
+                        tile elevation="0" 
+                        large  
                         @click="NextStep()"
                         :loading="Loading.upload"
                     >

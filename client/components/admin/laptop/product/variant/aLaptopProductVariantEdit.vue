@@ -3,7 +3,7 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Edit Variant</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 edit--text">Edit Variant</v-card-title>
         <v-card-subtitle>Cài đặt biến thể sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -22,8 +22,8 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="edit"
+                                item-color="edit"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.edit"
@@ -37,7 +37,7 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
+                                color="edit"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.edit"
@@ -57,8 +57,8 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="edit"
+                                item-color="edit"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.edit"
@@ -72,8 +72,8 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :items="VariantSelectConfiguration[item.name]"
-                                color="primary_admin"
-                                item-color="primary_admin"
+                                color="edit"
+                                item-color="edit"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.edit"
@@ -87,7 +87,7 @@
                                 :label="item.label"                    
                                 :placeholder="item.placeholder"
                                 :type="item.type ? item.type : 'text'"
-                                color="primary_admin"
+                                color="edit"
                                 autocomplete="off"
                                 outlined
                                 :disabled="Loading.edit"
@@ -101,7 +101,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4">
             <v-btn 
-                color="error" dark 
+                color="delete" dark 
                 tile elevation="0" 
                 large class="mx-0"
                 :disabled="Loading.edit"
@@ -122,7 +122,7 @@
             </v-btn>
             
             <v-btn 
-                color="primary_admin" dark 
+                color="edit" dark 
                 tile elevation="0" 
                 large class="mx-0" 
                 :disabled="Loading.delete"

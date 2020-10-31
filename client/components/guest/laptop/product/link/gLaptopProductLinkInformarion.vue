@@ -25,13 +25,9 @@
         </div>
 
         <!-- If Variant List Empty -->
-        <v-card-text v-if="Variants.length < 1">
-            <v-alert 
-                type="info" 
-                prominent outlined 
-                color="primary" class="mb-0 text-subtitle-1 text-sm-h6"
-            >
-                Sản phẩm hiện tại không có cấu hình để lựa chọn
+        <v-card-text class="py-0" v-if="Variants.length == 0">
+            <v-alert type="info" text border="left" color="primary">
+                Hiện không có cấu hình để lựa chọn
             </v-alert>
         </v-card-text>
 
@@ -39,6 +35,12 @@
         <v-sheet v-else>
             <!-- Configuration -->
             <div class="px-4 mb-4">
+                <v-divider class="my-4"></v-divider>
+
+                <v-alert type="info" dense text border="left" color="primary">
+                    Hiện có {{Variants.length}} cấu hình cho bạn lựa chọn
+                </v-alert>
+
                 <v-divider class="my-4"></v-divider>
 
                 <!-- Head -->
@@ -53,7 +55,7 @@
                         - {{Select.variant['discount'].amount.toLocaleString('vi-VN')}}đ
                     </v-chip>
                 </div>
-                
+
                 <!-- Select Button -->
                 <v-chip-group
                     mandatory

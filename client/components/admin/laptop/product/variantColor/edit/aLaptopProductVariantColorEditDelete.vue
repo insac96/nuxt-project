@@ -3,7 +3,7 @@
 
     <div>
         <!--Body-->
-        <v-alert outlined tile border="right" type="info" color="error" prominent class="ma-0 mb-4 text-subtitle-1">
+        <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 mb-4 text-subtitle-1">
             Chức năng này sẽ xóa màu sắc <strong>{{color.name}}</strong> của biến thể. Bạn có chắc chắn muốn xóa !
         </v-alert>
 
@@ -21,7 +21,7 @@
             <v-spacer></v-spacer>
 
             <v-btn 
-                color="error" 
+                color="delete" dark
                 tile elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.delete"

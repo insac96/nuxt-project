@@ -1,5 +1,5 @@
 <template>
-    <v-app class="Guest_Layout">
+    <v-app>
         <GLayoutHeader></GLayoutHeader>
 
         <v-main>
@@ -11,10 +11,8 @@
 </template>
 
 <script>
-import '@/assets/guest.scss';
-
 export default {
-    name: 'guest',
+    name: 'guest_layout',
 
     head() {
         return {

@@ -1,9 +1,9 @@
 <template>
     <!--Laptop Product Link Information-->
 
-    <v-card flat tile class="BoxShadow">
+    <v-card tile class="BoxShadow-Hover">
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary_admin--text">Information</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Information</v-card-title>
         <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>
 
         <!--Body-->
@@ -16,7 +16,7 @@
                 outlined
                 placeholder="Tên sản phẩm"
                 append-icon="laptop"
-                color="primary_admin"
+                color="primary"
                 autocomplete="off"
             ></v-text-field>
 
@@ -31,8 +31,8 @@
                 outlined
                 placeholder="Chọn hãng sản xuất"
                 append-icon="apartment"
-                color="primary_admin"
-                item-color="primary_admin"
+                color="primary"
+                item-color="primary"
                 @change="SetCompanySelect"
             ></v-select>
 
@@ -48,8 +48,8 @@
                 outlined
                 placeholder="Chọn thương hiệu nhánh"
                 append-icon="account_balance_wallet"
-                color="primary_admin"
-                item-color="primary_admin"
+                color="primary"
+                item-color="primary"
             ></v-select>
         </v-form>
 
@@ -58,7 +58,7 @@
             <v-spacer></v-spacer>
 
             <v-btn 
-                color="primary_admin" dark 
+                color="primary" dark 
                 elevation="0" tile large 
                 :loading="Loading.edit"
                 @click="EditInformation"

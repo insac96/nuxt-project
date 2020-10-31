@@ -14,7 +14,7 @@
 
         <!--Footer-->
         <v-card-actions class="justify-center pt-0 pb-4">
-            <v-btn rounded outlined elevation="0" color="primary" class="px-6" @click="ShowAll = !ShowAll">
+            <v-btn rounded elevation="0" color="primary" class="px-6" @click="ShowAll = !ShowAll">
                 {{ ShowAll ? 'Ẩn Nội Dung' : 'Xem Toàn Bộ Nội Dung'}}
             </v-btn>
         </v-card-actions>
