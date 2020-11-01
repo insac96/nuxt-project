@@ -2,6 +2,8 @@
     <!--a_laptop_product_create_step_2-->
 
     <v-form class="my-4" ref="form">
+        <v-alert type="info">Có thể để trống nhưng ô chưa có thông tin chính xác</v-alert>
+
         <v-row>
             <!--Col 1-->
             <v-col cols="6">
@@ -11,8 +13,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
-                        color="create"
-                        item-color="create"
+                        color="primary"
+                        item-color="primary"
                         :multiple="item.multiple"
                         autocomplete="off"
                     ></v-combobox>
@@ -22,7 +24,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="create"
+                        color="primary"
                         autocomplete="off"
                     ></v-text-field>
                 </div>
@@ -36,8 +38,8 @@
                         :label="item.label"
                         outlined :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
-                        color="create"
-                        item-color="create"
+                        color="primary"
+                        item-color="primary"
                         :multiple="item.multiple"
                         autocomplete="off"
                     ></v-combobox>
@@ -47,7 +49,7 @@
                         :label="item.label"
                         outlined
                         :placeholder="item.placeholder"
-                        color="create"
+                        color="primary"
                         autocomplete="off"
                     ></v-text-field>
                 </div>
@@ -60,7 +62,7 @@
                 Back
             </v-btn>
             
-            <v-btn color="create" tile elevation="0" large dark @click="NextStep()">
+            <v-btn color="primary" tile elevation="0" large dark @click="NextStep()">
                 Next
             </v-btn>
         </v-sheet>

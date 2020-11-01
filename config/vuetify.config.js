@@ -8,7 +8,7 @@ export default {
             //Dark Time
             dark: {
                 //Color
-                primary: "#2196f3",
+                primary: "#1976d2",
                 secondary: "#d2d2d2",
 
                 //Background
@@ -45,7 +45,7 @@ export default {
             
             light: {
                 //Color
-                primary: "#2196f3",
+                primary: "#1976d2",
                 secondary: "#05042c",
 
                 //Background

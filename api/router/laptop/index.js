@@ -66,6 +66,14 @@ Router.post('/admin/variant/color/delete', Authentic_Admin, Controller_Admin.Var
 //Article - Admin
 Router.post('/admin/article/create', Authentic_Admin, Controller_Admin.Article.Create);
 Router.post('/admin/article/edit', Authentic_Admin, Controller_Admin.Article.Edit);
+
+//Comment - Admin
+Router.post('/admin/comment/add', Authentic_Admin, Controller_Admin.Comment.Add);
+Router.post('/admin/comment/delete', Authentic_Admin, Controller_Admin.Comment.Delete);
+
+//Reply - Admin
+Router.post('/admin/comment/reply/add', Authentic_Admin, Controller_Admin.Comment.AddReply);
+Router.post('/admin/comment/reply/delete', Authentic_Admin, Controller_Admin.Comment.DeleteReply);
 /////////////////////END Admin - CONTROLLER//////////////////
 
 export default Router;

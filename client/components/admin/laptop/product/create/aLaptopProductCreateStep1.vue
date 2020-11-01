@@ -1,117 +1,114 @@
 <template>
     <!--a_laptop_product_create_step_1-->
+    <v-card flat tile>
+        <v-form class="mt-4" ref="form" v-model="Validate.form">
+            <!--Information-->
+            <v-card flat tile outlined class="mb-4">
+                <v-card-title class="font-weight-bold primary--text">Thông Tin</v-card-title>
 
-    <v-form class="mt-4" ref="form" v-model="Validate.form">
-        <v-row justify="center">
-            <v-col cols="12" lg="8" xl="7">
-                <!--Information-->
-                <v-card flat tile outlined class="mb-4">
-                    <v-card-title class="font-weight-bold create--text">Thông Tin</v-card-title>
+                <v-card-text class="pt-4">
+                    <v-text-field
+                        v-model="NewProduct.name"
+                        :rules="Validate.name"
+                        label="Laptop Name"
+                        outlined
+                        placeholder="Tên sản phẩm"
+                        append-icon="laptop"
+                        color="primary"
+                        autocomplete="off"
+                    ></v-text-field>
 
-                    <v-card-text class="pt-4">
-                        <v-text-field
-                            v-model="NewProduct.name"
-                            :rules="Validate.name"
-                            label="Laptop Name"
-                            outlined
-                            placeholder="Tên sản phẩm"
-                            append-icon="laptop"
-                            color="create"
-                            autocomplete="off"
-                        ></v-text-field>
+                    <v-select
+                        v-model="NewProduct.company"
+                        :rules="Validate.company"
+                        :items="Companyes"
+                        item-text="name"
+                        item-value="_id"
+                        label="Laptop Company"
+                        outlined
+                        placeholder="Chọn hãng sản xuất"
+                        append-icon="apartment"
+                        color="primary"
+                        item-color="primary"
+                        @click="GetCompanyes"
+                        @change="SetCompanySelect"
+                    ></v-select>
 
-                        <v-select
-                            v-model="NewProduct.company"
-                            :rules="Validate.company"
-                            :items="Companyes"
-                            item-text="name"
-                            item-value="_id"
-                            label="Laptop Company"
-                            outlined
-                            placeholder="Chọn hãng sản xuất"
-                            append-icon="apartment"
-                            color="create"
-                            item-color="create"
-                            @click="GetCompanyes"
-                            @change="SetCompanySelect"
-                        ></v-select>
+                    <v-select
+                        v-if="CompanySelect"
+                        v-model="NewProduct.trademark"
+                        :rules="Validate.trademark"
+                        :items="CompanySelect.trademarks"
+                        item-text="name"
+                        item-value="_id"
+                        label="Laptop Trademark"
+                        outlined
+                        placeholder="Chọn thương hiệu nhánh"
+                        append-icon="account_balance_wallet"
+                        color="primary"
+                        item-color="primary"
+                    ></v-select>
+                </v-card-text>
+            </v-card>
+        </v-form>
 
-                        <v-select
-                            v-if="CompanySelect"
-                            v-model="NewProduct.trademark"
-                            :rules="Validate.trademark"
-                            :items="CompanySelect.trademarks"
-                            item-text="name"
-                            item-value="_id"
-                            label="Laptop Trademark"
-                            outlined
-                            placeholder="Chọn thương hiệu nhánh"
-                            append-icon="account_balance_wallet"
-                            color="create"
-                            item-color="create"
-                        ></v-select>
-                    </v-card-text>
-                </v-card>
+        <!--Images Upload-->
+        <v-card flat tile outlined>
+            <!--Header-->
+            <v-sheet class="d-flex justify-space-between align-center pr-4">
+                <div>
+                    <v-card-title class="font-weight-bold primary--text">Hình Ảnh</v-card-title>
+                    <v-card-subtitle>Tải Hình Ảnh Cho Sản Phẩm</v-card-subtitle>
+                </div>
 
-                <!--Images Upload-->
-                <v-card flat tile outlined>
-                    <!--Header-->
-                    <v-sheet class="d-flex justify-space-between align-center pr-4">
-                        <div>
-                            <v-card-title class="font-weight-bold create--text">Hình Ảnh</v-card-title>
-                            <v-card-subtitle>Tải Hình Ảnh Cho Sản Phẩm</v-card-subtitle>
-                        </div>
+                <v-btn 
+                    fab color="primary" 
+                    dark elevation="0"
+                    :loading="Loading.upload"
+                    @click="$refs.File.click()"
+                >
+                    <v-icon>backup</v-icon>
+                    <input type="file" ref="File" hidden @change="UploadImages" multiple>
+                </v-btn>
+            </v-sheet>
+            
+            <!--List Image-->
+            <v-card-text class="pt-2" v-if="NewProduct.images.length > 0">
+                <v-row dense>
+                    <v-col cols="4" v-for="(image, indexImage) in NewProduct.images" :key="indexImage">
+                        <v-hover v-slot:default="{ hover }">
+                            <v-card :elevation="hover ? 10 : 3">
+                                <v-img :src="image">
+                                    <v-row v-if="hover" 
+                                        class="fill-height"
+                                        justify="center"
+                                        align="center"
+                                    >
+                                        <v-btn fab @click="$delete(NewProduct.images, indexImage)">
+                                            <v-icon>delete</v-icon>
+                                        </v-btn>
+                                    </v-row>
+                                </v-img>
+                            </v-card>
+                        </v-hover>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+        </v-card>
 
-                        <v-btn 
-                            fab color="create" 
-                            dark elevation="0"
-                            :loading="Loading.upload"
-                            @click="$refs.File.click()"
-                        >
-                            <v-icon>backup</v-icon>
-                            <input type="file" ref="File" hidden @change="UploadImages" multiple>
-                        </v-btn>
-                    </v-sheet>
-                    
-                    <!--List Image-->
-                    <v-card-text class="pt-2" v-if="NewProduct.images.length > 0">
-                        <v-row dense>
-                            <v-col cols="4" v-for="(image, indexImage) in NewProduct.images" :key="indexImage">
-                                <v-hover v-slot:default="{ hover }">
-                                    <v-card :elevation="hover ? 10 : 3">
-                                        <v-img :src="image">
-                                            <v-row v-if="hover" 
-                                                class="fill-height"
-                                                justify="center"
-                                                align="center"
-                                            >
-                                                <v-btn fab @click="$delete(NewProduct.images, indexImage)">
-                                                    <v-icon>delete</v-icon>
-                                                </v-btn>
-                                            </v-row>
-                                        </v-img>
-                                    </v-card>
-                                </v-hover>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                </v-card>
-                
-                <!--Button-->
-                <v-sheet class="d-flex justify-end mt-4">
-                    <v-btn 
-                        color="create" dark
-                        tile elevation="0" 
-                        large  
-                        @click="NextStep()"
-                        :loading="Loading.upload"
-                    >
-                        Next
-                    </v-btn>
-                </v-sheet>
-            </v-col>
-        </v-row>
-    </v-form>
+        <!--Footer-->
+        <v-sheet class="d-flex justify-end mt-4">
+            <v-btn 
+                color="primary" dark
+                tile elevation="0" 
+                large  
+                @click="NextStep()"
+                :loading="Loading.upload"
+            >
+                Next
+            </v-btn>
+        </v-sheet>
+    </v-card>
 </template>
 
 <script>

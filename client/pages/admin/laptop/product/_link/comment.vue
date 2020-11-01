@@ -1,17 +1,16 @@
 <template>
-    <!--g_laptop_product_link_comment-->
+    <!--Laptop Product Link Comment-->
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
-            <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
-        </v-sheet>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Comment</v-card-title>
+        <v-card-subtitle>Các bình luận của sản phẩm</v-card-subtitle>
 
         <!--Body-->
-        <v-card-text class="pt-6 pb-0" v-if="Comments.length > 0">
-            <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
+        <v-card-text class="pb-0">
+            <v-sheet v-for="(comment, indexComment) in CommentsMap" :key="indexComment" class="d-flex mb-6">
                 <!--Avatar User - Left-->        
-                <v-avatar :size="SizeComment">
+                <v-avatar :size="56">
                     <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
                 </v-avatar>
 
@@ -23,7 +22,6 @@
                             <span v-if="comment.user.role == 'ADMIN'" class="admin--text">{{comment.user.profile.name}}</span>
                             <span v-else class="guest--text">{{comment.user.profile.name}}</span>
                         </div>
-
                         <span class="text-subtitle-1">{{comment.content}}</span>
                     </v-card>
 
@@ -32,45 +30,32 @@
                         <span>{{$dayjs(comment.create).fromNow()}}</span>
 
                         <v-btn text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
+                        <v-btn text elevation="0" x-small class="ml-1" color="delete" :loading="Loading.delete" @click="DeleteComment(comment, indexComment)">Delete</v-btn>
                     </div>
 
                     <!--Reply-->
-                    <GLaptopProductLinkReplyOfComment :product="product" :comment="comment"></GLaptopProductLinkReplyOfComment>
+                    <ALaptopProductLinkReplyOfComment :product="product" :comment="comment"></ALaptopProductLinkReplyOfComment>
                 </v-sheet>
             </v-sheet>
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="justify-center pt-0 pb-4" v-if="Comments.length != CommentCount">
-            <v-btn 
-                rounded 
-                elevation="0" 
-                color="primary" 
-                class="px-6" 
-                :loading="Loading.more" 
-                @click="MoreComment"
-            >
-                Hiển Thị Thêm
-            </v-btn>
-        </v-card-actions>
-
-        <!--Input Comment-->
         <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
-            <v-avatar :size="SizeComment">
+            <v-avatar :size="56">
                 <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
             </v-avatar>
 
             <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-2">
                 <v-text-field
-                    v-model="Content"
+                    v-model="NewContent"
                     :rules="[ $Rules.required, $Rules.multiSpace ]"
                     placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
-                    :disabled="Loading.add"
+                    :disabled="Loading.add || Loading.delete"
                     rounded solo flat
                     background-color="heading_input"
                     color="primary"
                     maxlength="200"
-                    :height="SizeComment"
+                    :height="56"
                     hide-details
                     autocomplete="off"
                 ></v-text-field>
@@ -87,13 +72,12 @@ export default {
 
     data () {
         return {
-            Content: '',
+            NewContent: '',
             Comments: this.product.comments,
-            CommentCount: this.product.commentCount,
             Validate: true,
             Loading: {
                 add: false,
-                more: false
+                delete: false
             }
         }
     },
@@ -109,15 +93,6 @@ export default {
 
             return this.Comments;
         },
-        SizeComment () {
-            switch (this.$vuetify.breakpoint.name) {
-                case 'xs': return 48
-                case 'sm': return 56
-                case 'md': return 56
-                case 'lg': return 56
-                case 'xl': return 56
-            }
-        },
     },
 
     methods: {
@@ -127,11 +102,11 @@ export default {
             this.Loading.add = true;
 
             try {
-                let NewComment = await this.$axios.$post(LaptopAPI.guest.AddComment, {
+                let NewComment = await this.$axios.$post(LaptopAPI.admin.AddComment, {
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,
                     product: this.product._id,
-                    content: this.Content
+                    content: this.NewContent
                 });
 
                 this.DoneAddComment(NewComment);
@@ -139,7 +114,6 @@ export default {
             }
             catch(e){
                 this.Loading.add = false;
-                return false;
             }
         },
 
@@ -153,30 +127,25 @@ export default {
             NewComment.reply = [];
             
             this.Comments.push(NewComment);
-            this.CommentCount ++;
             
             this.$refs.form.reset();
         },
 
-        //More
-        async MoreComment () {
-            this.Loading.more = true;
+        //Delete
+        async DeleteComment (comment, indexComment) {
+            this.Loading.delete = true;
 
             try {
-                let MoreComment = await this.$axios.$post(LaptopAPI.guest.MoreComment, {
-                    product: this.product._id,
-                    skip: this.Comments.length
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteComment, {
+                    _id: comment._id
                 });
 
-                MoreComment.forEach(comment => {
-                    this.Comments.push(comment);
-                });
+                this.$delete(this.Comments, indexComment);
 
-                this.Loading.more = false;
+                this.Loading.delete = false;
             }
             catch(e){
-                this.Loading.more = false;
-                return false;
+                this.Loading.delete = false;
             }
         }
     }

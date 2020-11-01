@@ -14,20 +14,20 @@
             <v-tabs-items v-model="Tab" class="pa-6">
                 <!-- Information -->
                 <v-tab-item>
-                    <ALaptopProductVariantColorEditInformation 
+                    <ALaptopProductLinkVariantColorEditInformation 
                         :color="CloneColor"
                         @done="DoneEditInformation"
                         @cancel="$emit('cancel')"
-                    ></ALaptopProductVariantColorEditInformation>
+                    ></ALaptopProductLinkVariantColorEditInformation>
                 </v-tab-item>
 
                 <!-- Delete -->
                 <v-tab-item>
-                    <ALaptopProductVariantColorEditDelete
+                    <ALaptopProductLinkVariantColorEditDelete
                         :color="CloneColor"
                         @done="DoneEditDelete"
                         @cancel="$emit('cancel')"
-                    ></ALaptopProductVariantColorEditDelete>
+                    ></ALaptopProductLinkVariantColorEditDelete>
                 </v-tab-item>
             </v-tabs-items>
         </v-tabs>

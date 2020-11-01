@@ -1,18 +1,5 @@
 <template>
     <div>
-        <v-list color="header" dark dense height="64">
-            <v-list-item>
-                <v-list-item-content>
-                    <v-list-item-title class="title">
-                        Application
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                        Control
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
-
         <v-list nav>
             <div v-for="item in items" :key="item.title">
                 <v-list-item v-if="!item.child" :to="item.path" color="primary" class="mb-2">

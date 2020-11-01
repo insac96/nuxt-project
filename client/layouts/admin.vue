@@ -1,10 +1,8 @@
 <template>
     <v-app>
         <v-navigation-drawer
-            app fixed
-            width="300"
-            color="nav"
-            v-model="Drawer.left"
+            app width="300" color="nav"
+            v-model="Drawer.left" clipped fixed
         >
             <ALayoutNavLeft :drawer="Drawer.left"></ALayoutNavLeft>
         </v-navigation-drawer>
@@ -12,11 +10,12 @@
         <ALayoutHeader @toggle-nav-left="ToggleNavLeft"></ALayoutHeader>
 
         <v-main>
-            <v-container>
-                <nuxt></nuxt>
-            </v-container>
+            <v-row no-gutters justify="center">
+                <div class="Screen--lg">
+                    <nuxt></nuxt>
+                </div>
+            </v-row>
         </v-main>
-
     </v-app>
 </template>
 

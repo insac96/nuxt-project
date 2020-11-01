@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Link Information-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary--text">Information</v-card-title>
         <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>

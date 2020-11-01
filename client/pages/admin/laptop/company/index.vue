@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Company Index-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center">
             <div>

@@ -39,6 +39,12 @@ export default {
         //Article
         CreateNewArticle: '/laptop/admin/article/create',
         EditArticle: '/laptop/admin/article/edit',
+
+        //Comment and Reply
+        AddComment: '/laptop/admin/comment/add',
+        DeleteComment: '/laptop/admin/comment/delete',
+        AddReplyForComment: '/laptop/admin/comment/reply/add',
+        DeleteReplyOfComment: '/laptop/admin/comment/reply/delete'
     },
 
     guest: {
@@ -52,7 +58,7 @@ export default {
         //Product
         GetProductByLink: '/laptop/product/link/get',
 
-        //Comment
+        //Comment and Reply
         AddComment: '/laptop/comment/add',
         MoreComment: '/laptop/comment/more',
         AddReplyForComment: '/laptop/comment/reply/add'

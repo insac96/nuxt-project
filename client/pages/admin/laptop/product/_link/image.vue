@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Link Image-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center pr-4" color="heading">
             <!--Left-->
@@ -36,10 +36,10 @@
             
             <!--ELSE-->
             <v-row dense v-else>
-                <v-col cols="4" v-for="(item, index) in product.images" :key="index">
+                <v-col cols="3" v-for="(item, index) in product.images" :key="index">
                     <v-hover v-slot:default="{ hover }">
                         <v-card width="100%" flat tile>
-                            <v-img :src="item" max-width="100%">
+                            <v-img :src="$Image.Get(item, 'm')" max-width="100%" aspect-ratio="320/213">
                                 <v-row v-if="hover && !Loading.upload" 
                                     class="fill-height"
                                     justify="center"

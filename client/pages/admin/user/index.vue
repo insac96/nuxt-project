@@ -1,7 +1,7 @@
 <template>
     <!--User Admin Index-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary--text">Users</v-card-title>
         <v-card-subtitle>Danh sách tài khoản</v-card-subtitle>

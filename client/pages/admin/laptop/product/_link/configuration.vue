@@ -1,19 +1,19 @@
 <template>
     <!--Laptop Product Link Configuration-->
 
-    <v-tabs background-color="heading" color="primary" v-model="Tab" class="BoxShadow-Hover">
+    <v-tabs background-color="heading" color="primary" v-model="Tab">
         <v-tab>Mặc Định</v-tab>
         <v-tab>Nâng Cấp</v-tab>
 
         <v-tabs-items v-model="Tab">
             <!--Default-->
             <v-tab-item>
-                <ALaptopProductConfigurationDefault :product="product"></ALaptopProductConfigurationDefault>
+                <ALaptopProductLinkConfigurationDefault :product="product"></ALaptopProductLinkConfigurationDefault>
             </v-tab-item>
 
             <!--Upgrade-->
             <v-tab-item>
-                <ALaptopProductConfigurationUpgrade :product="product"></ALaptopProductConfigurationUpgrade>
+                <ALaptopProductLinkConfigurationUpgrade :product="product"></ALaptopProductLinkConfigurationUpgrade>
             </v-tab-item>
         </v-tabs-items>
     </v-tabs>

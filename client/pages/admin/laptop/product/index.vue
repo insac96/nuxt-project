@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Index-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center">
             <div>
@@ -123,7 +123,7 @@
                             <!--2 - Product Name-->
                             <td>
                                 <nuxt-link
-                                    :to="`/admin/laptop/product/${product.link}/Information`"
+                                    :to="`/admin/laptop/product/${product.link}/information`"
                                 >
                                     {{ product.name }}
                                 </nuxt-link>

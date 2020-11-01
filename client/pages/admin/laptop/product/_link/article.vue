@@ -1,5 +1,5 @@
 <template>
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary--text">Article</v-card-title>
         <v-card-subtitle>Bài đánh giá của sản phẩm</v-card-subtitle>
@@ -135,7 +135,7 @@ export default {
         //Tollbar
         .ql-toolbar {
             position: sticky;
-            top: 64px;
+            top: 132px;
             z-index: 1;
             display: flex;
             align-items: center;

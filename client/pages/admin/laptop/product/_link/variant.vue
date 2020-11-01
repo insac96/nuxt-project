@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Link Variant-->
 
-    <v-card tile class="BoxShadow-Hover">
+    <v-card tile flat>
         <!--Header-->
         <v-sheet class="d-flex justify-space-between align-center pr-4">
             <div>
@@ -20,145 +20,142 @@
             </v-btn>
         </v-sheet>
 
-        <!--If Variant List Empty-->
-        <v-card-text v-if="Variants.length < 1">
-            <v-alert 
-                color="primary" outlined
-                type="info" tile border="right"
-                class="ma-0"
-            >
-                Hiện tại chưa có biến thể nào của sản phẩm
-            </v-alert>
-        </v-card-text>
+        <!--Body-->
+        <v-sheet>
+            <!--Table-->
+            <v-simple-table class="Table">
+                <template v-slot:default>
+                    <!--Table Header-->
+                    <thead>
+                        <tr>
+                            <th>Configuration</th>
+                            <th class="text-center">Color</th>
+                            <th class="text-center" width="120">Price</th>
+                            <th class="text-center" width="120">Discount</th>
+                            <th class="text-center" width="120">Status</th>
+                            <th class="text-right" width="30">Edit</th>
+                        </tr>
+                    </thead>
 
-        <!--ELSE-->
-        <v-row class="px-4" v-else>
-            <v-col 
-                :cols="(Variants.length > 1) ? 6 : 12" 
-                v-for="(variant, indexVariant) in Variants" :key="indexVariant"
-            >
-                <v-card outlined>
-                    <!--Header-->
-                    <v-sheet class="d-flex justify-space-between align-center pr-4">
-                        <div>
-                            <v-card-title class="primary--text font-weight-bold pb-2">{{variant.code}}</v-card-title>
-                            <v-card-subtitle>Variant Code</v-card-subtitle>     
-                        </div>
+                    <!--Table Body-->
+                    <tbody>
+                        <tr v-for="(variant, indexVariant) in Variants" :key="indexVariant">
+                            <!--1 - Configuration-->
+                            <td class="py-4">
+                                <v-sheet 
+                                    v-for="prop in ConfigurationShow" :key="prop" 
+                                    class="d-flex justify-space-between align-center my-1"
+                                >
+                                    <span class="text-caption font-weight-bold text-uppercase">{{prop}}</span>
+                                    <v-chip small>{{ variant[prop] }}</v-chip>
+                                </v-sheet>
+                            </td>
 
-                        <v-chip color="primary" dark class="font-weight-bold text-h6">
-                            {{ variant.price.toLocaleString('vi-VN') }}
-                        </v-chip>
-                    </v-sheet>
-                    
-                    <!--Information-->
-                    <v-sheet>
-                        <div class="heading d-flex justify-space-between align-center px-4 py-2">
-                            <span class="grey--text text-subtitle font-weight-bold">Thông Tin</span>
-                            <v-btn icon small color="grey" @click="ShowVariantDialogEdit(indexVariant, variant)"><v-icon>edit</v-icon></v-btn>
-                        </div>
+                            <!--2 - Color-->
+                            <td class="text-center">
+                                <v-btn 
+                                    v-for="(color, indexColor) in variant.colors" :key="indexColor" 
+                                    :color="color.code" fab elevation="0" small
+                                    @click="ShowVariantDialogEditColor(indexColor, color, variant)"
+                                ></v-btn>
+                                <v-btn 
+                                    color="create" outlined fab elevation="0" small
+                                    @click="ShowVariantDialogCreateColor(variant)"
+                                ><v-icon>add</v-icon></v-btn>
+                            </td>
 
-                        <v-card-text>
-                            <v-sheet 
-                                v-for="prop in ConfigurationShow" :key="prop" 
-                                class="d-flex justify-space-between align-center my-1"
-                            >
-                                <span class="text-subtitle-2 font-weight-bold text-uppercase">{{prop}}</span>
-                                <v-chip>{{ variant[prop] }}</v-chip>
-                            </v-sheet>
+                            <!--3 - Price-->
+                            <td class="text-center">
+                                <v-chip class="font-weight-bold">{{ variant.price.toLocaleString('vi-VN') }}đ</v-chip>
+                            </td>
 
-                            <v-sheet 
-                                class="d-flex justify-space-between align-center my-1"
-                            >
-                                <span class="text-subtitle-2 font-weight-bold text-uppercase">Trạng Thái</span>
-                                <v-chip color="info">
-                                    {{ variant.status }}
+                            <!--4 - Discount-->
+                            <td class="text-center">
+                                <div v-if="!variant.discount.type" class="d-flex justify-center">
+                                    <v-switch 
+                                        hide-details
+                                        v-model="variant.discount.type" :disabled="Loading.edit"
+                                        @change="EditVariantDiscount(variant)"
+                                        color="primary" class="ma-0 pa-0"
+                                    ></v-switch>
+                                </div>
+                                
+                                <v-chip v-else color="error" class="font-weight-bold" @click="ShowVariantDialogEditDiscount(variant)">
+                                    {{ variant.discount.amount.toLocaleString('vi-VN') }}đ
                                 </v-chip>
-                            </v-sheet>     
-                        </v-card-text>
-                    </v-sheet>
+                            </td>
 
-                    <!--Color-->
-                    <v-sheet>
-                        <div class="heading d-flex justify-space-between align-center px-4 py-2">
-                            <span class="grey--text text-subtitle font-weight-bold">Màu Sắc</span>
-                            <v-btn icon small color="grey" @click="ShowVariantDialogCreateColor(variant)"><v-icon>add</v-icon></v-btn>
-                        </div>
+                            <!--5 - Status-->
+                            <td class="text-center">
+                                <v-chip color="info" class="font-weight-bold">{{ variant.status }}</v-chip>
+                            </td>
 
-                        <v-card-text v-if="variant.colors.length > 0">
-                            <v-btn 
-                                v-for="(color, indexColor) in variant.colors" :key="indexColor" 
-                                :color="color.code" fab elevation="0"
-                                class="mr-1 mb-1"
-                                @click="ShowVariantDialogEditColor(indexColor, color, variant)"
-                            ></v-btn>
-                        </v-card-text>
-                    </v-sheet>
+                            <!--6 - Edit-->
+                            <td class="text-right">
+                                <v-btn 
+                                    color="grey" icon
+                                    @click="ShowVariantDialogEdit(indexVariant, variant)"
+                                ><v-icon>edit</v-icon></v-btn>
+                            </td>
+                        </tr>
+                    </tbody>
+                </template>
+            </v-simple-table>
 
-                    <!--Discount-->
-                    <v-sheet>
-                        <div class="heading d-flex justify-space-between align-center px-4">
-                            <span class="grey--text text-subtitle font-weight-bold">Giảm Giá</span>
+            <!--If List Variant Empty-->
+            <v-alert v-if="Variants.length < 1" class="mb-0" tile>
+                Không có biến thể nào hiển thị
+            </v-alert>
 
-                            <v-switch 
-                                v-model="variant.discount.type" :disabled="Loading.edit"
-                                @change="EditVariantDiscount(variant)"
-                                color="primary" class="SwitchDiscountVariant ma-0 pa-0"
-                            ></v-switch>
-                        </div>
-
-                        <v-card-text v-if="variant.discount.type">
-                            <v-form ref="form">
-                                <v-text-field
-                                    v-model="variant.discount.amount"
-                                    hide-details
-                                    label="Discount Amount"
-                                    outlined type="number"
-                                    placeholder="Số tiền giảm giá"
-                                    append-icon="save"
-                                    color="primary"
-                                    :disabled="Loading.edit"
-                                    autocomplete="off"
-                                    @click:append="EditVariantDiscount(variant)"
-                                ></v-text-field>
-                            </v-form>
-                        </v-card-text>
-                    </v-sheet>
-                </v-card>
-            </v-col>
-        </v-row>
+            <!--Body Footer-->
+            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
+                <!--Count-->
+                <v-chip> 
+                    <span>{{Variants.length}} / {{Variants.length}}</span>
+                </v-chip>
+            </v-sheet>
+        </v-sheet>
 
         <!--Dialog Create Variant-->
         <v-dialog v-model="VariantDialog.create" persistent max-width="550">
-            <ALaptopProductVariantCreate 
+            <ALaptopProductLinkVariantCreate 
                 @cancel="VariantDialog.create = false" 
                 :product="product"
-            ></ALaptopProductVariantCreate>
+            ></ALaptopProductLinkVariantCreate>
         </v-dialog>
 
         <!--Dialog Edit Variant-->
         <v-dialog v-model="VariantDialog.edit.type" persistent max-width="550">
-            <ALaptopProductVariantEdit
+            <ALaptopProductLinkVariantEdit
                 @delete="$delete(product.variants, VariantDialog.edit.index)"
                 @cancel="VariantDialog.edit.type = false" 
                 :variant="VariantDialog.edit.select"
-            ></ALaptopProductVariantEdit>
+            ></ALaptopProductLinkVariantEdit>
         </v-dialog>
 
         <!--Dialog Create Color Variant-->
         <v-dialog v-model="VariantColorDialog.create.type" persistent max-width="550">
-            <ALaptopProductVariantColorCreate
+            <ALaptopProductLinkVariantColorCreate
                 @cancel="VariantColorDialog.create.type = false" 
                 :variant="VariantColorDialog.create.select"
-            ></ALaptopProductVariantColorCreate>
+            ></ALaptopProductLinkVariantColorCreate>
         </v-dialog>
 
         <!--Dialog Setting Color Variant-->
         <v-dialog v-model="VariantColorDialog.edit.type" persistent max-width="550">
-            <ALaptopProductVariantColorEdit
+            <ALaptopProductLinkVariantColorEdit
                 @delete="$delete(VariantColorDialog.edit.variant.colors, VariantColorDialog.edit.index)"
                 @cancel="VariantColorDialog.edit.type = false" 
                 :color="VariantColorDialog.edit.select"
-            ></ALaptopProductVariantColorEdit>
+            ></ALaptopProductLinkVariantColorEdit>
+        </v-dialog>
+
+        <!--Dialog Edit Discount-->
+        <v-dialog v-model="VariantDiscountDialog.edit.type" persistent max-width="550">
+            <ALaptopProductLinkVariantDiscountEdit
+                @cancel="VariantDiscountDialog.edit.type = false" 
+                :variant="VariantDiscountDialog.edit.select"
+            ></ALaptopProductLinkVariantDiscountEdit>
         </v-dialog>
     </v-card>
 </template>
@@ -193,6 +190,12 @@ export default {
                     variant: null
                 }
             },
+            VariantDiscountDialog: {
+                edit: {
+                    type: false,
+                    select: null,
+                }
+            },
             Loading: {
                 edit: false
             },
@@ -208,6 +211,12 @@ export default {
             this.VariantDialog.edit.select = variant;
             this.VariantDialog.edit.index = indexVariant;
             this.VariantDialog.edit.type = true;
+        },
+
+        //Edit Variant
+        ShowVariantDialogEditDiscount (variant) {
+            this.VariantDiscountDialog.edit.select = variant;
+            this.VariantDiscountDialog.edit.type = true;
         },
 
         //Create Color
@@ -235,11 +244,9 @@ export default {
                     discount: variant.discount
                 });
 
-                if(variant.discount.type === false){
-                    variant.discount.amount = 0;
-                }
-
                 this.Loading.edit = false;
+
+                this.ShowVariantDialogEditDiscount(variant);
             }
             catch(e){
                 this.Loading.edit = false;
@@ -248,10 +255,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-    .SwitchDiscountVariant {
-        position: relative;
-        top: 10px;
-    }
-</style>

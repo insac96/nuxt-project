@@ -3,7 +3,7 @@
         <!--Replys-->
         <div class="d-flex pl-6 mt-2" v-for="(reply, indexReply) in comment.reply" :key="indexReply">
             <!--Avatar User - Left-->  
-            <v-avatar :size="SizeReply">
+            <v-avatar :size="44">
                 <v-img :src="reply.user.profile.avatar" :alt="reply.user.profile.name"></v-img>
             </v-avatar>
 
@@ -22,13 +22,15 @@
                 <!--Information-->
                 <div class="pl-4 mt-1">
                     <span>{{$dayjs(reply.create).fromNow()}}</span>
+
+                    <v-btn text elevation="0" x-small class="ml-1" color="delete" :loading="Loading.delete" @click="DeleteReply(reply, indexReply)">Delete</v-btn>
                 </div>
             </v-sheet>
         </div>
 
         <!--Input Reply-->
         <div v-if="comment.showInputReply" class="d-flex pl-6 mt-2">
-            <v-avatar :size="SizeReply">
+            <v-avatar :size="40">
                 <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
             </v-avatar>
 
@@ -40,7 +42,7 @@
                     counter
                     maxlength="200"
                     placeholder="Trả lời bình luận"
-                    :disabled="Loading.reply"
+                    :disabled="Loading.reply || Loading.delete"
                     outlined rounded
                     color="primary"
                     autocomplete="off"
@@ -61,7 +63,8 @@ export default {
             Reply: '',
             Validate: true,
             Loading: {
-                reply: false
+                reply: false,
+                delete: false
             }
         }
     },
@@ -69,16 +72,6 @@ export default {
     computed: {
         UserStore() {
             return this.$store.state.user;
-        },
-
-        SizeReply () {
-            switch (this.$vuetify.breakpoint.name) {
-                case 'xs': return 30
-                case 'sm': return 40
-                case 'md': return 40
-                case 'lg': return 40
-                case 'xl': return 40
-            }
         }
     },
 
@@ -89,7 +82,7 @@ export default {
             this.Loading.reply = true;
 
             try {
-                let NewReply = await this.$axios.$post(LaptopAPI.guest.AddReplyForComment, {
+                let NewReply = await this.$axios.$post(LaptopAPI.admin.AddReplyForComment, {
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,
                     product: this.product._id,
@@ -102,7 +95,6 @@ export default {
             }
             catch(e){
                 this.Loading.reply = false;
-                return false;
             }
         },
 
@@ -118,6 +110,24 @@ export default {
 
             this.$refs.form.reset();
         },
+
+        //Delete
+        async DeleteReply (reply, indexReply) {
+            this.Loading.delete = true;
+
+            try {
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteReplyOfComment, {
+                    _id: reply._id
+                });
+
+                this.$delete(this.comment.reply, indexReply);
+
+                this.Loading.delete = false;
+            }
+            catch(e){
+                this.Loading.delete = false;
+            }
+        }
     }
 }
 </script>

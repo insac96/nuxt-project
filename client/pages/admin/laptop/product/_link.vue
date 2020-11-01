@@ -1,47 +1,17 @@
 <template>
     <!--Laptop Product Link Layout-->
+    <div>
+        <v-tabs fixed-tabs background-color="primary" icons-and-text hide-slider dark class="Sticky_Top">
+            <v-tab v-for="(item, index) in Menu" :key="index" :to="item.path" link>
+                {{item.title}}
 
-    <v-row no-gutters justify="center">
-        <!--Menu-->
-        <v-col cols="3" class="pr-3">
-            <v-navigation-drawer width="auto" height="auto" permanent class="Sticky_Top HiddenNavBorder BoxShadow-Hover" color="nav">
-                <v-list nav >
-                    <!--List Header-->
-                    <v-list-item>
-                        <v-list-item-content>
-                        <v-list-item-title class="title font-weight-bold">
-                            Menu
-                        </v-list-item-title>
-                        <v-list-item-subtitle>
-                            {{Product.name}}
-                        </v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <!--List Body-->
-                    <v-list-item
-                        v-for="item in Menu"
-                        :key="item.title"
-                        link color="primary"
-                        :to="`/admin/laptop/product/${$route.params.link}/${item.path}`"
-                    >
-                        <v-list-item-icon>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title class="font-weight-medium">{{ item.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </v-navigation-drawer>
-        </v-col>
+                <v-icon>{{item.icon}}</v-icon>
+            </v-tab>
+        </v-tabs>
 
         <!--Main-->
-        <v-col cols="9">
-            <nuxt-child :product="Product"></nuxt-child>
-        </v-col>
-    </v-row>
+        <nuxt-child :product="Product"></nuxt-child>
+    </div>
 </template>
 
 <script>
@@ -69,7 +39,7 @@ export default {
                 { title: 'Cấu Hình', icon: 'donut_small', path: `configuration` },
                 { title: 'Biến Thể', icon: 'view_carousel', path: `variant` },
                 { title: 'Bài Đánh Giá', icon: 'article', path: `article` },
-                //{ title: 'Cài Đặt', icon: 'settings', path: `setting` },
+                { title: 'Bình Luận', icon: 'chat', path: `comment` },
             ],
         }  
     }
