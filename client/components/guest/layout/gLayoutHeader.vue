@@ -40,7 +40,7 @@
         </div>
 
         <!--Bottom Menu-->
-        <LazyHydrate when-visible>
+        <LazyHydrate ssr-only :trigger-hydration="BottomMenu">
             <v-bottom-sheet v-model="BottomMenu">
                 <v-list subheader>
                     <v-subheader>Menu</v-subheader>

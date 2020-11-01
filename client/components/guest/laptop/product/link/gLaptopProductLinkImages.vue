@@ -8,7 +8,7 @@
 
         <!--One Image-->
         <v-card-text v-else-if="images.length == 1">
-            <v-img :src="images[0]" :aspect-ratio="1.5" contain>
+            <v-img :src="$Image.Get(item, 'm')" :aspect-ratio="1.5" contain>
                 <template v-slot:placeholder>
                     <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
                         <v-progress-circular
@@ -31,7 +31,7 @@
                     hide-delimiter-background
                 >
                     <v-carousel-item v-for="item in images" :key="item">
-                        <v-img :src="item" :aspect-ratio="1.5" contain>
+                        <v-img :src="$Image.Get(item, 'm')" :aspect-ratio="320/213" contain>
                             <!--Lazy Load-->
                             <template v-slot:placeholder>
                                 <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
@@ -47,18 +47,17 @@
             </LazyHydrate>
 
             <!--Mini List-->
-            <v-sheet class="mt-4 d-none d-sm-block">
-                <LazyHydrate when-idle>
+            <LazyHydrate when-visible>
+                <v-sheet class="mt-4 d-none d-sm-block">
                     <v-slide-group show-arrows center-active>
                         <v-slide-item v-for="(item, i) in images" :key="i" class="mr-1">
                             <v-card flat class="rounded-lg" :ripple="false" @click="ImageNow = i">
-                                <v-img :src="item" width="90" max-width="90"></v-img>
+                                <v-img :src="$Image.Get(item, 's')" width="90" max-width="90" height="70" max-height="70"></v-img>
                             </v-card>
                         </v-slide-item>
                     </v-slide-group>
-                </LazyHydrate>
-            </v-sheet>
-            
+                </v-sheet>
+            </LazyHydrate>
         </v-card-text>
     </v-card>
 </template>

@@ -56,7 +56,7 @@
                         <!--Image-->
                         <v-img 
                             class="mx-auto rounded-0" 
-                            :src="variant.product.images[0]" max-width="100%" 
+                            :src="$Image.Get(variant.product.images[0], 'm')" max-width="100%" 
                             :alt="variant.name" 
                         ></v-img>
                         

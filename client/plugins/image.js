@@ -28,6 +28,15 @@ const Upload = (File) => {
     });
 };
 
+
+const Get = (link, size) => {
+    let patt = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/g;
+    let fileType = String(link.match(patt));
+
+    return link.replace(patt, `${size}${fileType}`);
+};
+
+
 Vue.prototype.$Image = {
-    Upload
+    Upload, Get
 };
