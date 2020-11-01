@@ -26,56 +26,60 @@
                 </v-btn>
             </template>
 
-            <v-list>
-                <!--Info-->
-                <v-list-item>
-                    <v-list-item-avatar>
-                        <img :src="UserStore.profile.avatar" :alt="UserStore.profile.name">
-                    </v-list-item-avatar>
+            <LazyHydrate when-visible>
+                <v-list>
+                    <!--Info-->
+                    <v-list-item>
+                        <v-list-item-avatar>
+                            <img :src="UserStore.profile.avatar" :alt="UserStore.profile.name">
+                        </v-list-item-avatar>
 
-                    <v-list-item-content>
-                        <v-list-item-title class="text-capitalize text-h6 font-weight-bold">{{UserStore.profile.name}}</v-list-item-title>
-                        <v-list-item-subtitle class="text-caption font-weight-bold">
-                            <span :class="UserStore.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{UserStore.role}}</span>
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title class="text-capitalize text-h6 font-weight-bold">{{UserStore.profile.name}}</v-list-item-title>
+                            <v-list-item-subtitle class="text-caption font-weight-bold">
+                                <span :class="UserStore.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{UserStore.role}}</span>
+                            </v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
 
-                <v-divider></v-divider>
+                    <v-divider></v-divider>
 
-                <!--Menu-->
-                <v-list-item v-if="UserStore.role == 'ADMIN'" to="/admin">
-                    <v-list-item-icon><v-icon>admin_panel_settings</v-icon></v-list-item-icon>
-                    <v-list-item-title>Admin Panel</v-list-item-title>
-                </v-list-item>
+                    <!--Menu-->
+                    <v-list-item v-if="UserStore.role == 'ADMIN'" to="/admin">
+                        <v-list-item-icon><v-icon>admin_panel_settings</v-icon></v-list-item-icon>
+                        <v-list-item-title>Admin Panel</v-list-item-title>
+                    </v-list-item>
 
-                <!--Cart-->
-                <v-list-item>
-                    <v-list-item-icon><v-icon>shopping_cart</v-icon></v-list-item-icon>
-                    <v-list-item-title>Giỏ Hàng</v-list-item-title>
-                </v-list-item>
+                    <!--Cart-->
+                    <v-list-item>
+                        <v-list-item-icon><v-icon>shopping_cart</v-icon></v-list-item-icon>
+                        <v-list-item-title>Giỏ Hàng</v-list-item-title>
+                    </v-list-item>
 
-                <v-list-item>
-                    <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
-                    <v-list-item-title>Cài Đặt</v-list-item-title>
-                </v-list-item>
+                    <v-list-item>
+                        <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
+                        <v-list-item-title>Cài Đặt</v-list-item-title>
+                    </v-list-item>
 
-                <v-divider></v-divider>
+                    <v-divider></v-divider>
 
-                <!--Logout-->
-                <v-list-item @click="Logout">
-                    <v-list-item-icon><v-icon>power_settings_new</v-icon></v-list-item-icon>
-                    <v-list-item-title>Đăng Xuất</v-list-item-title>
-                </v-list-item>
-            </v-list>
+                    <!--Logout-->
+                    <v-list-item @click="Logout">
+                        <v-list-item-icon><v-icon>power_settings_new</v-icon></v-list-item-icon>
+                        <v-list-item-title>Đăng Xuất</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </LazyHydrate>
         </v-menu>
 
         <!--Dialog Authentic-->
-        <v-dialog v-model="Dialog" max-width="450">
-            <PDialogAuthentic 
-                @cancel="Dialog = false" 
-            ></PDialogAuthentic>
-        </v-dialog>
+        <LazyHydrate ssr-only :trigger-hydration="Dialog">
+            <v-dialog v-model="Dialog" max-width="450">
+                <PDialogAuthentic 
+                    @cancel="Dialog = false" 
+                ></PDialogAuthentic>
+            </v-dialog>
+        </LazyHydrate>
     </div>
 </template>
 

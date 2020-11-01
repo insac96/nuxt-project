@@ -15,34 +15,36 @@
         </template>
 
         <!--Menu-->
-        <v-list subheader>
-            <!--Theme-->
-            <v-subheader>Theme</v-subheader>
-            <v-list-item class="justify-center">
-                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == false ? 'primary' : ''" @click="ChangeTheme(false)" dark>
-                    Light
-                    <v-icon class="ml-2">wb_sunny</v-icon>
-                </v-btn>
+        <LazyHydrate when-visible>
+            <v-list subheader>
+                <!--Theme-->
+                <v-subheader>Theme</v-subheader>
+                <v-list-item class="justify-center">
+                    <v-btn large tile elevation="0" :color="$vuetify.theme.dark == false ? 'primary' : ''" @click="ChangeTheme(false)" dark>
+                        Light
+                        <v-icon class="ml-2">wb_sunny</v-icon>
+                    </v-btn>
 
-                <v-btn large tile elevation="0" :color="$vuetify.theme.dark == true ? 'primary' : ''" @click="ChangeTheme(true)">
-                    Dark
-                    <v-icon class="ml-2">brightness_2</v-icon>
-                </v-btn>
-            </v-list-item>
+                    <v-btn large tile elevation="0" :color="$vuetify.theme.dark == true ? 'primary' : ''" @click="ChangeTheme(true)">
+                        Dark
+                        <v-icon class="ml-2">brightness_2</v-icon>
+                    </v-btn>
+                </v-list-item>
 
-            <!--Color-->
-            <v-subheader>Color</v-subheader>
-            <v-list-item class="justify-center">
-                <v-btn 
-                    v-for="color in ListColor" :key="color"
-                    fab small 
-                    elevation="0" 
-                    class="mx-1"
-                    :color="color"
-                    @click="ChangeColor(color)"
-                ></v-btn>
-            </v-list-item>
-        </v-list>
+                <!--Color-->
+                <v-subheader>Color</v-subheader>
+                <v-list-item class="justify-center">
+                    <v-btn 
+                        v-for="color in ListColor" :key="color"
+                        fab small 
+                        elevation="0" 
+                        class="mx-1"
+                        :color="color"
+                        @click="ChangeColor(color)"
+                    ></v-btn>
+                </v-list-item>
+            </v-list>
+        </LazyHydrate>
     </v-menu>
 </template>
 

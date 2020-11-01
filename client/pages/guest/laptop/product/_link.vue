@@ -26,10 +26,14 @@
         </v-card>
 
         <!--Product Article-->
-        <GLaptopProductLinkArticle :article="Product.article"></GLaptopProductLinkArticle>
+        <LazyHydrate ssr-only>
+            <GLaptopProductLinkArticle :article="Product.article"></GLaptopProductLinkArticle>
+        </LazyHydrate>
 
         <!--Product Comment-->
-        <GLaptopProductLinkComment :product="Product"></GLaptopProductLinkComment>
+        <LazyHydrate when-visible>
+            <GLaptopProductLinkComment :product="Product"></GLaptopProductLinkComment>
+        </LazyHydrate>
     </v-container>
 </template>
 

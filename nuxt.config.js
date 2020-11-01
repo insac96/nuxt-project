@@ -26,6 +26,7 @@ export default {
 
   plugins: [
     {src: '~/plugins/axios.js'},
+    {src: '~/plugins/hydration.js'},
     {src: '~/plugins/day.js'},
     {src: '~/plugins/validator.js'},
     {src: '~/plugins/image.js', mode: 'client'},
@@ -38,7 +39,7 @@ export default {
 
   buildModules: [
     '@nuxtjs/vuetify',
-    '@nuxtjs/pwa',
+    //'@nuxtjs/pwa',
   ],
 
   modules: [

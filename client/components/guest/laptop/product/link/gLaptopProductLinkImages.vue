@@ -23,37 +23,42 @@
         <!--Many Image-->
         <v-card-text v-else class="pa-0 pa-sm-4">
             <!--Slide Show-->
-            <v-carousel
-                v-model="ImageNow"
-                cycle height="auto"
-                :show-arrows-on-hover="ShowArrows"
-                hide-delimiter-background
-            >
-                <v-carousel-item v-for="item in images" :key="item">
-                    <v-img :src="item" :aspect-ratio="1.5" contain>
-                        <!--Lazy Load-->
-                        <template v-slot:placeholder>
-                            <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
-                                <v-progress-circular
-                                    indeterminate
-                                    color="primary"
-                                ></v-progress-circular>
-                            </v-sheet>
-                        </template>
-                    </v-img>
-                </v-carousel-item>
-            </v-carousel>
+            <LazyHydrate when-idle>
+                <v-carousel
+                    v-model="ImageNow"
+                    cycle height="auto"
+                    :show-arrows-on-hover="ShowArrows"
+                    hide-delimiter-background
+                >
+                    <v-carousel-item v-for="item in images" :key="item">
+                        <v-img :src="item" :aspect-ratio="1.5" contain>
+                            <!--Lazy Load-->
+                            <template v-slot:placeholder>
+                                <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
+                                    <v-progress-circular
+                                        indeterminate
+                                        color="primary"
+                                    ></v-progress-circular>
+                                </v-sheet>
+                            </template>
+                        </v-img>
+                    </v-carousel-item>
+                </v-carousel>
+            </LazyHydrate>
 
             <!--Mini List-->
             <v-sheet class="mt-4 d-none d-sm-block">
-                <v-slide-group show-arrows center-active>
-                    <v-slide-item v-for="(item, i) in images" :key="i" class="mr-1">
-                        <v-card flat class="rounded-lg" :ripple="false" @click="ImageNow = i">
-                            <v-img :src="item" width="90" max-width="90"></v-img>
-                        </v-card>
-                    </v-slide-item>
-                </v-slide-group>
+                <LazyHydrate when-idle>
+                    <v-slide-group show-arrows center-active>
+                        <v-slide-item v-for="(item, i) in images" :key="i" class="mr-1">
+                            <v-card flat class="rounded-lg" :ripple="false" @click="ImageNow = i">
+                                <v-img :src="item" width="90" max-width="90"></v-img>
+                            </v-card>
+                        </v-slide-item>
+                    </v-slide-group>
+                </LazyHydrate>
             </v-sheet>
+            
         </v-card-text>
     </v-card>
 </template>
