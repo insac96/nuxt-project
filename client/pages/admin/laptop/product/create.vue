@@ -3,7 +3,7 @@
 
     <v-card tile flat class="BoxShadow">
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 primary--text">Create</v-card-title>
+        <v-card-title class="font-weight-bold text-h4 primary--text">Create Product</v-card-title>
         <v-card-subtitle>Thêm 1 sản phẩm mới</v-card-subtitle>
 
         <!--Body-->
@@ -44,7 +44,7 @@
 
             <v-stepper-items>
                 <!--Step 1-->
-                <v-stepper-content step="1" class="pt-0">
+                <v-stepper-content step="1">
                     <ALaptopProductCreateStep1 @next="Save_Step_1"></ALaptopProductCreateStep1>
                 </v-stepper-content>
 

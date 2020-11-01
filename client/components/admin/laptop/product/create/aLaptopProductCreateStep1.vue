@@ -1,12 +1,14 @@
 <template>
     <!--a_laptop_product_create_step_1-->
+    
     <v-card flat tile>
-        <v-form class="mt-4" ref="form" v-model="Validate.form">
-            <!--Information-->
-            <v-card flat tile outlined class="mb-4">
-                <v-card-title class="font-weight-bold primary--text">Thông Tin</v-card-title>
+        <!--Information-->
+        <div>
+            <v-card-title class="font-weight-bold primary--text">Thông Tin</v-card-title>
+            <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>
 
-                <v-card-text class="pt-4">
+            <v-card-text>
+                <v-form class="mt-4" ref="form" v-model="Validate.form">
                     <v-text-field
                         v-model="NewProduct.name"
                         :rules="Validate.name"
@@ -48,13 +50,13 @@
                         color="primary"
                         item-color="primary"
                     ></v-select>
-                </v-card-text>
-            </v-card>
-        </v-form>
+                </v-form>
+            </v-card-text>
+        </div>
 
-        <!--Images Upload-->
-        <v-card flat tile outlined>
-            <!--Header-->
+        <!--Image-->
+        <div>
+            <!--Header Image-->
             <v-sheet class="d-flex justify-space-between align-center pr-4">
                 <div>
                     <v-card-title class="font-weight-bold primary--text">Hình Ảnh</v-card-title>
@@ -75,29 +77,27 @@
             <!--List Image-->
             <v-card-text class="pt-2" v-if="NewProduct.images.length > 0">
                 <v-row dense>
-                    <v-col cols="4" v-for="(image, indexImage) in NewProduct.images" :key="indexImage">
+                    <v-col cols="3" v-for="(image, indexImage) in NewProduct.images" :key="indexImage">
                         <v-hover v-slot:default="{ hover }">
-                            <v-card :elevation="hover ? 10 : 3">
-                                <v-img :src="image">
-                                    <v-row v-if="hover" 
-                                        class="fill-height"
-                                        justify="center"
-                                        align="center"
-                                    >
-                                        <v-btn fab @click="$delete(NewProduct.images, indexImage)">
-                                            <v-icon>delete</v-icon>
-                                        </v-btn>
-                                    </v-row>
-                                </v-img>
-                            </v-card>
+                            <v-img :src="$Image.Get(image, 'm')" :aspect-ratio="320/213">
+                                <v-row v-if="hover" 
+                                    class="fill-height"
+                                    justify="center"
+                                    align="center"
+                                >
+                                    <v-btn fab @click="$delete(NewProduct.images, indexImage)">
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+                                </v-row>
+                            </v-img>
                         </v-hover>
                     </v-col>
                 </v-row>
             </v-card-text>
-        </v-card>
+        </div>
 
         <!--Footer-->
-        <v-sheet class="d-flex justify-end mt-4">
+        <v-sheet class="d-flex justify-end pa-4">
             <v-btn 
                 color="primary" dark
                 tile elevation="0" 

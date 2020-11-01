@@ -1,7 +1,7 @@
 <template>
     <!--a_laptop_product_create_step_2-->
 
-    <v-form class="my-4" ref="form">
+    <v-form class="pa-4" ref="form">
         <v-alert type="info">Có thể để trống nhưng ô chưa có thông tin chính xác</v-alert>
 
         <v-row>

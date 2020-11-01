@@ -26,9 +26,9 @@
         <v-sheet class="pa-4">
             <!--Alert if Image List Empty-->
             <v-alert 
-                v-if="product.images.length < 1"
-                color="primary" outlined
-                type="info" tile border="right"
+                v-if="product.images.length == 0"
+                color="info" outlined type="info" 
+                tile border="right"
                 class="ma-0"
             >
                 Hiện tại chưa có hình ảnh nào của sản phẩm
@@ -38,19 +38,17 @@
             <v-row dense v-else>
                 <v-col cols="3" v-for="(item, index) in product.images" :key="index">
                     <v-hover v-slot:default="{ hover }">
-                        <v-card width="100%" flat tile>
-                            <v-img :src="$Image.Get(item, 'm')" max-width="100%" aspect-ratio="320/213">
-                                <v-row v-if="hover && !Loading.upload" 
-                                    class="fill-height"
-                                    justify="center"
-                                    align="center"
-                                >
-                                    <v-btn fab @click="DeleteImage(index)">
-                                        <v-icon>delete</v-icon>
-                                    </v-btn>
-                                </v-row>
-                            </v-img>
-                        </v-card>
+                        <v-img :src="$Image.Get(item, 'm')" :aspect-ratio="320/213">
+                            <v-row v-if="hover && !Loading.upload" 
+                                class="fill-height"
+                                justify="center"
+                                align="center"
+                            >
+                                <v-btn fab @click="DeleteImage(index)">
+                                    <v-icon>delete</v-icon>
+                                </v-btn>
+                            </v-row>
+                        </v-img>
                     </v-hover>
                 </v-col>
             </v-row>

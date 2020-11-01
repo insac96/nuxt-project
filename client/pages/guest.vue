@@ -1,5 +1,7 @@
 <template>
-    <nuxt-child></nuxt-child>
+    <div class="Screen">
+        <nuxt-child></nuxt-child>
+    </div>
 </template>
 
 <script>

@@ -4,9 +4,7 @@
 
         <v-main>
             <v-row no-gutters justify="center">
-                <div class="Screen">
-                    <nuxt></nuxt>
-                </div>
+                <nuxt></nuxt>
             </v-row>
         </v-main>
     </v-app>

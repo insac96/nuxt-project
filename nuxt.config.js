@@ -29,7 +29,7 @@ export default {
     {src: '~/plugins/hydration.js'},
     {src: '~/plugins/day.js'},
     {src: '~/plugins/validator.js'},
-    {src: '~/plugins/image.js', mode: 'client'},
+    {src: '~/plugins/image.js'},
     {src: '~/plugins/editor.js', mode: 'client'}
   ],
 

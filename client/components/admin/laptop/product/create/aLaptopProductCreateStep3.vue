@@ -3,30 +3,30 @@
 
     <v-card tile flat>
         <!--Card Body-->
-        <v-card-text class="pt-4 px-0">
+        <v-card-text class="pt-4">
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">CPU</span>
-                <v-switch v-model="Upgrade.cpu" color="create" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.cpu" color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">GPU</span>
-                <v-switch v-model="Upgrade.gpu" color="create" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.gpu" color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">WIFI</span>
-                <v-switch v-model="Upgrade.wifi" color="create" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.wifi" color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">RAM</span>
-                    <v-switch v-model="Upgrade.ram.type" color="create" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="Upgrade.ram.type" color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
                 <div class="d-flex justify-end align-center" v-if="Upgrade.ram.type">
@@ -35,7 +35,7 @@
                         label="Max"
                         outlined dense
                         placeholder="Dung lượng tối đa"
-                        color="create"
+                        color="primary"
                         class="mr-1"
                         type="number"
                         autocomplete="off"
@@ -46,7 +46,7 @@
                         label="Slot"
                         outlined dense
                         placeholder="Số khe cắm ngoài"
-                        color="create"
+                        color="primary"
                         class="ml-1" type="number"
                         autocomplete="off"
                     ></v-text-field>
@@ -57,7 +57,7 @@
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">HARD DRIVE</span>
-                    <v-switch v-model="Upgrade.harddrive.type" color="create" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="Upgrade.harddrive.type" color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
                 <div class="d-flex justify-end align-center" v-if="Upgrade.harddrive.type">
@@ -66,7 +66,7 @@
                         label="Max"
                         outlined dense
                         placeholder="Dung lượng tối đa"
-                        color="create"
+                        color="primary"
                         class="mr-1"
                         autocomplete="off"
                     ></v-text-field>
@@ -76,7 +76,7 @@
                         label="Slot"
                         outlined dense
                         placeholder="Các khe hỗ trợ"
-                        color="create"
+                        color="primary"
                         class="ml-1"
                         autocomplete="off"
                     ></v-text-field>
@@ -85,12 +85,12 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-sheet class="d-flex justify-end">
+        <v-sheet class="d-flex justify-end pa-4">
             <v-btn tile elevation="0" large @click="$emit('back')">
                 Back
             </v-btn>
 
-            <v-btn color="create" tile elevation="0" large dark @click="NextStep()">
+            <v-btn color="primary" tile elevation="0" large dark @click="NextStep()">
                 Next
             </v-btn>
         </v-sheet>
