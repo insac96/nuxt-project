@@ -8,9 +8,10 @@ import * as Variant from './variant';
 import * as VariantColor from './color';
 import * as Article from './article';
 import * as Comment from './comment';
+import * as News from './news';
 
 const ContollerAdmin = {
-    Company, Trademark, Product, Configuration, Variant, VariantColor, Article, Comment
+    Company, Trademark, Product, Configuration, Variant, VariantColor, Article, Comment, News
 }
 
 export default ContollerAdmin;

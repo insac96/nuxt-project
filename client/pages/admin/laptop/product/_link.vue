@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Link Layout-->
     <div>
-        <v-tabs fixed-tabs background-color="primary" icons-and-text hide-slider dark class="Sticky_Top">
+        <v-tabs fixed-tabs background-color="primary" icons-and-text hide-slider dark>
             <v-tab v-for="(item, index) in Menu" :key="index" :to="item.path" link>
                 {{item.title}}
 

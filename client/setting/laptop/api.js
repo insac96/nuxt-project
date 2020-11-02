@@ -21,6 +21,14 @@ export default {
         EditImagesProduct: '/laptop/admin/product/images/edit',
         EditVisibilityProduct: '/laptop/admin/product/visibility/edit',
 
+        //News
+        GetAllNews: '/laptop/admin/news/get',
+        CreateNews: '/laptop/admin/news/create',
+        EditNews: '/laptop/admin/news/edit',
+        DeleteNews: '/laptop/admin/news/delete',
+        EditVisibilityNews: '/laptop/admin/news/visibility/edit',
+        EditTopNews: '/laptop/admin/news/top/edit',
+
         //Configuration
         EditDefaultConfiguration: '/laptop/admin/configuration/default/edit',
         EditUpgradeConfiguration: '/laptop/admin/configuration/upgrade/edit',

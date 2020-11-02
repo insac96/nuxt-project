@@ -12,7 +12,7 @@
                     label="Username"
                     counter
                     maxlength="15"
-                    rounded outlined
+                    rounded filled
                     height="55"   
                     autocomplete="off"
                     append-icon="person"
@@ -30,7 +30,7 @@
                     :rules="[$Rules.required, $Rules.min, $Rules.multiSpace]"
                     label="Password"
                     type="password"
-                    rounded outlined
+                    rounded filled
                     height="55"
                     autocomplete="off"
                     append-icon="lock"
@@ -49,7 +49,7 @@
                     :rules="[$Rules.required, $Rules.email, $Rules.multiSpace]"
                     label="Email"
                     type="email"
-                    rounded outlined
+                    rounded filled
                     height="55"
                     autocomplete="off"
                     append-icon="email"

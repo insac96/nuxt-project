@@ -98,6 +98,12 @@ a {
     z-index: 2;
 }
 
+.v-input {
+    .v-text-field__details {
+        padding: 0 24px !important;
+    }
+}
+
 .theme--dark.v-application {
     .v-image__image {
         filter: brightness(.8) contrast(1.2);

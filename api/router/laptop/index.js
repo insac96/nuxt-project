@@ -48,6 +48,14 @@ Router.post('/admin/product/information/edit', Authentic_Admin, Controller_Admin
 Router.post('/admin/product/images/edit', Authentic_Admin, Controller_Admin.Product.EditImages);
 Router.post('/admin/product/visibility/edit', Authentic_Admin, Controller_Admin.Product.EditVisibility);
 
+//News - Admin
+Router.post('/admin/news/get', Authentic_Admin, Controller_Admin.News.Get);
+Router.post('/admin/news/create', Authentic_Admin, Controller_Admin.News.Create);
+//Router.post('/admin/news/edit', Authentic_Admin, Controller_Admin.News.Edit);
+Router.post('/admin/news/delete', Authentic_Admin, Controller_Admin.News.Delete);
+Router.post('/admin/news/visibility/edit', Authentic_Admin, Controller_Admin.News.EditVisibility);
+Router.post('/admin/news/top/edit', Authentic_Admin, Controller_Admin.News.EditTop);
+
 //Configuration - Admin
 Router.post('/admin/configuration/default/edit', Authentic_Admin, Controller_Admin.Configuration.EditDefault);
 Router.post('/admin/configuration/upgrade/edit', Authentic_Admin, Controller_Admin.Configuration.EditUpgrade);

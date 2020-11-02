@@ -12,7 +12,7 @@
             <v-btn 
                 color="primary" dark 
                 rounded elevation="0" large class="mr-4"
-                to="/admin/laptop/product/create"
+                to="product/create"
             >
                 <v-icon>add</v-icon>
                 Thêm Mới
@@ -189,7 +189,7 @@
         <!--Dialog Delete-->
         <v-dialog v-model="Dialog.delete.type" persistent max-width="450">
             <ALaptopProductDelete 
-                @done="DeleteProductDone"
+                @delete="DeleteProductDone"
                 @cancel="Dialog.delete.type = false" 
                 :product="Dialog.delete.select"
             ></ALaptopProductDelete>

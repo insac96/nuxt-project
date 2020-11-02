@@ -53,7 +53,7 @@ export default {
 
                 this.Loading.delete = false;
                 
-                this.$emit('done');
+                this.$emit('delete');
                 this.$emit('cancel');
             }
             catch(e){
