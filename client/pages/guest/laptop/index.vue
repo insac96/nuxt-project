@@ -1,7 +1,7 @@
 <template>
     <v-container class="pa-0">
         <LazyHydrate when-idle>
-            <GLaptopNews class="mb-4"></GLaptopNews>
+            <GLaptopNewsTop class="mb-4"></GLaptopNewsTop>
         </LazyHydrate>
 
         <!--<GLaptopCompanyesMini class="mb-6 mb-sm-8"></GLaptopCompanyesMini>-->

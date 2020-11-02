@@ -17,6 +17,10 @@ Router.post("/variant/status/get", Controller_Guest.Variant.GetByStatus);
 //Product - Guest
 Router.post("/product/link/get", Controller_Guest.Product.GetByLink);
 
+//News - Guest
+Router.get("/news/top/get", Controller_Guest.News.GetListByTop);
+Router.post("/news/link/get", Controller_Guest.News.GetByLink);
+
 //Comment
 Router.post("/comment/add", Authentic_Guest, Controller_Guest.Comment.Add);
 Router.post("/comment/more", Controller_Guest.Comment.More);
@@ -50,11 +54,13 @@ Router.post('/admin/product/visibility/edit', Authentic_Admin, Controller_Admin.
 
 //News - Admin
 Router.post('/admin/news/get', Authentic_Admin, Controller_Admin.News.Get);
+Router.post('/admin/news/id/get', Authentic_Admin, Controller_Admin.News.GetByID);
 Router.post('/admin/news/create', Authentic_Admin, Controller_Admin.News.Create);
-//Router.post('/admin/news/edit', Authentic_Admin, Controller_Admin.News.Edit);
 Router.post('/admin/news/delete', Authentic_Admin, Controller_Admin.News.Delete);
 Router.post('/admin/news/visibility/edit', Authentic_Admin, Controller_Admin.News.EditVisibility);
 Router.post('/admin/news/top/edit', Authentic_Admin, Controller_Admin.News.EditTop);
+Router.post('/admin/news/information/edit', Authentic_Admin, Controller_Admin.News.EditInformation);
+Router.post('/admin/news/content/edit', Authentic_Admin, Controller_Admin.News.EditContent);
 
 //Configuration - Admin
 Router.post('/admin/configuration/default/edit', Authentic_Admin, Controller_Admin.Configuration.EditDefault);

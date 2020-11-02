@@ -5,7 +5,8 @@ export default async ({ app, $axios, store, error }) => {
 
     try {
         let GetAuthentic = await $axios.$get(UserAPI.guest.GetAuthentic);
-        store.commit('user/login', GetAuthentic);
+        
+        if(GetAuthentic.user) return store.commit('user/login', GetAuthentic);
     }
     catch(e){
         return false; 

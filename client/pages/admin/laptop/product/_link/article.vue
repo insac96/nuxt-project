@@ -6,7 +6,7 @@
 
         <!--Body-->
         <client-only>
-            <BoxEditor :content="this.Content" @save="Save" :loading="Loading"></BoxEditor>
+            <PBoxEditor :content="this.Content" @save="Save" :loading="Loading"></PBoxEditor>
         </client-only>
     </v-card>
 </template>

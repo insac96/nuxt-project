@@ -4,7 +4,7 @@ let Production = {
 };
 
 let Development = {
-    database: 'mongodb://localhost:27017',
+    database: 'mongodb://admin:cf1996@ds363088.mlab.com:63088/thinkpro',
     baseUrl: 'http://localhost:3000'
 };
 

@@ -23,11 +23,14 @@ export default {
 
         //News
         GetAllNews: '/laptop/admin/news/get',
+        GetNewsByID: '/laptop/admin/news/id/get',
         CreateNews: '/laptop/admin/news/create',
         EditNews: '/laptop/admin/news/edit',
         DeleteNews: '/laptop/admin/news/delete',
         EditVisibilityNews: '/laptop/admin/news/visibility/edit',
         EditTopNews: '/laptop/admin/news/top/edit',
+        EditInformationNews: '/laptop/admin/news/information/edit',
+        EditContentNews: '/laptop/admin/news/content/edit',
 
         //Configuration
         EditDefaultConfiguration: '/laptop/admin/configuration/default/edit',
@@ -65,6 +68,11 @@ export default {
 
         //Product
         GetProductByLink: '/laptop/product/link/get',
+
+        //News
+        GetListNews: '/laptop/news/get',
+        GetListNewsByTop: '/laptop/news/top/get',
+        GetNewsByLink: '/laptop/news/link/get',
 
         //Comment and Reply
         AddComment: '/laptop/comment/add',

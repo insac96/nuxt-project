@@ -1,13 +1,21 @@
 <template>
+    <!--Product Link-->
+
     <v-container v-if="$fetchState.pending">
         <v-card flat tile>
             <v-skeleton-loader type="image, article"></v-skeleton-loader>
         </v-card>
     </v-container>
 
-    <v-container class="pa-0" v-else-if="!$fetchState.pending && !$fetchState.error">
+    <v-container v-else-if="$fetchState.error">
+        <v-card flat tile>
+            <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
+        </v-card>
+    </v-container>
+
+    <v-container class="pa-0" v-else>
         <!--Product Information-->
-        <v-card tile flat>
+        <v-card tile flat class="BoxShadow">
             <!--Header-->
             <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
                 <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Thông Tin</span>
