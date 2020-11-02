@@ -33,7 +33,7 @@
                     <v-text-field
                         v-model="Upgrade.ram.max"
                         label="Max"
-                        outlined dense
+                        filled rounded
                         placeholder="Dung lượng tối đa"
                         color="primary"
                         class="mr-1"
@@ -44,7 +44,7 @@
                     <v-text-field
                         v-model="Upgrade.ram.slot"
                         label="Slot"
-                        outlined dense
+                        filled rounded
                         placeholder="Số khe cắm ngoài"
                         color="primary"
                         class="ml-1" type="number"
@@ -64,7 +64,7 @@
                     <v-text-field
                         v-model="Upgrade.harddrive.max"
                         label="Max"
-                        outlined dense
+                        filled rounded
                         placeholder="Dung lượng tối đa"
                         color="primary"
                         class="mr-1"
@@ -74,7 +74,7 @@
                     <v-text-field
                         v-model="Upgrade.harddrive.slot"
                         label="Slot"
-                        outlined dense
+                        filled rounded
                         placeholder="Các khe hỗ trợ"
                         color="primary"
                         class="ml-1"
@@ -86,11 +86,11 @@
 
         <!--Footer-->
         <v-sheet class="d-flex justify-end pa-4">
-            <v-btn tile elevation="0" large @click="$emit('back')">
+            <v-btn large rounded elevation="0" @click="$emit('back')">
                 Back
             </v-btn>
-
-            <v-btn color="primary" tile elevation="0" large dark @click="NextStep()">
+            
+            <v-btn color="primary" dark large rounded elevation="0" @click="NextStep()">
                 Next
             </v-btn>
         </v-sheet>

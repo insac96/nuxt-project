@@ -52,7 +52,7 @@
                         color="error"
                         class="font-weight-bold"
                     >
-                        - {{Select.variant['discount'].amount.toLocaleString('vi-VN')}}đ
+                        - {{ $String.toPrice(Select.variant['discount'].amount) }}đ
                     </v-chip>
                 </div>
 
@@ -86,7 +86,7 @@
                         color="info"
                         class="font-weight-bold"
                     >
-                        + {{Select.color['upprice'].toLocaleString('vi-VN')}}đ
+                        + {{ $String.toPrice(Select.color['upprice']) }}đ
                     </v-chip>
                 </div>
 
@@ -113,19 +113,19 @@
                 <div class="d-flex justify-space-between align-center mb-2">
                     Cấu Hình
 
-                    <span>{{ (Select.variant['price']).toLocaleString('vi-VN') }}</span>
+                    <span>{{ $String.toPrice(Select.variant['price']) }}</span>
                 </div>
 
                 <!--Total Color UpPrice-->
                 <div class="d-flex justify-space-between align-center mb-2">
                     Màu Sắc
-                    <span>+ {{ (Select.color['upprice']).toLocaleString('vi-VN') }}</span>
+                    <span>+ {{ $String.toPrice(Select.color['upprice']) }}</span>
                 </div>
 
                 <!--Total Discount-->
                 <div class="d-flex justify-space-between align-center mb-2">
                     Giảm Giá
-                    <span v-if="Select.variant['discount'].type">- {{ (Select.variant['discount'].amount).toLocaleString('vi-VN') }}</span>
+                    <span v-if="Select.variant['discount'].type">- {{ $String.toPrice(Select.variant['discount'].amount) }}</span>
                     <span v-else>- 0</span>
                 </div>
 
@@ -176,10 +176,10 @@ export default {
             if(!this.Select.variant && !this.Select.color) return false;
 
             if(this.Select.variant['discount'].type){
-                return (this.Select.variant['price'] + this.Select.color['upprice'] - this.Select.variant['discount'].amount).toLocaleString('vi-VN')
+                return this.$String.toPrice(this.Select.variant['price'] + this.Select.color['upprice'] - this.Select.variant['discount'].amount);
             }
 
-            return (this.Select.variant['price'] + this.Select.color['upprice']).toLocaleString('vi-VN');
+            return this.$String.toPrice(this.Select.variant['price'] + this.Select.color['upprice']);
         }
     },
 

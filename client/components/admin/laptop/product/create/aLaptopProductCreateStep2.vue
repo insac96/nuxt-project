@@ -2,8 +2,6 @@
     <!--a_laptop_product_create_step_2-->
 
     <v-form class="pa-4" ref="form">
-        <v-alert type="info">Có thể để trống nhưng ô chưa có thông tin chính xác</v-alert>
-
         <v-row>
             <!--Col 1-->
             <v-col cols="6">
@@ -11,8 +9,9 @@
                     <v-combobox v-if="item.select"
                         v-model="Default[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelect[item.model]"
+                        :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
+                        filled rounded 
                         color="primary"
                         item-color="primary"
                         :multiple="item.multiple"
@@ -22,8 +21,8 @@
                     <v-text-field v-else
                         v-model="Default[item.model]"
                         :label="item.label"
-                        outlined
                         :placeholder="item.placeholder"
+                        filled rounded
                         color="primary"
                         autocomplete="off"
                     ></v-text-field>
@@ -36,8 +35,9 @@
                     <v-combobox v-if="item.select"
                         v-model="Default[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelect[item.model]"
+                        :items="ConfigurationSelect[item.model]"
                         :placeholder="item.placeholder"
+                        filled rounded
                         color="primary"
                         item-color="primary"
                         :multiple="item.multiple"
@@ -47,8 +47,8 @@
                     <v-text-field v-else
                         v-model="Default[item.model]"
                         :label="item.label"
-                        outlined
                         :placeholder="item.placeholder"
+                        filled rounded
                         color="primary"
                         autocomplete="off"
                     ></v-text-field>
@@ -58,11 +58,11 @@
         
         <!--Button-->
         <v-sheet class="d-flex justify-end">
-            <v-btn tile elevation="0" large @click="$emit('back')">
+            <v-btn large rounded elevation="0" @click="$emit('back')">
                 Back
             </v-btn>
             
-            <v-btn color="primary" tile elevation="0" large dark @click="NextStep()">
+            <v-btn color="primary" dark large rounded elevation="0" @click="NextStep()">
                 Next
             </v-btn>
         </v-sheet>

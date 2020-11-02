@@ -1,5 +1,5 @@
 <template>
-    <!--a_laptop_product_variant_edit-->
+    <!--a_laptop_product_variant_discount_edit-->
 
     <v-card>
         <!--Header-->
@@ -17,27 +17,27 @@
                     type="number"
                     color="edit"
                     autocomplete="off"
-                    outlined
+                    filled rounded
                     :disabled="Loading.edit"
                 ></v-text-field>        
             </v-form>
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-btn 
                 color="delete" dark
-                tile elevation="0" large
+                rounded elevation="0" large
                 :loading="Loading.edit" 
                 @click="EditVariantDiscount('OFF')"
             >
-                Tắt Giảm Giá
+                Tắt
             </v-btn>
 
             <v-spacer></v-spacer>
 
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.edit"  
                 @click="Cancel"
             >
@@ -46,7 +46,7 @@
             
             <v-btn 
                 color="edit" dark 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0"
                 :loading="Loading.edit" 
                 @click="EditVariantDiscount()"
@@ -94,13 +94,12 @@ export default {
                     discount: this.CloneVariant.discount
                 });
 
-                this.variant.discount = this.CloneVariant.discount;
+                Object.assign(this.variant.discount, this.CloneVariant.discount)
                 this.Loading.edit = false;
 
                 this.Cancel();
             }
             catch(e){
-                console.log(e)
                 this.Loading.edit = false;
             } 
         },

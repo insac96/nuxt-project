@@ -14,7 +14,7 @@
                     v-model="NewTrademark.name"
                     :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Trademark Name"
-                    outlined
+                    filled rounded
                     placeholder="Tên thương hiệu nhánh"
                     append-icon="account_balance_wallet"
                     color="create"
@@ -24,10 +24,10 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large
+                rounded elevation="0" large
                 :disabled="Loading.create"
                 @click="Cancel"
             >
@@ -35,9 +35,8 @@
             </v-btn>
             
             <v-btn 
-                color="create" 
-                dark
-                tile elevation="0" large 
+                color="create" dark
+                rounded elevation="0" large 
                 class="mx-0" 
                 @click="CreateNewTrademark"
                 :loading="Loading.create" 

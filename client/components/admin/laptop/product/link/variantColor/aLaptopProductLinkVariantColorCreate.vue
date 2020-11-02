@@ -16,7 +16,7 @@
                 placeholder="Tên màu sắc"
                 color="create"
                 autocomplete="off"
-                outlined
+                filled rounded
                 :disabled="Loading.create"
             ></v-text-field>
 
@@ -37,7 +37,7 @@
                         placeholder="Mã màu sắc"
                         color="create"
                         autocomplete="off"
-                        outlined
+                        filled rounded
                         :disabled="Loading.create"
                         v-on="on"
                     ></v-text-field>
@@ -61,7 +61,7 @@
                 color="create"
                 append-icon="image"
                 autocomplete="off"
-                outlined
+                filled rounded
                 :disabled="Loading.create"
             ></v-text-field>
 
@@ -73,16 +73,16 @@
                 placeholder="Tăng giá so với giá gốc"
                 color="create"
                 autocomplete="off"
-                outlined
+                filled rounded
                 :disabled="Loading.edit"
             ></v-text-field>
         </v-form>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.create" 
                 @click="Cancel"
             >
@@ -91,7 +91,7 @@
             
             <v-btn 
                 color="create" dark 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create" 
                 @click="CreateVariantColor"

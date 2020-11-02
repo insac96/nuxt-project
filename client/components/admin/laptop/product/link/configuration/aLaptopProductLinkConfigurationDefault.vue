@@ -14,7 +14,7 @@
                     <v-combobox v-if="item.select"
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelectSetting[item.model]"
+                        filled rounded :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
                         color="primary"
                         item-color="primary"
@@ -26,7 +26,7 @@
                     <v-text-field v-else
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined
+                        filled rounded
                         :placeholder="item.placeholder"
                         color="primary"
                         autocomplete="off"
@@ -41,7 +41,7 @@
                     <v-combobox v-if="item.select"
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined :items="ConfigurationSelectSetting[item.model]"
+                        filled rounded :items="ConfigurationSelectSetting[item.model]"
                         :placeholder="item.placeholder"
                         color="primary"
                         item-color="primary"
@@ -53,7 +53,7 @@
                     <v-text-field v-else
                         v-model="ConfigurationDefault[item.model]"
                         :label="item.label"
-                        outlined
+                        filled rounded
                         :placeholder="item.placeholder"
                         color="primary"
                         autocomplete="off"
@@ -69,7 +69,7 @@
 
             <v-btn 
                 color="primary" dark 
-                elevation="0" tile large
+                elevation="0" rounded large
                 :loading="Loading.edit"
                 @click="EditDefault"
             >

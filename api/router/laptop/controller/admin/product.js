@@ -8,7 +8,7 @@ import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
-import { CaseString } from '../../../../plugins/string';
+import { toConvert } from '../../../../plugins/string';
 import { ErrorHandler } from '../../../../plugins/error';
 
 //Get All Products
@@ -21,7 +21,7 @@ export const Get = async (req, res, next) => {
     if(trademark)
         Query['trademark'] = trademark;
     if(key){
-        let keyCase = CaseString(key, '-');
+        let keyCase = toConvert(key, '-');
 
         Query['$text'] = { 
             $search: `\"${keyCase}\"`

@@ -15,7 +15,7 @@
                     :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     :items="CompanySelectSetting"
                     label="Company Name"
-                    outlined
+                    filled rounded
                     placeholder="Tên hãng sản xuất"
                     append-icon="apartment"
                     color="create"
@@ -28,7 +28,7 @@
                     :items="TrademarkSelectSetting[NewCompany.name]"
                     :disabled="!NewCompany.name"
                     label="Company Trademarks"
-                    outlined
+                    filled rounded
                     placeholder="Các thương hiệu nhánh"
                     append-icon="account_balance_wallet"
                     color="create"
@@ -48,7 +48,7 @@
                     v-model="NewCompany.logo"
                     :rules="[ $Rules.required ]"
                     label="Company Logo"
-                    outlined
+                    filled rounded
                     placeholder="Nhập link hoặc chọn file"
                     append-icon="image"
                     color="create"
@@ -62,11 +62,11 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.create || Loading.upload" 
                 @click="Cancel"
             >
@@ -74,9 +74,8 @@
             </v-btn>
             
             <v-btn 
-                color="create" 
-                dark
-                tile elevation="0" 
+                color="create" dark
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create || Loading.upload" 
                 @click="CreateNewCompany()"

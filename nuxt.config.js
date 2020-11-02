@@ -30,6 +30,7 @@ export default {
     {src: '~/plugins/day.js'},
     {src: '~/plugins/validator.js'},
     {src: '~/plugins/image.js'},
+    {src: '~/plugins/string.js'},
     {src: '~/plugins/editor.js', mode: 'client'}
   ],
 
@@ -39,7 +40,7 @@ export default {
 
   buildModules: [
     '@nuxtjs/vuetify',
-    //'@nuxtjs/pwa',
+    '@nuxtjs/pwa',
   ],
 
   modules: [

@@ -11,7 +11,7 @@
 
             <v-btn 
                 color="primary" dark 
-                tile elevation="0" large class="mr-4"
+                rounded elevation="0" large class="mr-4"
                 to="/admin/laptop/product/create"
             >
                 <v-icon>add</v-icon>

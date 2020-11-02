@@ -14,10 +14,10 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.delete"
                 @click="$emit('cancel')"
             >
@@ -25,9 +25,8 @@
             </v-btn>
             
             <v-btn 
-                color="delete"
-                dark
-                tile elevation="0" 
+                color="delete" dark
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.delete" 
                 @click="DeleteCompany"

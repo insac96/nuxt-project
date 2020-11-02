@@ -1,4 +1,10 @@
-export const toConvert = (text, replace) => {
+import Vue from 'vue';
+
+const toPrice = (number) => {
+    return number.toLocaleString('vi-VN');
+};
+
+const toConvert = (text, replace) => {
     let string = text;
     string = string.toLowerCase();
     string = string.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ|À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g,"a"); 
@@ -16,3 +22,7 @@ export const toConvert = (text, replace) => {
     
     return string;
 };
+
+Vue.prototype.$String = {
+    toPrice, toConvert
+}

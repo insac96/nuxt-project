@@ -2,7 +2,7 @@
 
 import UserDB from '../../model/user';
 
-import { CaseString } from '../../../../plugins/string';
+import { toConvert } from '../../../../plugins/string';
 import { ErrorHandler } from '../../../../plugins/error';
 
 //Get All User
@@ -13,7 +13,7 @@ export const Get = async (req, res, next) => {
     if(role)
         Query['role'] = role;
     if(key){
-        let keyCase = CaseString(key, '');
+        let keyCase = toConvert(key, '');
 
         Query['$text'] = { 
             $search: `\"${keyCase}\"`

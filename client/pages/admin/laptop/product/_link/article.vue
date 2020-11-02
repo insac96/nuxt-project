@@ -23,7 +23,7 @@
             <v-btn 
                 v-if="!Article"
                 color="primary" dark 
-                elevation="0" tile 
+                elevation="0" rounded 
                 :loading="Loading.create"
                 @click="CreateNewArticle"
             >
@@ -33,7 +33,7 @@
             <v-btn
                 v-else
                 color="primary" dark 
-                elevation="0" tile 
+                elevation="0" rounded 
                 :loading="Loading.edit"
                 @click="EditArticle"
             >

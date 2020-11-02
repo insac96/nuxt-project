@@ -25,7 +25,7 @@
                                 color="create"
                                 item-color="create"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.create"
                             ></v-combobox>
 
@@ -39,7 +39,7 @@
                                 :type="item.type ? item.type : 'text'"
                                 color="create"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.create"
                             ></v-text-field>     
                         </div>  
@@ -60,7 +60,7 @@
                                 color="create"
                                 item-color="create"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.create"
                             ></v-combobox>
 
@@ -75,7 +75,7 @@
                                 color="create"
                                 item-color="create"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.create"
                             ></v-select>
 
@@ -89,7 +89,7 @@
                                 :type="item.type ? item.type : 'text'"
                                 color="create"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.create"
                             ></v-text-field>     
                         </div>  
@@ -102,7 +102,7 @@
         <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.create" 
                 @click="Cancel"
             >
@@ -111,7 +111,7 @@
             
             <v-btn 
                 color="create" dark 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.create" 
                 @click="CreateVariant"

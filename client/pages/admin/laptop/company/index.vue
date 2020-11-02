@@ -10,7 +10,7 @@
             </div>
 
             <v-btn 
-                color="primary" dark tile 
+                color="primary" dark rounded 
                 elevation="0" large class="mr-4" 
                 @click="ShowCompanyDialogCreate"
             >

@@ -2,7 +2,7 @@
 
 import jwt from 'jsonwebtoken';
 import md5 from 'md5';
-import { CaseString } from '../../../../plugins/string';
+import { toConvert } from '../../../../plugins/string';
 import { ErrorHandler } from '../../../../plugins/error';
 import Config from '../../../../../config/app.config';
 
@@ -16,7 +16,7 @@ export const SignIn = async (req, res, next) => {
     if(req.authentic) return next(new ErrorHandler(403, 'Deny Access'));
 
     try {
-        username = CaseString(username, '');
+        username = toConvert(username, '');
         password = md5(password);
 
         let User = await UserDB
@@ -58,7 +58,7 @@ export const SignUp = async (req, res) => {
         if(!username || !password || !email) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
         if(req.authentic) return next(new ErrorHandler(403, 'Deny Access'));
 
-        username = CaseString(username, '');
+        username = toConvert(username, '');
         password = md5(password);
 
         let User = await UserDB

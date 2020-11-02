@@ -1,6 +1,6 @@
 //FOR LAPTOP
 
-import { CaseString } from '../../../plugins/string';
+import { toConvert } from '../../../plugins/string';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
@@ -14,7 +14,7 @@ const ProductSchema = new Schema(
         ],
         visibility: { type: Boolean, default: true },
         link: { type: String , default: function(){
-            if(this.name) return CaseString(this.name, '-');
+            if(this.name) return toConvert(this.name, '-');
             return null;
         }},
     }, 

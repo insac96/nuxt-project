@@ -13,7 +13,7 @@
                         v-model="NewProduct.name"
                         :rules="Validate.name"
                         label="Laptop Name"
-                        outlined
+                        filled rounded
                         placeholder="Tên sản phẩm"
                         append-icon="laptop"
                         color="primary"
@@ -27,7 +27,7 @@
                         item-text="name"
                         item-value="_id"
                         label="Laptop Company"
-                        outlined
+                        filled rounded
                         placeholder="Chọn hãng sản xuất"
                         append-icon="apartment"
                         color="primary"
@@ -44,7 +44,7 @@
                         item-text="name"
                         item-value="_id"
                         label="Laptop Trademark"
-                        outlined
+                        filled rounded
                         placeholder="Chọn thương hiệu nhánh"
                         append-icon="account_balance_wallet"
                         color="primary"
@@ -100,7 +100,7 @@
         <v-sheet class="d-flex justify-end pa-4">
             <v-btn 
                 color="primary" dark
-                tile elevation="0" 
+                rounded elevation="0" 
                 large  
                 @click="NextStep()"
                 :loading="Loading.upload"

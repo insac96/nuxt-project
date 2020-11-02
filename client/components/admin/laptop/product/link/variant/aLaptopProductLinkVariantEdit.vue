@@ -25,7 +25,7 @@
                                 color="edit"
                                 item-color="edit"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.edit"
                             ></v-combobox>
 
@@ -39,7 +39,7 @@
                                 :type="item.type ? item.type : 'text'"
                                 color="edit"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.edit"
                             ></v-text-field>     
                         </div>  
@@ -60,7 +60,7 @@
                                 color="edit"
                                 item-color="edit"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.edit"
                             ></v-combobox>
 
@@ -75,7 +75,7 @@
                                 color="edit"
                                 item-color="edit"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.edit"
                             ></v-select>
 
@@ -89,7 +89,7 @@
                                 :type="item.type ? item.type : 'text'"
                                 color="edit"
                                 autocomplete="off"
-                                outlined
+                                filled rounded
                                 :disabled="Loading.edit"
                             ></v-text-field>     
                         </div>  
@@ -99,10 +99,10 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-btn 
                 color="delete" dark 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0"
                 :disabled="Loading.edit"
                 :loading="Loading.delete" 
@@ -114,7 +114,7 @@
             <v-spacer></v-spacer>
 
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.delete || Loading.edit"  
                 @click="Cancel"
             >
@@ -123,7 +123,7 @@
             
             <v-btn 
                 color="edit" dark 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :disabled="Loading.delete"
                 :loading="Loading.edit" 

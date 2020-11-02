@@ -16,11 +16,12 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4">
             <v-spacer></v-spacer>
-            <v-btn tile elevation="0" large @click="$emit('cancel')">
+            
+            <v-btn large rounded elevation="0" @click="$emit('cancel')">
                 Hủy
             </v-btn>
             
-            <v-btn color="delete" tile elevation="0" large dark class="mx-0" @click="DeleteProduct">
+            <v-btn color="delete" rounded elevation="0" class="mx-0" dark large @click="DeleteProduct">
                 Xóa
             </v-btn>
         </v-card-actions>

@@ -10,7 +10,7 @@
         <!--Footer-->
         <v-sheet class="d-flex">
             <v-btn 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :disabled="Loading.delete"
                 @click="$emit('cancel')"
@@ -22,7 +22,7 @@
 
             <v-btn 
                 color="delete" dark
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.delete"
                 @click="DeleteVariantColor"

@@ -74,7 +74,7 @@
                                 label color="error" 
                                 class="rounded-0 font-weight-bold px-2 px-sm-3 text-caption text-sm-subtitle-2"
                             >
-                                - {{variant.discount.amount.toLocaleString('vi-VN')}}đ
+                                - {{ $String.toPrice(variant.discount.amount) }}đ
                             </v-chip>
                         </div>
 
@@ -95,15 +95,15 @@
                         <v-card-text class="text-center pt-0 pb-2 pb-sm-4">
                             <div class="text-h6 font-weight-bold error--text">
                                 <span v-if="variant.discount.type">
-                                    {{(variant.price - variant.discount.amount).toLocaleString('vi-VN')}}đ
+                                    {{ $String.toPrice(variant.price - variant.discount.amount) }}đ
                                 </span>
                                 <span v-else>
-                                    {{(variant.price).toLocaleString('vi-VN')}}đ
+                                    {{ $String.toPrice(variant.price) }}đ
                                 </span>
                             </div>
                             <div class="text-subtitle-2 text-decoration-line-through">
                                 <span v-if="variant.discount.type">
-                                    {{(variant.price).toLocaleString('vi-VN')}}đ
+                                    {{ $String.toPrice(variant.price)}}đ
                                 </span>
 
                                 <span v-else>

@@ -13,25 +13,21 @@
                     v-model="CloneTrademark.name"
                     :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Trademark Name"
-                    outlined
+                    filled rounded
                     placeholder="Tên thương hiệu nhánh"
                     append-icon="account_balance_wallet"
                     color="edit"
                     autocomplete="off"
                 ></v-text-field>
             </v-form>
-
-            <v-alert outlined tile border="left" type="edit" color="error" prominent class="mb-0">
-                Nếu xóa thương hiệu <strong>{{CloneTrademark.name}}</strong> sẽ xóa tất cả các sản phẩm liên quan !
-            </v-alert>
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-btn 
                 color="delete" 
                 dark
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 class="mx-0"
                 :loading="Loading.delete"
                 :disabled="Loading.delete || Loading.edit"
@@ -42,7 +38,7 @@
 
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 @click="Cancel()"
                 :disabled="Loading.delete || Loading.edit"
             >
@@ -52,7 +48,7 @@
             <v-btn 
                 color="edit" 
                 dark
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 class="mx-0"
                 :loading="Loading.delete || Loading.edit"
                 @click="EditTrademark()"

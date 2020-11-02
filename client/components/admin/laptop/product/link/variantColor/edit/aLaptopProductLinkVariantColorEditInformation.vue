@@ -10,7 +10,7 @@
             placeholder="Tên màu sắc"
             color="edit"
             autocomplete="off"
-            outlined
+            filled rounded
             :disabled="Loading.edit"
         ></v-text-field>
 
@@ -31,7 +31,7 @@
                     placeholder="Mã màu sắc"
                     color="edit"
                     autocomplete="off"
-                    outlined
+                    filled rounded
                     :disabled="Loading.edit"
                     v-on="on"
                 ></v-text-field>
@@ -55,7 +55,7 @@
             color="edit"
             append-icon="image"
             autocomplete="off"
-            outlined
+            filled rounded
             :disabled="Loading.edit"
         ></v-text-field>
 
@@ -67,14 +67,14 @@
             placeholder="Tăng giá so với giá gốc"
             color="edit"
             autocomplete="off"
-            outlined
+            filled rounded
             :disabled="Loading.edit"
         ></v-text-field>
 
         <!--Button Action-->
         <v-sheet class="d-flex">
             <v-btn 
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :disabled="Loading.edit"
                 @click="$emit('cancel')"
@@ -86,7 +86,7 @@
             
             <v-btn 
                 color="edit" dark
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.edit"
                 @click="EditVariantColor"

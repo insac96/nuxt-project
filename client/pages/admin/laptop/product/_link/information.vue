@@ -13,7 +13,7 @@
                 v-model="product.name"
                 :rules="[ $Rules.required, $Rules.multiSpace ]"
                 label="Laptop Name"
-                outlined
+                filled rounded
                 placeholder="Tên sản phẩm"
                 append-icon="laptop"
                 color="primary"
@@ -28,7 +28,7 @@
                 item-text="name"
                 item-value="_id"
                 label="Laptop Company"
-                outlined
+                filled rounded
                 placeholder="Chọn hãng sản xuất"
                 append-icon="apartment"
                 color="primary"
@@ -45,7 +45,7 @@
                 item-text="name"
                 item-value="_id"
                 label="Laptop Trademark"
-                outlined
+                filled rounded
                 placeholder="Chọn thương hiệu nhánh"
                 append-icon="account_balance_wallet"
                 color="primary"
@@ -59,7 +59,7 @@
 
             <v-btn 
                 color="primary" dark 
-                elevation="0" tile large 
+                elevation="0" rounded large 
                 :loading="Loading.edit"
                 @click="EditInformation"
             >

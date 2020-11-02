@@ -14,7 +14,7 @@
                     v-model="CloneCompany.name"
                     :rules="[ $Rules.required, $Rules.specialCharacters, $Rules.multiSpace ]"
                     label="Company Name"
-                    outlined
+                    filled rounded
                     placeholder="Tên hãng sản xuất"
                     append-icon="apartment"
                     color="edit"
@@ -26,7 +26,7 @@
                     v-model="CloneCompany.logo"
                     :rules="[ $Rules.required ]"
                     label="Company Logo"
-                    outlined
+                    filled rounded
                     placeholder="Logo hãng sản xuất"
                     append-icon="image"
                     color="edit"
@@ -40,10 +40,10 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             <v-btn 
-                tile elevation="0" large 
+                rounded elevation="0" large 
                 :disabled="Loading.edit || Loading.upload" 
                 @click="Cancel"
             >
@@ -52,7 +52,7 @@
             
             <v-btn 
                 color="edit" dark
-                tile elevation="0" 
+                rounded elevation="0" 
                 large class="mx-0" 
                 :loading="Loading.edit || Loading.upload" 
                 @click="EditCompany"

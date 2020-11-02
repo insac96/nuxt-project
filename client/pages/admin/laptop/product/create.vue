@@ -61,22 +61,11 @@
                 <!--Step 4-->
                 <v-stepper-content step="4">
                     <v-sheet class="d-flex justify-center">
-                        <v-btn 
-                            tile elevation="0" 
-                            large
-                            :disabled="Loading.create"
-                            @click="Step = 1"
-                        >
+                        <v-btn large rounded elevation="0" :disabled="Loading.create" @click="Step = 1">
                             Xem Lại
                         </v-btn>
 
-                        <v-btn 
-                            color="primary" 
-                            tile elevation="0" 
-                            large dark 
-                            :loading="Loading.create"
-                            @click="CreateNewProduct"
-                        >
+                        <v-btn color="primary" dark rounded elevation="0" large :loading="Loading.create" @click="CreateNewProduct">
                             Thêm Sản Phẩm
                         </v-btn>
                     </v-sheet>

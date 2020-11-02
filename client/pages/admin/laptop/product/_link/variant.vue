@@ -12,7 +12,7 @@
             <v-btn 
                 color="primary" 
                 dark elevation="0" 
-                tile large
+                rounded large
                 @click="VariantDialog.create = true"
             >
                 <v-icon>add</v-icon>
@@ -66,7 +66,7 @@
 
                             <!--3 - Price-->
                             <td class="text-center">
-                                <v-chip class="font-weight-bold">{{ variant.price.toLocaleString('vi-VN') }}đ</v-chip>
+                                <v-chip class="font-weight-bold">{{  $String.toPrice(variant.price) }}đ</v-chip>
                             </td>
 
                             <!--4 - Discount-->
@@ -81,7 +81,7 @@
                                 </div>
                                 
                                 <v-chip v-else color="error" class="font-weight-bold" @click="ShowVariantDialogEditDiscount(variant)">
-                                    {{ variant.discount.amount.toLocaleString('vi-VN') }}đ
+                                    {{ $String.toPrice(variant.discount.amount) }}đ
                                 </v-chip>
                             </td>
 

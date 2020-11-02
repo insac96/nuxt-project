@@ -38,7 +38,7 @@
                     <v-text-field
                         v-model="ConfigurationUpgrade.ram.max"
                         label="Max"
-                        outlined dense
+                        filled rounded
                         placeholder="Dung lượng tối đa"
                         color="primary"
                         class="mr-1"
@@ -50,7 +50,7 @@
                     <v-text-field
                         v-model="ConfigurationUpgrade.ram.slot"
                         label="Slot"
-                        outlined dense
+                        filled rounded
                         placeholder="Số khe cắm ngoài"
                         color="primary"
                         class="ml-1" type="number"
@@ -72,7 +72,7 @@
                     <v-text-field
                         v-model="ConfigurationUpgrade.harddrive.max"
                         label="Max"
-                        outlined dense
+                        filled rounded
                         placeholder="Dung lượng tối đa"
                         color="primary"
                         class="mr-1"
@@ -83,7 +83,7 @@
                     <v-text-field
                         v-model="ConfigurationUpgrade.harddrive.slot"
                         label="Slot"
-                        outlined dense
+                        filled rounded
                         placeholder="Các khe hỗ trợ"
                         color="primary"
                         class="ml-1"
@@ -101,7 +101,7 @@
 
             <v-btn 
                 color="primary" dark 
-                elevation="0" tile large
+                elevation="0" rounded large
                 :loading="Loading.edit"
                 @click="EditUpgrade"
             >
