@@ -10,9 +10,15 @@ export const EditDefault = async (req, res, next) => {
     if(!_id || !req.body.default) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await ConfigurationDB.updateOne({ '_id': _id }, { 
-            default: req.body.default
-        });
+        let Configuration = await ConfigurationDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Configuration) throw 'Configuration Data NotFound';
+
+        Configuration.default = req.body.default;
+
+        await Configuration.save();
 
         res.send(true);
     }
@@ -28,9 +34,15 @@ export const EditUpgrade = async (req, res, next) => {
     if(!_id || !upgrade) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
     try {
-        await ConfigurationDB.updateOne({ '_id': _id }, { 
-            upgrade: upgrade
-        });
+        let Configuration = await ConfigurationDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Configuration) throw 'Configuration Data NotFound';
+
+        Configuration.upgrade = upgrade;
+
+        await Configuration.save();
 
         res.send(true);
     }

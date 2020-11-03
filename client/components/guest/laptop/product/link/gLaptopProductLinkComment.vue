@@ -8,7 +8,7 @@
         </v-sheet>
 
         <!--Body-->
-        <v-card-text class="pt-6 pb-0" v-if="Comments.length > 0">
+        <v-card-text class="pt-6" v-if="Comments.length > 0">
             <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
                 <!--Avatar User - Left-->        
                 <v-avatar :size="SizeComment">
@@ -31,7 +31,7 @@
                     <div class="pl-6 my-1"> 
                         <span>{{$dayjs(comment.create).fromNow()}}</span>
 
-                        <v-btn text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
+                        <v-btn v-if="UserStore.authentic" text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
                     </div>
 
                     <!--Reply-->

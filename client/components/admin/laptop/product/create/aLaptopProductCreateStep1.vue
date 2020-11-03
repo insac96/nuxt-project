@@ -8,21 +8,27 @@
             <v-card-subtitle>Thông tin cơ bản của sản phẩm</v-card-subtitle>
 
             <v-card-text>
-                <v-form class="mt-4" ref="form" v-model="Validate.form">
+                <v-form class="mt-4" ref="form" v-model="Validate">
                     <v-text-field
                         v-model="NewProduct.name"
-                        :rules="Validate.name"
+                        :rules="[$Rules.required, $Rules.multiSpace, $Rules.specialCharacters]"
                         label="Laptop Name"
                         filled rounded
                         placeholder="Tên sản phẩm"
                         append-icon="laptop"
                         color="primary"
                         autocomplete="off"
-                    ></v-text-field>
+                        :error-messages="ErrorHintName"
+                        @click="ErrorHintName = null"
+                    >
+                        <template v-slot:message="{ message }">
+                            {{ ErrorHintName ? ErrorHintName : message }}
+                        </template>
+                    </v-text-field>
 
                     <v-select
                         v-model="NewProduct.company"
-                        :rules="Validate.company"
+                        :rules="[$Rules.required]"
                         :items="Companyes"
                         item-text="name"
                         item-value="_id"
@@ -39,7 +45,7 @@
                     <v-select
                         v-if="CompanySelect"
                         v-model="NewProduct.trademark"
-                        :rules="Validate.trademark"
+                        :rules="[$Rules.required]"
                         :items="CompanySelect.trademarks"
                         item-text="name"
                         item-value="_id"
@@ -115,6 +121,7 @@
 import LaptopAPI from '~/setting/laptop/api';
 
 export default {
+    props: ['ErrorHintName'],
     data () {
         return {
             Companyes: [],
@@ -125,18 +132,7 @@ export default {
                 trademark: null,
                 images: [],
             },
-            Validate: {
-                form: true,
-                name: [
-                    v => !!v || 'Tên sản phẩm không được để trống',
-                ],
-                company: [
-                    v => !!v || 'Tên hãng sản xuất không được để trống',
-                ],
-                trademark: [
-                    v => !!v || 'Tên thương hiệu con không được để trống',
-                ]
-            },
+            Validate: true,
             Loading: {
                 upload: false
             }
@@ -151,7 +147,7 @@ export default {
                 this.Companyes = await this.$axios.$get(LaptopAPI.admin.GetAllMiniCompany);
             }
             catch(e){
-                return false;
+                this.Companyes = [];
             }       
         },
 

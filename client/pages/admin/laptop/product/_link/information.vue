@@ -18,7 +18,13 @@
                 append-icon="laptop"
                 color="primary"
                 autocomplete="off"
-            ></v-text-field>
+                :error-messages="ErrorHint.name"
+                @click="ErrorHint.name = null"
+            >
+                <template v-slot:message="{ message }">
+                    {{ ErrorHint.name ? ErrorHint.name : message }}
+                </template>
+            </v-text-field>
 
             <!--Company-->
             <v-select
@@ -82,6 +88,9 @@ export default {
             Validate: true,
             Loading: {
                 edit: false
+            },
+            ErrorHint: {
+                name: null
             }
         }
     },
@@ -122,10 +131,14 @@ export default {
                     name: this.product.name
                 });
 
+                if(Edit.error) throw Edit;
+
                 this.Loading.edit = false;
             }
             catch(e){
                 this.Loading.edit = false;
+
+                if(e.error && e.status == 'name') return this.ErrorHint.name = e.message;
             }    
         }
     }

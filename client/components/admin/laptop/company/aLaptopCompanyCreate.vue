@@ -20,7 +20,13 @@
                     append-icon="apartment"
                     color="create"
                     item-color="create"
-                ></v-combobox>
+                    :error-messages="ErrorHint.name"
+                    @click="ErrorHint.name = null"
+                >
+                    <template v-slot:message="{ message }">
+                        {{ ErrorHint.name ? ErrorHint.name : message }}
+                    </template>
+                </v-combobox>
 
                 <!--Company Trademark-->
                 <v-combobox
@@ -56,7 +62,13 @@
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
                     autocomplete="off"
-                ></v-text-field>
+                    :error-messages="ErrorHint.logo"
+                    @click="ErrorHint.logo = null"
+                >
+                    <template v-slot:message="{ message }">
+                        {{ ErrorHint.logo ? ErrorHint.logo : message }}
+                    </template>
+                </v-text-field>
                 <input type="file" ref="File" hidden @change="Upload">
             </v-form>
         </v-card-text>
@@ -107,6 +119,10 @@ export default {
             Loading: {
                 upload: false,
                 create: false
+            },
+            ErrorHint: {
+                name: null,
+                logo: null
             }
         }
     },
@@ -121,6 +137,8 @@ export default {
                     name: this.NewCompany.name,
                     logo: this.NewCompany.logo
                 });
+
+                if(NewCompany.error) throw NewCompany;
 
                 NewCompany.trademarks = [];
                 NewCompany.productCount = 0;
@@ -138,6 +156,8 @@ export default {
             }
             catch(e){
                 this.Loading.create = false;
+
+                if(e.error && e.status == 'name') return this.ErrorHint.name = e.message;
             }   
         },
 
@@ -153,6 +173,7 @@ export default {
             }
             catch(e){
                 this.Loading.upload = false;
+                this.ErrorHint.logo = e.toString();
             }
         },
 
@@ -164,6 +185,11 @@ export default {
         },
 
         Cancel () {
+            this.ErrorHint = {
+                name: null,
+                logo: null
+            };
+
             this.$refs.form.reset();
             this.$refs.form.resetValidation();
 

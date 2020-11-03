@@ -12,6 +12,16 @@ export const Create = async (req, res, next) => {
     if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
+        let Get = await VariantDB
+        .findOne({'code': code})
+        .select('_id');
+
+        if(Get) return res.json({
+            error: true,
+            status: 'code',
+            message: 'Mã CODE đã tồn tại'
+        });
+
         let NewVariant = new VariantDB({
             company: company,
             trademark: trademark,
@@ -59,16 +69,35 @@ export const Edit = async (req, res, next) => {
     if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
     try {
-        await VariantDB.updateOne({ '_id': _id }, { 
-            code: code,
-            screen: screen,
-            cpu: cpu,
-            ram: ram,
-            gpu: gpu,
-            harddrive: harddrive,
-            price: price,
-            status: status
-        });
+        let Variant = await VariantDB
+        .findById(_id)
+        .select('_id code');
+
+        if(!Variant) throw 'Variant Data Not Found';
+
+        if(Variant.code != code){
+            let Get = await VariantDB
+            .findOne({'code': code})
+            .select('_id');
+
+            if(Get) return res.json({
+                error: true,
+                status: 'code',
+                message: 'Mã CODE đã tồn tại'
+            });
+        }
+
+        Variant.code = code;
+        Variant.screen = screen;
+        Variant.cpu = cpu;
+        Variant.ram = ram;
+        Variant.gpu = gpu;
+        Variant.harddrive = harddrive;
+        Variant.price = price;
+        Variant.status = status;
+
+        await Variant.save();
+
         res.send(true);
     }
     catch(e) {
@@ -83,13 +112,19 @@ export const EditDiscount = async (req, res, next) => {
     if(!_id || !discount) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
+        let Variant = await VariantDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Variant) throw 'Variant Data Not Found';
+
         if(discount.type === false) {
             discount.amount = 0;
         }
 
-        await VariantDB.updateOne({ '_id': _id }, { 
-            discount: discount
-        });
+        Variant.discount = discount;
+
+        await Variant.save();
 
         res.send(true);
     }

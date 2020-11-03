@@ -310,16 +310,18 @@ export default {
         async EditVisibilityProduct (product) {
             this.Loading.visibility = true;
 
+            product.visibility = !product.visibility;
+
             try {
                 let Change = await this.$axios.$post(LaptopAPI.admin.EditVisibilityProduct, {
                     _id: product._id,
                     visibility: product.visibility
                 });
 
-                product.visibility = !product.visibility;
                 this.Loading.visibility = false;
             }
             catch(e){
+                product.visibility = !product.visibility;
                 this.Loading.visibility = false;
             }
         }

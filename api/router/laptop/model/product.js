@@ -13,10 +13,7 @@ const ProductSchema = new Schema(
             { type: String }
         ],
         visibility: { type: Boolean, default: true },
-        link: { type: String , default: function(){
-            if(this.name) return toConvert(this.name, '-');
-            return null;
-        }},
+        link: { type: String , required: true },
     }, 
     { 
         toJSON: { virtuals: true } 

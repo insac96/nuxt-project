@@ -41,7 +41,12 @@
                                 autocomplete="off"
                                 filled rounded
                                 :disabled="Loading.edit"
-                            ></v-text-field>     
+                                :error-messages="ErrorHint[item.name]"
+                            >
+                                <template v-slot:message="{ message }">
+                                    {{ ErrorHint[item.name] ? ErrorHint[item.name] : message }}
+                                </template>
+                            </v-text-field>
                         </div>  
                     </v-col>
 
@@ -162,7 +167,8 @@ export default {
                 {name: 'gpu', label: 'GPU', placeholder: 'ex: RTX 2060', combobox: true},
                 {name: 'price', label: 'Price', placeholder: 'Giá bán của cấu hình', type: 'number'},
                 {name: 'status', label: 'Status', placeholder: 'Trạng thái cấu hình', type: 'number', select: true},
-            ]
+            ],
+            ErrorHint: {}
         }
     },
 
@@ -180,6 +186,8 @@ export default {
             try {
                 let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariant, this.CloneVariant);
 
+                if(Edit.error) throw Edit;
+
                 this.Loading.edit = false;
                 Object.assign(this.variant, this.CloneVariant);
 
@@ -187,6 +195,8 @@ export default {
             }
             catch(e){
                 this.Loading.edit = false;
+
+                if(e.error) return this.ErrorHint[e.status] = e.message;
             } 
         },
 
@@ -209,6 +219,7 @@ export default {
         },
 
         Cancel () {
+            this.ErrorHint = {};
             this.$refs.form.resetValidation();
 
             this.$emit('cancel');

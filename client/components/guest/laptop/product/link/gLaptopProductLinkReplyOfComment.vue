@@ -27,7 +27,7 @@
         </div>
 
         <!--Input Reply-->
-        <div v-if="comment.showInputReply" class="d-flex pl-6 mt-2">
+        <div v-if="UserStore.authentic && comment.showInputReply" class="d-flex pl-6 mt-2">
             <v-avatar :size="SizeReply">
                 <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
             </v-avatar>

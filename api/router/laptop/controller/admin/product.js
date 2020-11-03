@@ -53,9 +53,22 @@ export const Get = async (req, res, next) => {
 export const Create = async (req, res, next) => {
     let { product, configuration } = req.body;
 
-    if(!product || !configuration) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!product.name || !product.company || !product.trademark || !configuration) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
+    let link = toConvert(product.name, '-');
+    product.link = link;
 
     try {
+        let Get = await ProductDB
+        .findOne({'link': link})
+        .select('_id');
+
+        if(Get) return res.json({
+            error: true,
+            status: 'name',
+            message: 'Tên sản phẩm đã tồn tại'
+        });
+
         //New Product
         let NewProduct = new ProductDB(product);
         await NewProduct.save();
@@ -145,13 +158,34 @@ export const EditInformation = async (req, res, next) => {
     let { _id, company, trademark, name } = req.body;
 
     if(!_id || !name || !company || !trademark) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    
+    let link = toConvert(name, '-');
 
     try {
-        await ProductDB.updateOne({ '_id': _id }, { 
-            name: name,
-            company: company,
-            trademark: trademark
-        });
+        let Product = await ProductDB
+        .findById(_id)
+        .select('_id link');
+
+        if(!Product) throw 'Product Data Not Found';
+
+        if(link != Product.link){
+            let Get = await ProductDB
+            .findOne({'link': link})
+            .select('_id');
+
+            if(Get) return res.json({
+                error: true,
+                status: 'name',
+                message: 'Tên sản phẩm đã tồn tại'
+            });
+        }
+
+        Product.name = name;
+        Product.company = company;
+        Product.trademark = trademark;
+        Product.link = link;
+
+        await Product.save();
         
         res.send(true);
     }
@@ -167,9 +201,16 @@ export const EditImages = async (req, res, next) => {
     if(!_id || !images || !Array.isArray(images)) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await ProductDB.updateOne({ '_id': _id }, { 
-            images: images
-        });
+        let Product = await ProductDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Product) throw 'Product Data Not Found';
+
+        Product.images = images;
+
+        await Product.save();
+
         res.send(true);
     }
     catch(e) {
@@ -184,9 +225,15 @@ export const EditVisibility = async (req, res, next) => {
     if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await ProductDB.updateOne({ '_id': _id }, {
-            visibility: !visibility
-        });
+        let Product = await ProductDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Product) throw 'Product Data Not Found';
+
+        Product.visibility = visibility;
+
+        await Product.save();
 
         res.send(true);
     }

@@ -49,6 +49,16 @@ export const Create = async (req, res, next) => {
     if(!name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
+        let Get = await CompanyDB
+        .findOne({ 'name': name })
+        .select('_id');
+
+        if(Get) return res.json({
+            error: true,
+            status: 'name',
+            message: 'Tên công ty đã tồn tại'
+        });
+
         let NewCompany = new CompanyDB({
             name: name,
             logo: logo
@@ -94,10 +104,17 @@ export const Edit = async (req, res, next) => {
     if(!_id || !name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
     try {
-        await CompanyDB.updateOne({ '_id': _id }, { 
-            name: name,
-            logo: logo
-        });
+        let Company = await CompanyDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Company) throw 'Company Data Not Found';
+
+        Company.name = name;
+        Company.logo = logo;
+
+        await Company.save();
+
         res.send(true);
     }
     catch(e) {

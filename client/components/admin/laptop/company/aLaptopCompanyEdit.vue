@@ -34,7 +34,13 @@
                     :loading="Loading.upload"
                     :disabled="Loading.upload"
                     autocomplete="off"
-                ></v-text-field>
+                    :error-messages="ErrorHint.logo"
+                    @click="ErrorHint.logo = null"
+                >
+                    <template v-slot:message="{ message }">
+                        {{ ErrorHint.logo ? ErrorHint.logo : message }}
+                    </template>
+                </v-text-field>
                 <input type="file" ref="File" hidden @change="Upload">
             </v-form>
         </v-card-text>
@@ -77,6 +83,9 @@ export default {
             Loading: {
                 upload: false,
                 edit: false
+            },
+            ErrorHint: {
+                logo: null
             }
         }
     },
@@ -118,6 +127,7 @@ export default {
             }
             catch(e){
                 this.Loading.upload = false;
+                this.ErrorHint.logo = e.toString();
             }
         },
 
@@ -129,6 +139,11 @@ export default {
         },
 
         Cancel () {
+            this.ErrorHint = {
+                name: null,
+                logo: null
+            };
+            
             this.$refs.form.resetValidation();
             this.$emit('cancel');
         }

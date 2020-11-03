@@ -112,7 +112,7 @@ export const EditVisibility = async (req, res, next) => {
 
     try {
         let News = await NewsDB
-        .findOne({'_id': _id})
+        .findById(_id)
         .select('_id');
 
         if(!News) throw 'News Data Not Found';
@@ -135,7 +135,7 @@ export const EditTop = async (req, res, next) => {
 
     try {
         let News = await NewsDB
-        .findOne({'_id': _id})
+        .findById(_id)
         .select('_id');
 
         if(!News) throw 'News Data Not Found';
@@ -160,7 +160,7 @@ export const EditInformation = async (req, res, next) => {
 
     try {
         let News = await NewsDB
-        .findOne({'_id': _id})
+        .findById(_id)
         .select('_id link');
 
         if(!News) throw 'News Data Not Found';
@@ -198,7 +198,7 @@ export const EditContent = async (req, res, next) => {
 
     try {
         let News = await NewsDB
-        .findOne({'_id': _id})
+        .findById(_id)
         .select('_id');
 
         if(!News) throw 'News Data Not Found';

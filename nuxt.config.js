@@ -81,6 +81,7 @@ export default {
   build: {
     capche: true,
     optimizeCSS: true,
+    extractCSS: true
   },
 
   serverMiddleware: [

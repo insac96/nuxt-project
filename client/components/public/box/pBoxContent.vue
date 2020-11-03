@@ -7,7 +7,7 @@
             <div v-else v-html="content" :class="ShowAll ? '' : 'MiniArticle'"></div>
         </div>
 
-        <v-sheet class="d-flex justify-center pt-0 pb-2" v-if="mini">
+        <v-sheet class="d-flex justify-center pt-4" v-if="mini">
             <v-btn rounded elevation="0" color="primary" class="px-6" @click="ShowAll = !ShowAll">
                 {{ ShowAll ? 'Ẩn Nội Dung' : 'Xem Toàn Bộ Nội Dung'}}
             </v-btn>

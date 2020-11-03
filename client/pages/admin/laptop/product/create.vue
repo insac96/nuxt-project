@@ -45,7 +45,7 @@
             <v-stepper-items>
                 <!--Step 1-->
                 <v-stepper-content step="1">
-                    <ALaptopProductCreateStep1 @next="Save_Step_1"></ALaptopProductCreateStep1>
+                    <ALaptopProductCreateStep1 @next="Save_Step_1" :ErrorHintName="ErrorHint.productName"></ALaptopProductCreateStep1>
                 </v-stepper-content>
 
                 <!--Step 2-->
@@ -91,11 +91,15 @@ export default {
             },
             Loading: {
                 create: false
+            },
+            ErrorHint: {
+                productName: null
             }
         }
     },
 
     methods: {
+        //Save Step
         Save_Step_1(data){
             this.NewProduct = data;
 
@@ -111,6 +115,8 @@ export default {
 
             this.Step = 4;
         },
+
+        //Create
         async CreateNewProduct(){
             this.Loading.create = true;
 
@@ -120,11 +126,18 @@ export default {
                     configuration: this.NewConfiguration
                 });
 
+                if(NewProduct.error) throw NewProduct;
+
                 this.Loading.create = false;
                 this.$router.push(`/admin/laptop/product/${NewProduct.link}/information`);
             }
             catch(e){
-                return false;
+                this.Loading.create = false;
+
+                if(e.error && e.status == 'name') {
+                    this.Step = 1;
+                    return this.ErrorHint.productName = e.message;
+                }
             } 
         }
     }

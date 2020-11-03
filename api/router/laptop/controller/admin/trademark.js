@@ -1,5 +1,6 @@
 //FOR LAPTOP - ADMIN
 
+import CompanyDB from '../../model/company';
 import TrademarkDB from '../../model/trademark';
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';
@@ -18,6 +19,12 @@ export const Create = async (req, res, next) => {
     if(!company || !name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
+        let GetCompany = await CompanyDB
+        .findById(company)
+        .select('_id');
+
+        if(!GetCompany) throw 'Company Data Not Found';
+
         let NewTrademark = new TrademarkDB({
             company: company,
             name: name
@@ -62,9 +69,13 @@ export const Edit = async (req, res, next) => {
     if(!_id || !name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await TrademarkDB.updateOne({ '_id': _id }, { 
-            name: name,
-        });
+        let Trademark = await TrademarkDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Trademark) throw 'Trademark Data Not Found';
+
+        Trademark.name = name;
 
         res.send(true);
     }
