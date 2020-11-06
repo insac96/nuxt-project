@@ -11,26 +11,26 @@
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">CPU</span>
-                <v-switch v-model="ConfigurationUpgrade.cpu" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.cpu" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">GPU</span>
-                <v-switch v-model="ConfigurationUpgrade.gpu" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.gpu" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">Wifi</span>
-                <v-switch v-model="ConfigurationUpgrade.wifi" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                <v-switch v-model="ConfigurationUpgrade.wifi" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">RAM</span>
-                    <v-switch v-model="ConfigurationUpgrade.ram.type" color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
+                    <v-switch v-model="ConfigurationUpgrade.ram.type" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
                 </div>
                 
                 <!--Show, if Type of Ram is True-->
@@ -64,7 +64,7 @@
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">Hard Drive</span>
-                    <v-switch v-model="ConfigurationUpgrade.harddrive.type" color="primary" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="ConfigurationUpgrade.harddrive.type" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
                 </div>
                 
                 <!--Show, if Type of Hard Drive is True-->

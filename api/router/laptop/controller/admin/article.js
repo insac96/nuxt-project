@@ -1,7 +1,6 @@
 //FOR LAPTOP - ADMIN
 
 import ArticleDB from '../../model/article';
-import { ErrorHandler } from '../../../../plugins/error';
 
 //Create New Article
 export const Create = async (req, res, next) => {

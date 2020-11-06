@@ -57,7 +57,7 @@ export default {
         return {
             NewTrademark: {
                 name : null,
-                company: null
+                company: this.company.id
             },
             Validate: true,
             Loading: {
@@ -72,8 +72,6 @@ export default {
             this.Loading.create = true;
 
             try {
-                this.NewTrademark.company = this.company.id;
-
                 let NewTrademark = await this.$axios.$post(LaptopAPI.admin.CreateNewTrademark, this.NewTrademark);
 
                 this.Update(NewTrademark);

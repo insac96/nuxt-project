@@ -1,7 +1,6 @@
 //FOR LAPTOP - ADMIN
 
 import ConfigurationDB from '../../model/configuration';
-import { ErrorHandler } from '../../../../plugins/error';
 
 //Edit Default Configuration
 export const EditDefault = async (req, res, next) => {

@@ -104,7 +104,7 @@ export default {
             if(this.Companyes.length > 0) return false;
 
             try {
-                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetAllMiniCompany);
+                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetListCompanyInfo);
 
                 this.Companyes = Companyes;
                 this.CompanySelect = this.Companyes.find(i => i.id == this.product.company._id);

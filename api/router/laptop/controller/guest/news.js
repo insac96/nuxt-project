@@ -1,8 +1,6 @@
 //FOR LAPTOP - GUEST
 
 import NewsDB from '../../model/news';
-//import { toConvert } from '../../../../plugins/string';
-import { ErrorHandler } from '../../../../plugins/error';
 
 export const GetListByTop = async (req, res, next) => {
     try {

@@ -33,8 +33,8 @@
 
         <!-- ELSE -->
         <v-sheet v-else>
-            <!-- Configuration -->
-            <div class="px-4 mb-4">
+            <!-- Number Variant -->
+            <div class="px-4">
                 <v-divider class="my-4"></v-divider>
 
                 <v-alert type="info" dense text border="left" color="primary">
@@ -42,7 +42,10 @@
                 </v-alert>
 
                 <v-divider class="my-4"></v-divider>
+            </div>
 
+            <!-- Configuration -->
+            <div class="px-4 mb-4">
                 <!-- Head -->
                 <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
                     <span class="text-subtitle-1 text-sm-h6 font-weight-bold">1. CẤU HÌNH</span>
@@ -74,7 +77,7 @@
             </div>
 
             <!-- Color -->
-            <div class="px-4 mb-6">
+            <div class="px-4 mb-6" v-if="Select.color">
                 <v-divider class="my-4"></v-divider>
 
                 <!-- Head -->
@@ -82,28 +85,28 @@
                     <span class="text-subtitle-1 text-sm-h6 font-weight-bold">2. MÀU SẮC</span>
 
                     <v-chip 
-                        v-if="Select.color['upprice'] > 0"
+                        v-if="Select.color.export.upprice > 0"
                         color="info"
                         class="font-weight-bold"
                     >
-                        + {{ $String.toPrice(Select.color['upprice']) }}đ
+                        + {{ $String.toPrice(Select.color.export.upprice) }}đ
                     </v-chip>
                 </div>
 
                 <!-- Select Button -->
                 <v-btn-toggle>
                     <v-btn 
-                        v-for="(color, indexColor) in Select.variant.colors" :key="indexColor"    
-                        :color="color.code" fab :ripple="false" active-class="active-select"
-                        @click="SelectColor(color)"
+                        v-for="(warehouseColor, indexColor) in Select.variant.warehouse.colors" :key="indexColor"    
+                        :color="warehouseColor.variantColor.code" fab :ripple="false" active-class="active-select"
+                        @click="SelectColor(warehouseColor)"
                     >
-                        <v-icon v-if="Select.color._id == color._id" color="white">check</v-icon>
+                        <v-icon v-if="Select.color._id == warehouseColor._id" color="white">check</v-icon>
                     </v-btn>
                 </v-btn-toggle>
             </div>
 
             <!--Add to Cart-->
-            <div class="px-4 pb-4" v-if="TotalPrice">
+            <div class="px-4 pb-4" v-if="Select.variant && Select.color">
                 <v-divider class="my-4"></v-divider>
 
                 <!-- Head -->
@@ -113,13 +116,13 @@
                 <div class="d-flex justify-space-between align-center mb-2">
                     Cấu Hình
 
-                    <span>{{ $String.toPrice(Select.variant['price']) }}</span>
+                    <span>{{ $String.toPrice(Select.variant['warehouse'].export.price) }}</span>
                 </div>
 
                 <!--Total Color UpPrice-->
                 <div class="d-flex justify-space-between align-center mb-2">
                     Màu Sắc
-                    <span>+ {{ $String.toPrice(Select.color['upprice']) }}</span>
+                    <span>+ {{ $String.toPrice(Select.color['export'].upprice) }}</span>
                 </div>
 
                 <!--Total Discount-->
@@ -158,6 +161,7 @@ export default {
             Variants: this.product.variants,
             VariantQuery: this.variantQuery,
 
+            ////////////
             Ranting: 4,
             Select: {
                 variant: null,
@@ -173,13 +177,13 @@ export default {
 
     computed: {
         TotalPrice () {
-            if(!this.Select.variant && !this.Select.color) return false;
+            let Price = this.Select.variant['warehouse'].export.price;
+            let ColorUpPrice = this.Select.color['export'].upprice;
+            let Discount = this.Select.variant['discount'];
 
-            if(this.Select.variant['discount'].type){
-                return this.$String.toPrice(this.Select.variant['price'] + this.Select.color['upprice'] - this.Select.variant['discount'].amount);
-            }
+            if(Discount.type) return this.$String.toPrice(Price + ColorUpPrice - Discount.amount);
 
-            return this.$String.toPrice(this.Select.variant['price'] + this.Select.color['upprice']);
+            return this.$String.toPrice(Price + ColorUpPrice);
         }
     },
 
@@ -189,12 +193,22 @@ export default {
 
             if(this.VariantQuery){
                 this.Select.variant = this.VariantQuery;
-                this.Select.color = this.VariantQuery.colors.length > 0 ? this.VariantQuery.colors[0] : {};
+
+                let Warehouse = this.VariantQuery.warehouse;
+                if(!Warehouse) return this.Select.color == null;
+
+                this.Select.color = Warehouse.colors.length > 0 ? Warehouse.colors[0] : null;
             }
             else {
                 this.Select.variant = this.Variants[0];
-                this.Select.color = this.Variants[0].colors.length > 0 ? this.Variants[0].colors[0] : {};
+
+                let Warehouse = this.Variants[0].warehouse;
+                if(!Warehouse) return this.Select.color == null;
+
+                this.Select.color = Warehouse.colors.length > 0 ? Warehouse.colors[0] : null;
             }
+
+            console.log(this.Select.color)
         },
 
         GetListByType (type) {
@@ -236,7 +250,10 @@ export default {
 
         SetNewSelectVariant (variant) {
             this.Select.variant = variant;
-            this.Select.color = variant.colors.length > 0 ? variant.colors[0] : {};
+            
+            if(!variant.warehouse) return this.Select.color = null;
+
+            this.Select.color = variant.warehouse.colors.length > 0 ? variant.warehouse.colors[0] : null;
         },
 
         SelectColor (color) {

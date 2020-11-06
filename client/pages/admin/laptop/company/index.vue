@@ -157,7 +157,7 @@ import LaptopAPI from '@/setting/laptop/api';
 export default {    
     async asyncData({$axios}){
         try {
-            let Companyes = await $axios.$get(LaptopAPI.admin.GetAllCompany);
+            let Companyes = await $axios.$get(LaptopAPI.admin.GetListCompany);
 
             return {
                 Companyes: Companyes

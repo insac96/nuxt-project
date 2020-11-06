@@ -7,7 +7,11 @@
         <v-card-subtitle>Thêm màu sắc cho biến thể</v-card-subtitle>
 
         <!--Body-->
-        <v-form class="pa-4 pb-0" ref="form" v-model="Validate">
+        <v-form class="px-4 pb-0" ref="form" v-model="Validate">
+            <v-alert type="info" color="create" text class="rounded-xl mb-6" prominent>
+                Để màu sắc được hiển thị cho người mua, cần cài đặt trong phần <strong>Nhập Kho</strong> !!!
+            </v-alert>
+
             <!--Color Name-->
             <v-text-field
                 v-model="NewVariantColor.name"
@@ -64,18 +68,6 @@
                 filled rounded
                 :disabled="Loading.create"
             ></v-text-field>
-
-            <!--Color Up Price-->
-            <v-text-field
-                v-model="NewVariantColor.upprice"
-                :rules="[ $Rules.price ]"
-                label="Color Up Price"                    
-                placeholder="Tăng giá so với giá gốc"
-                color="create"
-                autocomplete="off"
-                filled rounded
-                :disabled="Loading.edit"
-            ></v-text-field>
         </v-form>
 
         <!--Footer-->
@@ -111,14 +103,13 @@ export default {
     data () {
         return {
             NewVariantColor: {
-                company: null,
-                trademark: null,
-                product: null,
-                variant: null,
+                company: this.variant.company,
+                trademark: this.variant.trademark,
+                product: this.variant.product,
+                variant: this.variant._id,
                 name: null,
                 code: null,
-                image: null,
-                upprice: null
+                image: null
             },
             Validate: true,
             Loading: {
@@ -133,11 +124,6 @@ export default {
             this.Loading.create = true;
 
             try {
-                this.NewVariantColor.company = this.variant.company;
-                this.NewVariantColor.trademark = this.variant.trademark;
-                this.NewVariantColor.product = this.variant.product;
-                this.NewVariantColor.variant = this.variant._id;
-
                 let NewVariantColor = await this.$axios.$post(LaptopAPI.admin.CreateVariantColor, this.NewVariantColor);
 
                 this.Loading.create = false;

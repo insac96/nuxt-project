@@ -30,7 +30,7 @@
 
                 <!--Company Trademark-->
                 <v-combobox
-                    v-model="NewTrademark"
+                    v-model="NewTrademarks"
                     :items="TrademarkSelectSetting[NewCompany.name]"
                     :disabled="!NewCompany.name"
                     label="Company Trademarks"
@@ -42,7 +42,7 @@
                     multiple small-chips
                 >
                     <template v-slot:selection="{ attrs, item, parent, selected }">
-                        <v-chip v-bind="attrs" :input-value="selected" label color="create" dark class="mt-2 mb-0">
+                        <v-chip v-bind="attrs" :input-value="selected" color="create" small dark class="mt-1 mb-0">
                             <span class="pr-2">{{ item }}</span>
                             <v-icon small @click="parent.selectItem(item)">close</v-icon>
                         </v-chip>
@@ -114,7 +114,7 @@ export default {
                 name: null,
                 logo: null,
             },
-            NewTrademark: null,
+            NewTrademarks: null,
             Validate: true,
             Loading: {
                 upload: false,
@@ -135,24 +135,16 @@ export default {
             try {
                 let NewCompany = await this.$axios.$post(LaptopAPI.admin.CreateNewCompany, {
                     name: this.NewCompany.name,
-                    logo: this.NewCompany.logo
+                    logo: this.NewCompany.logo,
+                    trademarks: this.NewTrademarks
                 });
 
                 if(NewCompany.error) throw NewCompany;
 
-                NewCompany.trademarks = [];
                 NewCompany.productCount = 0;
-
-                this.NewTrademark.forEach(async (name) => {
-                    let NewTrademark = await this.$axios.$post(LaptopAPI.admin.CreateNewTrademark, {
-                        company: NewCompany._id,
-                        name: name
-                    });
-
-                    NewCompany.trademarks.push(NewTrademark);
-                });
-
                 this.Update(NewCompany);
+
+                this.Loading.create = false;
             }
             catch(e){
                 this.Loading.create = false;
@@ -178,7 +170,6 @@ export default {
         },
 
         Update (NewCompany) {
-            this.Loading.create = false;
             this.companyes.push(NewCompany);
 
             this.Cancel();

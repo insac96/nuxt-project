@@ -9,18 +9,18 @@ let Router = express.Router();
 
 /////////////////////GUEST - CONTROLLER/////////////////////
 //Company - Guest
-Router.get("/company/mini/get", Controller_Guest.Company.GetMini);
-
-//Variant - Guest
-Router.post("/variant/discount/get", Controller_Guest.Variant.GetByDiscount);
-Router.post("/variant/status/get", Controller_Guest.Variant.GetByStatus);
+Router.get("/company/list/getInfo", Controller_Guest.Company.GetListOnlyInfo);
 
 //Product - Guest
-Router.post("/product/link/get", Controller_Guest.Product.GetByLink);
+Router.post("/product/getByLink", Controller_Guest.Product.GetByLink);
+
+//Variant - Guest
+Router.post("/variant/list/getByDiscount", Controller_Guest.Variant.GetListByDiscount);
+Router.post("/variant/list/getByStatus", Controller_Guest.Variant.GetListByStatus);
 
 //News - Guest
-Router.get("/news/top/get", Controller_Guest.News.GetListByTop);
-Router.post("/news/link/get", Controller_Guest.News.GetByLink);
+Router.get("/news/list/getByTop", Controller_Guest.News.GetListByTop);
+Router.post("/news/getByLink", Controller_Guest.News.GetByLink);
 
 //Comment
 Router.post("/comment/add", Authentic_Guest, Controller_Guest.Comment.Add);
@@ -33,8 +33,8 @@ Router.post("/comment/reply/add", Authentic_Guest, Controller_Guest.Comment.AddR
 
 /////////////////////ADMIN - CONTROLLER//////////////////////
 //Company - Admin
-Router.get("/admin/company/get", Authentic_Admin, Controller_Admin.Company.Get);
-Router.get("/admin/company/mini/get", Authentic_Admin, Controller_Admin.Company.GetMini);
+Router.get("/admin/company/list/get", Authentic_Admin, Controller_Admin.Company.Get);
+Router.get("/admin/company/list/getInfo", Authentic_Admin, Controller_Admin.Company.GetListOnlyInfo);
 Router.post('/admin/company/create', Authentic_Admin, Controller_Admin.Company.Create);
 Router.post('/admin/company/delete', Authentic_Admin, Controller_Admin.Company.Delete);
 Router.post('/admin/company/edit', Authentic_Admin, Controller_Admin.Company.Edit);
@@ -45,17 +45,17 @@ Router.post('/admin/trademark/delete', Authentic_Admin, Controller_Admin.Tradema
 Router.post('/admin/trademark/edit', Authentic_Admin, Controller_Admin.Trademark.Edit);
 
 //Product - Admin
-Router.post("/admin/product/get", Authentic_Admin, Controller_Admin.Product.Get);
+Router.post("/admin/product/list/get", Authentic_Admin, Controller_Admin.Product.Get);
 Router.post('/admin/product/create', Authentic_Admin, Controller_Admin.Product.Create);
 Router.post('/admin/product/delete', Authentic_Admin, Controller_Admin.Product.Delete);
-Router.post('/admin/product/link/get', Authentic_Admin, Controller_Admin.Product.GetByLink);
+Router.post('/admin/product/getByLink', Authentic_Admin, Controller_Admin.Product.GetByLink);
 Router.post('/admin/product/information/edit', Authentic_Admin, Controller_Admin.Product.EditInformation);
 Router.post('/admin/product/images/edit', Authentic_Admin, Controller_Admin.Product.EditImages);
 Router.post('/admin/product/visibility/edit', Authentic_Admin, Controller_Admin.Product.EditVisibility);
 
 //News - Admin
-Router.post('/admin/news/get', Authentic_Admin, Controller_Admin.News.Get);
-Router.post('/admin/news/id/get', Authentic_Admin, Controller_Admin.News.GetByID);
+Router.post('/admin/news/list/get', Authentic_Admin, Controller_Admin.News.Get);
+Router.post('/admin/news/getByID', Authentic_Admin, Controller_Admin.News.GetByID);
 Router.post('/admin/news/create', Authentic_Admin, Controller_Admin.News.Create);
 Router.post('/admin/news/delete', Authentic_Admin, Controller_Admin.News.Delete);
 Router.post('/admin/news/visibility/edit', Authentic_Admin, Controller_Admin.News.EditVisibility);
@@ -72,11 +72,20 @@ Router.post('/admin/variant/create', Authentic_Admin, Controller_Admin.Variant.C
 Router.post('/admin/variant/edit', Authentic_Admin, Controller_Admin.Variant.Edit);
 Router.post('/admin/variant/delete', Authentic_Admin, Controller_Admin.Variant.Delete);
 Router.post('/admin/variant/discount/edit', Authentic_Admin, Controller_Admin.Variant.EditDiscount);
+Router.post('/admin/variant/status/edit', Authentic_Admin, Controller_Admin.Variant.EditStatus);
 
 //VariantColor - Admin
 Router.post('/admin/variant/color/create', Authentic_Admin, Controller_Admin.VariantColor.Create);
 Router.post('/admin/variant/color/edit', Authentic_Admin, Controller_Admin.VariantColor.Edit);
 Router.post('/admin/variant/color/delete', Authentic_Admin, Controller_Admin.VariantColor.Delete);
+
+//WareHouse - Admin
+Router.post('/admin/warehouse/import', Authentic_Admin, Controller_Admin.Warehouse.Import);
+Router.post('/admin/warehouse/export/price/edit', Authentic_Admin, Controller_Admin.Warehouse.EditExportPrice);
+
+//WareHouse Color - Admin
+Router.post('/admin/warehouse/color/create', Authentic_Admin, Controller_Admin.WarehouseColor.Create);
+Router.post('/admin/warehouse/color/delete', Authentic_Admin, Controller_Admin.WarehouseColor.Delete);
 
 //Article - Admin
 Router.post('/admin/article/create', Authentic_Admin, Controller_Admin.Article.Create);

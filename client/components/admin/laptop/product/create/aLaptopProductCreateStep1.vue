@@ -144,7 +144,7 @@ export default {
             if(this.Companyes.length > 0) return false;
 
             try {
-                this.Companyes = await this.$axios.$get(LaptopAPI.admin.GetAllMiniCompany);
+                this.Companyes = await this.$axios.$get(LaptopAPI.admin.GetListCompanyInfo);
             }
             catch(e){
                 this.Companyes = [];

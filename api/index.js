@@ -1,5 +1,8 @@
+//Core
 import { ExpressInit } from './core/express';
 import { MongoInit } from './core/mongo';
+
+//Middleware
 import DatabaseMiddleware from './middleware/database';
 import EmptyMiddleware from './middleware/empty';
 
@@ -11,14 +14,14 @@ import UserRouter from './router/user/index';
 MongoInit();
 
 //App Init
-let App = ExpressInit();
+const App = ExpressInit();
 App.use(DatabaseMiddleware);
 
-//App Router
+//API Router
 App.use('/laptop', LaptopRouter);
 App.use('/user', UserRouter);
 
-//App Empty
+//API Empty
 App.use(EmptyMiddleware);
 
 //Export

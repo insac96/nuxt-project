@@ -1,7 +1,6 @@
 //FOR LAPTOP - GUEST
 
 import ProductDB from '../../model/product';
-import { ErrorHandler } from '../../../../plugins/error';
 
 export const GetByLink = async (req, res, next) => {
     let { link } = req.body;
@@ -17,7 +16,18 @@ export const GetByLink = async (req, res, next) => {
         .populate({path: 'article'})
         .populate({
             path: 'variants',
-            populate: { path: 'colors' }
+            populate: [
+                { 
+                    path: 'warehouse',
+                    options: {
+                        sort: { 'import.date': 1 }
+                    },
+                    populate: { 
+                        path: 'colors',
+                        populate: { path: 'variantColor' }
+                    }
+                }
+            ],
         })
         .populate({
             path: 'comments', 

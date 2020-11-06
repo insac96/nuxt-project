@@ -5,12 +5,12 @@ import TrademarkDB from '../../model/trademark';
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
+import VariantColorDB from '../../model/variantColor';
+import WarehouseDB from '../../model/warehouse';
+import WarehouseColorDB from '../../model/warehouseColor';
 import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
-
-import { ErrorHandler } from '../../../../plugins/error';
 
 //Add a New Trademarkk
 export const Create = async (req, res, next) => {
@@ -50,7 +50,9 @@ export const Delete = async (req, res, next) => {
         await ProductDB.deleteMany({ 'trademark': _id });
         await ConfigurationDB.deleteMany({ 'trademark': _id });
         await VariantDB.deleteMany({ 'trademark': _id });
-        await ColorDB.deleteMany({ 'trademark': _id });
+        await VariantColorDB.deleteMany({ 'trademark': _id });
+        await WarehouseDB.deleteMany({ 'trademark': _id });
+        await WarehouseColorDB.deleteMany({ 'trademark': _id });
         await ArticleDB.deleteMany({ 'trademark': _id });
         await CommentDB.deleteMany({ 'trademark': _id });
         await ReplyDB.deleteMany({ 'trademark': _id });

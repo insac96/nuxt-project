@@ -2,10 +2,7 @@
 
 import UserDB from '../../model/user';
 
-import { toConvert } from '../../../../plugins/string';
-import { ErrorHandler } from '../../../../plugins/error';
-
-//Get All User
+//Get List User
 export const Get = async (req, res, next) => {
     let { skip, role, key } = req.body;
     let Query = {};
@@ -13,7 +10,7 @@ export const Get = async (req, res, next) => {
     if(role)
         Query['role'] = role;
     if(key){
-        let keyCase = toConvert(key, '');
+        let keyCase = StringPlugin.toConvert(key, '');
 
         Query['$text'] = { 
             $search: `\"${keyCase}\"`

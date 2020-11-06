@@ -1,8 +1,6 @@
 //FOR LAPTOP - ADMIN
 
 import NewsDB from '../../model/news';
-import { toConvert } from '../../../../plugins/string';
-import { ErrorHandler } from '../../../../plugins/error';
 
 //Get All News
 export const Get = async (req, res, next) => {
@@ -10,7 +8,7 @@ export const Get = async (req, res, next) => {
     let Query = {};
     
     if(key){
-        let keyCase = toConvert(key, '-');
+        let keyCase = StringPlugin.toConvert(key, '-');
 
         Query['$text'] = { 
             $search: `\"${keyCase}\"`
@@ -60,7 +58,7 @@ export const Create = async (req, res, next) => {
 
     if(!title) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
-    let link = toConvert(title, '-');
+    let link = StringPlugin.toConvert(title, '-');
 
     try {
         let Get = await NewsDB
@@ -77,6 +75,7 @@ export const Create = async (req, res, next) => {
             title: title,
             image: image,
             content: content,
+            link: link
         });
 
         await NewNews.save();
@@ -156,7 +155,7 @@ export const EditInformation = async (req, res, next) => {
 
     if(!_id || !title ) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
-    let link = toConvert(title, '-');
+    let link = StringPlugin.toConvert(title, '-');
 
     try {
         let News = await NewsDB

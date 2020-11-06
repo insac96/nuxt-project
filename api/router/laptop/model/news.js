@@ -1,6 +1,5 @@
 //FOR LAPTOP
 
-import { toConvert } from '../../../plugins/string';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
@@ -8,14 +7,11 @@ const NewsSchema = new Schema(
     {
         title: { type: String, required: true },
         image: { type: String },
-        content: { type: String, required: true },
+        content: { type: String },
         top: { type: Boolean, default: false },
         visibility: { type: Boolean, default: true },
         create: { type: Date, default: Date.now },
-        link: { type: String , default: function(){
-            if(this.title) return toConvert(this.title, '-');
-            return null;
-        }},
+        link: { type: String , required: true },
         products: [ { type: Schema.Types.ObjectId, ref: 'LaptopProduct' } ],
     }, 
     { 

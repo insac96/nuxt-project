@@ -7,101 +7,103 @@
         <v-card-subtitle>Cài đặt biến thể sản phẩm</v-card-subtitle>
 
         <!--Body-->
-        <v-card-text class="pb-0">
-            <v-form ref="form" v-model="Validate">
-                <v-row>
-                    <!--Inputs-1-->
-                    <v-col :cols="6">
-                        <div v-for="(item, index) in Input_1" :key="index">
-                            <!--If (item.combobox = true) -->
-                            <v-combobox
-                                v-if="item.combobox"
-                                :items="VariantSelectConfiguration[item.name]"
-                                v-model="CloneVariant[item.name]"
-                                :rules="[ $Rules.required ]"
-                                :label="item.label"                    
-                                :placeholder="item.placeholder"
-                                :type="item.type ? item.type : 'text'"
-                                color="edit"
-                                item-color="edit"
-                                autocomplete="off"
-                                filled rounded
-                                :disabled="Loading.edit"
-                            ></v-combobox>
+        <v-form class="px-4" ref="form" v-model="Validate">
+            <v-row>
+                <!--Left-->
+                <v-col :cols="6">
+                    <!-- Code -->
+                    <v-text-field
+                        v-model="CloneVariant.code"
+                        :rules="[ $Rules.required ]"
+                        label="Code"                    
+                        placeholder="Mã cấu hình"
+                        color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                        :error-messages="ErrorHint.code"
+                        @click="ErrorHint.code = null"
+                    >
+                        <template v-slot:message="{ message }">
+                            {{ ErrorHint.code ? ErrorHint.code : message }}
+                        </template>
+                    </v-text-field>   
 
-                            <!--Else-->
-                            <v-text-field
-                                v-else
-                                v-model="CloneVariant[item.name]"
-                                :rules="[ $Rules.required ]"
-                                :label="item.label"                    
-                                :placeholder="item.placeholder"
-                                :type="item.type ? item.type : 'text'"
-                                color="edit"
-                                autocomplete="off"
-                                filled rounded
-                                :disabled="Loading.edit"
-                                :error-messages="ErrorHint[item.name]"
-                            >
-                                <template v-slot:message="{ message }">
-                                    {{ ErrorHint[item.name] ? ErrorHint[item.name] : message }}
-                                </template>
-                            </v-text-field>
-                        </div>  
-                    </v-col>
+                    <!-- Screen -->
+                    <v-combobox
+                        v-model="CloneVariant.screen"
+                        :rules="[ $Rules.required ]"
+                        label="Screen"                    
+                        placeholder="ex: 14 FHD"
+                        :items="VariantSelectConfiguration.screen"
+                        color="create"
+                        item-color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                    ></v-combobox>
 
-                    <!--Inputs-2-->
-                    <v-col :cols="6">
-                        <div v-for="(item, index) in Input_2" :key="index">
-                            <!--If (item.combobox = true) -->
-                            <v-combobox
-                                v-if="item.combobox"
-                                :items="VariantSelectConfiguration[item.name]"
-                                v-model="CloneVariant[item.name]"
-                                :rules="[ $Rules.required ]"
-                                :label="item.label"                    
-                                :placeholder="item.placeholder"
-                                :type="item.type ? item.type : 'text'"
-                                color="edit"
-                                item-color="edit"
-                                autocomplete="off"
-                                filled rounded
-                                :disabled="Loading.edit"
-                            ></v-combobox>
+                    <!-- CPU -->
+                    <v-combobox
+                        v-model="CloneVariant.cpu"
+                        :rules="[ $Rules.required ]"
+                        label="CPU"                    
+                        placeholder="ex: i7 9900H"
+                        :items="VariantSelectConfiguration.cpu"
+                        color="create"
+                        item-color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                    ></v-combobox>
+                </v-col>
 
-                            <!--If (item.select = true) -->
-                            <v-select
-                                v-else-if="item.select"
-                                v-model="CloneVariant[item.name]"
-                                :rules="[ $Rules.required ]"
-                                :label="item.label"                    
-                                :placeholder="item.placeholder"
-                                :items="VariantSelectConfiguration[item.name]"
-                                color="edit"
-                                item-color="edit"
-                                autocomplete="off"
-                                filled rounded
-                                :disabled="Loading.edit"
-                            ></v-select>
+                <!--Right-->
+                <v-col :cols="6">
+                    <!-- Ram -->
+                    <v-combobox
+                        v-model="CloneVariant.ram"
+                        :rules="[ $Rules.required ]"
+                        label="RAM"               
+                        placeholder="ex: 8GB"
+                        :items="VariantSelectConfiguration.ram"
+                        color="create"
+                        item-color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                    ></v-combobox>
 
-                            <!--Else-->
-                            <v-text-field
-                                v-else
-                                v-model="CloneVariant[item.name]"
-                                :rules="[ (item.name == 'price' ? $Rules.price : $Rules.required) ]"
-                                :label="item.label"                    
-                                :placeholder="item.placeholder"
-                                :type="item.type ? item.type : 'text'"
-                                color="edit"
-                                autocomplete="off"
-                                filled rounded
-                                :disabled="Loading.edit"
-                            ></v-text-field>     
-                        </div>  
-                    </v-col>
-                </v-row>     
-            </v-form>
-        </v-card-text>
+                    <!-- HardDrive -->
+                    <v-combobox
+                        v-model="CloneVariant.harddrive"
+                        :rules="[ $Rules.required ]"
+                        label="HardDrive"               
+                        placeholder="ex: 512GB"
+                        :items="VariantSelectConfiguration.harddrive"
+                        color="create"
+                        item-color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                    ></v-combobox>
+
+                    <!-- GPU -->
+                    <v-combobox
+                        v-model="CloneVariant.gpu"
+                        :rules="[ $Rules.required ]"
+                        label="GPU"               
+                        placeholder="ex: RTX 2060"
+                        :items="VariantSelectConfiguration.gpu"
+                        color="create"
+                        item-color="create"
+                        autocomplete="off"
+                        filled rounded
+                        :disabled="Loading.create"
+                    ></v-combobox>
+                </v-col>
+            </v-row>
+        </v-form>
 
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
@@ -142,39 +144,30 @@
 
 <script>
 import LaptopAPI from '@/setting/laptop/api';
-import * as VariantSetting from '@/setting/laptop/variant';
+import * as VariantSelectSetting from '@/setting/laptop/variant';
 
 export default {
     props: ['variant'],
 
     data () {
         return {
-            VariantSelectConfiguration: VariantSetting.configuration,
+            VariantSelectConfiguration: VariantSelectSetting.configuration,
             CloneVariant: JSON.parse(JSON.stringify(this.variant)),
             Loading: {
                 edit: false,
                 delete: false
             },
             Validate: true,
-            Input_1 : [
-                {name: 'code', label: 'Code', placeholder: 'Mã số cấu hình'},
-                {name: 'screen', label: 'Screen', placeholder: 'ex: 14" FHD', combobox: true},
-                {name: 'cpu', label: 'CPU', placeholder: 'ex: i5 9900H', combobox: true},
-                {name: 'ram', label: 'RAM', placeholder: 'ex: 8GB', combobox: true},
-            ],
-            Input_2 : [
-                {name: 'harddrive', label: 'HardDrive', placeholder: 'ex: 512GB', combobox: true},
-                {name: 'gpu', label: 'GPU', placeholder: 'ex: RTX 2060', combobox: true},
-                {name: 'price', label: 'Price', placeholder: 'Giá bán của cấu hình', type: 'number'},
-                {name: 'status', label: 'Status', placeholder: 'Trạng thái cấu hình', type: 'number', select: true},
-            ],
-            ErrorHint: {}
+            ErrorHint: {
+                code: null
+            }
         }
     },
 
     watch: {
         variant (newVal) {
-            this.CloneVariant = JSON.parse(JSON.stringify(this.variant))
+            console.log(newVal)
+            this.CloneVariant = JSON.parse(JSON.stringify(newVal))
         }
     },
 

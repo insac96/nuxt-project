@@ -59,18 +59,6 @@
             :disabled="Loading.edit"
         ></v-text-field>
 
-        <!--Color Up Price-->
-        <v-text-field
-            v-model="color.upprice"
-            :rules="[ $Rules.price ]"
-            label="Color Up Price"                    
-            placeholder="Tăng giá so với giá gốc"
-            color="edit"
-            autocomplete="off"
-            filled rounded
-            :disabled="Loading.edit"
-        ></v-text-field>
-
         <!--Button Action-->
         <v-sheet class="d-flex">
             <v-btn 

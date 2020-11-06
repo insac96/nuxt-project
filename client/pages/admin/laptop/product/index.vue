@@ -203,7 +203,7 @@ import LaptopAPI from '@/setting/laptop/api';
 export default {
     async asyncData({$axios}){
         try {
-            let Get = await $axios.$post(LaptopAPI.admin.GetAllProduct, {
+            let Get = await $axios.$post(LaptopAPI.admin.GetListProduct, {
                 skip: 0
             });
             return {
@@ -247,7 +247,7 @@ export default {
             if(this.Companyes.length > 0) return false;
 
             try {
-                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetAllMiniCompany);
+                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetListCompanyInfo);
 
                 this.Companyes = this.Companyes.concat(Companyes);
             }
@@ -276,7 +276,7 @@ export default {
         //Search
         async ShowProductByQuery (type) {
             try {
-                let Search = await this.$axios.$post(LaptopAPI.admin.GetAllProduct, {
+                let Search = await this.$axios.$post(LaptopAPI.admin.GetListProduct, {
                     skip: (type === 'more') ? this.Products.length : 0,
                     company: this.ComanySelectShow ? this.ComanySelectShow._id : null,
                     trademark: this.TrademarkSelectShow ? this.TrademarkSelectShow._id : null,

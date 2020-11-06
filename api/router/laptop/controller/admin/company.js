@@ -5,14 +5,14 @@ import TrademarkDB from '../../model/trademark';
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
+import VariantColorDB from '../../model/variantColor';
+import WarehouseDB from '../../model/warehouse';
+import WarehouseColorDB from '../../model/warehouseColor';
 import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
-import { ErrorHandler } from '../../../../plugins/error';
-
-//Get All Company
+//Get List Company
 export const Get = async (req, res, next) => {
     try {
         let Companyes = await CompanyDB
@@ -28,11 +28,12 @@ export const Get = async (req, res, next) => {
     }
 };
 
-//Get Mini Company
-export const GetMini = async (req, res, next) => {
+//Get List Company only Info
+export const GetListOnlyInfo = async (req, res, next) => {
     try {
         let Companyes = await CompanyDB
         .find({})
+        .select('name')
         .populate({path: 'trademarks', select: 'name'})
 
         res.json(Companyes);
@@ -44,7 +45,7 @@ export const GetMini = async (req, res, next) => {
 
 //Create a New Company
 export const Create = async (req, res, next) => {
-    let { name, logo } = req.body;
+    let { name, logo, trademarks } = req.body;
     
     if(!name) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
@@ -64,7 +65,22 @@ export const Create = async (req, res, next) => {
             logo: logo
         });
 
+        let ListNewTrademark = [];
+        for (let i = 0; i < trademarks.length; i++) {
+            let name = trademarks[i];
+            let New = {
+                name: name,
+                company: NewCompany._id
+            };
+            
+            let NewTrademark = new TrademarkDB(New);
+            await NewTrademark.save();
+
+            ListNewTrademark.push(NewTrademark);
+        };
+
         await NewCompany.save();
+        NewCompany.trademarks = ListNewTrademark;
 
         res.json(NewCompany);
     }
@@ -85,7 +101,9 @@ export const Delete = async (req, res, next) => {
         await ProductDB.deleteMany({ 'company': _id });
         await ConfigurationDB.deleteMany({ 'company': _id });
         await VariantDB.deleteMany({ 'company': _id });
-        await ColorDB.deleteMany({ 'company': _id });
+        await VariantColorDB.deleteMany({ 'company': _id });
+        await WarehouseDB.deleteMany({ 'company': _id });
+        await WarehouseColorDB.deleteMany({ 'company': _id });
         await ArticleDB.deleteMany({ 'company': _id });
         await CommentDB.deleteMany({ 'company': _id });
         await ReplyDB.deleteMany({ 'company': _id });

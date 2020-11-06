@@ -40,7 +40,7 @@
         </v-card-text>
 
         <v-card-text v-else>
-            <v-alert type="info" color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
+            <v-alert type="info" tile color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
 
             <v-row dense align="stretch" v-else>
                 <v-col 
@@ -117,7 +117,7 @@ export default {
 
     async fetch () {
         try {
-            let Variants = await this.$axios.$post(LaptopAPI.guest.GetVariantByDiscount, {
+            let Variants = await this.$axios.$post(LaptopAPI.guest.GetListVariantByDiscount, {
                 skip: this.skip,
                 limit: this.limit
             });

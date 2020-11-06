@@ -8,7 +8,7 @@
         </v-sheet>
 
         <!--Body-->
-        <v-card-text class="pt-6" v-if="Comments.length > 0">
+        <v-card-text class="pt-6 pb-0" v-if="Comments.length > 0">
             <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
                 <!--Avatar User - Left-->        
                 <v-avatar :size="SizeComment">

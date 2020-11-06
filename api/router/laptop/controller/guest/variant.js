@@ -1,9 +1,8 @@
 //FOR LAPTOP - GUEST
 
 import VariantDB from '../../model/variant';
-import { ErrorHandler } from '../../../../plugins/error';
 
-//Get All Variant Discount For Home Page
+//Get Variant Test
 export const Test = async (req, res, next) => {
     try {
         let Variants = await VariantDB
@@ -64,8 +63,8 @@ export const Test = async (req, res, next) => {
     }
 };
 
-//Get All Variant Discount For Home Page
-export const GetByDiscount = async (req, res, next) => {
+//Get Variant Discount
+export const GetListByDiscount = async (req, res, next) => {
     let { skip, limit } = req.body;
 
     try {
@@ -106,8 +105,8 @@ export const GetByDiscount = async (req, res, next) => {
     }
 };
 
-//Get All Variant New For Home Page
-export const GetByStatus = async (req, res, next) => {
+//Get All Variant New
+export const GetListByStatus = async (req, res, next) => {
     let { skip, limit, status } = req.body;
 
     if(!status) next(new ErrorHandler(400, 'Unsuitable Upload Data'));

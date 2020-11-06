@@ -3,23 +3,23 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const CommentReplySchema = new Schema(
+const VariantColorSchema = new Schema(
     {
         company: { type: Schema.Types.ObjectId, ref: 'LaptopCompany', required: true },
         trademark: { type: Schema.Types.ObjectId, ref: 'LaptopTrademark', required: true },
         product: { type: Schema.Types.ObjectId, ref: 'LaptopProduct', required: true },
-        comment: { type: Schema.Types.ObjectId, ref: 'LaptopComment', required: true },
+        variant: { type: Schema.Types.ObjectId, ref: 'LaptopVariant', required: true },
         
-        //////
-        user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-        content: { type: String, required: true },
-        create: { type: Date, default: Date.now }
+        ////
+        name: { type: String, required: true },
+        code: { type: String, required: true },
+        image: { type: String }
     }, 
     { 
         toJSON: { virtuals: true } 
     }
 );
 
-const Reply = mongoose.model('LaptopCommentReply', CommentReplySchema);
+const VariantColor = mongoose.model('LaptopVariantColor', VariantColorSchema);
 
-export default Reply;
+export default VariantColor;

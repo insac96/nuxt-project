@@ -2,8 +2,6 @@
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
-import { ErrorHandler } from '../../../../plugins/error';
-
 //Add Comment
 export const Add = async (req, res, next) => {
     let { company, trademark, product, content } = req.body;

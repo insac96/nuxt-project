@@ -1,15 +1,15 @@
 //FOR LAPTOP - ADMIN
 
 import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
-
-import { ErrorHandler } from '../../../../plugins/error';
+import VariantColorDB from '../../model/variantColor';
+import WarehouseDB from '../../model/warehouse';
+import WarehouseColorDB from '../../model/warehouseColor';
 
 //Create a New Variant
 export const Create = async (req, res, next) => {
-    let { company, trademark, product, code, screen, cpu, ram, gpu, harddrive, price, status } = req.body;
+    let { company, trademark, product, code, screen, cpu, ram, gpu, harddrive } = req.body;
 
-    if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
         let Get = await VariantDB
@@ -31,9 +31,7 @@ export const Create = async (req, res, next) => {
             cpu: cpu,
             ram: ram,
             gpu: gpu,
-            harddrive: harddrive,
-            price: price,
-            status: status
+            harddrive: harddrive
         });
 
         await NewVariant.save();
@@ -53,7 +51,9 @@ export const Delete = async (req, res, next) => {
 
     try {
         await VariantDB.deleteOne({ '_id': req.body._id });
-        await ColorDB.deleteMany({ 'variant': req.body._id });
+        await VariantColorDB.deleteMany({ 'variant': req.body._id });
+        await WarehouseDB.deleteMany({ 'variant': req.body._id });
+        await WarehouseColorDB.deleteMany({ 'variant': req.body._id });
 
         res.json(true);
     }
@@ -64,9 +64,9 @@ export const Delete = async (req, res, next) => {
 
 //Edit a Variant
 export const Edit = async (req, res, next) => {
-    let { _id, code, screen, cpu, ram, gpu, harddrive, price, status } = req.body;
+    let { _id, code, screen, cpu, ram, gpu, harddrive } = req.body;
 
-    if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive || !price || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
     try {
         let Variant = await VariantDB
@@ -93,8 +93,6 @@ export const Edit = async (req, res, next) => {
         Variant.ram = ram;
         Variant.gpu = gpu;
         Variant.harddrive = harddrive;
-        Variant.price = price;
-        Variant.status = status;
 
         await Variant.save();
 
@@ -123,6 +121,30 @@ export const EditDiscount = async (req, res, next) => {
         }
 
         Variant.discount = discount;
+
+        await Variant.save();
+
+        res.send(true);
+    }
+    catch(e) {
+        next(new ErrorHandler(500, e.toString()));
+    }
+};
+
+//Edit Variant Status
+export const EditStatus = async (req, res, next) => {
+    let { _id, status } = req.body;
+
+    if(!_id || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
+    try {
+        let Variant = await VariantDB
+        .findById(_id)
+        .select('_id');
+
+        if(!Variant) throw 'Variant Data Not Found';
+
+        Variant.status = status;
 
         await Variant.save();
 

@@ -35,7 +35,7 @@
 
         <!--Product Article-->
         <LazyHydrate ssr-only>
-            <GLaptopProductLinkArticle :article="Product.article"></GLaptopProductLinkArticle>
+            <GLaptopProductLinkArticle :article="Product.article" v-if="Product.article"></GLaptopProductLinkArticle>
         </LazyHydrate>
 
         <!--Product Comment-->

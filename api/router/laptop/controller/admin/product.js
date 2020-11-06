@@ -3,13 +3,12 @@
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
-import ColorDB from '../../model/color';
+import VariantColorDB from '../../model/variantColor';
+import WarehouseDB from '../../model/warehouse';
+import WarehouseColorDB from '../../model/warehouseColor';
 import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
-
-import { toConvert } from '../../../../plugins/string';
-import { ErrorHandler } from '../../../../plugins/error';
 
 //Get All Products
 export const Get = async (req, res, next) => {
@@ -21,7 +20,7 @@ export const Get = async (req, res, next) => {
     if(trademark)
         Query['trademark'] = trademark;
     if(key){
-        let keyCase = toConvert(key, '-');
+        let keyCase = StringPlugin.toConvert(key, '-');
 
         Query['$text'] = { 
             $search: `\"${keyCase}\"`
@@ -55,7 +54,7 @@ export const Create = async (req, res, next) => {
 
     if(!product.name || !product.company || !product.trademark || !configuration) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
-    let link = toConvert(product.name, '-');
+    let link = StringPlugin.toConvert(product.name, '-');
     product.link = link;
 
     try {
@@ -97,7 +96,9 @@ export const Delete = async (req, res, next) => {
         await ProductDB.deleteOne({ '_id': _id });
         await ConfigurationDB.deleteOne({ 'product': _id });
         await VariantDB.deleteMany({ 'product': _id });
-        await ColorDB.deleteMany({ 'product': _id });
+        await VariantColorDB.deleteMany({ 'product': _id });
+        await WarehouseDB.deleteMany({ 'product': _id });
+        await WarehouseColorDB.deleteMany({ 'product': _id });
         await ArticleDB.deleteOne({ 'product': _id })
         await CommentDB.deleteMany({ 'product': _id })
         await ReplyDB.deleteMany({ 'product': _id })
@@ -124,7 +125,16 @@ export const GetByLink = async (req, res, next) => {
         .populate({path: 'article'})
         .populate({
             path: 'variants',
-            populate: { path: 'colors' }
+            populate: [
+                { 
+                    path: 'warehouses',
+                    populate: { 
+                        path: 'colors',
+                        //populate: { path: 'variantColor', select: 'code' }
+                    }
+                },
+                { path: 'colors' }
+            ]
         })
         .populate({
             path: 'comments', 
@@ -159,7 +169,7 @@ export const EditInformation = async (req, res, next) => {
 
     if(!_id || !name || !company || !trademark) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     
-    let link = toConvert(name, '-');
+    let link = StringPlugin.toConvert(name, '-');
 
     try {
         let Product = await ProductDB

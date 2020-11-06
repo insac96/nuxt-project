@@ -1,8 +1,8 @@
 export default {
     admin: {
         //Company
-        GetAllCompany: '/laptop/admin/company/get',
-        GetAllMiniCompany: '/laptop/admin/company/mini/get',
+        GetListCompany: '/laptop/admin/company/list/get',
+        GetListCompanyInfo: '/laptop/admin/company/list/getInfo',
         CreateNewCompany: '/laptop/admin/company/create',
         DeleteCompany: '/laptop/admin/company/delete',
         EditCompany: '/laptop/admin/company/edit',
@@ -13,17 +13,17 @@ export default {
         EditTrademark: '/laptop/admin/trademark/edit',
 
         //Product
-        GetAllProduct: '/laptop/admin/product/get',
+        GetListProduct: '/laptop/admin/product/list/get',
         CreateNewProduct: '/laptop/admin/product/create',
         DeleteProduct: '/laptop/admin/product/delete',
-        GetProductByLink: '/laptop/admin/product/link/get',
+        GetProductByLink: '/laptop/admin/product/getByLink',
         EditInformationProduct: '/laptop/admin/product/information/edit',
         EditImagesProduct: '/laptop/admin/product/images/edit',
         EditVisibilityProduct: '/laptop/admin/product/visibility/edit',
 
         //News
-        GetAllNews: '/laptop/admin/news/get',
-        GetNewsByID: '/laptop/admin/news/id/get',
+        GetListNews: '/laptop/admin/news/list/get',
+        GetNewsByID: '/laptop/admin/news/getByID',
         CreateNews: '/laptop/admin/news/create',
         EditNews: '/laptop/admin/news/edit',
         DeleteNews: '/laptop/admin/news/delete',
@@ -41,12 +41,21 @@ export default {
         EditVariant: '/laptop/admin/variant/edit',
         DeleteVariant: '/laptop/admin/variant/delete',
         EditVariantDiscount: '/laptop/admin/variant/discount/edit',
+        EditVariantStatus: '/laptop/admin/variant/status/edit',
 
         //VariantColor
         CreateVariantColor: '/laptop/admin/variant/color/create',
         EditVariantColor: '/laptop/admin/variant/color/edit',
         DeleteVariantColor: '/laptop/admin/variant/color/delete',
 
+        //WareHouse
+        ImportWareHouse: '/laptop/admin/warehouse/import',
+        EditWarehouseExportPrice: '/laptop/admin/warehouse/export/price/edit',
+
+        //WareHouse Color
+        CreateWareHouseColor: '/laptop/admin/warehouse/color/create',
+        DeleteWareHouseColor: '/laptop/admin/warehouse/color/delete',
+        
         //Article
         CreateNewArticle: '/laptop/admin/article/create',
         EditArticle: '/laptop/admin/article/edit',
@@ -60,19 +69,19 @@ export default {
 
     guest: {
         //Company
-        GetAllMiniCompany: '/laptop/company/mini/get',
+        GetListCompanyInfo: '/laptop/company/list/getInfo',
 
         //Variant
-        GetVariantByDiscount: '/laptop/variant/discount/get',
-        GetVariantByStatus: '/laptop/variant/status/get',
+        GetListVariantByDiscount: '/laptop/variant/list/getByDiscount',
+        GetListVariantByStatus: '/laptop/variant/list/getByStatus',
 
         //Product
-        GetProductByLink: '/laptop/product/link/get',
+        GetProductByLink: '/laptop/product/getByLink',
 
         //News
-        GetListNews: '/laptop/news/get',
-        GetListNewsByTop: '/laptop/news/top/get',
-        GetNewsByLink: '/laptop/news/link/get',
+        //GetListNews: '/laptop/news/list/get',
+        GetListNewsByTop: '/laptop/news/list/getByTop',
+        GetNewsByLink: '/laptop/news/getByLink',
 
         //Comment and Reply
         AddComment: '/laptop/comment/add',

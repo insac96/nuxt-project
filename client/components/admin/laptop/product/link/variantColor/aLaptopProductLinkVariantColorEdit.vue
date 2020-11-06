@@ -47,7 +47,7 @@ export default {
 
     watch: {
         color (newVal) {
-            this.CloneColor = JSON.parse(JSON.stringify(this.color))
+            this.CloneColor = JSON.parse(JSON.stringify(newVal))
         }
     },
 

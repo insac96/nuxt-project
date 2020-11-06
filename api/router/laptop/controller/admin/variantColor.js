@@ -1,24 +1,22 @@
 //FOR LAPTOP - ADMIN
 
-import ColorDB from '../../model/color';
-import { ErrorHandler } from '../../../../plugins/error';
+import VariantColorDB from '../../model/variantColor';
 
 //Create Color
 export const Create = async (req, res, next) => {
-    let { company, trademark, product, variant, name, code, image, upprice } = req.body;
+    let { company, trademark, product, variant, name, code, image } = req.body;
 
     if(!company || !trademark || !product || !variant || !name || !code) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        let NewVariantColor = new ColorDB({
+        let NewVariantColor = new VariantColorDB({
             company: company,
             trademark: trademark,
             product: product,
             variant: variant,
             name: name,
             code: code,
-            image: image,
-            upprice: upprice ? upprice : 0
+            image: image
         });
 
         await NewVariantColor.save();
@@ -37,7 +35,7 @@ export const Edit = async (req, res, next) => {
     if(!_id || !name || !code) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await ColorDB.updateOne({'_id': _id}, {
+        await VariantColorDB.updateOne({'_id': _id}, {
             name: name,
             code: code,
             image: image,
@@ -58,7 +56,7 @@ export const Delete = async (req, res, next) => {
     if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
-        await ColorDB.deleteOne({'_id': _id});
+        await VariantColorDB.deleteOne({'_id': _id});
 
         res.json(true);
     }

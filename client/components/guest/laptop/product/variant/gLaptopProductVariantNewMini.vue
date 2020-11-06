@@ -132,7 +132,7 @@ export default {
 
     async fetch() {
         try {
-            let Variants = await this.$axios.$post(LaptopAPI.guest.GetVariantByStatus, {
+            let Variants = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
                 status: 'Mới Về',
                 skip: this.skip,
                 limit: this.limit

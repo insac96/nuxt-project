@@ -25,6 +25,8 @@
 
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
+            <v-spacer></v-spacer>
+
             <v-btn 
                 color="delete" dark
                 rounded elevation="0" large
@@ -32,16 +34,6 @@
                 @click="EditVariantDiscount('OFF')"
             >
                 Tắt
-            </v-btn>
-
-            <v-spacer></v-spacer>
-
-            <v-btn 
-                rounded elevation="0" large 
-                :disabled="Loading.edit"  
-                @click="Cancel"
-            >
-                Hủy
             </v-btn>
             
             <v-btn 
@@ -75,7 +67,7 @@ export default {
 
     watch: {
         variant (newVal) {
-            this.CloneVariant = JSON.parse(JSON.stringify(this.variant))
+            this.CloneVariant = JSON.parse(JSON.stringify(newVal))
         }
     },
 

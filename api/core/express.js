@@ -4,8 +4,11 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import { SetGlobal } from './global'
+
 export const ExpressInit = () => {
     let App = express();
+    SetGlobal();
 
     App.use(cors());
     App.use(bodyParser.json({limit: '50mb'}));

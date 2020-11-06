@@ -129,7 +129,7 @@ import LaptopAPI from '@/setting/laptop/api';
 export default {
     async asyncData({$axios}){
         try {
-            let Get = await $axios.$post(LaptopAPI.admin.GetAllNews, {
+            let Get = await $axios.$post(LaptopAPI.admin.GetListNews, {
                 skip: 0
             });
             return {
@@ -217,7 +217,7 @@ export default {
 
         async ShowNewsMore () {
             try {
-                let Get = await this.$axios.$post(LaptopAPI.admin.GetAllNews, {
+                let Get = await this.$axios.$post(LaptopAPI.admin.GetListNews, {
                     skip: this.ListNews.length,
                 });
 

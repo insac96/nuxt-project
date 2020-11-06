@@ -2,10 +2,8 @@
 
 import CompanyDB from '../../model/company';
 
-import { ErrorHandler } from '../../../../plugins/error';
-
 //Get Mini Company
-export const GetMini = async (req, res, next) => {
+export const GetListOnlyInfo = async (req, res, next) => {
     try {
         let Companyes = await CompanyDB
         .find({})

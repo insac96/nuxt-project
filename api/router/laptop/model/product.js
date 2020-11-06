@@ -1,6 +1,5 @@
 //FOR LAPTOP
 
-import { toConvert } from '../../../plugins/string';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
@@ -37,7 +36,7 @@ ProductSchema.virtual('article', {
 ProductSchema.virtual('variants', {
     ref: 'LaptopVariant',
     localField: '_id',
-    foreignField: 'product',
+    foreignField: 'product'
 });
 
 ProductSchema.virtual('variantCount', {
