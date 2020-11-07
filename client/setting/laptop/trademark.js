@@ -7,28 +7,24 @@ export default {
         'Gaming G Series',
         'Alienware',
         'Vostro',
-        'Orther'
     ],
     'Lenovo': [
         'ThinkPad',
         'IdeaPad',
         'Legion',
         'ThinkBook',
-        'Orther'
     ],
     'Acer': [
         'Nitro',
         'Swift',
         'Aspire',
         'Predator',
-        'Orther'
     ],
     'Razer': [
         'Blade 14',
         'Blade 15',
         'Blade 17',
         'Blade Stealth',
-        'Orther'
     ],
     'HP': [
         'Elitebook',
@@ -39,18 +35,15 @@ export default {
         'OMEN',
         'Envy',
         'Spectre',
-        'Orther'
     ],
     'Apple': [
         'Macbook Air',
         'Macbook Pro',
-        'Orther'
     ],
     'Microsoft': [
         'Surface Book',
         'Surface Laptop',
         'Surface Pro',
-        'Orther'
     ],
     'Asus': [
         'Vivobook',
@@ -58,7 +51,6 @@ export default {
         'TUF Gaming',
         'ROG Gaming',
         'ProArt',
-        'Orther'
     ],
     'MSI': [
         'GL Series',
@@ -72,7 +64,6 @@ export default {
         'Bravo'
     ],
     'LG': [
-        'Gram',
-        'Orther'
+        'Gram'
     ]
 }

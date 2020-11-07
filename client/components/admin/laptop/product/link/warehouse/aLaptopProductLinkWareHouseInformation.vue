@@ -46,7 +46,7 @@
                             <tbody>
                                 <tr v-for="(warehouseColor, indexColor) in CloneWareHouse.colors" :key="indexColor" class="font-weight-bold">
                                     <td class="py-2">
-                                        <v-btn fab elevation="0"  width="40" height="40" :color="FindColorByID(warehouseColor.variantColor)"></v-btn>
+                                        <v-btn fab elevation="0"  width="40" height="40" :color="FindColorByID(warehouseColor.information)"></v-btn>
                                     </td>
 
                                     <td class="text-center">{{$String.toPrice(warehouseColor.export.upprice)}}</td>

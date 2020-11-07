@@ -182,7 +182,9 @@ export default {
         },
 
         Update (NewVariant) {
+            NewVariant.warehouses = [];
             NewVariant.colors = [];
+            
             this.product.variants.push(NewVariant);
 
             this.Cancel();

@@ -78,9 +78,10 @@
                                 <v-btn
                                     v-else
                                     color="error"
-                                    rounded
+                                    rounded outlined
                                     elevation="0"
                                     @click="ShowVariantDialogEditDiscount(variant)"
+                                    class="font-weight-bold text-subtitle-1"
                                 >
                                     {{ $String.toPrice(variant.discount.amount) }}
                                 </v-btn>

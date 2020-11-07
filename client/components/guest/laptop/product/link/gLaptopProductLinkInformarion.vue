@@ -55,7 +55,7 @@
                         color="error"
                         class="font-weight-bold"
                     >
-                        - {{ $String.toPrice(Select.variant['discount'].amount) }}đ
+                        - {{ $String.toPrice(Select.variant['discount'].amount) }}
                     </v-chip>
                 </div>
 
@@ -89,7 +89,7 @@
                         color="info"
                         class="font-weight-bold"
                     >
-                        + {{ $String.toPrice(Select.color.export.upprice) }}đ
+                        + {{ $String.toPrice(Select.color.export.upprice) }}
                     </v-chip>
                 </div>
 
@@ -97,7 +97,7 @@
                 <v-btn-toggle>
                     <v-btn 
                         v-for="(warehouseColor, indexColor) in Select.variant.warehouse.colors" :key="indexColor"    
-                        :color="warehouseColor.variantColor.code" fab :ripple="false" active-class="active-select"
+                        :color="warehouseColor.information.code" fab :ripple="false" active-class="active-select"
                         @click="SelectColor(warehouseColor)"
                     >
                         <v-icon v-if="Select.color._id == warehouseColor._id" color="white">check</v-icon>
@@ -207,8 +207,6 @@ export default {
 
                 this.Select.color = Warehouse.colors.length > 0 ? Warehouse.colors[0] : null;
             }
-
-            console.log(this.Select.color)
         },
 
         GetListByType (type) {

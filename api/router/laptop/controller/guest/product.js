@@ -13,18 +13,25 @@ export const GetByLink = async (req, res, next) => {
         .populate({path: 'company', select: 'name logo'})
         .populate({path: 'trademark', select: 'name'})
         .populate({path: 'configuration', select: 'default upgrade'})
-        .populate({path: 'article'})
+        .populate({path: 'article', select: 'content'})
         .populate({
             path: 'variants',
             populate: [
                 { 
                     path: 'warehouse',
+                    select: 'import export',
                     options: {
                         sort: { 'import.date': 1 }
                     },
+                    
                     populate: { 
                         path: 'colors',
-                        populate: { path: 'variantColor' }
+                        select: 'import export',
+
+                        populate: { 
+                            path: 'information',
+                            select: 'name code image'
+                        }
                     }
                 }
             ],
@@ -33,12 +40,12 @@ export const GetByLink = async (req, res, next) => {
             path: 'comments', 
             select: 'user content create showInputReply',
             populate: [
-                { path: 'user', select: 'profile role' },
+                { path: 'user', select: 'profile.name profile.avatar role' },
                 { 
                     path: 'reply', 
                     select: 'user content create', 
                     populate: [ 
-                        { path: 'user', select: 'profile role' }
+                        { path: 'user', select: 'profile.name profile.avatar role' }
                     ]
                 }
             ],
@@ -46,7 +53,7 @@ export const GetByLink = async (req, res, next) => {
                 sort: { 'create': -1 },
             },
             skip: 0,
-            limit: 6
+            limit: 5
         })
         .populate({ path: 'commentCount' });
 

@@ -64,10 +64,12 @@ export default {
                 link: this.$route.params.link
             });
 
-            let VariantQuery = Product.variants.find(i => i._id == this.$route.query.variant);
+            let VariantQuery = Product.variants.find(i => i.code == this.$route.query.variant);
 
             this.Product = Product;
             this.VariantQuery = VariantQuery ? VariantQuery : null;
+
+            console.log(this.Product)
         }
         catch(e){
             throw new Error(e.toString());

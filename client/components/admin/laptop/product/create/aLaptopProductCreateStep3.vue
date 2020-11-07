@@ -7,26 +7,26 @@
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">CPU</span>
-                <v-switch v-model="Upgrade.cpu" color="primary" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.cpu" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">GPU</span>
-                <v-switch v-model="Upgrade.gpu" color="primary" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.gpu" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
                 <span class="font-weight-bold">WIFI</span>
-                <v-switch v-model="Upgrade.wifi" color="primary" class="ma-0 pa-0"></v-switch>
+                <v-switch v-model="Upgrade.wifi" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">RAM</span>
-                    <v-switch v-model="Upgrade.ram.type" color="primary" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="Upgrade.ram.type" inset color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
                 <div class="d-flex justify-end align-center" v-if="Upgrade.ram.type">
@@ -57,7 +57,7 @@
             <v-sheet>
                 <div class="d-flex justify-space-between">
                     <span class="font-weight-bold">HARD DRIVE</span>
-                    <v-switch v-model="Upgrade.harddrive.type" color="primary" class="ma-0 pa-0"></v-switch>
+                    <v-switch v-model="Upgrade.harddrive.type" inset color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
                 <div class="d-flex justify-end align-center" v-if="Upgrade.harddrive.type">

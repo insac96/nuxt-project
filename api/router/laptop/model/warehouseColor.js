@@ -10,7 +10,7 @@ const WarehouseColorSchema = new Schema(
         product: { type: Schema.Types.ObjectId, ref: 'LaptopProduct', required: true },
         variant: { type: Schema.Types.ObjectId, ref: 'LaptopVariant', required: true },
         warehouse: { type: Schema.Types.ObjectId, ref: 'LaptopWarehouse', required: true },
-        variantColor: { type: Schema.Types.ObjectId, ref: 'LaptopVariantColor', required: true },
+        information: { type: Schema.Types.ObjectId, ref: 'LaptopVariantColor', required: true },
 
         ////
         import: {

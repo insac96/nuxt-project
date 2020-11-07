@@ -4,9 +4,9 @@ import VariantDB from '../../model/variant';
 import WarehouseColorDB from '../../model/warehouseColor';
 
 export const Create = async (req, res, next) => {
-    let { company, trademark, product, variant, warehouse, variantColor} = req.body;
+    let { company, trademark, product, variant, warehouse, color_id} = req.body;
 
-    if(!company || !trademark || !product || !variant || !warehouse || !variantColor || !req.body.import || !req.body.export) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !variant || !warehouse || !color_id || !req.body.import || !req.body.export) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
     if(!req.body.import.amount || !req.body.export.upprice) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
 
     try {
@@ -22,7 +22,7 @@ export const Create = async (req, res, next) => {
             product: product,
             variant: variant,
             warehouse: warehouse,
-            variantColor: variantColor,
+            information: color_id,
 
             import: req.body.import,
             export: req.body.export

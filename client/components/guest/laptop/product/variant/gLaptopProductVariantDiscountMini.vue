@@ -51,7 +51,7 @@
                     <v-card 
                         class="d-flex flex-column BoxShadow"
                         :ripple="false"
-                        :to="`/guest/laptop/product/${variant.product.link}?variant=${variant._id}`"
+                        :to="`/guest/laptop/product/${variant.product.link}?variant=${variant.code}`"
                     >
                         <!--Image-->
                         <v-img 
@@ -92,8 +92,8 @@
 
                         <!--Price-->
                         <v-card-text class="text-center pt-0 pb-2 pb-sm-4">
-                            <div class="text-h6 font-weight-bold error--text">{{ $String.toPrice(variant.price - variant.discount.amount) }}đ</div>
-                            <div class="text-subtitle-2 text-decoration-line-through">{{ $String.toPrice(variant.price) }}đ</div>
+                            <div class="text-h6 font-weight-bold error--text">{{ $String.toPrice(variant.warehouse.export.price - variant.discount.amount) }}đ</div>
+                            <div class="text-subtitle-2 text-decoration-line-through">{{ $String.toPrice(variant.warehouse.export.price) }}đ</div>
                         </v-card-text>
                     </v-card>
                 </v-col>

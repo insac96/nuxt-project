@@ -46,6 +46,10 @@ export default {
         line-height: 1.5em;
     }
 
+    /*.QuillContent /deep/ p {
+        margin-bottom: 0;
+    }*/
+
     .QuillContent /deep/ .ql-size-small {
         font-size: 1.3em;
         line-height: 1.4em;

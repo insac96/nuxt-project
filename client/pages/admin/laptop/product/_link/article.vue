@@ -19,12 +19,11 @@ export default {
 
     data () {
         return {
-            Article: this.product.article,
             Content: this.product.article ? this.product.article.content : '',
             NewArticle: {
-                company: null,
-                trademark: null,
-                product: null,
+                company: this.product.company._id,
+                trademark: this.product.trademark._id,
+                product: this.product._id,
                 content: null
             },
             Loading: false
@@ -44,15 +43,12 @@ export default {
             this.Loading = true;
             
             try {
-                this.NewArticle.company = this.product.company._id;
-                this.NewArticle.trademark = this.product.trademark._id;
-                this.NewArticle.product = this.product._id;
                 this.NewArticle.content = this.Content;
 
                 let NewArticle = await this.$axios.$post(LaptopAPI.admin.CreateNewArticle, this.NewArticle);
 
+                this.product.article = NewArticle;
                 this.Loading = false;
-                this.Article = NewArticle;
             }
             catch(e){
                 this.Loading = false;
@@ -63,12 +59,12 @@ export default {
             this.Loading = true;
             
             try {
-                this.Article.content = this.Content;
-
                 let Edit = await this.$axios.$post(LaptopAPI.admin.EditArticle, {
-                    _id: this.Article._id,
-                    content: this.Article.content
+                    _id: this.product.article._id,
+                    content: this.Content
                 });
+
+                this.product.article.content = this.Content;
 
                 this.Loading = false;
             }

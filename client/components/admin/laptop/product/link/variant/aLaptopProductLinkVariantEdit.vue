@@ -20,7 +20,7 @@
                         color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                         :error-messages="ErrorHint.code"
                         @click="ErrorHint.code = null"
                     >
@@ -40,7 +40,7 @@
                         item-color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                     ></v-combobox>
 
                     <!-- CPU -->
@@ -54,7 +54,7 @@
                         item-color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                     ></v-combobox>
                 </v-col>
 
@@ -71,7 +71,7 @@
                         item-color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                     ></v-combobox>
 
                     <!-- HardDrive -->
@@ -85,21 +85,21 @@
                         item-color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                     ></v-combobox>
 
                     <!-- GPU -->
                     <v-combobox
                         v-model="CloneVariant.gpu"
                         :rules="[ $Rules.required ]"
+                        :items="VariantSelectConfiguration.gpu"
                         label="GPU"               
                         placeholder="ex: RTX 2060"
-                        :items="VariantSelectConfiguration.gpu"
                         color="create"
                         item-color="create"
                         autocomplete="off"
                         filled rounded
-                        :disabled="Loading.create"
+                        :disabled="Loading.edit"
                     ></v-combobox>
                 </v-col>
             </v-row>
@@ -125,7 +125,7 @@
                 :disabled="Loading.delete || Loading.edit"  
                 @click="Cancel"
             >
-                Hủy
+                Đóng
             </v-btn>
             
             <v-btn 
@@ -153,6 +153,7 @@ export default {
         return {
             VariantSelectConfiguration: VariantSelectSetting.configuration,
             CloneVariant: JSON.parse(JSON.stringify(this.variant)),
+            ModelVariant: {},
             Loading: {
                 edit: false,
                 delete: false
@@ -166,7 +167,6 @@ export default {
 
     watch: {
         variant (newVal) {
-            console.log(newVal)
             this.CloneVariant = JSON.parse(JSON.stringify(newVal))
         }
     },

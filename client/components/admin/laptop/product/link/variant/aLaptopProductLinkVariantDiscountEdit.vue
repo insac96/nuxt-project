@@ -11,7 +11,7 @@
             <v-form ref="form" v-model="Validate">
                 <v-text-field
                     v-model="CloneVariant.discount.amount"
-                    :rules="[ $Rules.price ]"
+                    :rules="[ $Rules.specialCharacters, $Rules.price ]"
                     label="Discount Amount"                    
                     placeholder="Nhập số tiền giảm giá"
                     type="number"
@@ -25,8 +25,6 @@
 
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
-            <v-spacer></v-spacer>
-
             <v-btn 
                 color="delete" dark
                 rounded elevation="0" large
@@ -34,6 +32,16 @@
                 @click="EditVariantDiscount('OFF')"
             >
                 Tắt
+            </v-btn>
+
+            <v-spacer></v-spacer>
+
+            <v-btn 
+                rounded elevation="0" large
+                :disabled="Loading.edit" 
+                @click="Cancel"
+            >
+                Đóng
             </v-btn>
             
             <v-btn 
@@ -75,10 +83,10 @@ export default {
         async EditVariantDiscount (type) {
             this.Loading.edit = true;
 
-            if(type == "OFF") {
+            if(type == "OFF" || this.CloneVariant.discount.amount == 0) {
                 this.CloneVariant.discount.type = false;
                 this.CloneVariant.discount.amount = 0;
-            }
+            };
     
             try {
                 let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantDiscount, {

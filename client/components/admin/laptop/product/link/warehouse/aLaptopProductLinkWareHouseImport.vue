@@ -57,7 +57,7 @@
                 <!--Input-->
                 <v-sheet v-for="(warehouseColor, indexColor) in NewImportWareHouse.colors" :key="indexColor">
                     <div class="d-flex">
-                        <v-btn fab elevation="0"  width="52" height="52" :color="FindColorByID(warehouseColor.variantColor)"></v-btn>
+                        <v-btn fab elevation="0"  width="52" height="52" :color="FindColorByID(warehouseColor.information)"></v-btn>
 
                         <v-sheet class="ml-2">
                             <v-text-field
@@ -166,7 +166,7 @@ export default {
                 product: this.variant.product,
                 variant: this.variant._id,
                 warehouse: null,
-                variantColor: color._id,
+                information: color._id,
                 import: {
                     amount: null
                 },
