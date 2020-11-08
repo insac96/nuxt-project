@@ -110,6 +110,15 @@ a {
     }
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .theme--dark.v-application {
     .v-image__image {
         filter: brightness(.8) contrast(1.2);

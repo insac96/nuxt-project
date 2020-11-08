@@ -7,7 +7,7 @@
         <v-card-subtitle>Cài đặt biến thể sản phẩm</v-card-subtitle>
 
         <!--Body-->
-        <v-form class="px-4" ref="form" v-model="Validate">
+        <v-form class="px-6" ref="form" v-model="Validate">
             <v-row>
                 <!--Left-->
                 <v-col :cols="6">

@@ -40,6 +40,7 @@ export default {
                 { title: 'Biến Thể', icon: 'view_carousel', path: `variant` },
                 { title: 'Bài Đánh Giá', icon: 'article', path: `article` },
                 { title: 'Bình Luận', icon: 'chat', path: `comment` },
+                { title: 'Cài Đặt', icon: 'settings', path: `setting` },
             ],
         }  
     }

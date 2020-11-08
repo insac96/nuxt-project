@@ -83,7 +83,13 @@
                         <!--Visibility-->
                         <v-sheet class="d-flex justify-space-between mb-4">
                             <span class="text-subtitle-1 font-weight-bold">Ẩn/Hiện tin tức</span>
-                            <v-switch v-model="News.visibility" hide-details color="primary" class="ma-0 pa-0" @change="EditVisibilityNews"></v-switch>
+                            <v-switch 
+                            v-model="News.visibility" 
+                            hide-details color="primary" 
+                            class="ma-0 pa-0" 
+                            @change="EditVisibilityNews"
+                            :disabled="Loading.editVisibility"
+                            ></v-switch>
                         </v-sheet>
 
                         <!--Top-->

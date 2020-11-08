@@ -13,8 +13,8 @@
 
             <!--Import-->
             <v-text-field
-                v-model="NewImportWareHouse.import.price"
-                :rules="[ $Rules.required, $Rules.price ]"
+                v-model.number="NewImportWareHouse.import.price"
+                :rules="[ $Rules.required, $Rules.price, $Rules.number ]"
                 label="Import Price"                    
                 placeholder="Giá nhập sản phẩm"
                 color="create"
@@ -22,12 +22,16 @@
                 autocomplete="off"
                 filled rounded
                 :disabled="Loading.import"
-            ></v-text-field>
+            >
+                <template v-slot:append v-if="NewImportWareHouse.import.price">
+                    <v-chip small class="font-weight-bold" color="create" dark>{{ $String.toPrice(NewImportWareHouse.import.price) }}</v-chip>
+                </template>
+            </v-text-field>
 
             <!--Export-->
             <v-text-field
-                v-model="NewImportWareHouse.export.price"
-                :rules="[ $Rules.required, $Rules.price ]"
+                v-model.number="NewImportWareHouse.export.price"
+                :rules="[ $Rules.required, $Rules.price, $Rules.number ]"
                 label="Export Price"                    
                 placeholder="Giá bán sản phẩm"
                 color="create"
@@ -35,7 +39,11 @@
                 autocomplete="off"
                 filled rounded
                 :disabled="Loading.import"
-            ></v-text-field>
+            >
+                <template v-slot:append v-if="NewImportWareHouse.export.price">
+                    <v-chip small class="font-weight-bold" color="create" dark>{{ $String.toPrice(NewImportWareHouse.export.price) }}</v-chip>
+                </template>
+            </v-text-field>
 
             <!--Color-->
             <div>
@@ -61,8 +69,8 @@
 
                         <v-sheet class="ml-2">
                             <v-text-field
-                                v-model="warehouseColor.import.amount"
-                                :rules="[ $Rules.required, $Rules.price ]"
+                                v-model.number="warehouseColor.import.amount"
+                                :rules="[ $Rules.required, $Rules.number ]"
                                 label="Import Amount"                    
                                 placeholder="Số lượng nhập"
                                 color="create"
@@ -74,8 +82,8 @@
                             ></v-text-field>
 
                             <v-text-field
-                                v-model="warehouseColor.export.upprice"
-                                :rules="[ $Rules.required, $Rules.price ]"
+                                v-model.number="warehouseColor.export.upprice"
+                                :rules="[ $Rules.price ]"
                                 label="Export Up Price"                    
                                 placeholder="Tăng giá so với gốc"
                                 color="create"

@@ -7,7 +7,7 @@
         <v-card-subtitle>Thêm màu sắc cho biến thể</v-card-subtitle>
 
         <!--Body-->
-        <v-form class="px-4 pb-0" ref="form" v-model="Validate">
+        <v-form class="px-6 pb-0" ref="form" v-model="Validate">
             <v-alert type="info" color="create" text class="rounded-xl mb-6" prominent>
                 Để màu sắc được hiển thị cho người mua, cần cài đặt trong phần <strong>Nhập Kho</strong> !!!
             </v-alert>

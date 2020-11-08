@@ -18,7 +18,7 @@ const WarehouseColorSchema = new Schema(
         },
 
         export: {
-            upprice: { type: Number, required: true },
+            upprice: { type: Number, required: true, default: 0 },
         }
     }, 
     { 

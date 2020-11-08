@@ -138,7 +138,7 @@
                                 <div v-else>
                                     <div v-for="(warehouse, indexWarehouse) in variant.warehouses" :key="indexWarehouse">
                                         <v-btn color="create" rounded elevation="0" dark class="mb-1" @click="ShowVariantDialogWareHouseInformarion(warehouse, variant)">
-                                            {{$dayjs(warehouse.import_date).format('DD/MM/YYYY')}}
+                                            {{$dayjs(warehouse.import.date).format('DD/MM/YYYY')}}
                                         </v-btn>
                                     </div>
 

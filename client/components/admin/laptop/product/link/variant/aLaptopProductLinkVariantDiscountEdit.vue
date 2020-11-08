@@ -10,7 +10,7 @@
         <v-card-text class="pb-0">
             <v-form ref="form" v-model="Validate">
                 <v-text-field
-                    v-model="CloneVariant.discount.amount"
+                    v-model.number="CloneVariant.discount.amount"
                     :rules="[ $Rules.specialCharacters, $Rules.price ]"
                     label="Discount Amount"                    
                     placeholder="Nhập số tiền giảm giá"
@@ -19,7 +19,11 @@
                     autocomplete="off"
                     filled rounded
                     :disabled="Loading.edit"
-                ></v-text-field>        
+                >
+                    <template v-slot:append v-if="CloneVariant.discount.amount">
+                        <v-chip small class="font-weight-bold" color="edit" dark>{{ $String.toPrice(CloneVariant.discount.amount) }}</v-chip>
+                    </template>
+                </v-text-field>        
             </v-form>
         </v-card-text>
 

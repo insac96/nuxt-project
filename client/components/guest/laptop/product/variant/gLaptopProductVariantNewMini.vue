@@ -6,10 +6,10 @@
         <v-sheet class="d-flex justify-space-between align-center px-4 py-3 Sticky_Top" color="background">
             <span class="text-h5 text-sm-h4 secondary--text">Hàng Mới Về</span>
 
-            <div>
+            <div v-if="variants.length > 0">
                 <v-btn
                     class="BoxShadow"
-                    :disabled="(this.skip == 0)" 
+                    :disabled="(skip === 0)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Before"
                 >
@@ -18,6 +18,7 @@
 
                 <v-btn 
                     class="BoxShadow"
+                    :disabled="(skip === (count - 1)) || (count == variants.length)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Next"
                 >
@@ -126,6 +127,7 @@ export default {
     data () {
         return {
             variants: [],
+            count: 0,
             skip: 0,
             limit: 4
         }
@@ -133,13 +135,14 @@ export default {
 
     async fetch() {
         try {
-            let Variants = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
+            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
                 status: 'Mới Về',
                 skip: this.skip,
                 limit: this.limit
             });
 
-            this.variants = Variants;
+            this.variants = Get.variants;
+            this.count = Get.countSum;
         }
         catch(e) {
             throw new Error(e.toString());
