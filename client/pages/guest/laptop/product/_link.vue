@@ -68,8 +68,6 @@ export default {
 
             this.Product = Product;
             this.VariantQuery = VariantQuery ? VariantQuery : null;
-
-            console.log(this.Product)
         }
         catch(e){
             throw new Error(e.toString());

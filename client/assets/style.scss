@@ -6,6 +6,37 @@ a {
     background: var(--v-background-base) !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.theme--dark.v-application {
+    .v-image__image {
+        filter: brightness(.8) contrast(1.2);
+    }
+
+    .BoxShadow, .BoxShadow-Hover {
+        box-shadow: none !important;
+
+        &:hover {
+            box-shadow: none !important;
+        }
+    }
+}
+
+.page-enter-active, .page-leave-active {
+    transition: opacity 0.3s ease;
+}
+.page-enter, .page-leave-to {
+    opacity: 0.2;
+}
+
+/////////////Custom/////////////////
 .Screen {
     width: 1000px;
     max-width: 1000px;
@@ -107,28 +138,5 @@ a {
 .v-input {
     .v-text-field__details {
         padding: 0 24px !important;
-    }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.theme--dark.v-application {
-    .v-image__image {
-        filter: brightness(.8) contrast(1.2);
-    }
-
-    .BoxShadow, .BoxShadow-Hover {
-        box-shadow: none !important;
-
-        &:hover {
-            box-shadow: none !important;
-        }
     }
 }
