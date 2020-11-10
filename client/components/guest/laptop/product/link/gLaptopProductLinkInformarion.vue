@@ -139,7 +139,7 @@
                 </div>
 
                 <!-- Button Add Cart -->
-                <v-btn block color="primary" dark x-large elevation="0">
+                <v-btn block color="primary" dark x-large elevation="0" @click="AddToCart">
                     <v-icon class="mr-3">shopping_cart</v-icon> 
                     Thêm vào giỏ hàng
                 </v-btn>
@@ -149,11 +149,14 @@
 </template>
 
 <script>
+import { CART } from '@/plugins/laptop/cart';
+
 export default {
     props: ['product', 'variantQuery'],
 
     data () {
         return {
+            CART: new CART(),
             Product: this.product,
             Company: this.product.company,
             Trademark: this.product.trademark,
@@ -256,6 +259,17 @@ export default {
 
         SelectColor (color) {
             this.Select.color = color;
+        },
+
+        //Cart
+        AddToCart () {
+            let item = {
+                variant: this.Select.variant._id,
+                warehouse: this.Select.variant.warehouse._id,
+                color: this.Select.color._id
+            };
+
+            this.CART.add(item);
         }
     },
 }

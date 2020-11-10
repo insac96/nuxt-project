@@ -131,9 +131,9 @@ export default {
     methods: {
         //OBserver
         onIntersect (entries, observer) {
-            this.GetComments();
+            if(!this.Loading.get) return false;
 
-            observer.disconnect();
+            this.GetComments();
         },
 
         async GetComments () {
