@@ -13,9 +13,9 @@
         </v-card>
     </v-container>
 
-    <v-container class="pa-0" v-else>
+    <v-container class="BoxShadow pa-0" v-else>
         <!--Product Information-->
-        <v-card tile flat class="BoxShadow">
+        <v-card tile flat>
             <!--Header-->
             <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
                 <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Thông Tin</span>
@@ -23,11 +23,11 @@
 
             <!--Body-->
             <v-row no-gutters>
-                <v-col cols="12" md="5">
+                <v-col cols="12" md="5" class="mb-0 mb-sm-6">
                     <GLaptopProductLinkImages :images="Product.images"></GLaptopProductLinkImages>
                 </v-col>
 
-                <v-col cols="12" md="7">
+                <v-col cols="12" md="7" class="mb-0 mb-sm-6">
                     <GLaptopProductLinkInformarion :product="Product" :variantQuery="VariantQuery"></GLaptopProductLinkInformarion>
                 </v-col>
             </v-row>

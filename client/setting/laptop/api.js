@@ -84,6 +84,7 @@ export default {
         GetNewsByLink: '/laptop/news/getByLink',
 
         //Comment and Reply
+        GetListCommentByProductID: '/laptop/comment/list/getByProductID',
         AddComment: '/laptop/comment/add',
         MoreComment: '/laptop/comment/more',
         AddReplyForComment: '/laptop/comment/reply/add'

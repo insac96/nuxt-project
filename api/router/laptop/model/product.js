@@ -52,13 +52,6 @@ ProductSchema.virtual('comments', {
     foreignField: 'product',
 });
 
-ProductSchema.virtual('commentCount', {
-    ref: 'LaptopComment',
-    localField: '_id',
-    foreignField: 'product',
-    count: true
-});
-
 ProductSchema.index({ link: 'text' });
 
 const Product = mongoose.model('LaptopProduct', ProductSchema);

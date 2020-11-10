@@ -1,81 +1,87 @@
 <template>
     <!--g_laptop_product_link_comment-->
 
-    <v-card tile flat>
+    <v-card tile flat v-intersect="onIntersect">
         <!--Header-->
         <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
         </v-sheet>
 
         <!--Body-->
-        <v-card-text class="pt-6 pb-0" v-if="Comments.length > 0">
-            <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-6">
-                <!--Avatar User - Left-->        
-                <v-avatar :size="SizeComment">
-                    <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
-                </v-avatar>
-
-                <!--Comment - Right-->  
-                <v-sheet class="ml-2">
-                    <!--Content-->
-                    <v-card flat class="rounded-xl py-2 px-6" color="box">
-                        <div class="text-capitalize font-weight-bold">
-                            <span v-if="comment.user.role == 'ADMIN'" class="admin--text">{{comment.user.profile.name}}</span>
-                            <span v-else class="guest--text">{{comment.user.profile.name}}</span>
-                        </div>
-
-                        <span class="text-subtitle-1">{{comment.content}}</span>
-                    </v-card>
-
-                    <!--Information-->
-                    <div class="pl-6 my-1"> 
-                        <span>{{$dayjs(comment.create).fromNow()}}</span>
-
-                        <v-btn v-if="UserStore.authentic" text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
-                    </div>
-
-                    <!--Reply-->
-                    <GLaptopProductLinkReplyOfComment :product="product" :comment="comment"></GLaptopProductLinkReplyOfComment>
-                </v-sheet>
-            </v-sheet>
+        <v-card-text v-if="Loading.get" flat tile>
+            <v-skeleton-loader type="list-item-avatar-two-line" v-for="i in 3" :key="i"></v-skeleton-loader>
         </v-card-text>
 
-        <!--Footer-->
-        <v-card-actions class="justify-center pt-0 pb-4" v-if="Comments.length != CommentCount">
-            <v-btn 
-                rounded 
-                elevation="0" 
-                color="primary" 
-                class="px-6" 
-                :loading="Loading.more" 
-                @click="MoreComment"
-            >
-                Hiển Thị Thêm
-            </v-btn>
-        </v-card-actions>
+        <div v-else>
+            <v-card-text class="py-6 pb-1" v-if="Comments.length > 0">
+                <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-4">
+                    <!--Avatar User - Left-->        
+                    <v-avatar :size="SizeComment">
+                        <v-img :src="comment.user.profile.avatar" :alt="comment.user.profile.name"></v-img>
+                    </v-avatar>
 
-        <!--Input Comment-->
-        <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
-            <v-avatar :size="SizeComment">
-                <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
-            </v-avatar>
+                    <!--Comment - Right-->  
+                    <v-sheet class="ml-2">
+                        <!--Content-->
+                        <v-card flat class="rounded-xl py-2 px-6" color="box">
+                            <div class="text-capitalize font-weight-bold">
+                                <span v-if="comment.user.role == 'ADMIN'" class="admin--text">{{comment.user.profile.name}}</span>
+                                <span v-else class="guest--text">{{comment.user.profile.name}}</span>
+                            </div>
 
-            <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-2">
-                <v-text-field
-                    v-model="Content"
-                    :rules="[ $Rules.required, $Rules.multiSpace ]"
-                    placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
-                    :disabled="Loading.add"
-                    rounded solo flat
-                    background-color="heading_input"
-                    color="primary"
-                    maxlength="200"
-                    :height="SizeComment"
-                    hide-details
-                    autocomplete="off"
-                ></v-text-field>
-            </v-form>
-        </v-sheet>
+                            <span class="text-subtitle-1">{{comment.content}}</span>
+                        </v-card>
+
+                        <!--Information-->
+                        <div class="pl-6 my-1"> 
+                            <span>{{$dayjs(comment.create).fromNow()}}</span>
+
+                            <v-btn v-if="UserStore.authentic" text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
+                        </div>
+
+                        <!--Reply-->
+                        <GLaptopProductLinkReplyOfComment :product="product" :comment="comment"></GLaptopProductLinkReplyOfComment>
+                    </v-sheet>
+                </v-sheet>
+            </v-card-text>
+
+            <!--Footer-->
+            <v-card-actions class="justify-center py-2" v-if="Comments.length != countComment">
+                <v-btn 
+                    rounded 
+                    elevation="0" 
+                    color="primary" 
+                    class="px-6" 
+                    :loading="Loading.more" 
+                    @click="MoreComment"
+                >
+                    Hiển Thị Thêm
+                </v-btn>
+            </v-card-actions>
+
+            <!--Input Comment-->
+            <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
+                <v-avatar :size="SizeComment">
+                    <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
+                </v-avatar>
+
+                <v-form ref="form" v-model="Validate" @submit.prevent="AddComment" style="width: 100%" class="ml-2">
+                    <v-text-field
+                        v-model="Content"
+                        :rules="[ $Rules.required, $Rules.multiSpace ]"
+                        placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
+                        :disabled="Loading.add"
+                        rounded solo flat
+                        background-color="heading_input"
+                        color="primary"
+                        maxlength="200"
+                        :height="SizeComment"
+                        hide-details
+                        autocomplete="off"
+                    ></v-text-field>
+                </v-form>
+            </v-sheet>
+        </div>
     </v-card>
 </template>
 
@@ -87,11 +93,13 @@ export default {
 
     data () {
         return {
+            Skip: 0,
             Content: '',
-            Comments: this.product.comments,
-            CommentCount: this.product.commentCount,
+            Comments: null,
+            countComment: null,
             Validate: true,
             Loading: {
+                get: true,
                 add: false,
                 more: false
             }
@@ -121,6 +129,31 @@ export default {
     },
 
     methods: {
+        //OBserver
+        onIntersect (entries, observer) {
+            this.GetComments();
+
+            observer.disconnect();
+        },
+
+        async GetComments () {
+            this.Loading.get = true;
+
+            try {
+                let Get = await this.$axios.$post(LaptopAPI.guest.GetListCommentByProductID, {
+                    product: this.product._id
+                });
+
+                this.Comments = Get.comments;
+                this.countComment = Get.countComment;
+
+                this.Loading.get = false;
+            }
+            catch(e){
+                return false;
+            }
+        },
+
         //Add
         async AddComment () {
             if(!this.$refs.form.validate()) return false;
@@ -153,7 +186,7 @@ export default {
             NewComment.reply = [];
             
             this.Comments.push(NewComment);
-            this.CommentCount ++;
+            this.countComment ++;
             
             this.$refs.form.reset();
         },

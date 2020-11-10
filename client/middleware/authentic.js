@@ -1,6 +1,6 @@
 import UserAPI from '@/setting/user/api';
 
-export default async ({ app, $axios, store, error }) => {
+export default async ({ app, $axios, store }) => {
     if(!app.$cookies.get('token')) return false;
 
     try {

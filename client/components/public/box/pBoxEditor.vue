@@ -60,7 +60,8 @@ export default {
 <style lang="scss">
     .quill-editor {
         .ql-editor {
-            font-size: 1.3em;
+            font-size: 1.5em;
+            line-height: 1.5em;
             padding: 0;
 
             a {
@@ -70,6 +71,18 @@ export default {
             img {
                 width: auto;
                 max-width: 100%;
+            }
+
+            p {
+                margin-bottom: 0;
+            }
+
+            .ql-size-small {
+                font-size: 0.9em;
+            }
+
+            .ql-size-large {
+                font-size: 1.6em;
             }
 
             &.ql-blank::before {

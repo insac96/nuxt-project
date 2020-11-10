@@ -1,8 +1,8 @@
 <template>
-    <v-container :class="`Error ${Class} fill-height`">
+    <v-container :class="`Error fill-height`">
         <v-row align="center" justify="center">
             <v-col cols="12" class="text-center px-6 px-sm-0">
-                <h1 :class="`${Color}--text`">{{error.statusCode}}</h1>
+                <h1 :class="`primary--text`">{{error.statusCode}}</h1>
                 <p class="text-h5 text-sm-h4 grey--text">{{error.message}}</p>
             </v-col>
         </v-row>
@@ -34,25 +34,17 @@ export default {
     },
 
     created () {
-        let Get = this.$route.path.substring(1, 6);
+        //let Get = this.$route.path.substring(1, 6);
 
-        if(Get == 'admin') {
-            this.Color = 'primary_admin';
-            this.Class = 'Error--admin';
-        }
+        //if(Get == 'admin') {
+        //}
     }
 }
 </script>
 
 <style lang="scss" scoped>
     .Error {
-        &--guest {
-            height: calc(100vh - 64px);
-        }
-
-        &--admin {
-            height: calc(100vh - 88px);
-        }
+        height: calc(100vh - 60px);
 
         h1 {
             font-size: 6em;

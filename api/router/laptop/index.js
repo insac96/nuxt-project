@@ -23,6 +23,7 @@ Router.get("/news/list/getByTop", Controller_Guest.News.GetListByTop);
 Router.post("/news/getByLink", Controller_Guest.News.GetByLink);
 
 //Comment
+Router.post("/comment/list/getByProductID", Authentic_Guest, Controller_Guest.Comment.GetByProductID);
 Router.post("/comment/add", Authentic_Guest, Controller_Guest.Comment.Add);
 Router.post("/comment/more", Controller_Guest.Comment.More);
 Router.post("/comment/reply/add", Authentic_Guest, Controller_Guest.Comment.AddReply);

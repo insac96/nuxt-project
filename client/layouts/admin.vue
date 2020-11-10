@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    middleware: 'isAdmin',
+    middleware: 'admin',
 
     name: 'admin_layout',
     

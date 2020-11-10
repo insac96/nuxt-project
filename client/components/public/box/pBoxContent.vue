@@ -37,7 +37,7 @@ export default {
 
 <style scoped>
     .MiniArticle {
-        max-height: calc(100vh - 64px - 48px - 105px);
+        max-height: 500px;
         overflow: hidden;
     }
 
@@ -46,18 +46,24 @@ export default {
         line-height: 1.5em;
     }
 
-    /*.QuillContent /deep/ p {
+    .QuillContent /deep/ p {
         margin-bottom: 0;
-    }*/
+    }
+
+    .QuillContent /deep/ ul {
+        padding-left: 1.5em;
+    }
+
+    .QuillContent /deep/ li {
+        padding-left: 1.5em;
+    }
 
     .QuillContent /deep/ .ql-size-small {
-        font-size: 1.3em;
-        line-height: 1.4em;
+        font-size: 0.9em;
     }
 
     .QuillContent /deep/ .ql-size-large {
         font-size: 1.6em;
-        line-height: 1.4em;
     }
 
     .QuillContent /deep/ img {

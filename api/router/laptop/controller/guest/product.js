@@ -35,27 +35,7 @@ export const GetByLink = async (req, res, next) => {
                     }
                 }
             ],
-        })
-        .populate({
-            path: 'comments', 
-            select: 'user content create showInputReply',
-            populate: [
-                { path: 'user', select: 'profile.name profile.avatar role' },
-                { 
-                    path: 'reply', 
-                    select: 'user content create', 
-                    populate: [ 
-                        { path: 'user', select: 'profile.name profile.avatar role' }
-                    ]
-                }
-            ],
-            options: {
-                sort: { 'create': -1 },
-            },
-            skip: 0,
-            limit: 5
-        })
-        .populate({ path: 'commentCount' });
+        });
 
         if(!Product) return next(new ErrorHandler(404, 'Product Data Not Found'));
         

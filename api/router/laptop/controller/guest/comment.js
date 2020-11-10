@@ -2,6 +2,41 @@
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
+//Get Comment and Reply by ProductID
+export const GetByProductID = async (req, res, next) => {
+    let { product } = req.body;
+
+    if(!product) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+
+    try {
+        let Comments = await CommentDB
+        .find({'product': product})
+        .select('user content create showInputReply')
+        .populate({ path: 'user', select: 'profile.name profile.avatar role' })
+        .populate({ 
+            path: 'reply', 
+            select: 'user content create', 
+            populate: [ 
+                { path: 'user', select: 'profile.name profile.avatar role' }
+            ]
+        })
+        .sort({ 'create': -1 })
+        .skip(0)
+        .limit(5);
+
+        let countComment = await CommentDB
+        .countDocuments({'product': product});
+
+        res.json({
+            comments: Comments,
+            countComment: countComment
+        });
+    }
+    catch(e) {
+        next(new ErrorHandler(500, e.toString()));
+    }
+};
+
 //Add Comment
 export const Add = async (req, res, next) => {
     let { company, trademark, product, content } = req.body;
@@ -46,7 +81,7 @@ export const More = async (req, res, next) => {
         })
         .sort({ 'create': -1 })
         .skip(skip)
-        .limit(6);
+        .limit(5);
         
         res.json(MoreComment);
     }
