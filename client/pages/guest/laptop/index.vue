@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pa-0">
+    <div>
         <LazyHydrate when-idle>
             <GLaptopNewsTop class="mb-4"></GLaptopNewsTop>
         </LazyHydrate>
@@ -13,5 +13,5 @@
         <LazyHydrate when-visible>
             <GLaptopProductVariantNewMini class="mb-6 mb-sm-8"></GLaptopProductVariantNewMini>
         </LazyHydrate>
-    </v-container>
+    </div>
 </template>

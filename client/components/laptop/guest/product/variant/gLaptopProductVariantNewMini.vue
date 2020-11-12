@@ -1,10 +1,10 @@
 <template>
-    <!--g_laptop_product_variant_discount_mini-->
+    <!--g_laptop_product_variant_new_mini-->
 
-    <v-card flat tile color="transparent">
+    <v-card flat tile  color="transparent">
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center Sticky_Top px-4 py-3" color="background">
-            <span class="text-h5 text-sm-h4 secondary--text">Giảm Giá</span>
+        <v-sheet class="d-flex justify-space-between align-center px-4 py-3 Sticky_Top" color="background">
+            <span class="text-h5 text-sm-h4 secondary--text">Hàng Mới Về</span>
 
             <div v-if="variants.length > 0">
                 <v-btn
@@ -18,7 +18,7 @@
 
                 <v-btn 
                     class="BoxShadow"
-                    :disabled="(skip === (count - 1)) || (count == variants.length)" 
+                    :disabled="(skip + variants.length) === (count)"
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Next"
                 >
@@ -41,7 +41,7 @@
         </v-card-text>
 
         <v-card-text v-else>
-            <v-alert type="info" tile color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
+            <v-alert type="info" color="primary" class="BoxShadow" tile v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
 
             <v-row dense align="stretch" v-else>
                 <v-col 
@@ -71,6 +71,7 @@
                             </v-chip>
 
                             <v-chip
+                                v-if="variant.discount.type"
                                 label color="error" 
                                 class="rounded-0 font-weight-bold px-2 px-sm-3 text-caption text-sm-subtitle-2"
                             >
@@ -93,8 +94,24 @@
 
                         <!--Price-->
                         <v-card-text class="text-center pt-0 pb-2 pb-sm-4">
-                            <div class="text-h6 font-weight-bold error--text">{{ $String.toPrice(variant.warehouse.export.price - variant.discount.amount) }}đ</div>
-                            <div class="text-subtitle-2 text-decoration-line-through">{{ $String.toPrice(variant.warehouse.export.price) }}đ</div>
+                            <div class="text-h6 font-weight-bold error--text">
+                                <span v-if="variant.discount.type">
+                                    {{ $String.toPrice(variant.warehouse.export.price - variant.discount.amount) }}đ
+                                </span>
+                                <span v-else>
+                                    {{ $String.toPrice(variant.warehouse.export.price) }}đ
+                                </span>
+                            </div>
+                            
+                            <div class="text-subtitle-2 text-decoration-line-through">
+                                <span v-if="variant.discount.type">
+                                    {{ $String.toPrice(variant.warehouse.export.price) }}đ
+                                </span>
+
+                                <span v-else>
+                                    Discount
+                                </span>
+                            </div>
                         </v-card-text>
                     </v-card>
                 </v-col>
@@ -104,10 +121,9 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
+import LaptopAPI from '~/setting/laptop/api';
 
 export default {
-
     data () {
         return {
             variants: [],
@@ -117,9 +133,10 @@ export default {
         }
     },
 
-    async fetch () {
+    async fetch() {
         try {
-            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByDiscount, {
+            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
+                status: 'Mới Về',
                 skip: this.skip,
                 limit: this.limit
             });
@@ -133,7 +150,7 @@ export default {
     },
 
     fetchOnServer: false,
-
+    
     computed: {
         SmallButton () {
             switch (this.$vuetify.breakpoint.name) {
@@ -160,6 +177,6 @@ export default {
 
             this.$fetch();
         }
-    }   
+    } 
 }
 </script>

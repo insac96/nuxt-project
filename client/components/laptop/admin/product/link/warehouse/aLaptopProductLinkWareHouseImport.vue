@@ -136,10 +136,10 @@ export default {
         return {
             Validate: true,
             NewImportWareHouse: {
-                company: this.variant.company,
-                trademark: this.variant.trademark,
-                product: this.variant.product,
-                variant: this.variant._id,
+                company: null,
+                trademark: null,
+                product: null,
+                variant: null,
 
                 import: {
                     price: null
@@ -191,6 +191,11 @@ export default {
             this.Loading.import = true;
 
             try {
+                this.NewImportWareHouse.company = this.variant.company;
+                this.NewImportWareHouse.trademark = this.variant.trademark;
+                this.NewImportWareHouse.product = this.variant.product;
+                this.NewImportWareHouse.variant = this.variant._id;
+
                 let NewImportWareHouse = await this.$axios.$post(LaptopAPI.admin.ImportWareHouse, this.NewImportWareHouse);
 
                 this.Update(NewImportWareHouse);
@@ -211,6 +216,8 @@ export default {
         Cancel () {
             this.$refs.form.reset();
             this.$refs.form.resetValidation();
+
+            this.NewImportWareHouse.colors = [];
 
             this.$emit('cancel');
         }

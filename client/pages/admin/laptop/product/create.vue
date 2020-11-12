@@ -1,7 +1,7 @@
 <template>
     <!--Laptop Product Create-->
 
-    <v-card tile flat class="BoxShadow">
+    <v-card tile flat>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary--text">Create Product</v-card-title>
         <v-card-subtitle>Thêm 1 sản phẩm mới</v-card-subtitle>

@@ -3,8 +3,8 @@
 
     <v-card>
         <!--Header-->
-        <v-card-title class="font-weight-bold text-h4 create--text">Create Color</v-card-title>
-        <v-card-subtitle>Thêm màu sắc cho biến thể</v-card-subtitle>
+        <v-card-title class="font-weight-bold text-h4 create--text">Create Color For All Variant</v-card-title>
+        <v-card-subtitle>Thêm màu sắc cho tất cả biến thể</v-card-subtitle>
 
         <!--Body-->
         <v-form class="px-6 pb-0" ref="form" v-model="Validate">
@@ -88,7 +88,7 @@
                 :loading="Loading.create" 
                 @click="CreateVariantColor"
             >
-                Thêm Mới
+                Thêm
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -98,15 +98,11 @@
 import LaptopAPI from '@/setting/laptop/api';
 
 export default {
-    props: ['variant'],
+    props: ['variants'],
 
     data () {
         return {
             NewVariantColor: {
-                company: this.variant.company,
-                trademark: this.variant.trademark,
-                product: this.variant.product,
-                variant: this.variant._id,
                 name: null,
                 code: null,
                 image: null
@@ -124,20 +120,29 @@ export default {
             this.Loading.create = true;
 
             try {
-                let NewVariantColor = await this.$axios.$post(LaptopAPI.admin.CreateVariantColor, this.NewVariantColor);
+                for (let i = 0; i < this.variants.length; i++) {
+                    let variant = this.variants[i];
+
+                    let New = {};
+                    New.company = variant.company;
+                    New.trademark = variant.trademark;
+                    New.product = variant.product;
+                    New.variant = variant._id;
+                    New.name = this.NewVariantColor.name;
+                    New.code = this.NewVariantColor.code;
+                    New.image = this.NewVariantColor.image;
+
+                    let NewVariantColor = await this.$axios.$post(LaptopAPI.admin.CreateVariantColor, New);
+
+                    variant.colors.push(NewVariantColor);
+                };
 
                 this.Loading.create = false;
-                this.Update(NewVariantColor);
+                this.Cancel();
             }
             catch(e){
                 this.Loading.create = false;
             }
-        },
-
-        Update (NewVariantColor) {
-            this.variant.colors.push(NewVariantColor);
-
-            this.Cancel();
         },
 
         Cancel () {

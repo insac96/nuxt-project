@@ -8,7 +8,7 @@
 
         <!--One Image-->
         <v-card-text v-else-if="images.length == 1">
-            <v-img :src="$Image.Get(item, 'l')" :aspect-ratio="1.5" contain>
+            <v-img :src="$Image.Get(images[0], 'l')" :aspect-ratio="1.5" contain>
                 <template v-slot:placeholder>
                     <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
                         <v-progress-circular

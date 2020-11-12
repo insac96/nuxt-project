@@ -50,6 +50,10 @@ export default {
         margin-bottom: 0;
     }
 
+    .QuillContent /deep/ img {
+        margin: 0 auto;
+    }
+
     .QuillContent /deep/ ul {
         padding-left: 1.5em;
     }

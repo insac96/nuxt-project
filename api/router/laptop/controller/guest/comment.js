@@ -3,7 +3,7 @@ import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
 //Get Comment and Reply by ProductID
-export const GetByProductID = async (req, res, next) => {
+export const GetListByProductID = async (req, res, next) => {
     let { product } = req.body;
 
     if(!product) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));

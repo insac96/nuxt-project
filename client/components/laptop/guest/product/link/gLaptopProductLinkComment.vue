@@ -131,9 +131,13 @@ export default {
     methods: {
         //OBserver
         onIntersect (entries, observer) {
+            let isIntersecting = entries[0].isIntersecting
+
+            if(!isIntersecting) return false;
             if(!this.Loading.get) return false;
 
             this.GetComments();
+            observer.disconnect();
         },
 
         async GetComments () {

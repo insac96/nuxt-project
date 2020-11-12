@@ -17,11 +17,22 @@
         <v-card-actions class="px-6 py-4">
             <v-spacer></v-spacer>
             
-            <v-btn large rounded elevation="0" @click="$emit('cancel')">
+            <v-btn 
+                large rounded 
+                elevation="0" 
+                :disabled="Loading.delete"
+                @click="$emit('cancel')"
+            >
                 Hủy
             </v-btn>
             
-            <v-btn color="delete" rounded elevation="0" class="mx-0" dark large @click="DeleteProduct">
+            <v-btn
+                color="delete" rounded 
+                elevation="0" class="mx-0" 
+                dark large 
+                :loading="Loading.delete"
+                @click="DeleteProduct"
+            >
                 Xóa
             </v-btn>
         </v-card-actions>
@@ -36,9 +47,16 @@ export default {
 
     data () {
         return {
+            CloneVariant: JSON.parse(JSON.stringify(this.variant)),
             Loading: {
                 delete: false
             }
+        }
+    },
+
+    watch: {
+        variant (newVal) {
+            this.CloneVariant = JSON.parse(JSON.stringify(newVal))
         }
     },
 

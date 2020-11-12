@@ -11,7 +11,7 @@
                 <v-form class="mt-4" ref="form" v-model="Validate">
                     <v-text-field
                         v-model="NewProduct.name"
-                        :rules="[$Rules.required, $Rules.multiSpace, $Rules.specialCharacters]"
+                        :rules="[$Rules.required, $Rules.multiSpace]"
                         label="Laptop Name"
                         filled rounded
                         placeholder="Tên sản phẩm"

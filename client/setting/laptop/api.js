@@ -87,6 +87,9 @@ export default {
         GetListCommentByProductID: '/laptop/comment/list/getByProductID',
         AddComment: '/laptop/comment/add',
         MoreComment: '/laptop/comment/more',
-        AddReplyForComment: '/laptop/comment/reply/add'
+        AddReplyForComment: '/laptop/comment/reply/add',
+
+        //Cart
+        GetListItemInCart: '/laptop/cart/list/get'
     }
 }

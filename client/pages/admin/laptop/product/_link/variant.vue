@@ -3,11 +3,24 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center pr-4">
+        <v-sheet class="d-flex align-center pr-4">
             <div>
                 <v-card-title class="font-weight-bold text-h4 primary--text">Variant</v-card-title>
                 <v-card-subtitle>Các biến thể cấu hình của sản phẩm</v-card-subtitle>
             </div>
+
+            <v-spacer></v-spacer>
+
+            <v-btn 
+                v-if="product.variants.length > 1"
+                color="create" class="mr-1"
+                dark elevation="0" 
+                rounded large
+                @click="VariantColorDialog.createAll = true"
+            >
+                <v-icon>color_lens</v-icon>
+                Thêm Màu Sắc
+            </v-btn>
 
             <v-btn 
                 color="primary" 
@@ -193,6 +206,14 @@
                     :variant="VariantDialog.edit.select"
                 ></ALaptopProductLinkVariantEdit>
             </v-dialog>
+            
+            <!--Dialog Create Color For All Variant-->
+            <v-dialog v-model="VariantColorDialog.createAll" persistent max-width="550">
+                <ALaptopProductLinkVariantColorCreateForAll
+                    @cancel="VariantColorDialog.createAll = false" 
+                    :variants="product.variants"
+                ></ALaptopProductLinkVariantColorCreateForAll>
+            </v-dialog>
 
             <!--Dialog Create Color Variant-->
             <v-dialog v-model="VariantColorDialog.create.type" persistent max-width="550">
@@ -259,6 +280,7 @@ export default {
                 }
             },
             VariantColorDialog: {
+                createAll: false,
                 create: {
                     type: false,
                     select: null

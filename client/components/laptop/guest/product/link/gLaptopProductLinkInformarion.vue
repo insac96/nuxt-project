@@ -3,7 +3,7 @@
 
     <v-card flat tile>
         <!--Header-->
-        <v-card-title class="text-h4 text-sm-h3 font-weight-bold">{{Product.name}}</v-card-title>
+        <v-card-title class="text-h4 text-sm-h3 font-weight-bold" style="word-break: break-word;">{{Product.name}}</v-card-title>
         <v-card-subtitle v-if="Select.variant" class="text-subtitle-2 text-sm-subtitle-1 text-md-h6">CODE: {{Select.variant.code}}</v-card-subtitle>
         
         <!-- Information -->
@@ -149,14 +149,11 @@
 </template>
 
 <script>
-import { CART } from '@/plugins/laptop/cart';
-
 export default {
     props: ['product', 'variantQuery'],
 
     data () {
         return {
-            CART: new CART(),
             Product: this.product,
             Company: this.product.company,
             Trademark: this.product.trademark,
@@ -264,12 +261,10 @@ export default {
         //Cart
         AddToCart () {
             let item = {
-                variant: this.Select.variant._id,
-                warehouse: this.Select.variant.warehouse._id,
                 color: this.Select.color._id
             };
 
-            this.CART.add(item);
+            this.$store.commit('laptop/addToCart', item);
         }
     },
 }
