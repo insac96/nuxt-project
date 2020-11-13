@@ -34,10 +34,6 @@ export default {
                 {
                     property: 'og:description',
                     content: 'Máy tính xách tay, laptop giá cả hợp lý, uy tín số 1 Việt Nam'
-                },
-                {
-                    property: 'og:image',
-                    content: 'https://anio.herokuapp.com/cover.jpg'
                 }
             ]
         }

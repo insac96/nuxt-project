@@ -58,10 +58,6 @@ export default {
                 {
                     property: 'og:description',
                     content: 'Một sản phẩm được tạo bởi @mitto.tran.18'
-                },
-                {
-                    property: 'og:image',
-                    content: 'https://anio.herokuapp.com/cover.jpg'
                 }
             ]
         }
