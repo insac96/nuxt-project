@@ -57,8 +57,6 @@ export default {
         }
     },
 
-    fetchOnServer: false,
-
     head () {
         return {
             title: !this.News ? 'Loading' : this.News.title,

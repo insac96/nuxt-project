@@ -74,8 +74,6 @@ export default {
         }
     },
 
-    fetchOnServer: false,
-
     head () {
         return {
             title: !this.Product ? 'Loading' : this.Product.name,
