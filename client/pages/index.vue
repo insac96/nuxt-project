@@ -31,6 +31,41 @@
 <script>
 export default {
     layout: 'guest',
+
+    head () {
+        return {
+            title: 'Project - NuxtJS Express MongoDB',
+            meta: [
+                //Google
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: 'Một sản phẩm được tạo bởi @mitto.tran.18'
+                },
+                //FaceBook
+                {
+                    property: 'og:url',
+                    content: 'https://anio.herokuapp.com'
+                },
+                {
+                    property: 'og:type',
+                    content: 'article'
+                },
+                {
+                    property: 'og:title',
+                    content: 'Project - NuxtJS Express MongoDB'
+                },
+                {
+                    property: 'og:description',
+                    content: 'Một sản phẩm được tạo bởi @mitto.tran.18'
+                },
+                {
+                    property: 'og:image',
+                    content: 'https://anio.herokuapp.com/cover.jpg'
+                }
+            ]
+        }
+    }
 }
 </script>
 

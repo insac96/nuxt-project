@@ -43,14 +43,12 @@ export default {
             News: null,
         }
     },
-
+    
     async fetch(){
         try {
             let News = await this.$axios.$post(LaptopAPI.guest.GetNewsByLink, {
                 link: this.$route.params.link
             });
-
-            console.log(News)
 
             this.News = News;
         }
@@ -59,6 +57,39 @@ export default {
         }
     },
 
-    fetchOnServer: false
+    fetchOnServer: false,
+
+    head () {
+        return {
+            title: !this.News ? 'Loading' : this.News.title,
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: !this.News ? 'Loading' : this.News.title
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://anio.herokuapp.com'+ this.$route.path
+                },
+                {
+                    property: 'og:type',
+                    content: 'article'
+                },
+                {
+                    property: 'og:title',
+                    content: !this.News ? 'Loading' : this.News.title
+                },
+                {
+                    property: 'og:description',
+                    content: !this.News ? 'Loading' : this.News.title
+                },
+                {
+                    property: 'og:image',
+                    content: !this.News ? 'Loading' : this.News.image
+                },
+            ]
+        }
+    },
 }
 </script>

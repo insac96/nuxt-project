@@ -74,6 +74,39 @@ export default {
         }
     },
 
-    fetchOnServer: false
+    fetchOnServer: false,
+
+    head () {
+        return {
+            title: !this.Product ? 'Loading' : this.Product.name,
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: !this.Product ? 'Loading' : this.Product.name
+                },
+                {
+                    property: 'og:url',
+                    content: 'https://anio.herokuapp.com'+ this.$route.path
+                },
+                {
+                    property: 'og:type',
+                    content: 'article'
+                },
+                {
+                    property: 'og:title',
+                    content: !this.Product ? 'Loading' : this.Product.name
+                },
+                {
+                    property: 'og:description',
+                    content: !this.Product ? 'Loading' : this.Product.name
+                },
+                {
+                    property: 'og:image',
+                    content: !this.Product ? 'Loading' : this.Product.images[0]
+                },
+            ]
+        }
+    },
 }
 </script>
