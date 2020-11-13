@@ -7,7 +7,7 @@
             v-if="!UserStore.authentic"
             fab elevation="0" small 
             color="header_button" class="ml-1" 
-            @click="Dialog = true"       
+            @click="$store.commit('user/changeDialogAuthentic', true)"
         >
             <v-icon>person</v-icon>
         </v-btn>
@@ -73,11 +73,13 @@
         </v-menu>
 
         <!--Dialog Authentic-->
-        <LazyHydrate ssr-only :trigger-hydration="Dialog">
-            <v-dialog v-model="Dialog" max-width="450">
-                <PDialogAuthentic 
-                    @cancel="Dialog = false" 
-                ></PDialogAuthentic>
+        <LazyHydrate when-visible>
+            <v-dialog 
+                v-model="UserStore.dialogAuthentic" 
+                persistent max-width="450" 
+                @click:outside="$store.commit('user/changeDialogAuthentic', false)"
+            >
+                <PDialogAuthentic @cancel="Dialog = false"></PDialogAuthentic>
             </v-dialog>
         </LazyHydrate>
     </div>
@@ -87,12 +89,6 @@
 import UserAPI from '@/setting/user/api';
 
 export default {
-    data () {
-        return {
-            Dialog: false,
-        }
-    },
-
     computed: {
         UserStore() {
             return this.$store.state.user;

@@ -1,4 +1,5 @@
 export const state = () => ({
+    dialogAuthentic: false,
     authentic: false,
     id: null,
     profile: null,
@@ -20,5 +21,8 @@ export const mutations = {
         state.profile = null;
         state.role = null;
         state.verification = null;
+    },
+    changeDialogAuthentic(state, type) {
+        state.dialogAuthentic = type;
     }
 };
