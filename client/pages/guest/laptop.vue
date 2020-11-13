@@ -20,19 +20,23 @@ export default {
                 },
                 //FaceBook
                 {
-                    property: 'og:url',
+                    hid: 'og:url',
+                    name: 'og:url',
                     content: 'https://anio.herokuapp.com'+ this.$route.path
                 },
                 {
-                    property: 'og:type',
+                    hid: 'og:type',
+                    name: 'og:type',
                     content: 'article'
                 },
                 {
-                    property: 'og:title',
+                    hid: 'og:title',
+                    name: 'og:title',
                     content: 'Anio - Máy Tính Xách Tay, Laptop'
                 },
                 {
-                    property: 'og:description',
+                    hid: 'og:description',
+                    name: 'og:description',
                     content: 'Máy tính xách tay, laptop giá cả hợp lý, uy tín số 1 Việt Nam'
                 }
             ]

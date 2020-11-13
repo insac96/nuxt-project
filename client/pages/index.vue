@@ -44,19 +44,23 @@ export default {
                 },
                 //FaceBook
                 {
-                    property: 'og:url',
+                    hid: 'og:url',
+                    name: 'og:url',
                     content: 'https://anio.herokuapp.com'
                 },
                 {
-                    property: 'og:type',
+                    hid: 'og:type',
+                    name: 'og:type',
                     content: 'article'
                 },
                 {
-                    property: 'og:title',
+                    hid: 'og:title',
+                    name: 'og:title',
                     content: 'Project - NuxtJS Express MongoDB'
                 },
                 {
-                    property: 'og:description',
+                    hid: 'og:description',
+                    name: 'og:description',
                     content: 'Một sản phẩm được tạo bởi @mitto.tran.18'
                 }
             ]

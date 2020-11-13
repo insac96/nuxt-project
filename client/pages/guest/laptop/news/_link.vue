@@ -67,23 +67,28 @@ export default {
                     content: !this.News ? 'Loading' : this.News.title
                 },
                 {
-                    property: 'og:url',
+                    hid: 'og:url',
+                    name: 'og:url',
                     content: 'https://anio.herokuapp.com'+ this.$route.path
                 },
                 {
-                    property: 'og:type',
+                    hid: 'og:type',
+                    name: 'og:type',
                     content: 'article'
                 },
                 {
-                    property: 'og:title',
+                    hid: 'og:title',
+                    name: 'og:title',
                     content: !this.News ? 'Loading' : this.News.title
                 },
                 {
-                    property: 'og:description',
+                    hid: 'og:description',
+                    name: 'og:description',
                     content: !this.News ? 'Loading' : this.News.title
                 },
                 {
-                    property: 'og:image',
+                    hid: 'og:image',
+                    name: 'og:image',
                     content: !this.News ? 'Loading' : this.News.image
                 },
             ]
