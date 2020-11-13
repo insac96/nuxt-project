@@ -85,27 +85,32 @@ export default {
                 },
                 {
                     hid: 'og:url',
-                    name: 'og:url',
+                    name: 'og:urlurl',
+                    property: 'og:url',
                     content: 'https://anio.herokuapp.com'+ this.$route.path
                 },
                 {
                     hid: 'og:type',
                     name: 'og:type',
+                    property: 'og:type',
                     content: 'article'
                 },
                 {
                     hid: 'og:title',
                     name: 'og:title',
+                    property: 'og:title',
                     content: !this.Product ? 'Loading' : this.Product.name
                 },
                 {
                     hid: 'og:description',
                     name: 'og:description',
+                    property: 'og:description',
                     content: !this.Product ? 'Loading' : this.Product.name
                 },
                 {
                     hid: 'og:image',
                     name: 'og:image',
+                    property: 'og:image',
                     content: !this.Product ? 'Loading' : this.Product.images[0]
                 },
             ]

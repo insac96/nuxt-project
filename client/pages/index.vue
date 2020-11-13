@@ -46,23 +46,33 @@ export default {
                 {
                     hid: 'og:url',
                     name: 'og:url',
+                    property: 'og:url',
                     content: 'https://anio.herokuapp.com'
                 },
                 {
                     hid: 'og:type',
                     name: 'og:type',
+                    property: 'og:type',
                     content: 'article'
                 },
                 {
                     hid: 'og:title',
                     name: 'og:title',
+                    property: 'og:title',
                     content: 'Project - NuxtJS Express MongoDB'
                 },
                 {
                     hid: 'og:description',
                     name: 'og:description',
+                    property: 'og:description',
                     content: 'Một sản phẩm được tạo bởi @mitto.tran.18'
-                }
+                },
+                {
+                    hid: 'og:image',
+                    name: 'og:image',
+                    property: 'og:image',
+                    content: 'https://anio.herokuapp.com/cover.jpg'
+                },
             ]
         }
     }
