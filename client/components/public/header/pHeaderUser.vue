@@ -79,7 +79,7 @@
                 persistent max-width="450" 
                 @click:outside="$store.commit('user/changeDialogAuthentic', false)"
             >
-                <PDialogAuthentic @cancel="Dialog = false"></PDialogAuthentic>
+                <PDialogAuthentic @cancel="$store.commit('user/changeDialogAuthentic', false)"></PDialogAuthentic>
             </v-dialog>
         </LazyHydrate>
     </div>
