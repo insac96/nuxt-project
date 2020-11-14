@@ -2,14 +2,14 @@
     <!--g_laptop_product_link_images-->
 
     <v-card flat tile class="Sticky_Top Sticky_Top--xl">
-        <v-card-text v-if="images.length < 1">
+        <v-card-text v-if="images.length < 1" class="pa-0 pa-sm-4">
             <LazyHydrate when-visible>
                 <v-alert type="info">Sản Phẩm Chưa Có Hình Ảnh</v-alert>
             </LazyHydrate>
         </v-card-text>
 
         <!--One Image-->
-        <v-card-text v-else-if="images.length == 1">
+        <v-card-text v-else-if="images.length == 1" class="pa-0 pa-sm-4">
             <LazyHydrate when-visible>
                 <v-img :src="$Image.Get(images[0], 'l')" :aspect-ratio="1.5" contain>
                     <template v-slot:placeholder>
