@@ -47,25 +47,23 @@
         </v-menu>
 
         <!--Dialog Color-->
-        <LazyHydrate when-visible>
-            <v-dialog v-model="DialogColor" persistent width="300">
-                <v-card>
-                    <v-color-picker v-model="Color" dot-size="10" hide-mode-switch hide-inputs></v-color-picker>
+        <v-dialog v-model="DialogColor" persistent width="300">
+            <v-card>
+                <v-color-picker v-model="Color" dot-size="10" hide-mode-switch hide-inputs></v-color-picker>
 
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
 
-                        <v-btn tile elevation="0" color="primary" dark @click="ChangeColor(Color)">
-                            Thay Đổi
-                        </v-btn>
+                    <v-btn tile elevation="0" color="primary" dark @click="ChangeColor(Color)">
+                        Thay Đổi
+                    </v-btn>
 
-                        <v-btn tile elevation="0" class="mx-0" @click="CloseDialogColor">
-                            Hủy
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-        </LazyHydrate>
+                    <v-btn tile elevation="0" class="mx-0" @click="CloseDialogColor">
+                        Hủy
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 

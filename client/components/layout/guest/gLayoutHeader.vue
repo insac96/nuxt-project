@@ -40,25 +40,23 @@
         </div>
 
         <!--Bottom Menu-->
-        <LazyHydrate ssr-only :trigger-hydration="BottomMenu">
-            <v-bottom-sheet v-model="BottomMenu">
-                <v-list subheader>
-                    <v-subheader>Menu</v-subheader>
+        <v-bottom-sheet v-model="BottomMenu">
+            <v-list subheader>
+                <v-subheader>Menu</v-subheader>
 
-                    <v-list-item
-                        v-for="item in Menu"
-                        :key="item.title"
-                        :disabled="item.disabled"
-                        @click="$router.push(item.path)"
-                    >
-                        <v-list-item-avatar>
-                            <v-icon>{{item.icon}}</v-icon>
-                        </v-list-item-avatar>
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-bottom-sheet>
-        </LazyHydrate>
+                <v-list-item
+                    v-for="item in Menu"
+                    :key="item.title"
+                    :disabled="item.disabled"
+                    @click="$router.push(item.path)"
+                >
+                    <v-list-item-avatar>
+                        <v-icon>{{item.icon}}</v-icon>
+                    </v-list-item-avatar>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-bottom-sheet>
     </v-app-bar>
 </template>
 

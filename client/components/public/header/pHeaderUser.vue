@@ -73,15 +73,13 @@
         </v-menu>
 
         <!--Dialog Authentic-->
-        <LazyHydrate when-visible>
-            <v-dialog 
-                v-model="UserStore.dialogAuthentic" 
-                persistent max-width="450" 
-                @click:outside="$store.commit('user/changeDialogAuthentic', false)"
-            >
-                <PDialogAuthentic @cancel="$store.commit('user/changeDialogAuthentic', false)"></PDialogAuthentic>
-            </v-dialog>
-        </LazyHydrate>
+        <v-dialog 
+            v-model="UserStore.dialogAuthentic" 
+            persistent max-width="450" 
+            @click:outside="$store.commit('user/changeDialogAuthentic', false)"
+        >
+            <PDialogAuthentic @cancel="$store.commit('user/changeDialogAuthentic', false)"></PDialogAuthentic>
+        </v-dialog>
     </div>
 </template>
 
