@@ -1,6 +1,4 @@
 const SaveCartToLocalStorage = (state) => {
-    if(process.server) return false;
-
     localStorage.setItem('CART', JSON.stringify(state.cart));
 };
 
