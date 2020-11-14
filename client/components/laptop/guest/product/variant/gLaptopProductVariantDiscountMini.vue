@@ -142,8 +142,6 @@ export default {
         }
     },
 
-    fetchOnServer: false,
-
     computed: {
         SmallButton () {
             switch (this.$vuetify.breakpoint.name) {

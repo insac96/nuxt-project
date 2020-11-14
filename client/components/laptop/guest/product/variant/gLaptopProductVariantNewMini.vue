@@ -158,8 +158,6 @@ export default {
             throw new Error(e.toString());
         }
     },
-
-    fetchOnServer: false,
     
     computed: {
         SmallButton () {

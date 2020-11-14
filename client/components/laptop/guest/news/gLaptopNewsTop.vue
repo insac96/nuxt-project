@@ -63,8 +63,6 @@ export default {
         catch(e){
             throw new Error(e.toString());
         }
-    },
-
-    fetchOnServer: false
+    }
 }
 </script>
