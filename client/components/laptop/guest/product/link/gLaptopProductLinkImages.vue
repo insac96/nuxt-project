@@ -3,21 +3,25 @@
 
     <v-card flat tile class="Sticky_Top Sticky_Top--xl">
         <v-card-text v-if="images.length < 1">
-            <v-alert type="info">Sản Phẩm Chưa Có Hình Ảnh</v-alert>
+            <LazyHydrate when-visible>
+                <v-alert type="info">Sản Phẩm Chưa Có Hình Ảnh</v-alert>
+            </LazyHydrate>
         </v-card-text>
 
         <!--One Image-->
         <v-card-text v-else-if="images.length == 1">
-            <v-img :src="$Image.Get(images[0], 'l')" :aspect-ratio="1.5" contain>
-                <template v-slot:placeholder>
-                    <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
-                        <v-progress-circular
-                            indeterminate
-                            color="primary"
-                        ></v-progress-circular>
-                    </v-sheet>
-                </template>
-            </v-img>
+            <LazyHydrate when-visible>
+                <v-img :src="$Image.Get(images[0], 'l')" :aspect-ratio="1.5" contain>
+                    <template v-slot:placeholder>
+                        <v-sheet width="100%" height="100%" color="card" class="d-flex justify-center align-center">
+                            <v-progress-circular
+                                indeterminate
+                                color="primary"
+                            ></v-progress-circular>
+                        </v-sheet>
+                    </template>
+                </v-img>
+            </LazyHydrate>
         </v-card-text>
         
         <!--Many Image-->

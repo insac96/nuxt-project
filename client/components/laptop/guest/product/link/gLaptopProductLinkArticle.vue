@@ -9,7 +9,7 @@
 
         <!--Body-->
         <v-card-text>
-            <PBoxContent :content="Article.content" mini></PBoxContent>
+            <PBoxContent :content="content" :mini="true"></PBoxContent>
         </v-card-text>
     </v-card>
 </template>
@@ -20,7 +20,7 @@ export default {
 
     data () {
         return {
-            Article: this.article,
+            content: this.article.content,
         }
     }
 }

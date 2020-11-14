@@ -23,128 +23,170 @@
                 <span class="text-sm-h6">(30 đánh giá)</span>
             </div>
         </div>
-
+        
         <!-- If Variant List Empty -->
-        <v-card-text class="py-0" v-if="Variants.length == 0">
-            <v-alert type="info" text border="left" color="primary">
-                Hiện không có cấu hình để lựa chọn
-            </v-alert>
-        </v-card-text>
+        <LazyHydrate never :trigger-hydration="Variants.length == 0">
+            <v-card-text class="py-0" v-if="Variants.length == 0">
+                <v-alert type="info" text border="left" color="primary">
+                    Hiện không có cấu hình để lựa chọn
+                </v-alert>
+            </v-card-text>
+        </LazyHydrate>
 
         <!-- ELSE -->
-        <v-sheet v-else>
-            <!-- Number Variant -->
-            <div class="px-4">
-                <v-divider class="my-4"></v-divider>
+        <LazyHydrate never :trigger-hydration="Variants.length > 0">
+            <v-sheet>
+                <!-- Configuration -->
+                <div class="px-4 mb-4">
+                    <v-divider class="my-4"></v-divider>
 
-                <v-alert type="info" dense text border="left" color="primary">
-                    Hiện có {{Variants.length}} cấu hình cho bạn lựa chọn
-                </v-alert>
+                    <!-- Head -->
+                    <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
+                        <span class="text-subtitle-1 text-sm-h6 font-weight-bold">1. CẤU HÌNH</span>
 
-                <v-divider class="my-4"></v-divider>
-            </div>
+                        <v-btn icon @click="ViewListFormat = !ViewListFormat">
+                            <v-icon v-if="!ViewListFormat">view_list</v-icon>
+                            <v-icon v-else>dns</v-icon>
+                        </v-btn>
+                    </div>
 
-            <!-- Configuration -->
-            <div class="px-4 mb-4">
-                <!-- Head -->
-                <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
-                    <span class="text-subtitle-1 text-sm-h6 font-weight-bold">1. CẤU HÌNH</span>
+                    <!-- Select By Format Button -->
+                    <div v-if="!ViewListFormat">
+                        <v-chip-group
+                            mandatory
+                            v-for="type in ListType" :key="type" 
+                            v-model="Select.variant[type]"
+                        >
+                            <v-chip
+                                v-for="name in GetListByType(type)" :key="name"
+                                :value="name" label
+                                active-class="active-select active-select--chip"
+                                @click="SelectVariant(name, type)"
+                            >
+                                {{name}}
+                            </v-chip>
+                        </v-chip-group>
 
-                    <v-chip
-                        v-if="Select.variant['discount'].type"
-                        color="error"
-                        class="font-weight-bold"
-                    >
-                        - {{ $String.toPrice(Select.variant['discount'].amount) }}
-                    </v-chip>
+                        <!-- Discount Status -->
+                        <v-alert v-if="Select.variant['discount'].type" dense text border="left" color="error" class="mt-2">
+                            <div class="d-flex justify-space-between">
+                                <span>Cấu hình được giảm</span>
+
+                                <v-chip color="error" small class="font-weight-bold">
+                                    - {{ $String.toPrice(Select.variant['discount'].amount) }}đ
+                                </v-chip>
+                            </div>
+                        </v-alert>
+                    </div>
+
+                    <!-- Select By Format List -->
+                    <LazyHydrate never :trigger-hydration="ViewListFormat">
+                        <v-item-group mandatory v-model="Select.variant" v-if="ViewListFormat">
+                            <v-item 
+                                v-for="(variant, index) in Variants" 
+                                :key="index" 
+                                v-slot="{ active }"
+                                :value="variant"
+                            >
+                                <v-alert
+                                    :color="active ? 'primary' : 'box'"
+                                    border="left"
+                                    :text="active ? true : false"
+                                    @click="SetNewSelectVariant(variant)"
+                                    tile class="mb-0"
+                                    style="cursor: pointer;"
+                                >
+                                    <div class="pb-1 d-flex justify-space-between align-center">
+                                        <span class="text-subtitle-2 font-weight-bold">{{variant.code}}</span>
+
+                                        <v-chip color="error" small class="font-weight-bold" v-if="variant['discount'].type">
+                                            - {{ $String.toPrice(variant['discount'].amount) }}đ
+                                        </v-chip>
+                                    </div>
+
+                                    <div>
+                                        <v-chip 
+                                            v-for="type in ListType" :key="type" 
+                                            class="my-1 mr-1" label
+                                            :color="active ? 'primary' : ''"
+                                        >{{variant[type]}}</v-chip>
+                                    </div>
+                                </v-alert>
+                            </v-item>
+                        </v-item-group>
+                    </LazyHydrate>
                 </div>
 
-                <!-- Select Button -->
-                <v-chip-group
-                    mandatory
-                    v-for="type in ListType" :key="type" 
-                    v-model="Select.variant[type]"
-                >
-                    <v-chip
-                        v-for="name in GetListByType(type)" :key="name"
-                        :value="name" label
-                        active-class="active-select active-select--chip"
-                        @click="SelectVariant(name, type)"
-                    >
-                        {{name}}
-                    </v-chip>
-                </v-chip-group>
-            </div>
+                <!-- Color -->
+                <div class="px-4 mb-6" v-if="Select.color">
+                    <v-divider class="my-4"></v-divider>
 
-            <!-- Color -->
-            <div class="px-4 mb-6" v-if="Select.color">
-                <v-divider class="my-4"></v-divider>
+                    <!-- Head -->
+                    <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
+                        <span class="text-subtitle-1 text-sm-h6 font-weight-bold">2. MÀU SẮC</span>
 
-                <!-- Head -->
-                <div class="d-flex justify-space-between align-center mb-3" style="height: 32px;">
-                    <span class="text-subtitle-1 text-sm-h6 font-weight-bold">2. MÀU SẮC</span>
+                        <v-chip 
+                            v-if="Select.color.export.upprice > 0"
+                            color="info"
+                            class="font-weight-bold"
+                        >
+                            + {{ $String.toPrice(Select.color.export.upprice) }}
+                        </v-chip>
+                    </div>
 
-                    <v-chip 
-                        v-if="Select.color.export.upprice > 0"
-                        color="info"
-                        class="font-weight-bold"
-                    >
-                        + {{ $String.toPrice(Select.color.export.upprice) }}
-                    </v-chip>
+                    <!-- Select Button -->
+                    <v-btn-toggle>
+                        <v-btn 
+                            v-for="(warehouseColor, indexColor) in Select.variant.warehouse.colors" :key="indexColor"    
+                            :color="warehouseColor.information.code" fab :ripple="false" active-class="active-select"
+                            @click="SelectColor(warehouseColor)"
+                        >
+                            <v-icon v-if="Select.color._id == warehouseColor._id" color="white">check</v-icon>
+                        </v-btn>
+                    </v-btn-toggle>
                 </div>
 
-                <!-- Select Button -->
-                <v-btn-toggle>
-                    <v-btn 
-                        v-for="(warehouseColor, indexColor) in Select.variant.warehouse.colors" :key="indexColor"    
-                        :color="warehouseColor.information.code" fab :ripple="false" active-class="active-select"
-                        @click="SelectColor(warehouseColor)"
-                    >
-                        <v-icon v-if="Select.color._id == warehouseColor._id" color="white">check</v-icon>
+                <!--Add to Cart-->
+                <div class="px-4 pb-4" v-if="Select.variant && Select.color">
+                    <v-divider class="my-4"></v-divider>
+
+                    <!-- Head -->
+                    <div class="text-subtitle-1 text-sm-h6 font-weight-bold mb-2">3. THÀNH TIỀN</div>
+
+                    <!--Total Price-->
+                    <div class="d-flex justify-space-between align-center mb-2">
+                        Cấu Hình
+
+                        <span>{{ $String.toPrice(Select.variant['warehouse'].export.price) }}</span>
+                    </div>
+
+                    <!--Total Color UpPrice-->
+                    <div class="d-flex justify-space-between align-center mb-2">
+                        Màu Sắc
+                        <span>+ {{ $String.toPrice(Select.color['export'].upprice) }}</span>
+                    </div>
+
+                    <!--Total Discount-->
+                    <div class="d-flex justify-space-between align-center mb-2">
+                        Giảm Giá
+                        <span v-if="Select.variant['discount'].type">- {{ $String.toPrice(Select.variant['discount'].amount) }}</span>
+                        <span v-else>- 0</span>
+                    </div>
+
+                    <!--Total-->
+                    <div class="d-flex justify-space-between align-center mb-6 font-weight-bold text-h6 text-sm-h5">
+                        Total
+                        <span class="error--text">{{TotalPrice}}</span>
+                    </div>
+
+                    <!-- Button Add Cart -->
+                    <v-btn block color="primary" dark x-large elevation="0" @click="AddToCart">
+                        <v-icon class="mr-3">shopping_cart</v-icon> 
+                        Thêm vào giỏ hàng
                     </v-btn>
-                </v-btn-toggle>
-            </div>
-
-            <!--Add to Cart-->
-            <div class="px-4 pb-4" v-if="Select.variant && Select.color">
-                <v-divider class="my-4"></v-divider>
-
-                <!-- Head -->
-                <div class="text-subtitle-1 text-sm-h6 font-weight-bold mb-2">3. THÀNH TIỀN</div>
-
-                <!--Total Price-->
-                <div class="d-flex justify-space-between align-center mb-2">
-                    Cấu Hình
-
-                    <span>{{ $String.toPrice(Select.variant['warehouse'].export.price) }}</span>
                 </div>
-
-                <!--Total Color UpPrice-->
-                <div class="d-flex justify-space-between align-center mb-2">
-                    Màu Sắc
-                    <span>+ {{ $String.toPrice(Select.color['export'].upprice) }}</span>
-                </div>
-
-                <!--Total Discount-->
-                <div class="d-flex justify-space-between align-center mb-2">
-                    Giảm Giá
-                    <span v-if="Select.variant['discount'].type">- {{ $String.toPrice(Select.variant['discount'].amount) }}</span>
-                    <span v-else>- 0</span>
-                </div>
-
-                <!--Total-->
-                <div class="d-flex justify-space-between align-center mb-6 font-weight-bold text-h6 text-sm-h5">
-                    Total
-                    <span class="error--text">{{TotalPrice}}</span>
-                </div>
-
-                <!-- Button Add Cart -->
-                <v-btn block color="primary" dark x-large elevation="0" @click="AddToCart">
-                    <v-icon class="mr-3">shopping_cart</v-icon> 
-                    Thêm vào giỏ hàng
-                </v-btn>
-            </div>
-        </v-sheet>
+            </v-sheet>
+        </LazyHydrate>
     </v-card>
 </template>
 
@@ -168,6 +210,9 @@ export default {
                 color: null
             },
             ListType: ['screen', 'cpu', 'ram', 'harddrive', 'gpu'],
+
+            //View
+            ViewListFormat: false
         }
     },
 
@@ -278,8 +323,16 @@ export default {
             color: #ffffff !important;
         }
 
+        &--card {
+            border-color: var(--v-primary-base) !important;
+        }
+
         &::before {
             opacity: 0 !important;
         }
+    }
+
+    .card-border-2 {
+        border-width: 2px !important;
     }
 </style>

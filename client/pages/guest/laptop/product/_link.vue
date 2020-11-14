@@ -12,7 +12,7 @@
             <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card>
     </v-container>
-
+    
     <v-container class="BoxShadow pa-0" v-else>
         <!--Product Information-->
         <v-card tile flat>
@@ -34,7 +34,7 @@
         </v-card>
 
         <!--Product Article-->
-        <LazyHydrate ssr-only>
+        <LazyHydrate when-visible>
             <GLaptopProductLinkArticle :article="Product.article" v-if="Product.article"></GLaptopProductLinkArticle>
         </LazyHydrate>
 
