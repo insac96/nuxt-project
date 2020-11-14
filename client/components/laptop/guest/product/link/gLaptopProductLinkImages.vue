@@ -27,14 +27,14 @@
         <!--Many Image-->
         <v-card-text v-else class="pa-0 pa-sm-4">
             <!--Slide Show-->
-            <LazyHydrate when-idle>
-                <v-carousel
-                    v-model="ImageNow"
-                    cycle height="auto"
-                    :show-arrows-on-hover="ShowArrows"
-                    hide-delimiter-background
-                >
-                    <v-carousel-item v-for="item in images" :key="item">
+            <v-carousel
+                v-model="ImageNow"
+                cycle height="auto"
+                :show-arrows-on-hover="ShowArrows"
+                hide-delimiter-background
+            >
+                <v-carousel-item v-for="item in images" :key="item">
+                    <LazyHydrate when-visible>
                         <v-img :src="$Image.Get(item, 'l')" :aspect-ratio="320/213" contain>
                             <!--Lazy Load-->
                             <template v-slot:placeholder>
@@ -46,22 +46,22 @@
                                 </v-sheet>
                             </template>
                         </v-img>
-                    </v-carousel-item>
-                </v-carousel>
-            </LazyHydrate>
+                    </LazyHydrate>
+                </v-carousel-item>
+            </v-carousel>
 
             <!--Mini List-->
-            <LazyHydrate when-visible>
-                <v-sheet class="mt-4 d-none d-sm-block">
-                    <v-slide-group show-arrows center-active>
-                        <v-slide-item v-for="(item, i) in images" :key="i" class="mr-1">
+            <v-sheet class="mt-4 d-none d-sm-block">
+                <v-slide-group show-arrows center-active>
+                    <v-slide-item v-for="(item, i) in images" :key="i" class="mr-1">
+                        <LazyHydrate when-visible>
                             <v-card flat class="rounded-lg" :ripple="false" @click="ImageNow = i">
                                 <v-img :src="$Image.Get(item, 's')" width="90" max-width="90" height="70" max-height="70"></v-img>
                             </v-card>
-                        </v-slide-item>
-                    </v-slide-group>
-                </v-sheet>
-            </LazyHydrate>
+                        </LazyHydrate>
+                    </v-slide-item>
+                </v-slide-group>
+            </v-sheet>
         </v-card-text>
     </v-card>
 </template>

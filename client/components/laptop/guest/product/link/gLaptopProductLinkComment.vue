@@ -1,15 +1,19 @@
 <template>
     <!--g_laptop_product_link_comment-->
 
-    <v-card tile flat v-intersect="onIntersect">
+    <v-card tile flat>
         <!--Header-->
         <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
         </v-sheet>
 
         <!--Body-->
-        <v-card-text v-if="Loading.get" flat tile>
+        <v-card-text v-if="$fetchState.pending" flat tile color="card">
             <v-skeleton-loader type="list-item-avatar-two-line" v-for="i in 3" :key="i"></v-skeleton-loader>
+        </v-card-text>
+
+        <v-card-text v-else-if="$fetchState.error" flat tile>
+            <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
 
         <div v-else>
@@ -128,36 +132,25 @@ export default {
         },
     },
 
+    async fetch () {
+        try {
+            let Get = await this.$axios.$post(LaptopAPI.guest.GetListCommentByProductID, {
+                product: this.product._id
+            });
+
+            this.Comments = Get.comments;
+            this.countComment = Get.countComment;
+
+            this.Loading.get = false;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
+
     methods: {
-        //OBserver
-        onIntersect (entries, observer) {
-            let isIntersecting = entries[0].isIntersecting
-
-            if(!isIntersecting) return false;
-            if(!this.Loading.get) return false;
-
-            this.GetComments();
-            observer.disconnect();
-        },
-
-        async GetComments () {
-            this.Loading.get = true;
-
-            try {
-                let Get = await this.$axios.$post(LaptopAPI.guest.GetListCommentByProductID, {
-                    product: this.product._id
-                });
-
-                this.Comments = Get.comments;
-                this.countComment = Get.countComment;
-
-                this.Loading.get = false;
-            }
-            catch(e){
-                return false;
-            }
-        },
-
         //Add
         async AddComment () {
             if(!this.$refs.form.validate()) return false;

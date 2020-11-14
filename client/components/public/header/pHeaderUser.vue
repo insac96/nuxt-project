@@ -50,15 +50,10 @@
                         <v-list-item-title>Admin Panel</v-list-item-title>
                     </v-list-item>
 
-                    <!--Cart-->
-                    <v-list-item>
-                        <v-list-item-icon><v-icon>shopping_cart</v-icon></v-list-item-icon>
-                        <v-list-item-title>Giỏ Hàng</v-list-item-title>
-                    </v-list-item>
-
+                    <!--Setting-->
                     <v-list-item>
                         <v-list-item-icon><v-icon>settings</v-icon></v-list-item-icon>
-                        <v-list-item-title>Cài Đặt</v-list-item-title>
+                        <v-list-item-title>Tài Khoản</v-list-item-title>
                     </v-list-item>
 
                     <v-divider></v-divider>

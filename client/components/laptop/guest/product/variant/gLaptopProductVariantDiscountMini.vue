@@ -18,7 +18,7 @@
 
                 <v-btn 
                     class="BoxShadow"
-                    :disabled="(skip + variants.length) === (count)" 
+                    :disabled="(skip + variants.length) === (countComment)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Next"
                 >
@@ -121,7 +121,7 @@ export default {
     data () {
         return {
             variants: [],
-            count: 0,
+            countComment: 0,
             skip: 0,
             limit: 4
         }
@@ -135,7 +135,7 @@ export default {
             });
 
             this.variants = Get.variants;
-            this.count = Get.countSum;
+            this.countComment = Get.countComment;
         }
         catch(e) {
             throw new Error(e.toString());

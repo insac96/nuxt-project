@@ -1,8 +1,6 @@
 <template>
     <div>
-        <LazyHydrate when-idle>
-            <GLaptopNewsTop class="mb-4"></GLaptopNewsTop>
-        </LazyHydrate>
+        <GLaptopNewsTop class="mb-4"></GLaptopNewsTop>
 
         <!--<GLaptopCompanyesMini class="mb-6 mb-sm-8"></GLaptopCompanyesMini>-->
         

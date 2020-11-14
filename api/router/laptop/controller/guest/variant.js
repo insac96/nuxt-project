@@ -74,7 +74,7 @@ export const GetListByDiscount = async (req, res, next) => {
 
         res.json({
             variants: Variants,
-            countSum: Count[0].number
+            countComment: Count[0].number
         });
     }
     catch(e) {
@@ -149,7 +149,7 @@ export const GetListByStatus = async (req, res, next) => {
 
         res.json({
             variants: Variants,
-            countSum: Count[0].number
+            countComment: Count[0].number
         });
     }
     catch(e) {
