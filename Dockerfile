@@ -1,12 +1,17 @@
-FROM node:10.15
+FROM node:14.15.0
 
 ENV APP_ROOT /src
+ENV HOST 0.0.0.0
 
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
-ADD . ${APP_ROOT}
 
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 RUN npm run build
 
-ENV HOST 0.0.0.0
+EXPOSE 80
+
+CMD [ "npm", "run", "start" ]
