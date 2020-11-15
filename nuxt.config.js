@@ -63,7 +63,8 @@ export default {
   },
 
   axios: {
-    baseURL: `${Config.baseUrl}/api`,
+    //baseURL: `${Config.baseUrl}/api`,
+    prefix: '/api'
   },
 
   vuetify: {
