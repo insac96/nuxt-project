@@ -5,7 +5,7 @@
         <v-skeleton-loader type="image"></v-skeleton-loader>
     </v-sheet>
 
-    <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-0 px-md-4">
+    <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-4 px-md-4">
         <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
     </v-sheet>
 
