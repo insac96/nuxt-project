@@ -7,7 +7,7 @@
             :content="LaptopStore.cart.length" 
             :value="LaptopStore.cart.length"
         >
-            <v-btn fab small color="primary" @click="OpenDialogCart"><v-icon>shopping_cart</v-icon></v-btn>
+            <v-btn fab :small="SmallButton" color="primary" @click="OpenDialogCart"><v-icon>shopping_cart</v-icon></v-btn>
         </v-badge>
 
         <!--Box Bottom-->
@@ -134,6 +134,15 @@ export default {
     },
 
     computed: {
+        SmallButton () {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return true
+                case 'sm': return false
+                case 'md': return false
+                case 'lg': return false
+                case 'xl': return false
+            }
+        },
         LaptopStore () {
             return this.$store.state.laptop;
         },

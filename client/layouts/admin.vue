@@ -23,8 +23,6 @@
 export default {
     middleware: 'admin',
 
-    name: 'admin_layout',
-    
     head () {
         return {
             titleTemplate: 'Anio - Admin Control',

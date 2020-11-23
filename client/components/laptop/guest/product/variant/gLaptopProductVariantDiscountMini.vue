@@ -52,7 +52,7 @@
                     <v-card 
                         class="d-flex flex-column BoxShadow"
                         :ripple="false"
-                        :to="`/guest/laptop/product/${variant.product.link}?variant=${variant.code}`"
+                        :to="`laptop/product/${variant.product.link}?variant=${variant.code}`"
                     >
                         <!--Image-->
                         <v-img 
@@ -117,7 +117,6 @@
 import LaptopAPI from '@/setting/laptop/api';
 
 export default {
-
     data () {
         return {
             variants: [],

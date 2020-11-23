@@ -9,7 +9,7 @@
         <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
     </v-sheet>
 
-    <v-sheet v-else class="pa-0 px-md-4" color="transparent">
+    <v-sheet v-else class="pa-0" color="transparent">
         <v-carousel
             class="BoxShadow"
             cycle height="auto"

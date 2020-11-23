@@ -4,16 +4,20 @@
 
         <v-main>
             <v-row no-gutters justify="center">
-                <nuxt></nuxt>
+                <v-container class="Screen pa-0">
+                    <nuxt keep-alive></nuxt>
+                </v-container>
             </v-row>
         </v-main>
+
+        <client-only>
+            <GLaptopCart></GLaptopCart>
+        </client-only>
     </v-app>
 </template>
 
 <script>
 export default {
-    name: 'guest_layout',
-
     head() {
         return {
             title: 'Anio',
