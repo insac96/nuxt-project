@@ -26,18 +26,10 @@ export default {
         }
     },
 
-    data () {
+    head () {
         return {
-            Color: 'secondary',
-            Class: 'Error--guest'
+            title: 'Error',
         }
-    },
-
-    created () {
-        //let Get = this.$route.path.substring(1, 6);
-
-        //if(Get == 'admin') {
-        //}
     }
 }
 </script>

@@ -23,12 +23,12 @@ export const mutations = {
         if(indexItem < 0) {
             item.amount = 1;
             state.cart.push(item);
-            state.cartUpdate = true;
         }
         else {
             state.cart[indexItem].amount ++;
         }
         
+        state.cartUpdate = true;
         SaveCartToLocalStorage(state);
     },
     removeInCart (state, item) {

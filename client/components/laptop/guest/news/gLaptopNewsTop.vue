@@ -63,6 +63,14 @@ export default {
         catch(e){
             throw new Error(e.toString());
         }
+    },
+
+    fetchOnServer: false,
+
+    activated() {
+        if (this.$fetchState.timestamp <= Date.now() - 30000) {
+            this.$fetch()
+        }
     }
 }
 </script>

@@ -25,8 +25,7 @@ export default {
 
     head () {
         return {
-            titleTemplate: 'Anio - Admin Control',
-            title: 'Anio - Admin Control',
+            title: 'Admin Control',
             meta: [
                 { name: 'viewport', content: 'maximum-scale=1' },
             ],

@@ -3,7 +3,7 @@
 
     <v-card flat tile color="transparent">
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center Sticky_Top px-4 py-3" color="background">
+        <v-sheet class="d-flex justify-space-between align-center Sticky_Top py-3 px-4 px-sm-0" color="background">
             <span class="text-h5 text-sm-h4 secondary--text">Giảm Giá</span>
 
             <div v-if="variants.length > 0">
@@ -138,6 +138,14 @@ export default {
         }
         catch(e) {
             throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
+
+    activated() {
+        if (this.$fetchState.timestamp <= Date.now() - 30000) {
+            this.$fetch()
         }
     },
 
