@@ -1,8 +1,8 @@
 <template>
     <v-app-bar app fixed color="header" height="60">
         <!--Logo-->
-        <nuxt-link to="/" class="white--text text-h4 font-weight-bold">
-            Pro<span class="primary--text">ject</span>
+        <nuxt-link to="/" class="white--text text-h5 text-sm-h4 font-weight-bold">
+            Tita<span class="primary--text">Lap</span>
         </nuxt-link>
 
         <v-spacer></v-spacer>
