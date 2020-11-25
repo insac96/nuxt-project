@@ -31,7 +31,7 @@ export default {
                     hid: 'og:url',
                     name: 'og:url',
                     property: 'og:url',
-                    content: `${this.$Config.baseURL}${this.$route.path}`
+                    content: `${this.$Config.baseUrl}${this.$route.path}`
                 },
                 {
                     hid: 'og:type',
