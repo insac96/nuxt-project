@@ -18,20 +18,20 @@
 export default {
     head () {
         return {
-            title: 'Hề Thống Bán Lẻ Máy Tính Xách Tay Laptop',
+            title: `${this.$Config.appName} - Hề Thống Bán Lẻ Máy Tính Xách Tay Laptop`,
             meta: [
                 //Google
                 {
                     hid: 'description',
                     name: 'description',
-                    content: 'Máy tính xách tay, laptop giá cả hợp lý, uy tín số 1 Việt Nam'
+                    content: `${this.$Config.appName} - Máy tính xách tay, laptop giá cả hợp lý, uy tín số 1 Việt Nam`
                 },
                 //FaceBook
                 {
                     hid: 'og:url',
                     name: 'og:url',
                     property: 'og:url',
-                    content: 'https://anio.herokuapp.com'+ this.$route.path
+                    content: `${this.$Config.baseURL}${this.$route.path}`
                 },
                 {
                     hid: 'og:type',
@@ -43,7 +43,7 @@ export default {
                     hid: 'og:title',
                     name: 'og:title',
                     property: 'og:title',
-                    content: 'Anio - Máy Tính Xách Tay, Laptop'
+                    content: `${this.$Config.appName} - Hề Thống Bán Lẻ Máy Tính Xách Tay Laptop`
                 },
                 {
                     hid: 'og:description',
@@ -55,7 +55,7 @@ export default {
                     hid: 'og:image',
                     name: 'og:image',
                     property: 'og:image',
-                    content: 'https://anio.herokuapp.com/cover.jpg'
+                    content: `${this.$Config.baseUrl}/cover.jpg`
                 },
             ]
         }

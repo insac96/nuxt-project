@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bluebird from 'bluebird';
 
-import Config from '../../config/app.config';
+import Config from '../../config/api.config';
 
 export const MongoInit = async () => {
     bluebird.promisifyAll(mongoose);

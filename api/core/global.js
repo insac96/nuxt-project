@@ -1,4 +1,4 @@
-import Config from '../../config/app.config';
+import Config from '../../config/api.config';
 import { ErrorHandler } from '../plugins/error';
 import * as StringPlugin from '../plugins/string';
 

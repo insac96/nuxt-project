@@ -25,6 +25,7 @@ export default {
   components: true,
 
   plugins: [
+    {src: '~/plugins/config.js'},
     {src: '~/plugins/axios.js'},
     {src: '~/plugins/hydration.js'},
     {src: '~/plugins/day.js'},
@@ -54,8 +55,8 @@ export default {
       theme_color: "#191919",
     },
     manifest: {
-      short_name: "Anio",
-      name: "Anio",
+      short_name: Config.appName,
+      name: Config.appName,
       display: 'fullscreen',
       background_color: "#ffffff",
       categories: ["laptop", "shop"],
