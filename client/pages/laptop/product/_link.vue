@@ -1,19 +1,15 @@
 <template>
     <!--Product Link-->
 
-    <v-container v-if="$fetchState.pending">
-        <v-card flat tile>
-            <v-skeleton-loader type="image, article"></v-skeleton-loader>
-        </v-card>
-    </v-container>
+    <div v-if="$fetchState.pending" class="pa-4 px-md-0">
+        <v-skeleton-loader type="image, article"></v-skeleton-loader>
+    </div>
 
-    <v-container v-else-if="$fetchState.error">
-        <v-card flat tile>
-            <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
-        </v-card>
-    </v-container>
+    <div v-else-if="$fetchState.error" class="pa-4 px-md-0">
+        <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
+    </div>
     
-    <v-container class="BoxShadow pa-0" v-else>
+    <div class="BoxShadow pa-0" v-else>
         <!--Product Information-->
         <v-card tile flat>
             <!--Header-->
@@ -23,11 +19,11 @@
 
             <!--Body-->
             <v-row no-gutters>
-                <v-col cols="12" md="5" class="mb-0 mb-sm-6">
+                <v-col cols="12" sm="4" md="5" class="mb-0 mb-sm-6">
                     <GLaptopProductLinkImages :images="Product.images"></GLaptopProductLinkImages>
                 </v-col>
 
-                <v-col cols="12" md="7" class="mb-0 mb-sm-6">
+                <v-col cols="12" sm="8" md="7" class="mb-0 mb-sm-6">
                     <GLaptopProductLinkInformarion :product="Product" :variantQuery="VariantQuery"></GLaptopProductLinkInformarion>
                 </v-col>
             </v-row>
@@ -42,7 +38,7 @@
         <LazyHydrate when-visible>
             <GLaptopProductLinkComment :product="Product"></GLaptopProductLinkComment>
         </LazyHydrate>
-    </v-container>
+    </div>
 </template>
 
 <script>

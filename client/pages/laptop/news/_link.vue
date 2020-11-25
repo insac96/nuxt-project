@@ -1,20 +1,16 @@
 <template>
     <!--News Link-->
 
-    <v-container v-if="$fetchState.pending">
-        <v-card flat tile>
-            <v-skeleton-loader type="image, article"></v-skeleton-loader>
-        </v-card>
-    </v-container>
+    <div v-if="$fetchState.pending" class="pa-4 px-md-0">
+        <v-skeleton-loader type="image, article"></v-skeleton-loader>
+    </div>
 
-    <v-container v-else-if="$fetchState.error">
-        <v-card flat tile>
-            <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
-        </v-card>
-    </v-container>
+    <div v-else-if="$fetchState.error" class="pa-4 px-md-0">
+        <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
+    </div>
 
-    <v-container class="pa-0" v-else>
-        <v-card tile flat class="BoxShadow">
+    <div class="BoxShadow" v-else>
+        <v-card tile flat>
             <!--Image-->
             <v-img v-if="News.image" :src="News.image"></v-img>
 
@@ -29,7 +25,7 @@
                 <PBoxContent :content="News.content"></PBoxContent>
             </v-card-text>
         </v-card>
-    </v-container>
+    </div>
 </template>
 
 <script>

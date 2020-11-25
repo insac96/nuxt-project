@@ -1,17 +1,16 @@
 <template>
     <!--News Top List-->
 
-    <v-sheet v-if="$fetchState.pending" color="transparent" class="pa-0 px-md-4">
+    <v-sheet v-if="$fetchState.pending" color="transparent">
         <v-skeleton-loader type="image"></v-skeleton-loader>
     </v-sheet>
 
-    <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-4 px-md-4">
-        <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
+    <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-4 px-md-0">
+        <v-alert type="error" class="BoxShadow">{{$fetchState.error.message}}</v-alert>
     </v-sheet>
 
-    <v-sheet v-else class="pa-0" color="transparent">
+    <v-sheet v-else class="BoxShadow" color="transparent">
         <v-carousel
-            class="BoxShadow"
             cycle height="auto"
             hide-delimiters
             hide-delimiter-backgroung

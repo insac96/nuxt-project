@@ -1,15 +1,15 @@
 <template>
-    <div id="INDEX">
-        <GLaptopNewsTop class="mb-4"></GLaptopNewsTop>
+    <div id="HOME">
+        <GLaptopHomeNews class="mb-4"></GLaptopHomeNews>
 
         <!--<GLaptopCompanyesMini class="mb-6 mb-sm-8"></GLaptopCompanyesMini>-->
         
         <LazyHydrate when-visible>
-            <GLaptopProductVariantDiscountMini class="mb-6 mb-sm-8"></GLaptopProductVariantDiscountMini>
+            <GLaptopHomeProductDiscount class="mb-6 mb-sm-8"></GLaptopHomeProductDiscount>
         </LazyHydrate>
         
         <LazyHydrate when-visible>
-            <GLaptopProductVariantNewMini class="mb-6 mb-sm-8"></GLaptopProductVariantNewMini>
+            <GLaptopHomeProductNew class="mb-6 mb-sm-8"></GLaptopHomeProductNew>
         </LazyHydrate>
     </div>
 </template>

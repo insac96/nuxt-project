@@ -1,10 +1,10 @@
 <template>
-    <!--g_laptop_product_variant_new_mini-->
+    <!--g_laptop_product_variant_discount_mini-->
 
-    <v-card flat tile  color="transparent">
+    <v-card flat tile color="transparent">
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center Sticky_Top py-3 px-4 px-sm-0" color="background">
-            <span class="text-h5 text-sm-h4 secondary--text">Hàng Mới Về</span>
+        <v-sheet class="d-flex justify-space-between align-center Sticky_Top py-3 px-4 px-md-0" color="background">
+            <span class="text-h5 text-md-h4 secondary--text">Giảm Giá</span>
 
             <div v-if="variants.length > 0">
                 <v-btn
@@ -18,7 +18,7 @@
 
                 <v-btn 
                     class="BoxShadow"
-                    :disabled="(skip + variants.length) === (countComment)"
+                    :disabled="(skip + variants.length) === (countComment)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Next"
                 >
@@ -28,24 +28,24 @@
         </v-sheet>
 
         <!--Body-->
-        <v-card-text v-if="$fetchState.pending" flat tile color="card">
+        <v-card-text v-if="$fetchState.pending" class="px-4 px-md-0">
             <v-row dense>
-                <v-col cols="6" md="3" class="pa-1 pa-sm-2" v-for="i in 4" :key="i">
+                <v-col cols="6" sm="3" class="pa-1 pa-md-2" v-for="i in 4" :key="i">
                     <v-skeleton-loader type="image, article"></v-skeleton-loader>
                 </v-col>
             </v-row>
         </v-card-text>
 
-        <v-card-text v-else-if="$fetchState.error" flat tile>
+        <v-card-text v-else-if="$fetchState.error" class="px-4 px-md-0">
             <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
 
-        <v-card-text v-else>
-            <v-alert type="info" color="primary" class="BoxShadow" tile v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
+        <v-card-text v-else class="px-4 px-md-0">
+            <v-alert type="info" color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
 
             <v-row dense align="stretch" v-else>
                 <v-col 
-                    cols="6" md="3"
+                    cols="6" sm="3"
                     class="d-flex child-flex"
                     v-for="(variant, indexVariant) in variants" :key="indexVariant"
                 >
@@ -58,7 +58,8 @@
                         <v-img 
                             class="mx-auto rounded-0" 
                             :src="$Image.Get(variant.product.images[0], 'm')"
-                            :alt="variant.name" width="100%"
+                            :alt="variant.name"
+                            width="100%"
                             :aspect-ratio="1.5" contain
                         >
                             <template v-slot:placeholder>
@@ -75,53 +76,36 @@
                         <div class="d-flex">
                             <v-chip 
                                 label color="primary" 
-                                class="rounded-0 font-weight-bold px-2 px-sm-3 text-caption text-sm-subtitle-2"
+                                class="rounded-0 font-weight-bold px-2 px-md-3 text-caption text-md-subtitle-2"
                             >
                                 {{variant.status}}
                             </v-chip>
 
                             <v-chip
-                                v-if="variant.discount.type"
                                 label color="error" 
-                                class="rounded-0 font-weight-bold px-2 px-sm-3 text-caption text-sm-subtitle-2"
+                                class="rounded-0 font-weight-bold px-2 px-md-3 text-caption text-md-subtitle-2"
                             >
                                 - {{ $String.toPrice(variant.discount.amount) }}đ
                             </v-chip>
                         </div>
 
                         <!--Information-->
-                        <v-card-text style="min-height: 105px;" class="py-2 py-sm-4">
+                        <v-card-text class="py-2 py-md-4">
                             <div
-                                class="text-subtitle-1 text-sm-h6 font-weight-bold"
-                                style="line-height: 1.6rem; word-break: break-word;"
+                                class="text-subtitle-1 text-md-h6 font-weight-bold Text-Nowap"
+                                style="line-height: 1.4em;"
                             >
                                 {{variant.product.name}}
                             </div>
-                            <span class="text-caption text-sm-subtitle-2">CODE: {{variant.code}}</span>
+                            <span class="Text-Nowap text-caption text-md-subtitle-2">{{variant.code}}</span>
                         </v-card-text>
 
                         <v-spacer></v-spacer>
 
                         <!--Price-->
-                        <v-card-text class="text-center pt-0 pb-2 pb-sm-4">
-                            <div class="text-h6 font-weight-bold error--text">
-                                <span v-if="variant.discount.type">
-                                    {{ $String.toPrice(variant.warehouse.export.price - variant.discount.amount) }}đ
-                                </span>
-                                <span v-else>
-                                    {{ $String.toPrice(variant.warehouse.export.price) }}đ
-                                </span>
-                            </div>
-                            
-                            <div class="text-subtitle-2 text-decoration-line-through">
-                                <span v-if="variant.discount.type">
-                                    {{ $String.toPrice(variant.warehouse.export.price) }}đ
-                                </span>
-
-                                <span v-else>
-                                    Discount
-                                </span>
-                            </div>
+                        <v-card-text class="text-center pt-0 pb-2 pb-md-4">
+                            <div class="text-h6 font-weight-bold error--text">{{ $String.toPrice(variant.warehouse.export.price - variant.discount.amount) }}đ</div>
+                            <div class="text-subtitle-2 text-decoration-line-through">{{ $String.toPrice(variant.warehouse.export.price) }}đ</div>
                         </v-card-text>
                     </v-card>
                 </v-col>
@@ -131,7 +115,7 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
+import LaptopAPI from '@/setting/laptop/api';
 
 export default {
     data () {
@@ -143,10 +127,9 @@ export default {
         }
     },
 
-    async fetch() {
+    async fetch () {
         try {
-            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
-                status: 'Mới Về',
+            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByDiscount, {
                 skip: this.skip,
                 limit: this.limit
             });
@@ -166,7 +149,7 @@ export default {
             this.$fetch()
         }
     },
-    
+
     computed: {
         SmallButton () {
             switch (this.$vuetify.breakpoint.name) {
@@ -193,6 +176,6 @@ export default {
 
             this.$fetch();
         }
-    } 
+    }   
 }
 </script>
