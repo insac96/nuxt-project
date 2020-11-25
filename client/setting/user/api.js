@@ -10,5 +10,6 @@ export default {
         'SignUp': '/user/authentic/signup',
         
         //User
+        'CreateNewContact': '/user/contact/create'
     }
 }

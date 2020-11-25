@@ -17,7 +17,8 @@ export const SignIn = async (req, res, next) => {
         password = md5(password);
 
         let User = await UserDB
-        .findOne({ 'auth.username': username });
+        .findOne({ 'auth.username': username })
+        .populate({ path: 'contacts', select: 'phone address'});
 
         if(!User) return res.json({
             error: true,
@@ -101,7 +102,8 @@ export const Get = async (req, res, next) => {
 
     try {
         let User = await UserDB
-        .findOne({ '_id': req.authentic.id });
+        .findOne({ '_id': req.authentic.id })
+        .populate({ path: 'contacts', select: 'phone address'});
         
         res.json({
             token: req.cookies.token,

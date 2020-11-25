@@ -12,6 +12,8 @@ Router.get('/authentic/get', Authentic_Guest, Controller_Guest.Authentic.Get);
 Router.post('/authentic/signin', Controller_Guest.Authentic.SignIn);
 Router.post('/authentic/signup', Controller_Guest.Authentic.SignUp);
 
+//Contact
+Router.post('/contact/create', Authentic_Guest, Controller_Guest.Contact.Create);
 /////////////////////END Guest - CONTROLLER/////////////////
 
 

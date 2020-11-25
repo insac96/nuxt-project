@@ -60,6 +60,9 @@ export default {
       display: 'fullscreen',
       background_color: "#ffffff",
       categories: ["laptop", "shop"],
+    },
+    workbox: {
+      workboxVersion: '1.0.0'
     }
   },
 

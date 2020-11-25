@@ -15,7 +15,6 @@ const UserSchema = new Schema(
                 return this.auth.username;
             }},
             email: { type: String, required: true },
-            phone: { type: String },
             avatar: { type: String, default: '/user.png' },
             create: { type: Date, default: Date.now }
         },
@@ -27,6 +26,12 @@ const UserSchema = new Schema(
         toJSON: { virtuals: true } 
     }
 );
+
+UserSchema.virtual('contacts', {
+    ref: 'UserContact',
+    localField: '_id',
+    foreignField: 'user',
+});
 
 UserSchema.index({ 'auth.username': 'text' });
 

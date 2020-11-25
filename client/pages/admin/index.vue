@@ -1,16 +1,18 @@
 <template>
     <!--Admin Home Page-->
     
-    <v-row class="Cover" align="center" justify="center">
-        <div class="pa-4 text-center">
-            <h1 class="font-weight-bold mb-4">
-                Wellcome
-            </h1>
-            <h4 class="font-weight-thin">
-                Hệ Thống Quản Lý Dữ Liệu Cho Quản Trị ViênViên
-            </h4>
-        </div>
-    </v-row>
+    <v-card flat tile>
+        <v-row class="Cover" align="center" justify="center">
+            <div class="pa-4 text-center">
+                <h1 class="font-weight-bold mb-4">
+                    Wellcome
+                </h1>
+                <h4 class="font-weight-thin">
+                    Hệ Thống Quản Lý Dữ Liệu Cho Quản Trị Viên
+                </h4>
+            </div>
+        </v-row>
+    </v-card>
 </template>
 
 <style lang="scss" scoped>

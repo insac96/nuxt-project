@@ -1,4 +1,6 @@
 <template>
+    <!--Guest Laptop Order Create-->
+
     <div>
         <!--Button-->
         <v-badge 
@@ -116,6 +118,11 @@
                 </v-card-actions>
             </v-card>
         </v-bottom-sheet>
+
+        <!--Dialog Order-->
+        <v-dialog v-if="UserStore.authentic" v-model="DialogOrder" persistent width="700">
+            <GLaptopOrderCreate @cancel="DialogOrder = false"></GLaptopOrderCreate>
+        </v-dialog>
     </div>
 </template>
 
@@ -127,6 +134,7 @@ export default {
         return {
             ListProduct: [],
             DialogCart: false,
+            DialogOrder: false,
             Loading: {
                 get: true
             }
@@ -239,6 +247,8 @@ export default {
 
         Pay () {
             if(!this.UserStore.authentic) return this.$store.commit('user/changeDialogAuthentic', true);
+
+            this.DialogOrder = true;
         }
     }
 }
