@@ -3,31 +3,24 @@
 
     <v-card>
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center pr-4">
+        <v-sheet class="d-flex align-center pr-4" color="primary">
             <!--Left-->
-            <div>
-                <v-card-title class="font-weight-bold text-h6 text-sm-h5 primary--text">Đơn Hàng</v-card-title>
-                <v-card-subtitle>Tạo đơn hàng mới</v-card-subtitle>
-            </div>
+            <v-card-title class="font-weight-bold text-h6 text-sm-h5 white--text">
+                {{ addContact ? 'Thêm Thông Tin' : 'Tạo Đơn Hàng' }}
+            </v-card-title>
+
+            <v-spacer></v-spacer>
 
             <!--Right-->
-            <v-btn small icon elevation="0" @click="$emit('cancel')">
+            <v-btn small dark icon elevation="0" @click="$emit('cancel')">
                 <v-icon>close</v-icon>
             </v-btn>
         </v-sheet>
 
-        <!--Body - If UserStore.contacts.length < 1-->
-        <v-card tile flat v-if="UserStore.contacts.length < 1 || addContact">
+        <!--Body - If addContact = true-->
+        <v-card tile flat v-if="addContact" class="pt-6">
             <!--Body-->
             <v-card-text class="py-0">
-                <v-alert 
-                    v-if="UserStore.contacts.length < 1" 
-                    type="warning" color="primary" 
-                    border="left" text
-                >
-                    Hiện tại bạn chưa có thông tin nơi nhận hàng
-                </v-alert>
-
                 <v-form ref="form" v-model="Validate">
                     <v-text-field
                         v-model="NewContact.name"
@@ -69,11 +62,10 @@
             </v-card-text>
 
             <!--Footer-->
-            <v-card-actions class="px-4 pb-4">
+            <v-card-actions class="pa-4 pt-0">
                 <v-spacer></v-spacer>
 
                 <v-btn 
-                    v-if="addContact"
                     elevation="0" rounded 
                     :loading="Loading.create"
                     @click="addContact = false"
@@ -92,88 +84,109 @@
             </v-card-actions>
         </v-card>
 
-        <!--Body - If UserStore.contacts.length > 0-->
-        <v-tabs v-else background-color="primary" dark v-model="Tab" class="rounded-0" hide-slider>
-            <v-tab class="ml-2">Giao Hàng</v-tab>
-            <v-tab>Lấy Tại Cửa Hàng</v-tab>
+        <!--Body - Else-->
+        <v-card tile flat v-else class="pt-6">
+            <!--Body-->
+            <v-form ref="form" v-model="Validate" class="px-4">
+                <v-select
+                    v-model="NewOrder.vendor"
+                    :rules="[ $Rules.required ]"
+                    :items="Contacts"
+                    item-value="_id"
+                    item-text="address"
+                    label="Thông Tin"
+                    filled rounded
+                    placeholder="Chọn thông tin người đặt"
+                    append-icon="location_on"
+                    :disabled="Loading.create"
+                    autocomplete="off"
+                    no-data-text="No Data"
+                    @click="GetContacts"
+                >
+                    <template v-slot:item="{ item, attrs, on }">
+                        <v-list-item two-line v-bind="attrs">
+                            <v-list-item-content v-on="on">
+                                <v-list-item-title>{{item.phone}}</v-list-item-title>
+                                <v-list-item-subtitle>{{item.address}}</v-list-item-subtitle>
+                            </v-list-item-content>
 
-            <!--Delivery-->
-            <v-tab-item>
-                <v-card tile flat>
-                    <!--Body-->
-                    <v-form ref="form" v-model="Validate" class="px-4 pt-4">
-                        <v-select
-                            v-model="NewDelivery.vendor"
-                            :rules="[ $Rules.required ]"
-                            :items="UserStore.contacts"
-                            item-value="_id"
-                            item-text="address"
-                            label="Thông Tin"
-                            filled rounded
-                            placeholder="Chọn địa chỉ giao hàng"
-                            append-icon="location_on"
-                            :disabled="Loading.create"
-                            autocomplete="off"
-                        >
-                            <template v-slot:item="{ item, attrs, on }">
-                                <v-list-item two-line v-bind="attrs" v-on="on">
-                                    <v-list-item-content>
-                                        <v-list-item-title>{{item.phone}}</v-list-item-title>
-                                        <v-list-item-subtitle>{{item.address}}</v-list-item-subtitle>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </template>
+                            <v-list-item-action>
+                                <v-btn icon color="delete" @click="DeleteContact(item._id)">
+                                    <v-icon>delete</v-icon>
+                                </v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </template>
+                    
+                    <template v-slot:append-item>
+                        <v-list-item @click="addContact = true">
+                            Thêm thông tin người đặt hàng
+                        </v-list-item>
+                    </template>
+                </v-select>
 
-                            <template v-slot:append-item>
-                                <v-list-item @click="addContact = true">
-                                    Thêm địa chỉ mới
-                                </v-list-item>
-                            </template>
-                        </v-select>
+                <v-text-field
+                    v-if="NewOrder.vendor"
+                    :value="GetContactByID(NewOrder.vendor, 'name')"
+                    :rules="[ $Rules.required ]"
+                    label="Người Nhận"
+                    filled rounded
+                    append-icon="person"
+                    disabled
+                >
+                </v-text-field>
 
-                        <v-text-field
-                            v-if="NewDelivery.vendor"
-                            :value="GetPhoneByID(NewDelivery.vendor)"
-                            :rules="[ $Rules.required ]"
-                            label="Phone"
-                            filled rounded
-                            append-icon="phone"
-                            disabled
-                        >
-                        </v-text-field>
+                <v-text-field
+                    v-if="NewOrder.vendor"
+                    :value="GetContactByID(NewOrder.vendor, 'phone')"
+                    :rules="[ $Rules.required ]"
+                    label="Điện Thoại"
+                    filled rounded
+                    append-icon="phone"
+                    disabled
+                >
+                </v-text-field>
 
-                        <v-text-field
-                            v-model="NewDelivery.pay"
-                            :rules="[ $Rules.required ]"
-                            label="Thanh Toán"
-                            filled rounded
-                            append-icon="payment"
-                            disabled
-                        >
-                        </v-text-field>
-                    </v-form>
+                <v-select
+                    v-model="NewOrder.type"
+                    :items="TypeOrder"
+                    item-value="value"
+                    item-text="text"
+                    :rules="[ $Rules.required ]"
+                    label="Hình Thức"
+                    placeholder="Chọn hình thức nhận hàng"
+                    filled rounded
+                    append-icon="local_shipping"
+                    :disabled="Loading.create"
+                    autocomplete="off"
+                >
+                </v-select>
 
-                    <!--Footer-->
-                    <v-card-actions class="px-4 pb-4">
-                        <v-spacer></v-spacer>
+                <v-text-field
+                    v-model="NewOrder.pay"
+                    :rules="[ $Rules.required ]"
+                    label="Thanh Toán"
+                    filled rounded
+                    append-icon="payment"
+                    disabled
+                >
+                </v-text-field>
+            </v-form>
 
-                        <v-btn 
-                            elevation="0" color="primary" 
-                            rounded 
-                            :loading="Loading.create"
-                            @click="CreateNewDelivery"
-                        >
-                            Xác Nhận
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-tab-item>
+            <!--Footer-->
+            <v-card-actions class="pa-4 pt-0">
+                <v-spacer></v-spacer>
 
-            <!--Reserve-->
-            <v-tab-item>
-
-            </v-tab-item>
-        </v-tabs>
+                <v-btn 
+                    elevation="0" color="primary" 
+                    rounded 
+                    :loading="Loading.create"
+                    @click="CreateNewOrder"
+                >
+                    Tạo Đơn Hàng
+                </v-btn>
+            </v-card-actions>
+        </v-card>
     </v-card>
 </template>
 
@@ -182,33 +195,37 @@ import LaptopAPI from '@/setting/laptop/api';
 import UserAPI from '@/setting/user/api';
 
 export default {
+    props: ['listProductOrder'],
+
     data () {
         return {
-            Tab: 0,
-            t: false,
+            Contacts: [],
 
             //Contact
             Validate: true,
             addContact: false,
             NewContact: {
-                name: this.$store.state.user.profile.name,
+                name: null,
                 phone: null,
                 address: null
             },
 
-            //Delivery
-            NewDelivery: {
+            //Order
+            NewOrder: {
                 vendor: null,
-                pay: 'Thanh Toán Khi Nhận Hàng'
+                pay: 'Thanh Toán Khi Nhận Hàng',
+                type: null
             },
+            TypeOrder: [
+                {value: 1, text: 'Giao Hàng'},
+                {value: 2, text: 'Đặt trước, nhận tại cửa hàng'},
+            ],
 
-            //Reserve
-            NewReserve: {
-                vendor: null,
-            },
-
+            //Loading
             Loading: {
-                create: false
+                get: false,
+                create: false,
+                delete: false
             }
         }
     },
@@ -220,10 +237,26 @@ export default {
     },
 
     methods : {
+        async GetContacts () {
+            if(this.Contacts.length > 0) return false;
+
+            this.Loading.get = true;
+
+            try {
+                let Contacts = await this.$axios.$get(UserAPI.guest.GetListContact);
+                
+                this.Contacts = this.Contacts.concat(Contacts);
+                this.Loading.get = false;
+            }
+            catch(e){
+                this.Loading.get = false;
+            }   
+        },
+
         async CreateNewContact () {
             if(!this.$refs.form.validate()) return false;
             this.Loading.create = true;
-            
+
             try {
                 let NewContact = await this.$axios.$post(UserAPI.guest.CreateNewContact, {
                     name: this.NewContact.name,
@@ -231,7 +264,7 @@ export default {
                     address: this.NewContact.address,
                 });
 
-                this.$store.commit('user/addNewContact', NewContact);
+                this.Contacts.push(NewContact);
 
                 this.addContact = false;
 
@@ -245,14 +278,59 @@ export default {
             }   
         },
 
-        async CreateNewDelivery () {
+        async DeleteContact (_id) {
+            this.Loading.delete = true;
+            
+            try {
+                let Delete = await this.$axios.$post(UserAPI.guest.DeleteContact, {
+                    _id: _id
+                });
 
+                let indexItem = this.Contacts.findIndex(e => e._id == _id);
+
+                if (indexItem > -1) {
+                    this.$delete(this.Contacts, indexItem);
+                }
+
+                if(this.NewOrder.vendor == _id) {
+                    this.NewOrder.vendor = null; 
+                }
+
+                this.Loading.delete = false;
+            }
+            catch(e){
+                this.Loading.delete = false;
+            }   
         },
 
-        GetPhoneByID (id) {
-            let indexItem = this.UserStore.contacts.findIndex(e => e._id == id);
+        async CreateNewOrder () {
+            if(!this.$refs.form.validate()) return false;
+            if(this.listProductOrder.length < 1) return false;
+            
+            this.Loading.order = true;
 
-            return this.UserStore.contacts[indexItem].phone;
+            try {
+                let NewOrder = await this.$axios.$post(UserAPI.guest.CreateNewContact, {
+                    vendor: this.NewOrder.vendor,
+                    pay: this.NewOrder.pay,
+                    type: this.NewOrder.type,
+                    listProductOrder: this.listProductOrder
+                });
+
+                this.$refs.form.reset();
+                this.$refs.form.resetValidation();
+
+                this.Loading.order = false;
+            }
+            catch(e){
+                this.Loading.order = false;
+            }   
+        },
+
+        GetContactByID (id, type) {
+            let indexItem = this.Contacts.findIndex(e => e._id == id);
+
+            return this.Contacts[indexItem][type];
         }
     }
 }

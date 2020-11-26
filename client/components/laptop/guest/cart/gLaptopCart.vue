@@ -120,8 +120,11 @@
         </v-bottom-sheet>
 
         <!--Dialog Order-->
-        <v-dialog v-if="UserStore.authentic" v-model="DialogOrder" persistent width="700">
-            <GLaptopOrderCreate @cancel="DialogOrder = false"></GLaptopOrderCreate>
+        <v-dialog v-if="UserStore.authentic" v-model="DialogOrder.type" persistent width="700" :fullscreen="FullScreenOrder">
+            <GLaptopOrderCreate 
+                @cancel="DialogOrder.type = false"
+                :listProductOrder="DialogOrder.listProductOrder"
+            ></GLaptopOrderCreate>
         </v-dialog>
     </div>
 </template>
@@ -133,8 +136,14 @@ export default {
     data () {
         return {
             ListProduct: [],
+
             DialogCart: false,
-            DialogOrder: false,
+
+            DialogOrder: {
+                type: false,
+                listProductOrder: null
+            },
+
             Loading: {
                 get: true
             }
@@ -143,6 +152,15 @@ export default {
 
     computed: {
         SmallButton () {
+            switch (this.$vuetify.breakpoint.name) {
+                case 'xs': return true
+                case 'sm': return false
+                case 'md': return false
+                case 'lg': return false
+                case 'xl': return false
+            }
+        },
+        FullScreenOrder () {
             switch (this.$vuetify.breakpoint.name) {
                 case 'xs': return true
                 case 'sm': return false
@@ -218,6 +236,7 @@ export default {
             }
         },
 
+        //Amount Function
         AddAmount (item) {
             if(item.amount == item.import.amount) return false;
             item.amount++;
@@ -248,7 +267,22 @@ export default {
         Pay () {
             if(!this.UserStore.authentic) return this.$store.commit('user/changeDialogAuthentic', true);
 
-            this.DialogOrder = true;
+            let listProductOrder = this.ListProduct.map(item => {
+                let newItem = {};
+
+                newItem.warehouseColor = item._id;
+                newItem.whenOrder = {
+                    amount: item.amount,
+                    price: item.warehouse.export.price,
+                    upprice: item.export.upprice,
+                    discount: item.variant.discount.amount
+                }
+
+                return newItem;
+            });
+
+            this.DialogOrder.type = true;
+            this.DialogOrder.listProductOrder = listProductOrder;
         }
     }
 }

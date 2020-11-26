@@ -10,6 +10,9 @@ export default {
         'SignUp': '/user/authentic/signup',
         
         //User
-        'CreateNewContact': '/user/contact/create'
+        'GetListContact': '/user/contact/list/get',
+        'CreateNewContact': '/user/contact/create',
+        'EditContact': '/user/contact/edit',
+        'DeleteContact': '/user/contact/delete',
     }
 }

@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const ContactSchema = new Schema(
     {
         user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        name: { type: String , required: true },
         phone: { type: String , required: true },
         address: { type: String , required: true },
         isDefault: { type: Boolean, default: false }
