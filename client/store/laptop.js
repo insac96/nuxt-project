@@ -39,6 +39,12 @@ export const mutations = {
 
         SaveCartToLocalStorage(state);
     },
+    resetCart (state) {
+        state.cart = [];
+        state.cartUpdate = true;
+
+        SaveCartToLocalStorage(state);
+    },
     updateAmountInCart (state, item) {
         let indexItem = state.cart.findIndex(e => e.color == item.color);
         if(indexItem < 0) return false;

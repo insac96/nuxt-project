@@ -90,6 +90,9 @@ export default {
         AddReplyForComment: '/laptop/comment/reply/add',
 
         //Cart
-        GetListItemInCart: '/laptop/cart/list/get'
+        GetListItemInCart: '/laptop/cart/list/get',
+
+        //Order
+        CreateNewOrder: '/laptop/order/create'
     }
 }

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Config from '../../config/api.config';
 
+//Guest
 export const Authentic_Guest = (req, res, next) => {
     if(!req.cookies.token) return next(new ErrorHandler(403, 'Deny Access'));
 
@@ -15,8 +16,9 @@ export const Authentic_Guest = (req, res, next) => {
         
         next();
     });
-}
+};
 
+//Admin
 export const Authentic_Admin = (req, res, next) => {
     if(!req.cookies.token) return next(new ErrorHandler(403, 'Deny Access'));
 
@@ -32,4 +34,4 @@ export const Authentic_Admin = (req, res, next) => {
 
         next();
     });
-}
+};

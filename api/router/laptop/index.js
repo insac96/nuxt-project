@@ -31,6 +31,9 @@ Router.post("/comment/reply/add", Authentic_Guest, Controller_Guest.Comment.AddR
 //Cart
 Router.post("/cart/list/get", Controller_Guest.Cart.GetList);
 
+//Order
+Router.post("/order/create", Authentic_Guest, Controller_Guest.Order.Create);
+
 /////////////////////END Guest - CONTROLLER//////////////////
 
 

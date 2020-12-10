@@ -123,6 +123,7 @@
         <v-dialog v-if="UserStore.authentic" v-model="DialogOrder.type" persistent width="700" :fullscreen="FullScreenOrder">
             <GLaptopOrderCreate 
                 @cancel="DialogOrder.type = false"
+                @done="DoneOrder"
                 :listProductOrder="DialogOrder.listProductOrder"
             ></GLaptopOrderCreate>
         </v-dialog>
@@ -275,14 +276,21 @@ export default {
                     amount: item.amount,
                     price: item.warehouse.export.price,
                     upprice: item.export.upprice,
-                    discount: item.variant.discount.amount
-                }
+                    discountAmount: item.variant.discount.amount
+                };
 
                 return newItem;
             });
 
             this.DialogOrder.type = true;
             this.DialogOrder.listProductOrder = listProductOrder;
+        },
+
+        DoneOrder () {
+            this.DialogOrder.type = false
+            this.DialogCart = false;
+
+            this.$store.commit('laptop/resetCart');
         }
     }
 }
