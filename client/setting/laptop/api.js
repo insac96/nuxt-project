@@ -64,7 +64,10 @@ export default {
         AddComment: '/laptop/admin/comment/add',
         DeleteComment: '/laptop/admin/comment/delete',
         AddReplyForComment: '/laptop/admin/comment/reply/add',
-        DeleteReplyOfComment: '/laptop/admin/comment/reply/delete'
+        DeleteReplyOfComment: '/laptop/admin/comment/reply/delete',
+
+        //Order
+        GetListOrderByType: '/laptop/admin/order/list/getByType'
     },
 
     guest: {

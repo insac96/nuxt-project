@@ -105,6 +105,9 @@ Router.post('/admin/comment/delete', Authentic_Admin, Controller_Admin.Comment.D
 //Reply - Admin
 Router.post('/admin/comment/reply/add', Authentic_Admin, Controller_Admin.Comment.AddReply);
 Router.post('/admin/comment/reply/delete', Authentic_Admin, Controller_Admin.Comment.DeleteReply);
+
+//Order - Admin
+Router.post('/admin/order/list/getByType', Authentic_Admin, Controller_Admin.Order.GetListByType);
 /////////////////////END Admin - CONTROLLER//////////////////
 
 export default Router;

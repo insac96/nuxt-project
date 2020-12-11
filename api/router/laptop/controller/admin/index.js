@@ -11,6 +11,7 @@ import * as WarehouseColor from './warehouseColor';
 import * as Article from './article';
 import * as Comment from './comment';
 import * as News from './news';
+import * as Order from './order';
 
 const ContollerAdmin = {
     News,
@@ -21,7 +22,8 @@ const ContollerAdmin = {
     Variant, VariantColor, 
     Warehouse, WarehouseColor,
     Article, 
-    Comment
+    Comment,
+    Order
 }
 
 export default ContollerAdmin;

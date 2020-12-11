@@ -44,7 +44,13 @@ export default {
         return {
             t: this.drawer,
             items: [
-                { title: 'Đơn Hàng', icon: 'shopping_cart', path: '/admin/carts' },
+                { 
+                    title: 'Đơn Hàng', icon: 'shopping_cart',
+                    child: [
+                        { title: 'Giao Hàng', icon: 'local_shipping', path: '/admin/order/delivery' },
+                        { title: 'Giữ Hàng', icon: 'store', path: '/admin/order/preorder' }
+                    ]
+                },
                 //{ title: 'Bình Luận', icon: 'chat', path: '/admin/comments' },
                 {
                     title: 'Laptop', icon: 'laptop',

@@ -10,9 +10,9 @@ const OrderSchema = new Schema(
         pay: { type: Number, required: true },
         create: { type: Date, default: Date.now },
         verification: {
-            type: { type: false, default: false },
+            type: { type: Boolean, default: false, required: true },
             date: { type: Date },
-            user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+            user: { type: Schema.Types.ObjectId, ref: 'User' },
         }
     }, 
     {

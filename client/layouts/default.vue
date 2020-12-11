@@ -21,15 +21,8 @@ export default {
     head() {
         return {
             meta: [
-                { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'},
-                { name: 'google-site-verification', content: 'x6eiS9dZrpRj2TGxFTFlqbY_OtfOjAl3WtNvgfvMMcs'},
+                { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'}
             ],
-        }
-    },
-
-    data () {
-        return {
-            Dialog: true
         }
     }
 }

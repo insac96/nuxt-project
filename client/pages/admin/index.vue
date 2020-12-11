@@ -17,8 +17,9 @@
 
 <style lang="scss" scoped>
     .Cover {
-        height: calc(100vh - 60px) !important;
-
+        width: 100%;
+        height: 100%;
+        
         h1 {
             font-size: 4em;
         }
