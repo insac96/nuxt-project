@@ -28,7 +28,7 @@
                             label="Name"
                             filled rounded
                             placeholder="Nhập tên người nhận hàng"
-                            append-icon="phone"
+                            append-icon="person"
                             :disabled="Loading.create"
                             autocomplete="off"
                         >
@@ -176,6 +176,17 @@
                         autocomplete="off"
                     >
                     </v-select>
+
+                    <v-text-field
+                        v-model="NewOrder.note"
+                        label="Note"
+                        filled rounded
+                        placeholder="Ghi chú đơn hàng"
+                        append-icon="article"
+                        color="edit"
+                        autocomplete="off"
+                    >
+                    </v-text-field>
                 </v-form>
 
                 <!--Footer-->
@@ -242,7 +253,8 @@ export default {
             NewOrder: {
                 vendor: null,
                 pay: null,
-                type: null
+                type: null,
+                note: null
             },
             PayOrder: [
                 {value: 1, text: 'Thanh Toán Khi Nhận Hàng'},
@@ -347,6 +359,7 @@ export default {
                     vendor: this.NewOrder.vendor,
                     pay: this.NewOrder.pay,
                     type: this.NewOrder.type,
+                    note: this.NewOrder.note,
                     listProductOrder: this.listProductOrder
                 });
 

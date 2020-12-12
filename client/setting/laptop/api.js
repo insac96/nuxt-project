@@ -67,7 +67,18 @@ export default {
         DeleteReplyOfComment: '/laptop/admin/comment/reply/delete',
 
         //Order
-        GetListOrderByType: '/laptop/admin/order/list/getByType'
+        GetListOrderByType: '/laptop/admin/order/list/getByType',
+        DeleteOrder: '/laptop/admin/order/delete',
+        EditStatusOrder: '/laptop/admin/order/status/edit',
+        EditDoneOrder: '/laptop/admin/order/done/edit',
+        EditInformationOrder: '/laptop/admin/order/information/edit',
+
+        //ProductOrder
+        GetListProductOrder: '/laptop/admin/order/product/list/get',
+        DeleteProductOrder: '/laptop/admin/order/product/delete',
+        EditProductOrder: '/laptop/admin/order/product/edit',
+        AddProductOrder: '/laptop/admin/order/product/add',
+        SearchProductForOrder: '/laptop/admin/order/product/add/search'
     },
 
     guest: {

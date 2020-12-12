@@ -6,7 +6,7 @@ import WarehouseColorDB from '../../model/warehouseColor';
 
 //Create Order
 export const Create = async (req, res, next) => {
-    let { vendor, pay, type, listProductOrder } = req.body;
+    let { vendor, pay, type, note, listProductOrder } = req.body;
     let NewOrder_ID;
 
     if(!vendor || !pay || !type || !listProductOrder) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
@@ -14,9 +14,11 @@ export const Create = async (req, res, next) => {
 
     try {
         let NewOrder = new OrderDB({
+            user: req.authentic.id,
             vendor: vendor,
             type: type,
-            pay: pay
+            pay: pay,
+            note: note
         });
         NewOrder_ID = NewOrder._id;
 
@@ -55,25 +57,5 @@ export const Create = async (req, res, next) => {
         if(!e.type) return next(new ErrorHandler(500, e.toString()));
 
         next(new ErrorHandler(500, `${e.productError} - Product Data Empty`));
-    }
-};
-
-//Verification Order
-export const Verification = (req, res, next) => {
-    try {
-
-    }
-    catch (e) {
-        next(new ErrorHandler(500, e.toString()));
-    }
-};
-
-//Delete Order
-export const Delete = (req, res, next) => {
-    try {
-
-    }
-    catch (e) {
-        next(new ErrorHandler(500, e.toString()));
     }
 };

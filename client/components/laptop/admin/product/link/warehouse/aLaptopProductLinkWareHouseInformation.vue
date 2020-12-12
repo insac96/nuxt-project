@@ -74,7 +74,7 @@
                     <v-form ref="form" v-model="Validate">
                         <!--Export-->
                         <v-text-field
-                            v-model="CloneWareHouse.export.price"
+                            v-model.number="CloneWareHouse.export.price"
                             :rules="[ $Rules.required, $Rules.price ]"
                             label="Export Price"                    
                             placeholder="Giá bán sản phẩm"

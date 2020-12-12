@@ -108,6 +108,18 @@ Router.post('/admin/comment/reply/delete', Authentic_Admin, Controller_Admin.Com
 
 //Order - Admin
 Router.post('/admin/order/list/getByType', Authentic_Admin, Controller_Admin.Order.GetListByType);
+Router.post('/admin/order/delete', Authentic_Admin, Controller_Admin.Order.Delete);
+Router.post('/admin/order/status/edit', Authentic_Admin, Controller_Admin.Order.EditStatus);
+Router.post('/admin/order/done/edit', Authentic_Admin, Controller_Admin.Order.EditDone);
+Router.post('/admin/order/information/edit', Authentic_Admin, Controller_Admin.Order.EditInformation);
+
+//ProductOrder - Admin
+Router.post('/admin/order/product/list/get', Authentic_Admin, Controller_Admin.Order.GetListProductOrder);
+Router.post('/admin/order/product/delete', Authentic_Admin, Controller_Admin.Order.DeleteProductOrder);
+Router.post('/admin/order/product/edit', Authentic_Admin, Controller_Admin.Order.EditProductOrder);
+Router.post('/admin/order/product/add', Authentic_Admin, Controller_Admin.Order.AddProductOrder);
+Router.post('/admin/order/product/add/search', Authentic_Admin, Controller_Admin.Order.SearchProductForOrder);
+
 /////////////////////END Admin - CONTROLLER//////////////////
 
 export default Router;
