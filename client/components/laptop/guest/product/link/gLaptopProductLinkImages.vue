@@ -2,6 +2,7 @@
     <!--g_laptop_product_link_images-->
 
     <v-card flat tile class="Sticky_Top Sticky_Top--xl">
+        <!--No Image-->
         <v-card-text v-if="images.length < 1" class="pa-0 pa-sm-4">
             <LazyHydrate when-visible>
                 <v-alert type="info">Sản Phẩm Chưa Có Hình Ảnh</v-alert>

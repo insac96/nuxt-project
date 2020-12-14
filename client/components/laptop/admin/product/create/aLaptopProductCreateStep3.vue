@@ -2,30 +2,30 @@
     <!--a_laptop_product_create_step_3-->
 
     <v-card tile flat>
-        <!--Card Body-->
+        <!--Body-->
         <v-card-text class="pt-4">
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">CPU</span>
+                <span class="font-weight-bold text-subtitle-1">CPU</span>
                 <v-switch v-model="Upgrade.cpu" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">GPU</span>
+                <span class="font-weight-bold text-subtitle-1">GPU</span>
                 <v-switch v-model="Upgrade.gpu" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">WIFI</span>
+                <span class="font-weight-bold text-subtitle-1">WIFI</span>
                 <v-switch v-model="Upgrade.wifi" inset color="primary" class="ma-0 pa-0"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
-                    <span class="font-weight-bold">RAM</span>
+                    <span class="font-weight-bold text-subtitle-1">RAM</span>
                     <v-switch v-model="Upgrade.ram.type" inset color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
@@ -56,7 +56,7 @@
             <!--Hard Drive-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
-                    <span class="font-weight-bold">HARD DRIVE</span>
+                    <span class="font-weight-bold text-subtitle-1">HARD DRIVE</span>
                     <v-switch v-model="Upgrade.harddrive.type" inset color="primary" class="ma-0 pa-0"></v-switch>
                 </div>
                 
@@ -85,7 +85,9 @@
         </v-card-text>
 
         <!--Footer-->
-        <v-sheet class="d-flex justify-end pa-4">
+        <v-card-actions class="px-4">
+            <v-spacer></v-spacer>
+
             <v-btn large rounded elevation="0" @click="$emit('back')">
                 Back
             </v-btn>
@@ -93,7 +95,7 @@
             <v-btn color="primary" dark large rounded elevation="0" @click="NextStep()">
                 Next
             </v-btn>
-        </v-sheet>
+        </v-card-actions>
     </v-card>
 </template>
 

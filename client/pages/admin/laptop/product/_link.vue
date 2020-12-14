@@ -1,6 +1,8 @@
 <template>
     <!--Laptop Product Link Layout-->
+    
     <div>
+        <!--Tabs-->
         <v-tabs fixed-tabs background-color="primary" icons-and-text hide-slider dark>
             <v-tab v-for="(item, index) in Menu" :key="index" :to="item.path" link>
                 {{item.title}}
@@ -15,12 +17,10 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
-    async asyncData({$axios, params}){
+    async asyncData({$axios, $api, params}){
         try {
-            let Product = await $axios.$post(LaptopAPI.admin.GetProductByLink, {
+            let Product = await $axios.$post($api.laptop.admin.GetProductByLink, {
                 link: params.link
             });
 

@@ -26,6 +26,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
+            
             <v-btn 
                 rounded elevation="0" large
                 :disabled="Loading.create"
@@ -48,8 +49,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['company'],
 
@@ -72,10 +71,11 @@ export default {
             this.Loading.create = true;
 
             try {
-                let NewTrademark = await this.$axios.$post(LaptopAPI.admin.CreateNewTrademark, this.NewTrademark);
+                let NewTrademark = await this.$axios.$post(this.$api.laptop.admin.CreateNewTrademark, this.NewTrademark);
 
-                this.Update(NewTrademark);
-                this.Cancel();
+                this.Update(NewTrademark); 
+
+                this.Loading.create = false;
             }
             catch(e){
                 return false;
@@ -83,8 +83,9 @@ export default {
         },
 
         Update (NewTrademark) {
-            this.Loading.create = false;
             this.company.trademarks.push(NewTrademark);
+
+            this.Cancel();
         },
         
         Cancel () {

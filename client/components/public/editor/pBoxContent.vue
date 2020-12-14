@@ -1,19 +1,21 @@
 <template>
     <!--P_Box_Content-->
     
-    <v-sheet>
+    <div>
+        <!--Main-->
         <div class="QuillContent">
             <LazyHydrate never :trigger-hydration="!isMini">
                 <div v-html="content" :class="isMini ? 'MiniArticle' : ''"></div>
             </LazyHydrate>
         </div>
 
-        <v-sheet class="d-flex justify-center pt-4" v-if="isMini">
+        <!--Show All-->
+        <div class="d-flex justify-center pt-4" v-if="isMini">
             <v-btn rounded elevation="0" color="primary" class="px-6" @click="Show">
                 Xem Toàn Bộ Nội Dung
             </v-btn>
-        </v-sheet>
-    </v-sheet>
+        </div>
+    </div>
 </template>
 
 <script>

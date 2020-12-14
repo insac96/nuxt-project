@@ -1,194 +1,203 @@
 <template>
     <!--Laptop Product Link Variant-->
 
-    <v-card tile flat>
-        <!--Header-->
-        <v-sheet class="d-flex align-center pr-4">
-            <div>
-                <v-card-title class="font-weight-bold text-h4 primary--text">Variant</v-card-title>
-                <v-card-subtitle>Các biến thể cấu hình của sản phẩm</v-card-subtitle>
+    <div>
+        <!--Main-->
+        <v-card tile flat>
+            <!--Header-->
+            <div class="d-flex align-center pr-4">
+                <!--Header - Left-->
+                <div>
+                    <v-card-title class="font-weight-bold text-h4 primary--text">Variant</v-card-title>
+                    <v-card-subtitle>Các biến thể cấu hình của sản phẩm</v-card-subtitle>
+                </div>
+
+                <v-spacer></v-spacer>
+
+                <!--Header - Right-->
+                <div>
+                    <!--Button Create Color For All-->
+                    <v-btn 
+                        v-if="product.variants.length > 1"
+                        color="create" class="mr-1"
+                        dark elevation="0" 
+                        rounded large
+                        @click="VariantColorDialog.createAll = true"
+                    >
+                        <v-icon>color_lens</v-icon>
+                        Thêm Màu Sắc
+                    </v-btn>
+
+                    <!--Button Create New Variant-->
+                    <v-btn 
+                        color="primary" 
+                        dark elevation="0" 
+                        rounded large
+                        @click="VariantDialog.create = true"
+                    >
+                        <v-icon>add</v-icon>
+                        Thêm Mới
+                    </v-btn>
+                </div>
             </div>
 
-            <v-spacer></v-spacer>
+            <!--Body-->
+            <div>
+                <!--Table-->
+                <v-simple-table class="Table">
+                    <template v-slot:default>
+                        <!--Table Header-->
+                        <thead>
+                            <tr>
+                                <th>Cấu Hình</th>
+                                <th class="text-center">Màu Sắc</th>
+                                <th class="text-center" width="120">Giảm Giá</th>
+                                <th class="text-center" width="120">Trạng Thái</th>
+                                <th class="text-center" width="120">Kho</th>
+                                <th class="text-right" width="30">Edit</th>
+                            </tr>
+                        </thead>
 
-            <v-btn 
-                v-if="product.variants.length > 1"
-                color="create" class="mr-1"
-                dark elevation="0" 
-                rounded large
-                @click="VariantColorDialog.createAll = true"
-            >
-                <v-icon>color_lens</v-icon>
-                Thêm Màu Sắc
-            </v-btn>
-
-            <v-btn 
-                color="primary" 
-                dark elevation="0" 
-                rounded large
-                @click="VariantDialog.create = true"
-            >
-                <v-icon>add</v-icon>
-                Thêm Mới
-            </v-btn>
-        </v-sheet>
-
-        <!--Body-->
-        <v-sheet>
-            <!--Table-->
-            <v-simple-table class="Table">
-                <template v-slot:default>
-                    <!--Table Header-->
-                    <thead>
-                        <tr>
-                            <th>Cấu Hình</th>
-                            <th class="text-center">Màu Sắc</th>
-                            <th class="text-center" width="120">Giảm Giá</th>
-                            <th class="text-center" width="120">Trạng Thái</th>
-                            <th class="text-center" width="120">Kho</th>
-                            <th class="text-right" width="30">Edit</th>
-                        </tr>
-                    </thead>
-
-                    <!--Table Body-->
-                    <tbody>
-                        <tr v-for="(variant, indexVariant) in Variants" :key="indexVariant">
-                            <!--1 - Configuration-->
-                            <td class="py-4">
-                                <v-sheet 
-                                    v-for="prop in ConfigurationShow" :key="prop" 
-                                    class="d-flex justify-space-between align-center my-1"
-                                >
-                                    <span class="text-caption font-weight-bold text-uppercase">{{prop}}</span>
-                                    <v-chip small>{{ variant[prop] }}</v-chip>
-                                </v-sheet>
-                            </td>
-
-                            <!--2 - Color-->
-                            <td class="text-center">
-                                <v-btn 
-                                    v-for="(color, indexColor) in variant.colors" :key="indexColor" 
-                                    :color="color.code" fab elevation="0" small
-                                    @click="ShowVariantDialogEditColor(indexColor, color, variant)"
-                                ></v-btn>
-                                <v-btn 
-                                    color="create" outlined fab elevation="0" small
-                                    @click="ShowVariantDialogCreateColor(variant)"
-                                ><v-icon>add</v-icon></v-btn>
-                            </td>
-
-                            <!--4 - Discount-->
-                            <td class="text-center">
-                                <div v-if="!variant.discount.type" class="d-flex justify-center">
-                                    <v-switch 
-                                        hide-details inset
-                                        v-model="variant.discount.type" :disabled="Loading.editDiscount"
-                                        @change="EditVariantDiscount(variant)"
-                                        color="primary" class="ma-0 pa-0"
-                                    ></v-switch>
-                                </div>
-                                
-                                <v-btn
-                                    v-else
-                                    color="error"
-                                    rounded outlined
-                                    elevation="0"
-                                    @click="ShowVariantDialogEditDiscount(variant)"
-                                    class="font-weight-bold text-subtitle-1"
-                                >
-                                    {{ $String.toPrice(variant.discount.amount) }}
-                                </v-btn>
-                            </td>
-
-                            <!--5 - Status-->
-                            <td class="text-center">
-                                <v-menu offset-y left transition="slide-y-transition" min-width="170" max-width="300" nudge-bottom="5">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn 
-                                            color="info" rounded elevation="0" outlined
-                                            :loading="Loading.editStatus"
-                                            v-bind="attrs" v-on="on"
-                                        >
-                                            {{ variant.status }}
-                                        </v-btn>
-                                    </template>
-
-                                    <v-list subheader class="pb-0" v-if="variant.warehouses.length > 0">
-                                        <v-list-item
-                                            color="info"
-                                            v-for="(status, indexStatus) in VariantSelectConfiguration.status" :key="indexStatus"
-                                            @click="EditVariantStatus(status, variant)"
-                                        >
-                                            <v-list-item-title>{{ status }}</v-list-item-title>
-                                        </v-list-item>
-                                    </v-list>
-
-                                    <v-sheet v-else>
-                                        <v-alert type="warning" color="info" text class="mb-0" prominent>
-                                            Cần cập nhật <strong>Kho Hàng</strong> để sử dụng tính năng này !!!
-                                        </v-alert>
+                        <!--Table Body-->
+                        <tbody>
+                            <tr v-for="(variant, indexVariant) in Variants" :key="indexVariant">
+                                <!--1 - Configuration-->
+                                <td class="py-4">
+                                    <v-sheet 
+                                        v-for="prop in ConfigurationShow" :key="prop" 
+                                        class="d-flex justify-space-between align-center my-1"
+                                    >
+                                        <span class="text-caption font-weight-bold text-uppercase">{{prop}}</span>
+                                        <v-chip small>{{ variant[prop] }}</v-chip>
                                     </v-sheet>
-                                </v-menu>
-                            </td>
+                                </td>
 
-                            <!--6 - WareHouse-->
-                            <td class="text-center">
-                                <v-menu v-if="variant.colors.length < 1" offset-y left transition="slide-y-transition" max-width="300" nudge-bottom="5">
-                                    <template v-slot:activator="{ on, attrs }">
+                                <!--2 - Color-->
+                                <td class="text-center">
+                                    <v-btn 
+                                        v-for="(color, indexColor) in variant.colors" :key="indexColor" 
+                                        :color="color.code" fab elevation="0" small
+                                        @click="ShowVariantDialogEditColor(indexColor, color, variant)"
+                                    ></v-btn>
+                                    <v-btn 
+                                        color="create" outlined fab elevation="0" small
+                                        @click="ShowVariantDialogCreateColor(variant)"
+                                    ><v-icon>add</v-icon></v-btn>
+                                </td>
+
+                                <!--4 - Discount-->
+                                <td class="text-center">
+                                    <div v-if="!variant.discount.type" class="d-flex justify-center">
+                                        <v-switch 
+                                            hide-details inset
+                                            v-model="variant.discount.type" :disabled="Loading.editDiscount"
+                                            @change="EditVariantDiscount(variant)"
+                                            color="primary" class="ma-0 pa-0"
+                                        ></v-switch>
+                                    </div>
+                                    
+                                    <v-btn
+                                        v-else
+                                        color="error"
+                                        rounded outlined
+                                        elevation="0"
+                                        @click="ShowVariantDialogEditDiscount(variant)"
+                                        class="font-weight-bold text-subtitle-1"
+                                    >
+                                        {{ $String.toPrice(variant.discount.amount) }}
+                                    </v-btn>
+                                </td>
+
+                                <!--5 - Status-->
+                                <td class="text-center">
+                                    <v-menu offset-y left transition="slide-y-transition" min-width="170" max-width="300" nudge-bottom="5">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn 
+                                                color="info" rounded elevation="0" outlined
+                                                :loading="Loading.editStatus"
+                                                v-bind="attrs" v-on="on"
+                                            >
+                                                {{ variant.status }}
+                                            </v-btn>
+                                        </template>
+
+                                        <v-list subheader class="pb-0" v-if="variant.warehouses.length > 0">
+                                            <v-list-item
+                                                color="info"
+                                                v-for="(status, indexStatus) in VariantSelectConfiguration.status" :key="indexStatus"
+                                                @click="EditVariantStatus(status, variant)"
+                                            >
+                                                <v-list-item-title>{{ status }}</v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+
+                                        <v-sheet v-else>
+                                            <v-alert type="warning" color="info" text class="mb-0" prominent>
+                                                Cần cập nhật <strong>Kho Hàng</strong> để sử dụng tính năng này !!!
+                                            </v-alert>
+                                        </v-sheet>
+                                    </v-menu>
+                                </td>
+
+                                <!--6 - WareHouse-->
+                                <td class="text-center">
+                                    <v-menu v-if="variant.colors.length < 1" offset-y left transition="slide-y-transition" max-width="300" nudge-bottom="5">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn
+                                                color="create" rounded elevation="0" dark outlined
+                                                v-bind="attrs" v-on="on"
+                                            >Nhập Kho</v-btn>
+                                        </template>
+
+                                        <v-sheet>
+                                            <v-alert type="warning" color="create" text class="mb-0" prominent>
+                                                Cần cập nhật <strong>Màu Sắc</strong> trước khi nhập kho !!!
+                                            </v-alert>
+                                        </v-sheet>
+                                    </v-menu>
+
+                                    <div v-else>
+                                        <div v-for="(warehouse, indexWarehouse) in variant.warehouses" :key="indexWarehouse">
+                                            <v-btn color="create" rounded elevation="0" dark class="mb-1" @click="ShowVariantDialogWareHouseInformarion(warehouse, variant)">
+                                                {{$dayjs(warehouse.import.date).format('DD/MM/YYYY')}}
+                                            </v-btn>
+                                        </div>
+
                                         <v-btn
                                             color="create" rounded elevation="0" dark outlined
-                                            v-bind="attrs" v-on="on"
+                                            @click="ShowVariantDialogImportWareHouse(variant)"
                                         >Nhập Kho</v-btn>
-                                    </template>
-
-                                    <v-sheet>
-                                        <v-alert type="warning" color="create" text class="mb-0" prominent>
-                                            Cần cập nhật <strong>Màu Sắc</strong> trước khi nhập kho !!!
-                                        </v-alert>
-                                    </v-sheet>
-                                </v-menu>
-
-                                <div v-else>
-                                    <div v-for="(warehouse, indexWarehouse) in variant.warehouses" :key="indexWarehouse">
-                                        <v-btn color="create" rounded elevation="0" dark class="mb-1" @click="ShowVariantDialogWareHouseInformarion(warehouse, variant)">
-                                            {{$dayjs(warehouse.import.date).format('DD/MM/YYYY')}}
-                                        </v-btn>
                                     </div>
+                                </td>
 
-                                    <v-btn
-                                        color="create" rounded elevation="0" dark outlined
-                                        @click="ShowVariantDialogImportWareHouse(variant)"
-                                    >Nhập Kho</v-btn>
-                                </div>
-                            </td>
+                                <!--7 - Edit-->
+                                <td class="text-right py-2">
+                                    <v-btn 
+                                        color="grey" icon small
+                                        @click="ShowVariantDialogEdit(indexVariant, variant)"
+                                    ><v-icon>edit</v-icon></v-btn>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
 
-                            <!--7 - Edit-->
-                            <td class="text-right py-2">
-                                <v-btn 
-                                    color="grey" icon small
-                                    @click="ShowVariantDialogEdit(indexVariant, variant)"
-                                ><v-icon>edit</v-icon></v-btn>
-                            </td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
+                <!--If List Variant Empty-->
+                <v-alert v-if="Variants.length < 1" class="mb-0" tile>
+                    Không có biến thể nào hiển thị
+                </v-alert>
 
-            <!--If List Variant Empty-->
-            <v-alert v-if="Variants.length < 1" class="mb-0" tile>
-                Không có biến thể nào hiển thị
-            </v-alert>
+                <!--Body Footer-->
+                <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
+                    <!--Count-->
+                    <v-chip> 
+                        <span>{{Variants.length}} / {{Variants.length}}</span>
+                    </v-chip>
+                </v-sheet>
+            </div>
+        </v-card>
 
-            <!--Body Footer-->
-            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
-                <!--Count-->
-                <v-chip> 
-                    <span>{{Variants.length}} / {{Variants.length}}</span>
-                </v-chip>
-            </v-sheet>
-        </v-sheet>
-
-        <!--List Dialog-->
+        <!--Dialog-->
         <div>
             <!--Dialog Create Variant-->
             <v-dialog v-model="VariantDialog.create" persistent max-width="550">
@@ -257,11 +266,10 @@
                 ></ALaptopProductLinkWareHouseInformation>
             </v-dialog>
         </div>
-    </v-card>
+    </div>
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
 import * as VariantSelectSetting from '@/setting/laptop/variant';
 
 export default {
@@ -366,7 +374,7 @@ export default {
             this.Loading.editDiscount = true;
     
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantDiscount, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditVariantDiscount, {
                     _id: variant._id,
                     discount: variant.discount
                 });
@@ -385,7 +393,7 @@ export default {
             this.Loading.editStatus = true;
     
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantStatus, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditVariantStatus, {
                     _id: variant._id,
                     status: status
                 });

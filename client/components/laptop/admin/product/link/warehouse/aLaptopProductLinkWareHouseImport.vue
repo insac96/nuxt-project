@@ -106,6 +106,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
+            
             <v-btn 
                 rounded elevation="0" large 
                 :disabled="Loading.import"
@@ -128,8 +129,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['variant'],
     data () {
@@ -196,11 +195,10 @@ export default {
                 this.NewImportWareHouse.product = this.variant.product;
                 this.NewImportWareHouse.variant = this.variant._id;
 
-                let NewImportWareHouse = await this.$axios.$post(LaptopAPI.admin.ImportWareHouse, this.NewImportWareHouse);
-
-                this.Update(NewImportWareHouse);
+                let NewImportWareHouse = await this.$axios.$post(this.$api.laptop.admin.ImportWareHouse, this.NewImportWareHouse);
 
                 this.Loading.import = false;
+                this.Update(NewImportWareHouse);
             }
             catch(e){
                 this.Loading.import = false;

@@ -37,6 +37,7 @@
             </v-btn>
 
             <v-spacer></v-spacer>
+            
             <v-btn 
                 rounded elevation="0" large 
                 @click="Cancel()"
@@ -60,8 +61,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['trademark'],
 
@@ -87,11 +86,13 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteTrademark, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteTrademark, {
                     _id: this.trademark._id
                 });
 
                 this.Delete();
+
+                this.Loading.delete = false;
             }
             catch(e){
                 this.Loading.delete = false;
@@ -105,12 +106,14 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditTrademark, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditTrademark, {
                     _id: this.CloneTrademark._id,
                     name: this.CloneTrademark.name
                 });
 
                 this.Update();
+
+                this.Loading.edit = false;
             }
             catch(e){
                 this.Loading.edit = false;
@@ -120,14 +123,12 @@ export default {
         },
 
         Delete () {
-            this.Loading.delete = false;
             this.$emit('delete');
 
             this.Cancel();
         },
 
         Update () {
-            this.Loading.edit = false;
             Object.assign(this.trademark, this.CloneTrademark);
             
             this.Cancel();

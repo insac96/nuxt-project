@@ -65,14 +65,11 @@
             >
                 Lưu
             </v-btn>
-            
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['company'],
     
@@ -102,13 +99,15 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditCompany, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditCompany, {
                     _id: this.CloneCompany._id,
                     name: this.CloneCompany.name,
                     logo: this.CloneCompany.logo,
                 });
 
                 this.Update();
+
+                this.Loading.edit = false;
             }
             catch(e){
                 this.Loading.edit = false;
@@ -132,7 +131,6 @@ export default {
         },
 
         Update () {
-            this.Loading.edit = false;
             Object.assign(this.company, this.CloneCompany);
 
             this.Cancel();

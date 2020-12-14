@@ -143,7 +143,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
 import * as VariantSelectSetting from '@/setting/laptop/variant';
 
 export default {
@@ -177,14 +176,13 @@ export default {
             this.Loading.edit = true;
     
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariant, this.CloneVariant);
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditVariant, this.CloneVariant);
 
                 if(Edit.error) throw Edit;
 
-                this.Loading.edit = false;
-                Object.assign(this.variant, this.CloneVariant);
+                this.UpdateEdit();
 
-                this.Cancel();
+                this.Loading.edit = false;
             }
             catch(e){
                 this.Loading.edit = false;
@@ -193,11 +191,16 @@ export default {
             } 
         },
 
+        UpdateEdit(){
+            Object.assign(this.variant, this.CloneVariant);
+            this.Cancel();
+        },
+
         async DeleteVariant () {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariant, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteVariant, {
                     _id: this.CloneVariant._id
                 });
 

@@ -89,6 +89,7 @@
                     <!-- Button Action -->
                     <v-sheet class="d-flex">
                         <v-spacer></v-spacer>
+                        
                         <v-btn 
                             rounded elevation="0" large 
                             @click="Cancel" :disabled="Loading.edit"
@@ -112,8 +113,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['variant' , 'warehouse'],
     data () {
@@ -146,7 +145,7 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditWarehouseExportPrice, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditWarehouseExportPrice, {
                     _id: this.CloneWareHouse._id,
                     export: this.CloneWareHouse.export
                 });

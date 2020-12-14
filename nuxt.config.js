@@ -26,6 +26,7 @@ export default {
 
   plugins: [
     {src: '~/plugins/config.js'},
+    {src: '~/plugins/api.js'},
     {src: '~/plugins/axios.js'},
     {src: '~/plugins/hydration.js'},
     {src: '~/plugins/day.js'},

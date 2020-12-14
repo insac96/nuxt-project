@@ -108,6 +108,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
+            
             <v-btn 
                 rounded elevation="0" large 
                 :disabled="Loading.create" 
@@ -130,7 +131,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
 import * as VariantSelectSetting from '@/setting/laptop/variant';
 
 export default {
@@ -167,12 +167,13 @@ export default {
             this.Loading.create = true;
 
             try {
-                let NewVariant = await this.$axios.$post(LaptopAPI.admin.CreateNewVariant, this.NewVariant);
+                let NewVariant = await this.$axios.$post(this.$api.laptop.admin.CreateNewVariant, this.NewVariant);
 
                 if(NewVariant.error) throw NewVariant;
 
-                this.Loading.create = false;
                 this.Update(NewVariant);    
+
+                this.Loading.create = false;
             }
             catch(e){
                 this.Loading.create = false;

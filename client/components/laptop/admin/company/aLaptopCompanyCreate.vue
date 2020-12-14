@@ -99,7 +99,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
 import CompanySelectSetting from '@/setting/laptop/company';
 import TrademarkSelectSetting from '@/setting/laptop/trademark';
 
@@ -133,7 +132,7 @@ export default {
             this.Loading.create = true;
             
             try {
-                let NewCompany = await this.$axios.$post(LaptopAPI.admin.CreateNewCompany, {
+                let NewCompany = await this.$axios.$post(this.$api.laptop.admin.CreateNewCompany, {
                     name: this.NewCompany.name,
                     logo: this.NewCompany.logo,
                     trademarks: this.NewTrademarks

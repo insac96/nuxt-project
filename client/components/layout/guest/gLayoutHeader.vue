@@ -1,4 +1,6 @@
 <template>
+    <!--a-layout-header-->
+
     <v-app-bar app fixed color="header" height="60">
         <!--Logo-->
         <nuxt-link to="/" class="white--text text-h5 text-sm-h4 font-weight-bold">

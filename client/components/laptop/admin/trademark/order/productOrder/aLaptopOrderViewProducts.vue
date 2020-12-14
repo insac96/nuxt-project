@@ -5,16 +5,12 @@
         <!--Main-->
         <v-card>
             <!--Header-->
-            <div class="d-flex align-center">
-                <!--Header Left-->
+            <v-sheet class="d-flex align-center justify-space-between">
                 <div>
                     <v-card-title class="font-weight-bold text-h4 edit--text">Products Order</v-card-title>
                     <v-card-subtitle>Danh sách sản phẩm</v-card-subtitle>
                 </div>
 
-                <v-spacer></v-spacer>
-
-                <!--Header Right-->
                 <v-btn 
                     v-if="!order.done.type"
                     color="edit" dark 
@@ -24,7 +20,7 @@
                 >
                    Thêm Sản Phẩm
                 </v-btn>
-            </div>
+            </v-sheet>
 
             <!--Body Fetch Pending-->
             <v-card-text v-if="$fetchState.pending">
@@ -148,11 +144,8 @@
                 </v-alert>
 
                 <!--Total-->
-                <v-sheet v-else class="d-flex align-center px-4 py-2 text-h6" color="heading">
+                <v-sheet v-else class="d-flex align-center justify-space-between px-4 py-2 text-h6" color="heading">
                     <span>Total:</span>
-
-                    <v-spacer></v-spacer>
-
                     <span class="font-weight-bold error--text">{{ $String.toPrice(Total()) }}đ</span>
                 </v-sheet>
             </div>
@@ -181,6 +174,8 @@
 </template>
 
 <script>
+import LaptopAPI from '~/setting/laptop/api';
+
 export default {
     props : ['order'],
 
@@ -206,7 +201,7 @@ export default {
 
     async fetch () {
         try {
-            let Products = await this.$axios.$post(this.$api.laptop.admin.GetListProductOrder, {
+            let Products = await this.$axios.$post(LaptopAPI.admin.GetListProductOrder, {
                 order: this.order._id
             });
 
@@ -230,7 +225,7 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteProductOrder, {
+                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteProductOrder, {
                     _id: product._id
                 });
 

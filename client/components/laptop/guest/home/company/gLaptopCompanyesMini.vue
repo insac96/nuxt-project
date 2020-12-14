@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props: ['companyes'],
 

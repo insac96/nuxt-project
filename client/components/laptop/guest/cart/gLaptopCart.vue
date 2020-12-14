@@ -16,12 +16,14 @@
         <v-bottom-sheet v-model="DialogCart" width="800">
             <v-card flat tile>
                 <!--Header-->
-                <v-sheet class="d-flex justify-space-between align-center pr-2 pr-sm-4" color="heading">
+                <v-sheet class="d-flex align-center pr-2 pr-sm-4" color="heading">
                     <!--Left-->
                     <div>
                         <v-card-title class="font-weight-bold text-h5 primary--text px-2 px-sm-4">Cart</v-card-title>
                         <v-card-subtitle class="px-2 px-sm-4">Thông tin các sản phẩm trong giỏ hàng</v-card-subtitle>
                     </div>
+
+                    <v-spacer></v-spacer>
 
                     <!--Right-->
                     <v-btn small icon elevation="0" @click="DialogCart = false">
@@ -131,8 +133,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     data () {
         return {
@@ -213,7 +213,7 @@ export default {
 
             try {
                 let ListID = this.LaptopStore.cart.map(item => item.color);
-                let ListProduct = await this.$axios.$post(LaptopAPI.guest.GetListItemInCart, ListID);
+                let ListProduct = await this.$axios.$post(this.$api.laptop.guest.GetListItemInCart, ListID);
 
                 ListProduct.map(item => {
                     let indexItem = this.LaptopStore.cart.findIndex(e => e.color == item._id);

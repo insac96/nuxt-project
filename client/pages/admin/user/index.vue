@@ -7,7 +7,7 @@
         <v-card-subtitle>Danh sách tài khoản</v-card-subtitle>
 
         <!--Body-->
-        <v-sheet>
+        <div>
             <!--Option Search-->
             <v-sheet class="d-flex align-center pa-3" color="heading">
                 <!--Input Search-->
@@ -84,13 +84,22 @@
 
                             <!--3 - User Role-->
                             <td class="text-center font-weight-bold">
-                                <span :class="user.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{ user.role }}</span>
+                                <v-chip
+                                    dark
+                                    :color="user.role == 'ADMIN' ? 'admin' : 'guest'"
+                                >
+                                    {{ user.role }}
+                                </v-chip>
                             </td>
 
                             <!--4 - User Verification-->
                             <td class="text-center font-weight-bold">
-                                <span v-if="user.verification" class="info--text">Đã Xác Minh</span>
-                                <span v-else class="grey--text">Chưa Xác Minh</span>
+                                <v-chip
+                                    dark
+                                    :color="user.verification ? 'info' : ''"
+                                >
+                                    {{ user.verification ? 'Đã Xác Minh' : 'Chưa Xác Minh' }}
+                                </v-chip>
                             </td>
                         </tr>
                     </tbody>
@@ -121,17 +130,15 @@
                     More
                 </v-btn>
             </v-sheet>
-        </v-sheet>
+        </div>
     </v-card>
 </template>
 
 <script>
-import UserAPI from '@/setting/user/api';
-
 export default {
-    async asyncData({$axios}){
+    async asyncData({$axios, $api}){
         try {
-            let Get = await $axios.$post(UserAPI.admin.GetUsers, {
+            let Get = await $axios.$post($api.user.admin.GetUsers, {
                 skip: 0
             });
 
@@ -141,6 +148,7 @@ export default {
             }
         }
         catch(e){
+            console.log(e)
             return {
                 Users: [],
                 Count: 0

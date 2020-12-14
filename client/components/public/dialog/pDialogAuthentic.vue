@@ -2,7 +2,7 @@
     <!--p_dialog_authentic-->
     
     <v-card flat class="px-4 px-md-10 py-8 py-md-10">
-        <!--Form-->
+        <!--Body-->
         <v-card-text class="py-4 px-0">
             <v-form ref="form" v-model="Validate">
                 <!--Username-->
@@ -88,8 +88,6 @@
 </template>
 
 <script>
-import UserAPI from '@/setting/user/api';
-
 export default {
     data () {
         return {
@@ -124,7 +122,7 @@ export default {
             this.Loading.signin = true;
 
             try {
-                let Signin = await this.$axios.$post(UserAPI.guest.SignIn, {
+                let Signin = await this.$axios.$post(this.$api.user.guest.SignIn, {
                     username: this.Authentic.username,
                     password: this.Authentic.password
                 });
@@ -148,7 +146,7 @@ export default {
             this.Loading.signup = true;
 
             try {
-                let Signup = await this.$axios.$post(UserAPI.guest.SignUp, {
+                let Signup = await this.$axios.$post(this.$api.user.guest.SignUp, {
                     username: this.Authentic.username,
                     password: this.Authentic.password,
                     email: this.Authentic.email

@@ -2,6 +2,7 @@
     <!--a_laptop_product_create_step_2-->
 
     <v-form class="pa-4" ref="form">
+        <!--Body-->
         <v-row>
             <!--Col 1-->
             <v-col cols="6">
@@ -57,7 +58,9 @@
         </v-row>
         
         <!--Button-->
-        <v-sheet class="d-flex justify-end">
+        <v-card-actions class="px-0">
+            <v-spacer></v-spacer>
+
             <v-btn large rounded elevation="0" @click="$emit('back')">
                 Back
             </v-btn>
@@ -65,7 +68,7 @@
             <v-btn color="primary" dark large rounded elevation="0" @click="NextStep()">
                 Next
             </v-btn>
-        </v-sheet>
+        </v-card-actions>
     </v-form>
 </template>
 

@@ -79,8 +79,6 @@
 </template>
 
 <script>
-import UserAPI from '@/setting/user/api';
-
 export default {
     computed: {
         UserStore() {

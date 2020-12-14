@@ -11,7 +11,7 @@
             v-model="Step"
             class="elevation-0 rounded-0 card"
         >
-            <!--Header-->
+            <!--Stepper - Header-->
             <v-stepper-header class="heading BoxShadow">
                 <v-stepper-step
                     :complete="Step > 1"
@@ -42,6 +42,7 @@
                 </v-stepper-step>
             </v-stepper-header>
 
+            <!--Stepper - Body-->
             <v-stepper-items>
                 <!--Step 1-->
                 <v-stepper-content step="1">
@@ -76,8 +77,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     data () {
         return {
@@ -121,7 +120,7 @@ export default {
             this.Loading.create = true;
 
             try {
-                let NewProduct = await this.$axios.$post(LaptopAPI.admin.CreateNewProduct, {
+                let NewProduct = await this.$axios.$post(this.$api.laptop.admin.CreateNewProduct, {
                     product: this.NewProduct,
                     configuration: this.NewConfiguration
                 });

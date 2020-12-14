@@ -1,5 +1,7 @@
 <template>
-    <v-sheet>
+    <!--g_laptop_product_link_reply_of_comment-->
+
+    <div>
         <!--Replys-->
         <div class="d-flex pl-6 mt-2" v-for="(reply, indexReply) in comment.reply" :key="indexReply">
             <!--Avatar User - Left-->  
@@ -47,12 +49,10 @@
                 ></v-text-field>
             </v-form>
         </div>
-    </v-sheet>
+    </div>
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product', 'comment'],
 
@@ -89,7 +89,7 @@ export default {
             this.Loading.reply = true;
 
             try {
-                let NewReply = await this.$axios.$post(LaptopAPI.guest.AddReplyForComment, {
+                let NewReply = await this.$axios.$post(this.$api.laptop.guest.AddReplyForComment, {
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,
                     product: this.product._id,

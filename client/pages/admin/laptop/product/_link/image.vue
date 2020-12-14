@@ -3,14 +3,16 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center pr-4" color="heading">
-            <!--Left-->
+        <v-sheet class="d-flex align-center pr-4" color="heading">
+            <!--Header Left-->
             <div>
                 <v-card-title class="font-weight-bold text-h4 primary--text">Images</v-card-title>
                 <v-card-subtitle>Các hình ảnh của sản phẩm</v-card-subtitle>
             </div>
 
-            <!--Right-->
+            <v-spacer></v-spacer>
+
+            <!--Header Right-->
             <v-btn 
                 fab color="primary" 
                 dark elevation="0" 
@@ -23,7 +25,7 @@
         </v-sheet>
 
         <!--Body-->
-        <v-sheet class="pa-4">
+        <div class="pa-4">
             <!--Alert if Image List Empty-->
             <v-alert 
                 v-if="product.images.length == 0"
@@ -52,13 +54,11 @@
                     </v-hover>
                 </v-col>
             </v-row>
-        </v-sheet>
+        </div>
     </v-card>
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -96,7 +96,7 @@ export default {
             this.Loading.upload = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditImagesProduct, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditImagesProduct, {
                     _id: this.product._id,
                     images: this.product.images
                 });

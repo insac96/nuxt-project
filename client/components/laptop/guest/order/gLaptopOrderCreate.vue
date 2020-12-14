@@ -1,6 +1,8 @@
 <template>
     <!--Guest Laptop Order Create-->
+
     <div>
+        <!--Main-->
         <v-card>
             <!--Header-->
             <v-sheet class="d-flex align-center pr-4" color="primary">
@@ -66,7 +68,8 @@
                     <v-spacer></v-spacer>
 
                     <v-btn 
-                        elevation="0" rounded 
+                        elevation="0"
+                        rounded large
                         :loading="Loading.create"
                         @click="addContact = false"
                     >
@@ -75,7 +78,7 @@
 
                     <v-btn 
                         elevation="0" color="primary" 
-                        rounded 
+                        rounded large
                         :loading="Loading.create"
                         @click="CreateNewContact"
                     >
@@ -86,8 +89,9 @@
 
             <!--Body - Else-->
             <v-card tile flat v-else class="pt-6">
-                <!--Body-->
+                <!--From-->
                 <v-form ref="form" v-model="Validate" class="px-4">
+                    <!--Ventor-->
                     <v-select
                         v-model="NewOrder.vendor"
                         :rules="[ $Rules.required ]"
@@ -124,7 +128,8 @@
                             </v-list-item>
                         </template>
                     </v-select>
-
+                    
+                    <!--Name Disabled-->
                     <v-text-field
                         v-if="NewOrder.vendor"
                         :value="GetContactByID(NewOrder.vendor, 'name')"
@@ -136,6 +141,7 @@
                     >
                     </v-text-field>
 
+                    <!--Phone Disabled-->
                     <v-text-field
                         v-if="NewOrder.vendor"
                         :value="GetContactByID(NewOrder.vendor, 'phone')"
@@ -147,9 +153,10 @@
                     >
                     </v-text-field>
 
+                    <!--Type Order-->
                     <v-select
                         v-model="NewOrder.type"
-                        :items="TypeOrder"
+                        :items="OrderSetting.type"
                         item-value="value"
                         item-text="text"
                         :rules="[ $Rules.required ]"
@@ -162,9 +169,10 @@
                     >
                     </v-select>
 
+                    <!--Pay Order-->
                     <v-select
                         v-model="NewOrder.pay"
-                        :items="PayOrder"
+                        :items="OrderSetting.pay"
                         item-value="value"
                         item-text="text"
                         :rules="[ $Rules.required ]"
@@ -177,6 +185,7 @@
                     >
                     </v-select>
 
+                    <!--Note-->
                     <v-text-field
                         v-model="NewOrder.note"
                         label="Note"
@@ -195,7 +204,7 @@
 
                     <v-btn 
                         elevation="0" color="primary" 
-                        rounded 
+                        rounded large
                         :loading="Loading.order"
                         @click="CreateNewOrder"
                     >
@@ -227,14 +236,15 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-import UserAPI from '@/setting/user/api';
+import OrderSetting from '@/setting/laptop/order';
 
 export default {
     props: ['listProductOrder'],
 
     data () {
         return {
+            OrderSetting: OrderSetting,
+
             Contacts: [],
 
             //DialogDone
@@ -256,14 +266,6 @@ export default {
                 type: null,
                 note: null
             },
-            PayOrder: [
-                {value: 1, text: 'Thanh Toán Khi Nhận Hàng'},
-                {value: 2, text: 'Thanh Toán Trước'},
-            ],
-            TypeOrder: [
-                {value: 1, text: 'Giao Hàng'},
-                {value: 2, text: 'Đặt trước, nhận tại cửa hàng'},
-            ],
 
             //Loading
             Loading: {
@@ -288,7 +290,7 @@ export default {
             this.Loading.get = true;
 
             try {
-                let Contacts = await this.$axios.$get(UserAPI.guest.GetListContact);
+                let Contacts = await this.$axios.$get(this.$api.user.guest.GetListContact);
                 
                 this.Contacts = this.Contacts.concat(Contacts);
                 this.Loading.get = false;
@@ -303,7 +305,7 @@ export default {
             this.Loading.create = true;
 
             try {
-                let NewContact = await this.$axios.$post(UserAPI.guest.CreateNewContact, {
+                let NewContact = await this.$axios.$post(this.$api.user.guest.CreateNewContact, {
                     name: this.NewContact.name,
                     phone: this.NewContact.phone,
                     address: this.NewContact.address,
@@ -327,7 +329,7 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(UserAPI.guest.DeleteContact, {
+                let Delete = await this.$axios.$post(this.$api.user.guest.DeleteContact, {
                     _id: _id
                 });
 
@@ -355,7 +357,7 @@ export default {
             this.Loading.order = true;
 
             try {
-                let NewOrder = await this.$axios.$post(LaptopAPI.guest.CreateNewOrder, {
+                let NewOrder = await this.$axios.$post(this.$api.laptop.guest.CreateNewOrder, {
                     vendor: this.NewOrder.vendor,
                     pay: this.NewOrder.pay,
                     type: this.NewOrder.type,

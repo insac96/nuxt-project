@@ -2,6 +2,7 @@
     <!--P_Box_Editor-->
 
     <div>
+        <!--Main-->
         <quill-editor 
             ref="Editor" 
             :content="CloneContent" 
@@ -9,6 +10,7 @@
             class="Editor"
         ></quill-editor>
 
+        <!--Input File Hidden-->
         <input type="file" id="file" hidden>
 
         <!--Footer-->

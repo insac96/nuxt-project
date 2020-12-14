@@ -8,7 +8,7 @@
 
         <!--Body-->
         <v-card-text>
-            <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 text-subtitle-1">
+            <v-alert type="info" outlined color="delete" prominent class="rounded-xl">
                 Chức năng này sẽ xóa hãng sản xuất <strong>{{company.name}}</strong> và tất cả thương hiệu nhánh, sản phẩm liên quan. Bạn có chắc chắn muốn xóa.
             </v-alert>
         </v-card-text>
@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['company'],
 
@@ -56,7 +54,7 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteCompany, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteCompany, {
                     _id: this.company._id
                 });
 

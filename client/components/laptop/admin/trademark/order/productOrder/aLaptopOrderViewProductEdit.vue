@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import LaptopAPI from '~/setting/laptop/api';
+
 export default {
     props : ['product'],
 
@@ -113,13 +115,14 @@ export default {
             this.Loading.edit = true;
             
             try {
-                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditProductOrder, {
+                let Edit = await this.$axios.$post(LaptopAPI.admin.EditProductOrder, {
                     _id: this.CloneProduct._id,
                     whenOrder: this.CloneProduct.whenOrder
                 });
 
-                this.Update();
                 this.Loading.edit = false;
+
+                this.Update();
             }
             catch(e){
                 this.Loading.edit = false;

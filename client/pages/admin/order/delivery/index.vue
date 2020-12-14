@@ -1,5 +1,6 @@
 <template>
     <!--Admin Delivery Order Page-->
+    
     <div>
         <!--Main-->
         <v-card tile flat>
@@ -8,7 +9,7 @@
             <v-card-subtitle>Danh sách đơn giao hàng</v-card-subtitle>
 
             <!--Body-->
-            <v-sheet>
+            <div>
                 <!--Table-->
                 <v-simple-table class="Table">
                     <template v-slot:default>
@@ -99,7 +100,7 @@
                 >
                     Không có đơn hàng nào hiển thị
                 </v-alert>
-            </v-sheet>
+            </div>
         </v-card>
 
         <!--Dialog-->
@@ -142,12 +143,10 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
-    async asyncData({$axios}){
+    async asyncData({$axios, $api}){
         try {
-            let Get = await $axios.$post(LaptopAPI.admin.GetListOrderByType, {
+            let Get = await $axios.$post($api.laptop.admin.GetListOrderByType, {
                 skip: 0,
                 type: 1
             });

@@ -1,14 +1,17 @@
 <template>
     <!--News Top List-->
 
+    <!--Fetch Pendding-->
     <v-sheet v-if="$fetchState.pending" color="transparent">
         <v-skeleton-loader type="image"></v-skeleton-loader>
     </v-sheet>
 
+    <!--Fetch Error-->
     <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-4 px-md-0">
         <v-alert type="error" class="BoxShadow">{{$fetchState.error.message}}</v-alert>
     </v-sheet>
 
+    <!--Fetch Done-->
     <v-sheet v-else class="BoxShadow" color="transparent">
         <v-carousel
             cycle height="auto"
@@ -44,8 +47,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     data () {
         return {
@@ -55,7 +56,7 @@ export default {
 
     async fetch(){
         try {
-            let ListNews = await this.$axios.$get(LaptopAPI.guest.GetListNewsByTop);
+            let ListNews = await this.$axios.$get(this.$api.laptop.guest.GetListNewsByTop);
 
             this.ListNews = ListNews;
         }

@@ -1,135 +1,143 @@
 <template>
     <!--Laptop News Index-->
 
-    <v-card tile flat>
-        <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center">
-            <div>
-                <v-card-title class="font-weight-bold text-h4 primary--text">News</v-card-title>
-                <v-card-subtitle>Quản lý tin tức</v-card-subtitle>
+    <div>
+        <!--Main-->
+        <v-card tile flat>
+            <!--Header-->
+            <div class="d-flex align-center">
+                <!--Header Left-->
+                <div>
+                    <v-card-title class="font-weight-bold text-h4 primary--text">News</v-card-title>
+                    <v-card-subtitle>Quản lý tin tức</v-card-subtitle>
+                </div>
+
+                <v-spacer></v-spacer>
+
+                <!--Header Right-->
+                <v-btn 
+                    color="primary" dark rounded 
+                    elevation="0" large class="mr-4" 
+                    to="news/create"
+                >
+                    <v-icon>add</v-icon>
+                    Thêm Mới
+                </v-btn>
             </div>
 
-            <v-btn 
-                color="primary" dark rounded 
-                elevation="0" large class="mr-4" 
-                to="news/create"
-            >
-                <v-icon>add</v-icon>
-                Thêm Mới
-            </v-btn>
-        </v-sheet>
+            <!--Body-->
+            <div>
+                <!--Table-->
+                <v-simple-table class="Table">
+                    <template v-slot:default>
+                        <!--Table Header-->
+                        <thead>
+                            <tr>
+                                <th>Tiêu Đề</th>
+                                <th class="text-center" width="120">Hình Ảnh</th>
+                                <th class="text-center" width="60">Top</th>
+                                <th class="text-right" width="120">Chức Năng</th>
+                            </tr>
+                        </thead>
 
-        <!--Body-->
-        <v-sheet>
-            <!--Table-->
-            <v-simple-table class="Table">
-                <template v-slot:default>
-                    <!--Table Header-->
-                    <thead>
-                        <tr>
-                            <th>Tiêu Đề</th>
-                            <th class="text-center" width="120">Hình Ảnh</th>
-                            <th class="text-center" width="60">Top</th>
-                            <th class="text-right" width="120">Chức Năng</th>
-                        </tr>
-                    </thead>
+                        <!--Table Body-->
+                        <tbody>
+                            <tr v-for="(news, indexNews) in ListNews" :key="indexNews">
+                                <!--1 - Title-->
+                                <td class="text-capitalize py-4">
+                                    <nuxt-link :to="`news/${news._id}`">
+                                        {{ news.title }}
+                                    </nuxt-link>
+                                </td>
 
-                    <!--Table Body-->
-                    <tbody>
-                        <tr v-for="(news, indexNews) in ListNews" :key="indexNews">
-                            <!--1 - Title-->
-                            <td class="text-capitalize py-4">
-                                <nuxt-link :to="`news/${news._id}`">
-                                    {{ news.title }}
-                                </nuxt-link>
-                            </td>
+                                <!--2 - Image-->
+                                <td class="text-center">
+                                    {{ news.image ? 'Yes' : 'No' }}
+                                </td>
 
-                            <!--2 - Image-->
-                            <td class="text-center">
-                                {{ news.image ? 'Yes' : 'No' }}
-                            </td>
+                                <!--3 - Top-->
+                                <td class="text-center">
+                                    <div class="d-flex justify-center">
+                                        <v-switch 
+                                            hide-details
+                                            v-model="news.top" :disabled="Loading.top"
+                                            color="primary" class="ma-0 pa-0"
+                                            @change="EditTopNews(news)"
+                                        ></v-switch>
+                                    </div>
+                                </td>
 
-                            <!--3 - Top-->
-                            <td class="text-center">
-                                <div class="d-flex justify-center">
-                                    <v-switch 
-                                        hide-details
-                                        v-model="news.top" :disabled="Loading.top"
-                                        color="primary" class="ma-0 pa-0"
-                                        @change="EditTopNews(news)"
-                                    ></v-switch>
-                                </div>
-                            </td>
+                                <!--4 - Funtion-->
+                                <td class="text-right">
+                                    <v-btn 
+                                        :color="news.visibility ? 'primary' : 'grey'" 
+                                        icon small elevation="0"
+                                        :disabled="Loading.visibility"
+                                        @click="EditVisibilityNews(news)"
+                                    >
+                                        <v-icon>{{news.visibility ? 'visibility' : 'visibility_off'}}</v-icon>
+                                    </v-btn>
 
-                            <!--4 - Funtion-->
-                            <td class="text-right">
-                                <v-btn 
-                                    :color="news.visibility ? 'primary' : 'grey'" 
-                                    icon small elevation="0"
-                                    :disabled="Loading.visibility"
-                                    @click="EditVisibilityNews(news)"
-                                >
-                                    <v-icon>{{news.visibility ? 'visibility' : 'visibility_off'}}</v-icon>
-                                </v-btn>
+                                    <v-btn
+                                        color="error"
+                                        icon small elevation="0"
+                                        @click="ShowDialogDeleteNews(indexNews)"
+                                    >
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
 
-                                <v-btn
-                                    color="error"
-                                    icon small elevation="0"
-                                    @click="ShowDialogDeleteNews(indexNews)"
-                                >
-                                    <v-icon>delete</v-icon>
-                                </v-btn>
-                            </td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
-
-            <!--If List Product Empty-->
-            <v-alert
-                v-if="ListNews.length < 1" 
-                class="mb-0" tile
-            >
-                Không có tin tức nào hiển thị
-            </v-alert>
-
-            <!--Body Footer-->
-            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
-                <!--Count-->
-                <v-chip> 
-                    <span>{{ListNews.length}} / {{Count}}</span>
-                </v-chip>
-
-                <!--Button Next Previous-->
-                <v-btn 
-                    elevation="0" rounded 
-                    color="primary"
-                    v-if="(ListNews.length < Count)" 
-                    @click="ShowNewsMore();"
+                <!--If List Product Empty-->
+                <v-alert
+                    v-if="ListNews.length < 1" 
+                    class="mb-0" tile
                 >
-                    More
-                </v-btn>
-            </v-sheet>
-        </v-sheet>
+                    Không có tin tức nào hiển thị
+                </v-alert>
 
-        <!--Dialog Delete-->
-        <v-dialog v-model="Dialog.delete.type" persistent max-width="450">
-            <ALaptopNewsDelete 
-                @delete="DeleteNewsDone"
-                @cancel="Dialog.delete.type = false" 
-                :news="Dialog.delete.select"
-            ></ALaptopNewsDelete>
-        </v-dialog>
-    </v-card>
+                <!--Body Footer-->
+                <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
+                    <!--Count-->
+                    <v-chip> 
+                        <span>{{ListNews.length}} / {{Count}}</span>
+                    </v-chip>
+
+                    <!--Button Next Previous-->
+                    <v-btn 
+                        elevation="0" rounded 
+                        color="primary"
+                        v-if="(ListNews.length < Count)" 
+                        @click="ShowNewsMore();"
+                    >
+                        More
+                    </v-btn>
+                </v-sheet>
+            </div>
+        </v-card>
+
+        <!--Dialog-->
+        <div>
+            <!--Dialog Delete-->
+            <v-dialog v-model="Dialog.delete.type" persistent max-width="450">
+                <ALaptopNewsDelete 
+                    @delete="DeleteNewsDone"
+                    @cancel="Dialog.delete.type = false" 
+                    :news="Dialog.delete.select"
+                ></ALaptopNewsDelete>
+            </v-dialog>
+        </div>
+    </div>
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
-    async asyncData({$axios}){
+    async asyncData({$axios, $api}){
         try {
-            let Get = await $axios.$post(LaptopAPI.admin.GetListNews, {
+            let Get = await $axios.$post($api.laptop.admin.GetListNews, {
                 skip: 0
             });
             return {
@@ -184,7 +192,7 @@ export default {
             news.visibility = !news.visibility;
 
             try {
-                let Change = await this.$axios.$post(LaptopAPI.admin.EditVisibilityNews, {
+                let Change = await this.$axios.$post(this.$api.laptop.admin.EditVisibilityNews, {
                     _id: news._id,
                     visibility: news.visibility
                 });
@@ -202,7 +210,7 @@ export default {
             this.Loading.top = true;
 
             try {
-                let Change = await this.$axios.$post(LaptopAPI.admin.EditTopNews, {
+                let Change = await this.$axios.$post(this.$api.laptop.admin.EditTopNews, {
                     _id: news._id,
                     top: news.top
                 });
@@ -217,7 +225,7 @@ export default {
 
         async ShowNewsMore () {
             try {
-                let Get = await this.$axios.$post(LaptopAPI.admin.GetListNews, {
+                let Get = await this.$axios.$post(this.$api.laptop.admin.GetListNews, {
                     skip: this.ListNews.length,
                 });
 

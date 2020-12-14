@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     data () {
         return {
@@ -92,7 +90,7 @@ export default {
             this.Loading.create = true;
             
             try {
-                let News = await this.$axios.$post(LaptopAPI.admin.CreateNews, {
+                let News = await this.$axios.$post(this.$api.laptop.admin.CreateNews, {
                     title: this.News.title,
                     image: this.News.image,
                     content: this.News.content,

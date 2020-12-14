@@ -9,6 +9,7 @@
 
             <v-card-text>
                 <v-form class="mt-4" ref="form" v-model="Validate">
+                    <!--Name-->
                     <v-text-field
                         v-model="NewProduct.name"
                         :rules="[$Rules.required, $Rules.multiSpace]"
@@ -26,6 +27,7 @@
                         </template>
                     </v-text-field>
 
+                    <!--Company-->
                     <v-select
                         v-model="NewProduct.company"
                         :rules="[$Rules.required]"
@@ -42,6 +44,7 @@
                         @change="SetCompanySelect"
                     ></v-select>
 
+                    <!--Trademark-->
                     <v-select
                         v-if="CompanySelect"
                         v-model="NewProduct.trademark"
@@ -63,11 +66,13 @@
         <!--Image-->
         <div>
             <!--Header Image-->
-            <v-sheet class="d-flex justify-space-between align-center pr-4">
+            <div class="d-flex justify-space-between align-center pr-4">
                 <div>
                     <v-card-title class="font-weight-bold primary--text">Hình Ảnh</v-card-title>
                     <v-card-subtitle>Tải Hình Ảnh Cho Sản Phẩm</v-card-subtitle>
                 </div>
+
+                <v-spacer></v-spacer>
 
                 <v-btn 
                     fab color="primary" 
@@ -78,7 +83,7 @@
                     <v-icon>backup</v-icon>
                     <input type="file" ref="File" hidden @change="UploadImages" multiple>
                 </v-btn>
-            </v-sheet>
+            </div>
             
             <!--List Image-->
             <v-card-text class="pt-2" v-if="NewProduct.images.length > 0">
@@ -103,7 +108,9 @@
         </div>
 
         <!--Footer-->
-        <v-sheet class="d-flex justify-end pa-4">
+        <v-card-actions class="px-4">
+            <v-spacer></v-spacer>
+            
             <v-btn 
                 color="primary" dark
                 rounded elevation="0" 
@@ -113,13 +120,11 @@
             >
                 Next
             </v-btn>
-        </v-sheet>
+        </v-card-actions>
     </v-card>
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props: ['ErrorHintName'],
     data () {
@@ -144,7 +149,7 @@ export default {
             if(this.Companyes.length > 0) return false;
 
             try {
-                this.Companyes = await this.$axios.$get(LaptopAPI.admin.GetListCompanyInfo);
+                this.Companyes = await this.$axios.$get(this.$api.laptop.admin.GetListCompanyInfo);
             }
             catch(e){
                 this.Companyes = [];

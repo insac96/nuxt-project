@@ -3,19 +3,21 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
+        <v-sheet color="heading" class="Sticky_Top px-4 py-2">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Bình Luận</span>
         </v-sheet>
 
-        <!--Body-->
+        <!--Fetch Pendding-->
         <v-card-text v-if="$fetchState.pending" flat tile color="card">
             <v-skeleton-loader type="list-item-avatar-two-line" v-for="i in 3" :key="i"></v-skeleton-loader>
         </v-card-text>
 
+        <!--Fetch Error-->
         <v-card-text v-else-if="$fetchState.error" flat tile>
             <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
-
+        
+        <!--Fetch Done-->
         <div v-else>
             <v-card-text class="py-6 pb-1" v-if="Comments.length > 0">
                 <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-4">
@@ -90,8 +92,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -134,7 +134,7 @@ export default {
 
     async fetch () {
         try {
-            let Get = await this.$axios.$post(LaptopAPI.guest.GetListCommentByProductID, {
+            let Get = await this.$axios.$post(this.$api.laptop.guest.GetListCommentByProductID, {
                 product: this.product._id
             });
 
@@ -157,7 +157,7 @@ export default {
             this.Loading.add = true;
 
             try {
-                let NewComment = await this.$axios.$post(LaptopAPI.guest.AddComment, {
+                let NewComment = await this.$axios.$post(this.$api.laptop.guest.AddComment, {
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,
                     product: this.product._id,
@@ -193,7 +193,7 @@ export default {
             this.Loading.more = true;
 
             try {
-                let MoreComment = await this.$axios.$post(LaptopAPI.guest.MoreComment, {
+                let MoreComment = await this.$axios.$post(this.$api.laptop.guest.MoreComment, {
                     product: this.product._id,
                     skip: this.Comments.length
                 });

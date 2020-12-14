@@ -5,6 +5,7 @@
         <v-tab>Mặc Định</v-tab>
         <v-tab>Nâng Cấp</v-tab>
 
+        <!--Tabs Items-->
         <v-tabs-items v-model="Tab">
             <!--Default-->
             <v-tab-item>

@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
 import ConfigurationSelectSetting from '@/setting/laptop/configuration';
 
 export default {
@@ -124,7 +123,7 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditDefaultConfiguration, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditDefaultConfiguration, {
                     _id: this.ID,
                     default: this.ConfigurationDefault
                 });

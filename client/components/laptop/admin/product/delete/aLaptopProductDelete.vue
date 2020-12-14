@@ -8,13 +8,13 @@
 
         <!--Body-->
         <v-card-text>
-            <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 text-subtitle-1">
+            <v-alert type="info" outlined color="delete" prominent class="rounded-xl">
                 Chức năng này sẽ xóa sản phẩm <strong>{{product.name}}</strong> và tất cả các cấu hình liên quan. Bạn có chắc chắn muốn xóa.
             </v-alert>
         </v-card-text>
 
         <!--Footer-->
-        <v-card-actions class="px-6 py-4">
+        <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
             
             <v-btn 
@@ -40,23 +40,14 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['product'],
 
     data () {
         return {
-            CloneVariant: JSON.parse(JSON.stringify(this.variant)),
             Loading: {
                 delete: false
             }
-        }
-    },
-
-    watch: {
-        variant (newVal) {
-            this.CloneVariant = JSON.parse(JSON.stringify(newVal))
         }
     },
 
@@ -65,7 +56,7 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteProduct, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteProduct, {
                     _id: this.product._id
                 });
 

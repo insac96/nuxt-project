@@ -1,163 +1,171 @@
 <template>
     <!--Laptop Company Index-->
 
-    <v-card tile flat>
-        <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center">
-            <div>
-                <v-card-title class="font-weight-bold text-h4 primary--text">Companyes</v-card-title>
-                <v-card-subtitle>Danh sách các hãng sản xuất</v-card-subtitle>
+    <div>
+        <!--Main-->
+        <v-card tile flat>
+            <!--Header-->
+            <div class="d-flex justify-space-between align-center">
+                <!--Header Left-->
+                <div>
+                    <v-card-title class="font-weight-bold text-h4 primary--text">Companyes</v-card-title>
+                    <v-card-subtitle>Danh sách các hãng sản xuất</v-card-subtitle>
+                </div>
+
+                <v-spacer></v-spacer>
+
+                <!--Header Right-->
+                <v-btn 
+                    color="primary" dark rounded 
+                    elevation="0" large class="mr-4" 
+                    @click="ShowCompanyDialogCreate"
+                >
+                    <v-icon>add</v-icon>
+                    Thêm Mới
+                </v-btn>
             </div>
 
-            <v-btn 
-                color="primary" dark rounded 
-                elevation="0" large class="mr-4" 
-                @click="ShowCompanyDialogCreate"
-            >
-                <v-icon>add</v-icon>
-                Thêm Mới
-            </v-btn>
-        </v-sheet>
+            <!--Body-->
+            <div>
+                <!--Table-->
+                <v-simple-table class="Table" fixed-header>
+                    <template v-slot:default>
+                        <!--Table Header-->
+                        <thead>
+                            <tr>
+                                <th width="100" >Logo</th>
+                                <th >Tên Hãng</th>
+                                <th class="text-center" width="150">Sản Phẩm</th>
+                                <th class="text-right" width="150" >Chức Năng</th>
+                            </tr>
+                        </thead>
 
-        <!--Body-->
-        <v-sheet>
-            <!--Table-->
-            <v-simple-table class="Table" fixed-header>
-                <template v-slot:default>
-                    <!--Table Header-->
-                    <thead>
-                        <tr>
-                            <th width="100" >Logo</th>
-                            <th >Tên Hãng</th>
-                            <th class="text-center" width="150">Sản Phẩm</th>
-                            <th class="text-right" width="150" >Chức Năng</th>
-                        </tr>
-                    </thead>
+                        <!--Table Body-->
+                        <tbody>
+                            <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany">
+                                <!-- Company Logo -->
+                                <td>
+                                    <v-card flat width="100">
+                                        <v-img :src="company.logo" :alt="company.name" max-width="100%">
+                                        </v-img>
+                                    </v-card>
+                                </td>
 
-                    <!--Table Body-->
-                    <tbody>
-                        <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany">
-                            <!-- Company Logo -->
-                            <td>
-                                <v-card flat width="100">
-                                    <v-img :src="company.logo" :alt="company.name" max-width="100%">
-                                    </v-img>
-                                </v-card>
-                            </td>
+                                <!-- Company Name -->
+                                <td class="py-5">
+                                    <span class="text-uppercase font-weight-bold text-h6 primary--text">{{ company.name }}</span>
 
-                            <!-- Company Name -->
-                            <td class="py-5">
-                                <span class="text-uppercase font-weight-bold text-h6 primary--text">{{ company.name }}</span>
+                                    <!-- Trademark -->
+                                    <div class="mt-1">
+                                        <v-chip 
+                                            v-for="(trademark, indexTrademark) in company.trademarks" 
+                                            :key="indexTrademark" 
+                                            label class="mr-1 my-1"
+                                            @click="ShowTrademarkDialogEdit(trademark, company, indexTrademark)"
+                                        >
+                                            {{ trademark.name }}
+                                        </v-chip>
 
-                                <!-- Trademark -->
-                                <div class="mt-1">
-                                    <v-chip 
-                                        v-for="(trademark, indexTrademark) in company.trademarks" 
-                                        :key="indexTrademark" 
-                                        label class="mr-1 my-1"
-                                        @click="ShowTrademarkDialogEdit(trademark, company, indexTrademark)"
+                                        <v-chip label class="mr-1 my-1" color="teal" dark @click="ShowTrademarkDialogCreate(company)">
+                                            <v-icon small>add</v-icon>
+                                        </v-chip>
+                                    </div>
+                                </td>
+                                
+                                <!-- Company Product Count -->
+                                <td class="text-center"><v-chip>{{ company.productCount }}</v-chip></td>
+
+                                <!-- Function -->
+                                <td class="text-right">
+                                    <v-btn 
+                                        color="info" dark fab small elevation="0" 
+                                        @click="ShowCompanyDialogEdit(company)"
                                     >
-                                        {{ trademark.name }}
-                                    </v-chip>
+                                        <v-icon>edit</v-icon>
+                                    </v-btn>
 
-                                    <v-chip label class="mr-1 my-1" color="teal" dark @click="ShowTrademarkDialogCreate(company)">
-                                        <v-icon small>add</v-icon>
-                                    </v-chip>
-                                </div>
-                            </td>
-                            
-                            <!-- Company Product Count -->
-                            <td class="text-center">{{ company.productCount }}</td>
+                                    <v-btn
+                                        color="error" dark fab small elevation="0"  
+                                        @click="ShowCompanyDialogDelete(company, indexCompany)"
+                                    >
+                                        <v-icon>delete</v-icon>
+                                    </v-btn>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
 
-                            <!-- Function -->
-                            <td class="text-right">
-                                <v-btn 
-                                    color="info" dark fab small elevation="0" 
-                                    @click="ShowCompanyDialogEdit(company)"
-                                >
-                                    <v-icon>edit</v-icon>
-                                </v-btn>
+                <!--If List Companyes Empty-->
+                <v-alert
+                    v-if="Companyes.length < 1" 
+                    class="mb-0" tile
+                >
+                    Không có công ty nào hiển thị
+                </v-alert>
 
-                                <v-btn
-                                    color="error" dark fab small elevation="0"  
-                                    @click="ShowCompanyDialogDelete(company, indexCompany)"
-                                >
-                                    <v-icon>delete</v-icon>
-                                </v-btn>
-                            </td>
-                        </tr>
-                    </tbody>
-                </template>
-            </v-simple-table>
+                <!--Body Footer-->
+                <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
+                    <!--Count-->
+                    <v-chip> 
+                        <span>{{Companyes.length}} / {{Companyes.length}}</span>
+                    </v-chip>
+                </v-sheet>
+            </div>
+        </v-card>
 
-            <!--If List Companyes Empty-->
-            <v-alert
-                v-if="Companyes.length < 1" 
-                class="mb-0" tile
-            >
-                Không có công ty nào hiển thị
-            </v-alert>
+        <!--Dialog-->
+        <div>
+            <!--Dialog Create Company-->
+            <v-dialog v-model="CompanyDialog.create" persistent max-width="450">
+                <ALaptopCompanyCreate 
+                    @cancel="CompanyDialog.create = false" 
+                    :companyes="Companyes"
+                ></ALaptopCompanyCreate>
+            </v-dialog>
 
-            <!--Body Footer-->
-            <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
-                <!--Count-->
-                <v-chip> 
-                    <span>{{Companyes.length}} / {{Companyes.length}}</span>
-                </v-chip>
-            </v-sheet>
-        </v-sheet>
+            <!--Dialog Edit Company-->
+            <v-dialog v-model="CompanyDialog.edit.type" persistent max-width="450">
+                <ALaptopCompanyEdit 
+                    @cancel="CompanyDialog.edit.type = false" 
+                    :company="CompanyDialog.edit.select"
+                ></ALaptopCompanyEdit>
+            </v-dialog>
 
-        <!--Dialog Create Company-->
-        <v-dialog v-model="CompanyDialog.create" persistent max-width="450">
-            <ALaptopCompanyCreate 
-                @cancel="CompanyDialog.create = false" 
-                :companyes="Companyes"
-            ></ALaptopCompanyCreate>
-        </v-dialog>
+            <!--Dialog Delete Company-->
+            <v-dialog v-model="CompanyDialog.delete.type" persistent max-width="450">
+                <ALaptopCompanyDelete 
+                    @delete="$delete(Companyes, CompanyDialog.delete.index)"
+                    @cancel="CompanyDialog.delete.type = false" 
+                    :company="CompanyDialog.delete.select"
+                ></ALaptopCompanyDelete>
+            </v-dialog>
 
-        <!--Dialog Edit Company-->
-        <v-dialog v-model="CompanyDialog.edit.type" persistent max-width="450">
-            <ALaptopCompanyEdit 
-                @cancel="CompanyDialog.edit.type = false" 
-                :company="CompanyDialog.edit.select"
-            ></ALaptopCompanyEdit>
-        </v-dialog>
+            <!--Dialog Create Trademark-->
+            <v-dialog v-model="TrademarkDialog.create.type" persistent max-width="450">
+                <ALaptopTrademarkCreate 
+                    @cancel="TrademarkDialog.create.type = false" 
+                    :company="TrademarkDialog.create.company"
+                ></ALaptopTrademarkCreate>
+            </v-dialog>
 
-        <!--Dialog Delete Company-->
-        <v-dialog v-model="CompanyDialog.delete.type" persistent max-width="450">
-            <ALaptopCompanyDelete 
-                @delete="$delete(Companyes, CompanyDialog.delete.index)"
-                @cancel="CompanyDialog.delete.type = false" 
-                :company="CompanyDialog.delete.select"
-            ></ALaptopCompanyDelete>
-        </v-dialog>
-
-        <!--Dialog Create Trademark-->
-        <v-dialog v-model="TrademarkDialog.create.type" persistent max-width="450">
-            <ALaptopTrademarkCreate 
-                @cancel="TrademarkDialog.create.type = false" 
-                :company="TrademarkDialog.create.company"
-            ></ALaptopTrademarkCreate>
-        </v-dialog>
-
-        <!--Dialog Edit Trademark-->
-        <v-dialog v-model="TrademarkDialog.edit.type" persistent max-width="450">
-            <ALaptopTrademarkEdit 
-                @delete="$delete(TrademarkDialog.edit.company.trademarks, TrademarkDialog.edit.index)"
-                @cancel="TrademarkDialog.edit.type = false" 
-                :trademark="TrademarkDialog.edit.select"
-            ></ALaptopTrademarkEdit>
-        </v-dialog>
-    </v-card>
+            <!--Dialog Edit Trademark-->
+            <v-dialog v-model="TrademarkDialog.edit.type" persistent max-width="450">
+                <ALaptopTrademarkEdit 
+                    @delete="$delete(TrademarkDialog.edit.company.trademarks, TrademarkDialog.edit.index)"
+                    @cancel="TrademarkDialog.edit.type = false" 
+                    :trademark="TrademarkDialog.edit.select"
+                ></ALaptopTrademarkEdit>
+            </v-dialog>
+        </div>
+    </div>
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {    
-    async asyncData({$axios}){
+    async asyncData({$axios, $api}){
         try {
-            let Companyes = await $axios.$get(LaptopAPI.admin.GetListCompany);
+            let Companyes = await $axios.$get($api.laptop.admin.GetListCompany);
 
             return {
                 Companyes: Companyes

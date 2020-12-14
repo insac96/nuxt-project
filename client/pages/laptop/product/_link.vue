@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     scrollToTop: true,
 
@@ -62,7 +60,7 @@ export default {
 
     async fetch(){
         try {
-            let Product = await this.$axios.$post(LaptopAPI.guest.GetProductByLink, {
+            let Product = await this.$axios.$post(this.$api.laptop.guest.GetProductByLink, {
                 link: this.$route.params.link
             });
 

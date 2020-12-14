@@ -73,6 +73,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
             <v-spacer></v-spacer>
+
             <v-btn 
                 rounded elevation="0" large 
                 :disabled="Loading.create" 
@@ -95,8 +96,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['variants'],
 
@@ -132,7 +131,7 @@ export default {
                     New.code = this.NewVariantColor.code;
                     New.image = this.NewVariantColor.image;
 
-                    let NewVariantColor = await this.$axios.$post(LaptopAPI.admin.CreateVariantColor, New);
+                    let NewVariantColor = await this.$axios.$post(this.$api.laptop.admin.CreateVariantColor, New);
 
                     variant.colors.push(NewVariantColor);
                 };

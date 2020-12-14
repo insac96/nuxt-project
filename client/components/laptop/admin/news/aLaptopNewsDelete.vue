@@ -1,5 +1,5 @@
 <template>
-    <!--a_laptop_company_delete-->
+    <!--a_laptop_news_delete-->
 
     <v-card>
         <!--Header-->
@@ -8,7 +8,7 @@
 
         <!--Body-->
         <v-card-text>
-            <v-alert outlined tile border="right" type="info" color="delete" prominent class="ma-0 text-subtitle-1">
+            <v-alert type="info" outlined color="delete" prominent class="rounded-xl">
                 Chức năng này sẽ xóa tin tức <strong>{{news.title}}</strong>. Bạn có chắc chắn muốn xóa.
             </v-alert>
         </v-card-text>
@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     props : ['news'],
 
@@ -56,7 +54,7 @@ export default {
             this.Loading.delete = true;
             
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteNews, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteNews, {
                     _id: this.news._id
                 });
 

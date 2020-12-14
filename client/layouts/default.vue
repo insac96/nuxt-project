@@ -1,7 +1,11 @@
 <template>
+    <!--Layout Default-->
+
     <v-app>
+        <!--Header-->
         <GLayoutHeader></GLayoutHeader>
 
+        <!--Main-->
         <v-main>
             <v-row no-gutters justify="center">
                 <v-container class="Screen pa-0">
@@ -9,7 +13,8 @@
                 </v-container>
             </v-row>
         </v-main>
-
+        
+        <!--Cart Button-->
         <client-only>
             <GLaptopCart></GLaptopCart>
         </client-only>

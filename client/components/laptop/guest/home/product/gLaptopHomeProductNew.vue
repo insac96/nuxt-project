@@ -3,9 +3,13 @@
 
     <v-card flat tile  color="transparent">
         <!--Header-->
-        <v-sheet class="d-flex justify-space-between align-center Sticky_Top py-3 px-4 px-md-0" color="background">
+        <v-sheet class="d-flex align-center Sticky_Top py-3 px-4 px-md-0" color="background">
+            <!--Header Left-->
             <span class="text-h5 text-md-h4 secondary--text">Hàng Mới Về</span>
 
+            <v-spacer></v-spacer>
+
+            <!--Header Right-->
             <div v-if="variants.length > 0">
                 <v-btn
                     class="BoxShadow"
@@ -27,7 +31,7 @@
             </div>
         </v-sheet>
 
-        <!--Body-->
+        <!--Fetch Pendding-->
         <v-card-text v-if="$fetchState.pending" class="px-4 px-md-0">
             <v-row dense>
                 <v-col cols="6" sm="3" class="pa-1 pa-md-2" v-for="i in 4" :key="i">
@@ -36,10 +40,12 @@
             </v-row>
         </v-card-text>
 
+        <!--Fetch Error-->
         <v-card-text v-else-if="$fetchState.error" class="px-4 px-md-0">
             <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
 
+        <!--Fetch Done-->
         <v-card-text v-else class="px-4 px-md-0">
             <v-alert type="info" color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
 
@@ -132,8 +138,6 @@
 </template>
 
 <script>
-import LaptopAPI from '~/setting/laptop/api';
-
 export default {
     data () {
         return {
@@ -146,7 +150,7 @@ export default {
 
     async fetch() {
         try {
-            let Get = await this.$axios.$post(LaptopAPI.guest.GetListVariantByStatus, {
+            let Get = await this.$axios.$post(this.$api.laptop.guest.GetListVariantByStatus, {
                 status: 'Mới Về',
                 skip: this.skip,
                 limit: this.limit

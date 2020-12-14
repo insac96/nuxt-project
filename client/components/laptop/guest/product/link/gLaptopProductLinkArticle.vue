@@ -3,7 +3,7 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet color="heading" class="px-4 py-2 Sticky_Top">
+        <v-sheet color="heading" class="Sticky_Top px-4 py-2">
             <span class="text-h6 text-sm-h5 grey--text text--darken-1 font-weight-bold">Đánh Giá Chi Tiết</span> 
         </v-sheet>
 

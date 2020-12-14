@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import LaptopAPI from '~/setting/laptop/api';
+
 export default {
     props : ['order'],
 
@@ -115,7 +117,7 @@ export default {
             this.Loading.search = true;
             
             try {
-                let Products = await this.$axios.$post(this.$api.laptop.admin.SearchProductForOrder, {
+                let Products = await this.$axios.$post(LaptopAPI.admin.SearchProductForOrder, {
                     key: this.NewSearch
                 });
 
@@ -133,7 +135,7 @@ export default {
             this.Loading.add = true;
             
             try {
-                let NewProductOrder = await this.$axios.$post(this.$api.laptop.admin.AddProductOrder, {
+                let NewProductOrder = await this.$axios.$post(LaptopAPI.admin.AddProductOrder, {
                     order: this.order._id,
                     warehouseColor: warehouseColor._id,
                     whenOrder: {
@@ -144,9 +146,9 @@ export default {
                     }
                 });
 
-                this.Update(NewProductOrder);
-
                 this.Loading.add = false;
+
+                this.Update(NewProductOrder);
             }
             catch(e){
                 console.log(e)

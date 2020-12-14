@@ -76,8 +76,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -104,7 +102,7 @@ export default {
             if(this.Companyes.length > 0) return false;
 
             try {
-                let Companyes = await this.$axios.$get(LaptopAPI.admin.GetListCompanyInfo);
+                let Companyes = await this.$axios.$get(this.$api.laptop.admin.GetListCompanyInfo);
 
                 this.Companyes = Companyes;
                 this.CompanySelect = this.Companyes.find(i => i.id == this.product.company._id);
@@ -124,7 +122,7 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditInformationProduct, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditInformationProduct, {
                     _id: this.product._id,
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,

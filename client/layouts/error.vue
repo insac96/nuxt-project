@@ -1,4 +1,6 @@
 <template>
+    <!--Layout Error-->
+    
     <v-container :class="`Error fill-height`">
         <v-row align="center" justify="center">
             <v-col cols="12" class="text-center px-6 px-sm-0">

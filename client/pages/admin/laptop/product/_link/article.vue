@@ -1,4 +1,6 @@
 <template>
+    <!--Laptop Product Link Article-->
+
     <v-card tile flat>
         <!--Header-->
         <v-card-title class="font-weight-bold text-h4 primary--text">Article</v-card-title>
@@ -12,8 +14,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -45,7 +45,7 @@ export default {
             try {
                 this.NewArticle.content = this.Content;
 
-                let NewArticle = await this.$axios.$post(LaptopAPI.admin.CreateNewArticle, this.NewArticle);
+                let NewArticle = await this.$axios.$post(this.$api.laptop.admin.CreateNewArticle, this.NewArticle);
 
                 this.product.article = NewArticle;
                 this.Loading = false;
@@ -59,7 +59,7 @@ export default {
             this.Loading = true;
             
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditArticle, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditArticle, {
                     _id: this.product.article._id,
                     content: this.Content
                 });

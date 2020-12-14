@@ -50,7 +50,7 @@
             <v-btn 
                 color="edit" dark
                 rounded elevation="0" 
-                class="mx-0" large
+                class="mx-0" 
                 :loading="Loading.edit" 
                 @click="EditStatusOrder"
             >

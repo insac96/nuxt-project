@@ -1,39 +1,39 @@
 <template>
-    <div>
-        <v-list nav>
-            <div v-for="item in items" :key="item.title">
-                <v-list-item v-if="!item.child" :to="item.path" color="primary" class="mb-2">
+    <!--a-layout-nav-left-->
+
+    <v-list nav>
+        <div v-for="item in items" :key="item.title">
+            <v-list-item v-if="!item.child" :to="item.path" color="primary" class="mb-2">
+                <v-list-item-icon>
+                    <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-title class="font-weight-bold">{{item.title}}</v-list-item-title>
+            </v-list-item>
+
+            <v-list-group
+                v-else
+                :prepend-icon="item.icon"
+                color="primary"
+                no-action
+                class="mb-2"
+            >
+                <template v-slot:activator>
+                    <v-list-item-title class="font-weight-bold">{{item.title}}</v-list-item-title>
+                </template>
+
+                <v-list-item v-for="child in item.child" :key="child.title" :to="child.path" class="pl-10 mb-2">
                     <v-list-item-icon>
-                        <v-icon v-text="item.icon"></v-icon>
+                        <v-icon>{{ child.icon }}</v-icon>
                     </v-list-item-icon>
 
-                    <v-list-item-title class="font-weight-bold">{{item.title}}</v-list-item-title>
+                    <v-list-item-content>
+                        <v-list-item-title class="font-weight-medium">{{ child.title }}</v-list-item-title>
+                    </v-list-item-content>
                 </v-list-item>
-
-                <v-list-group
-                    v-else
-                    :prepend-icon="item.icon"
-                    color="primary"
-                    no-action
-                    class="mb-2"
-                >
-                    <template v-slot:activator>
-                        <v-list-item-title class="font-weight-bold">{{item.title}}</v-list-item-title>
-                    </template>
-
-                    <v-list-item v-for="child in item.child" :key="child.title" :to="child.path" class="pl-10 mb-2">
-                        <v-list-item-icon>
-                            <v-icon>{{ child.icon }}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title class="font-weight-medium">{{ child.title }}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list-group>
-            </div>
-        </v-list>
-    </div>
+            </v-list-group>
+        </div>
+    </v-list>
 </template>
 
 <script>
@@ -51,7 +51,6 @@ export default {
                         { title: 'Giữ Hàng', icon: 'store', path: '/admin/order/preorder' }
                     ]
                 },
-                //{ title: 'Bình Luận', icon: 'chat', path: '/admin/comments' },
                 {
                     title: 'Laptop', icon: 'laptop',
                     child: [
@@ -60,8 +59,7 @@ export default {
                         { title: 'Sản Phẩm', icon: 'laptop', path: '/admin/laptop/product'},
                     ]
                 },
-                //{ title: 'Phụ Kiện', icon: 'games', path: '/admin/accessories' },
-                { title: 'Thành Viên', icon: 'supervisor_account', path: '/admin/user' },
+                { title: 'Thành Viên', icon: 'supervisor_account', path: '/admin/user' }
             ]
         }
     }

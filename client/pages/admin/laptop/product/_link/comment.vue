@@ -30,7 +30,7 @@
                         <span>{{$dayjs(comment.create).fromNow()}}</span>
 
                         <v-btn text elevation="0" x-small class="ml-1" color="primary" @click="comment.showInputReply = true">Reply</v-btn>
-                        <v-btn text elevation="0" x-small class="ml-1" color="delete" :loading="Loading.delete" @click="DeleteComment(comment, indexComment)">Delete</v-btn>
+                        <v-btn text elevation="0" x-small class="ml-1" color="delete" :disabled="Loading.delete" @click="DeleteComment(comment, indexComment)">Delete</v-btn>
                     </div>
 
                     <!--Reply-->
@@ -65,8 +65,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -102,7 +100,7 @@ export default {
             this.Loading.add = true;
 
             try {
-                let NewComment = await this.$axios.$post(LaptopAPI.admin.AddComment, {
+                let NewComment = await this.$axios.$post(this.$api.laptop.admin.AddComment, {
                     company: this.product.company._id,
                     trademark: this.product.trademark._id,
                     product: this.product._id,
@@ -136,7 +134,7 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteComment, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteComment, {
                     _id: comment._id
                 });
 

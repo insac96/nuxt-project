@@ -10,26 +10,26 @@
         <v-card-text class="pb-0 pt-3">
             <!--CPU-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">CPU</span>
+                <span class="font-weight-bold text-subtitle-1">CPU</span>
                 <v-switch v-model="ConfigurationUpgrade.cpu" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--GPU-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">GPU</span>
+                <span class="font-weight-bold text-subtitle-1">GPU</span>
                 <v-switch v-model="ConfigurationUpgrade.gpu" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Wifi-->
             <v-sheet class="d-flex justify-space-between">
-                <span class="font-weight-bold">Wifi</span>
+                <span class="font-weight-bold text-subtitle-1">Wifi</span>
                 <v-switch v-model="ConfigurationUpgrade.wifi" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
             </v-sheet>
 
             <!--Ram-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
-                    <span class="font-weight-bold">RAM</span>
+                    <span class="font-weight-bold text-subtitle-1">RAM</span>
                     <v-switch v-model="ConfigurationUpgrade.ram.type" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
                 </div>
                 
@@ -63,7 +63,7 @@
             <!--Hard Drive-->
             <v-sheet>
                 <div class="d-flex justify-space-between">
-                    <span class="font-weight-bold">Hard Drive</span>
+                    <span class="font-weight-bold text-subtitle-1">Hard Drive</span>
                     <v-switch v-model="ConfigurationUpgrade.harddrive.type" inset color="primary" class="ma-0 pa-0" :disabled="Loading.edit"></v-switch>
                 </div>
                 
@@ -94,7 +94,6 @@
             </v-sheet>   
         </v-card-text>
 
-
         <!--Footer-->
         <v-card-actions class="pa-4">
             <v-spacer></v-spacer>
@@ -112,8 +111,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['product'],
 
@@ -132,7 +129,7 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditUpgradeConfiguration, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditUpgradeConfiguration, {
                     _id: this.ID,
                     upgrade: this.ConfigurationUpgrade
                 });

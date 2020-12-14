@@ -1,5 +1,8 @@
 <template>
+    <!--Layout Admin-->
+
     <v-app>
+        <!--Navigation-->
         <v-navigation-drawer
             app width="300" color="nav"
             v-model="Drawer.left" clipped fixed
@@ -7,8 +10,10 @@
             <ALayoutNavLeft :drawer="Drawer.left"></ALayoutNavLeft>
         </v-navigation-drawer>
 
+        <!--Header-->
         <ALayoutHeader @toggle-nav-left="ToggleNavLeft"></ALayoutHeader>
 
+        <!--Main-->
         <v-main>
             <v-row no-gutters justify="center">
                 <div class="Screen--lg">

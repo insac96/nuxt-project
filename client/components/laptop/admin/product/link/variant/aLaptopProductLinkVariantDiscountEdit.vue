@@ -62,8 +62,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['variant'],
 
@@ -93,19 +91,24 @@ export default {
             };
     
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantDiscount, {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditVariantDiscount, {
                     _id: this.variant._id,
                     discount: this.CloneVariant.discount
                 });
 
-                Object.assign(this.variant.discount, this.CloneVariant.discount)
-                this.Loading.edit = false;
+                this.Update();
 
-                this.Cancel();
+                this.Loading.edit = false;
             }
             catch(e){
                 this.Loading.edit = false;
             } 
+        },
+
+        Update () {
+            Object.assign(this.variant.discount, this.CloneVariant.discount)
+
+            this.Cancel();
         },
 
         Cancel () {

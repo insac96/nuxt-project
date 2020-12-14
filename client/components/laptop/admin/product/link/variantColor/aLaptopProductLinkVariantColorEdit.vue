@@ -105,8 +105,6 @@
 </template>
 
 <script>
-import LaptopAPI from '@/setting/laptop/api';
-
 export default {
     props: ['color'],
 
@@ -139,7 +137,7 @@ export default {
             this.Loading.edit = true;
 
             try {
-                let Edit = await this.$axios.$post(LaptopAPI.admin.EditVariantColor, this.CloneColor);
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.EditVariantColor, this.CloneColor);
 
                 Object.assign(this.color, this.CloneColor);
                 this.Loading.edit = false;
@@ -153,7 +151,7 @@ export default {
             this.Loading.delete = true;
 
             try {
-                let Delete = await this.$axios.$post(LaptopAPI.admin.DeleteVariantColor, {
+                let Delete = await this.$axios.$post(this.$api.laptop.admin.DeleteVariantColor, {
                     _id: this.color._id
                 });
 
