@@ -158,7 +158,7 @@
 
                                     <div v-else>
                                         <div v-for="(warehouse, indexWarehouse) in variant.warehouses" :key="indexWarehouse">
-                                            <v-btn color="create" rounded elevation="0" dark class="mb-1" @click="ShowVariantDialogWareHouseInformarion(warehouse, variant)">
+                                            <v-btn color="create" rounded elevation="0" dark class="mb-1" @click="ShowVariantDialogWareHouseInformarion(warehouse, indexWarehouse, variant)">
                                                 {{$dayjs(warehouse.import.date).format('DD/MM/YYYY')}}
                                             </v-btn>
                                         </div>
@@ -250,16 +250,17 @@
             </v-dialog>
 
             <!--Dialog Import WareHouse-->
-            <v-dialog v-model="VariantWareHouseDialog.setting.type" persistent max-width="600">
+            <v-dialog v-model="VariantWareHouseDialog.import.type" persistent max-width="600">
                 <ALaptopProductLinkWareHouseImport
-                    @cancel="VariantWareHouseDialog.setting.type = false" 
-                    :variant="VariantWareHouseDialog.setting.select"
+                    @cancel="VariantWareHouseDialog.import.type = false" 
+                    :variant="VariantWareHouseDialog.import.select"
                 ></ALaptopProductLinkWareHouseImport>
             </v-dialog>
 
             <!--Dialog WareHouse Information-->
             <v-dialog v-model="VariantWareHouseDialog.info.type" persistent max-width="600">
                 <ALaptopProductLinkWareHouseInformation
+                    @delete="$delete(VariantWareHouseDialog.info.variant.warehouses, VariantWareHouseDialog.info.indexWarehouse)"
                     @cancel="VariantWareHouseDialog.info.type = false" 
                     :variant="VariantWareHouseDialog.info.variant"
                     :warehouse="VariantWareHouseDialog.info.select"
@@ -307,13 +308,14 @@ export default {
                 }
             },
             VariantWareHouseDialog: {
-                setting: {
+                import: {
                     type: false,
                     select: null,
                 },
                 info: {
                     type: false,
                     select: null,
+                    indexWarehouse: null,
                     variant: null
                 }
             },
@@ -358,13 +360,14 @@ export default {
 
         //Import WareHouse
         ShowVariantDialogImportWareHouse (variant) {
-            this.VariantWareHouseDialog.setting.select = variant;
-            this.VariantWareHouseDialog.setting.type = true;
+            this.VariantWareHouseDialog.import.select = variant;
+            this.VariantWareHouseDialog.import.type = true;
         },
 
         //WareHouse Informartion
-        ShowVariantDialogWareHouseInformarion (warehouse, variant) {
+        ShowVariantDialogWareHouseInformarion (warehouse, indexWarehouse, variant) {
             this.VariantWareHouseDialog.info.variant = variant;
+            this.VariantWareHouseDialog.info.indexWarehouse = indexWarehouse;
             this.VariantWareHouseDialog.info.select = warehouse;
             this.VariantWareHouseDialog.info.type = true;
         },

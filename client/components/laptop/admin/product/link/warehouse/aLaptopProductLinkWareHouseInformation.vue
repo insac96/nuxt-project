@@ -182,6 +182,10 @@ export default {
                 });
 
                 this.Loading.delete = false;
+
+                this.$emit('delete');
+
+                this.Cancel();
             }
             catch (e) {
                 this.Loading.delete = false;
