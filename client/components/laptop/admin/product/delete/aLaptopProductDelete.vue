@@ -9,7 +9,7 @@
         <!--Body-->
         <v-card-text>
             <v-alert type="info" outlined color="delete" prominent class="rounded-xl">
-                Chức năng này sẽ xóa sản phẩm <strong>{{product.name}}</strong> và tất cả các cấu hình liên quan. Bạn có chắc chắn muốn xóa.
+                Chức năng này sẽ xóa sản phẩm <strong>{{product.name}}</strong> và bạn chỉ có thể xóa nếu sản phẩm chưa có biến thể.
             </v-alert>
         </v-card-text>
 

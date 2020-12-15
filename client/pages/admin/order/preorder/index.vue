@@ -82,7 +82,7 @@
 
                                     <v-btn 
                                         elevation="0" color="delete" small icon 
-                                        :disabled="order.done.type"
+                                        
                                         @click="ShowOrderDialogDelete(order, indexOrder)"
                                     >
                                         <v-icon>delete</v-icon>

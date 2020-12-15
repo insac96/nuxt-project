@@ -21,6 +21,9 @@
                 </div>
             </v-row>
         </v-main>
+
+        <!--Dialog Status-->
+        <PDialogStatus></PDialogStatus>
     </v-app>
 </template>
 

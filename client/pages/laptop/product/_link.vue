@@ -1,14 +1,14 @@
 <template>
     <!--Product Link-->
 
-    <div v-if="$fetchState.pending" class="pa-4 px-md-0">
+    <!--Fetch Pending-->
+    <div v-if="$fetchState.pending || $fetchState.error" class="pa-4 px-md-0">
         <v-skeleton-loader type="image, article"></v-skeleton-loader>
+
+        <v-alert v-if="$fetchState.error" type="error" class="BoxShadow mt-4"> {{$fetchState.error.message}} </v-alert>
     </div>
 
-    <div v-else-if="$fetchState.error" class="pa-4 px-md-0">
-        <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
-    </div>
-    
+    <!--Fetch Done-->
     <div class="BoxShadow pa-0" v-else>
         <!--Product Information-->
         <v-card tile flat>

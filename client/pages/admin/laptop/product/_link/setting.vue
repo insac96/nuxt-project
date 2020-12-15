@@ -42,7 +42,7 @@
             <!--Dialog Delete-->
             <v-dialog v-model="Dialog.delete" persistent max-width="450">
                 <ALaptopProductDelete 
-                    @delete="$route.push('/admin/laptop/product')"
+                    @delete="$router.push('/admin/laptop/product')"
                     @cancel="Dialog.delete = false" 
                     :product="product"
                 ></ALaptopProductDelete>

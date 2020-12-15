@@ -9,7 +9,7 @@
         <!--Body-->
         <v-card-text>
             <v-alert type="info" outlined color="delete" prominent class="rounded-xl">
-                Chức năng này sẽ xóa hãng sản xuất <strong>{{company.name}}</strong> và tất cả thương hiệu nhánh, sản phẩm liên quan. Bạn có chắc chắn muốn xóa.
+                Chức năng này sẽ xóa hãng sản xuất <strong>{{company.name}}</strong> và bạn chỉ có thể xóa nếu hãng sản xuất chưa có sản phẩm.
             </v-alert>
         </v-card-text>
 

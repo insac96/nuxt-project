@@ -38,7 +38,7 @@ export const Get = async (req, res, next) => {
 export const GetByID = async (req, res, next) => {
     let { _id } = req.body;
 
-    if(!_id ) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id ) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let News =  await NewsDB.findOne({'_id': _id});
@@ -46,6 +46,7 @@ export const GetByID = async (req, res, next) => {
         if(!News) throw 'News Data Not Found';
 
         res.send(News);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -56,7 +57,7 @@ export const GetByID = async (req, res, next) => {
 export const Create = async (req, res, next) => {
     let { title, image, content } = req.body;
 
-    if(!title) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!title) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     let link = StringPlugin.toConvert(title, '-');
 
@@ -81,6 +82,7 @@ export const Create = async (req, res, next) => {
         await NewNews.save();
 
         res.json(NewNews);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -91,12 +93,13 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         await NewsDB.deleteOne({'_id': _id});
 
         res.json(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -107,19 +110,20 @@ export const Delete = async (req, res, next) => {
 export const EditVisibility = async (req, res, next) => {
     let { _id, visibility } = req.body;
 
-    if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let News = await NewsDB
         .findById(_id)
         .select('_id');
 
-        if(!News) throw 'News Data Not Found';
+        if(!News) throw 'Tin tức không tồn tại';
 
         News.visibility = visibility;
         await News.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -130,19 +134,21 @@ export const EditVisibility = async (req, res, next) => {
 export const EditTop = async (req, res, next) => {
     let { _id, top } = req.body;
 
-    if(!_id || top == null || typeof(top) != 'boolean') return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || top == null || typeof(top) != 'boolean') return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let News = await NewsDB
         .findById(_id)
-        .select('_id');
+        .select('_id image');
 
-        if(!News) throw 'News Data Not Found';
+        if(!News) throw 'Tin tức không tồn tại';
+        if(!News.image) throw 'Vui lòng thêm hình ảnh cho tin tức';
 
         News.top = top;
         await News.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -153,7 +159,7 @@ export const EditTop = async (req, res, next) => {
 export const EditInformation = async (req, res, next) => {
     let { _id, title, image } = req.body;
 
-    if(!_id || !title ) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !title ) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     let link = StringPlugin.toConvert(title, '-');
 
@@ -162,7 +168,7 @@ export const EditInformation = async (req, res, next) => {
         .findById(_id)
         .select('_id link');
 
-        if(!News) throw 'News Data Not Found';
+        if(!News) throw 'Tin tức không tồn tại';
 
         if(link != News.link){
             let Get = await NewsDB
@@ -183,6 +189,7 @@ export const EditInformation = async (req, res, next) => {
         await News.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -193,20 +200,21 @@ export const EditInformation = async (req, res, next) => {
 export const EditContent = async (req, res, next) => {
     let { _id, content } = req.body;
 
-    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let News = await NewsDB
         .findById(_id)
         .select('_id');
 
-        if(!News) throw 'News Data Not Found';
+        if(!News) throw 'Tin tức không tồn tại';
 
         News.content = content;
 
         await News.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

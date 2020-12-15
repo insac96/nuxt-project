@@ -5,7 +5,7 @@ import ProductDB from '../../model/product';
 export const GetByLink = async (req, res, next) => {
     let { link } = req.body;
 
-    if(!link) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!link) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Product = await ProductDB
@@ -18,12 +18,8 @@ export const GetByLink = async (req, res, next) => {
             path: 'variants',
             populate: [
                 { 
-                    path: 'warehouse',
+                    path: 'warehouses',
                     select: 'import export',
-                    options: {
-                        sort: { 'import.date': 1 }
-                    },
-                    
                     populate: { 
                         path: 'colors',
                         select: 'import export',
@@ -37,9 +33,10 @@ export const GetByLink = async (req, res, next) => {
             ],
         });
 
-        if(!Product) return next(new ErrorHandler(404, 'Product Data Not Found'));
+        if(!Product) return next(new ErrorHandler(404, 'Sản Phẩm Không Tồn Tại'));
         
         res.json(Product);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

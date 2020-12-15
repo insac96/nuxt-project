@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const ProductOrderSchema = new Schema(
     {
+        warehouse: { type: Schema.Types.ObjectId, ref: 'LaptopWarehouse', required: true },
         warehouseColor: { type: Schema.Types.ObjectId, ref: 'LaptopWarehouseColor', required: true },
         order: { type: Schema.Types.ObjectId, ref: 'LaptopOrder', required: true },
         

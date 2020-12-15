@@ -89,6 +89,7 @@ Router.post('/admin/variant/color/delete', Authentic_Admin, Controller_Admin.Var
 //WareHouse - Admin
 Router.post('/admin/warehouse/import', Authentic_Admin, Controller_Admin.Warehouse.Import);
 Router.post('/admin/warehouse/export/price/edit', Authentic_Admin, Controller_Admin.Warehouse.EditExportPrice);
+Router.post('/admin/warehouse/delete', Authentic_Admin, Controller_Admin.Warehouse.Delete);
 
 //WareHouse Color - Admin
 Router.post('/admin/warehouse/color/create', Authentic_Admin, Controller_Admin.WarehouseColor.Create);

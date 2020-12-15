@@ -122,7 +122,7 @@
             <!--Dialog Delete-->
             <v-dialog v-model="Dialog.delete" persistent max-width="450">
                 <ALaptopNewsDelete 
-                    @delete="$route.push('/admin/laptop/news')"
+                    @delete="$router.push('/admin/laptop/news')"
                     @cancel="Dialog.delete = false" 
                     :news="News"
                 ></ALaptopNewsDelete>

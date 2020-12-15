@@ -124,7 +124,7 @@
                         <tbody>
                             <tr v-for="(product, indexProduct) in Products" :key="indexProduct">
                                 <!--1 - Company Name-->
-                                <td class="text-uppercase"><v-chip>{{ product.company ? product.company.name : 'Null' }}</v-chip></td>
+                                <td class="text-uppercase"><v-chip>{{ product.company.name }}</v-chip></td>
 
                                 <!--2 - Product Name-->
                                 <td>

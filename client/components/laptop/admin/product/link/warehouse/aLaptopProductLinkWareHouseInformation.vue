@@ -87,7 +87,17 @@
                     </v-form>
 
                     <!-- Button Action -->
-                    <v-sheet class="d-flex">
+                    <div class="d-flex">
+                        <v-btn 
+                            color="error" dark
+                            rounded elevation="0" large 
+                            @click="DeleteWarehouse"
+                            :disabled="Loading.edit"
+                            :loading="Loading.delete"
+                        >
+                            Xóa Kho
+                        </v-btn>
+
                         <v-spacer></v-spacer>
                         
                         <v-btn 
@@ -99,13 +109,14 @@
 
                         <v-btn 
                             color="info" dark
-                            rounded elevation="0" large 
-                            @click="EditExportPrice"
+                            rounded elevation="0" large
+                            :disabled="Loading.delete"
                             :loading="Loading.edit"
+                            @click="EditExportPrice"
                         >
                             Luu
                         </v-btn>
-                    </v-sheet>
+                    </div>
                 </v-tab-item>
             </v-tabs-items>
         </v-tabs>
@@ -121,7 +132,8 @@ export default {
             CloneWareHouse : JSON.parse(JSON.stringify(this.warehouse)),
             Validate: true,
             Loading: {
-                edit: false 
+                edit: false,
+                delete: false
             }
         }
     },
@@ -159,7 +171,25 @@ export default {
             }
         },
 
+        async DeleteWarehouse () {
+            if(!this.$refs.form.validate()) return false;
+
+            this.Loading.delete = true;
+
+            try {
+                let Edit = await this.$axios.$post(this.$api.laptop.admin.DeleteWarehouse, {
+                    _id: this.CloneWareHouse._id
+                });
+
+                this.Loading.delete = false;
+            }
+            catch (e) {
+                this.Loading.delete = false;
+            }
+        },
+
         Cancel () {
+            this.Tab = 0;
             this.$emit('cancel');
         }
     }

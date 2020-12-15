@@ -11,6 +11,7 @@ export const GetListByTop = async (req, res, next) => {
         });
 
         res.json(ListNews);
+        res.end();
     }
     catch (e) {
         next(new ErrorHandler(500, e.toString()));
@@ -20,7 +21,7 @@ export const GetListByTop = async (req, res, next) => {
 export const GetByLink = async (req, res, next) => {
     let { link } = req.body;
 
-    if(!link) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!link) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let News = await NewsDB
@@ -29,6 +30,7 @@ export const GetByLink = async (req, res, next) => {
         if(!News) return next(new ErrorHandler(404, 'News Data Not Found'));
         
         res.json(News);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

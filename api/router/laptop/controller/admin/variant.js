@@ -1,17 +1,23 @@
 //FOR LAPTOP - ADMIN
 
+import ProductDB from '../../model/product';
 import VariantDB from '../../model/variant';
 import VariantColorDB from '../../model/variantColor';
 import WarehouseDB from '../../model/warehouse';
-import WarehouseColorDB from '../../model/warehouseColor';
 
 //Create a New Variant
 export const Create = async (req, res, next) => {
     let { company, trademark, product, code, screen, cpu, ram, gpu, harddrive } = req.body;
 
-    if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        let Product = await ProductDB
+        .findById(product)
+        .select('_id');
+
+        if(!Product) throw 'Sản phẩm gốc không tồn tại';
+
         let Get = await VariantDB
         .findOne({'code': code})
         .select('_id');
@@ -19,7 +25,7 @@ export const Create = async (req, res, next) => {
         if(Get) return res.json({
             error: true,
             status: 'code',
-            message: 'Mã CODE đã tồn tại'
+            message: 'Mã biến thể đã tồn tại'
         });
 
         let NewVariant = new VariantDB({
@@ -37,6 +43,7 @@ export const Create = async (req, res, next) => {
         await NewVariant.save();
 
         res.json(NewVariant);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -47,15 +54,17 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
-        await VariantDB.deleteOne({ '_id': req.body._id });
-        await VariantColorDB.deleteMany({ 'variant': req.body._id });
-        await WarehouseDB.deleteMany({ 'variant': req.body._id });
-        await WarehouseColorDB.deleteMany({ 'variant': req.body._id });
+        let CountWarehouseOfVariant = await WarehouseDB.countDocuments({'variant': _id});
+        if(CountWarehouseOfVariant > 0) throw 'Không thể xóa vì biến thể đã được nhập kho';
+
+        await VariantDB.deleteOne({ '_id': _id });
+        await VariantColorDB.deleteMany({ 'variant': _id });
 
         res.json(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -66,14 +75,14 @@ export const Delete = async (req, res, next) => {
 export const Edit = async (req, res, next) => {
     let { _id, code, screen, cpu, ram, gpu, harddrive } = req.body;
 
-    if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !code || !screen || !cpu || !ram || !gpu || !harddrive) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
     
     try {
         let Variant = await VariantDB
         .findById(_id)
         .select('_id code');
 
-        if(!Variant) throw 'Variant Data Not Found';
+        if(!Variant) throw 'Biến thể không tồn tại';
 
         if(Variant.code != code){
             let Get = await VariantDB
@@ -83,7 +92,7 @@ export const Edit = async (req, res, next) => {
             if(Get) return res.json({
                 error: true,
                 status: 'code',
-                message: 'Mã CODE đã tồn tại'
+                message: 'Mã biến thể đã tồn tại'
             });
         }
 
@@ -97,6 +106,7 @@ export const Edit = async (req, res, next) => {
         await Variant.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -107,14 +117,14 @@ export const Edit = async (req, res, next) => {
 export const EditDiscount = async (req, res, next) => {
     let { _id, discount } = req.body;
 
-    if(!_id || !discount) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !discount) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Variant = await VariantDB
         .findById(_id)
         .select('_id');
 
-        if(!Variant) throw 'Variant Data Not Found';
+        if(!Variant) throw 'Biến thể không tồn tại';
 
         if(discount.type === false) {
             discount.amount = 0;
@@ -125,6 +135,7 @@ export const EditDiscount = async (req, res, next) => {
         await Variant.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -135,20 +146,21 @@ export const EditDiscount = async (req, res, next) => {
 export const EditStatus = async (req, res, next) => {
     let { _id, status } = req.body;
 
-    if(!_id || !status) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !status) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Variant = await VariantDB
         .findById(_id)
         .select('_id');
 
-        if(!Variant) throw 'Variant Data Not Found';
+        if(!Variant) throw 'Biến thể không tồn tại';
 
         Variant.status = status;
 
         await Variant.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

@@ -2,13 +2,10 @@
     <!--News Top List-->
 
     <!--Fetch Pendding-->
-    <v-sheet v-if="$fetchState.pending" color="transparent">
+    <v-sheet v-if="$fetchState.pending || $fetchState.error" color="transparent">
         <v-skeleton-loader type="image"></v-skeleton-loader>
-    </v-sheet>
 
-    <!--Fetch Error-->
-    <v-sheet v-else-if="$fetchState.error" color="transparent" class="pa-4 px-md-0">
-        <v-alert type="error" class="BoxShadow">{{$fetchState.error.message}}</v-alert>
+        <v-alert v-if="$fetchState.error" type="error" class="BoxShadow mt-4"> {{$fetchState.error.message}} </v-alert>
     </v-sheet>
 
     <!--Fetch Done-->

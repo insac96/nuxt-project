@@ -22,7 +22,7 @@
 
                 <v-btn 
                     class="BoxShadow"
-                    :disabled="(skip + variants.length) === (countComment)" 
+                    :disabled="(skip + variants.length) === (countVariant)" 
                     fab :small="!SmallButton" :x-small="SmallButton"
                     @click="Next"
                 >
@@ -32,17 +32,14 @@
         </v-sheet>
 
         <!--Fetch Pendding-->
-        <v-card-text v-if="$fetchState.pending" class="px-4 px-md-0">
+        <v-card-text v-if="$fetchState.pending || $fetchState.error" class="px-4 px-md-0">
             <v-row dense>
                 <v-col cols="6" sm="3" class="pa-1 pa-md-2" v-for="i in 4" :key="i">
                     <v-skeleton-loader type="image, article"></v-skeleton-loader>
                 </v-col>
             </v-row>
-        </v-card-text>
 
-        <!--Fetch Error-->
-        <v-card-text v-else-if="$fetchState.error" class="px-4 px-md-0">
-            <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
+            <v-alert v-if="$fetchState.error" type="error" class="BoxShadow mt-4"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
 
         <!--Fetch Done-->
@@ -125,7 +122,7 @@ export default {
     data () {
         return {
             variants: [],
-            countComment: 0,
+            countVariant: 0,
             skip: 0,
             limit: 4
         }
@@ -139,7 +136,7 @@ export default {
             });
 
             this.variants = Get.variants;
-            this.countComment = Get.countComment;
+            this.countVariant = Get.countVariant;
         }
         catch(e) {
             throw new Error(e.toString());

@@ -3,9 +3,6 @@
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';
 import VariantDB from '../../model/variant';
-import VariantColorDB from '../../model/variantColor';
-import WarehouseDB from '../../model/warehouse';
-import WarehouseColorDB from '../../model/warehouseColor';
 import ArticleDB from '../../model/article';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
@@ -42,6 +39,7 @@ export const Get = async (req, res, next) => {
             count: Count,
             products: Products
         });
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -52,7 +50,7 @@ export const Get = async (req, res, next) => {
 export const Create = async (req, res, next) => {
     let { product, configuration } = req.body;
 
-    if(!product.name || !product.company || !product.trademark || !configuration) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!product.name || !product.company || !product.trademark || !configuration) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     let link = StringPlugin.toConvert(product.name, '-');
     product.link = link;
@@ -80,6 +78,7 @@ export const Create = async (req, res, next) => {
         await NewConfiguration.save();
 
         res.json(NewProduct);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -90,20 +89,20 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        let CountVariantInProduct = await VariantDB.countDocuments({'product': _id});
+        if(CountVariantInProduct > 0) throw 'Không thể xóa vì sản phẩm đã tồn tại biến thể';
+
         await ProductDB.deleteOne({ '_id': _id });
         await ConfigurationDB.deleteOne({ 'product': _id });
-        await VariantDB.deleteMany({ 'product': _id });
-        await VariantColorDB.deleteMany({ 'product': _id });
-        await WarehouseDB.deleteMany({ 'product': _id });
-        await WarehouseColorDB.deleteMany({ 'product': _id });
-        await ArticleDB.deleteOne({ 'product': _id })
-        await CommentDB.deleteMany({ 'product': _id })
-        await ReplyDB.deleteMany({ 'product': _id })
+        await ArticleDB.deleteOne({ 'product': _id });
+        await CommentDB.deleteMany({ 'product': _id });
+        await ReplyDB.deleteMany({ 'product': _id });
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -114,7 +113,7 @@ export const Delete = async (req, res, next) => {
 export const GetByLink = async (req, res, next) => {
     let { link } = req.body;
 
-    if(!link) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!link) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Product = await ProductDB
@@ -154,9 +153,10 @@ export const GetByLink = async (req, res, next) => {
             }
         });
 
-        if(!Product) throw 'Product Data Not Found';
+        if(!Product) throw 'Sản phẩm không tồn tại';
         
         res.json(Product);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -167,7 +167,7 @@ export const GetByLink = async (req, res, next) => {
 export const EditInformation = async (req, res, next) => {
     let { _id, company, trademark, name } = req.body;
 
-    if(!_id || !name || !company || !trademark) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !name || !company || !trademark) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
     
     let link = StringPlugin.toConvert(name, '-');
 
@@ -176,7 +176,7 @@ export const EditInformation = async (req, res, next) => {
         .findById(_id)
         .select('_id link');
 
-        if(!Product) throw 'Product Data Not Found';
+        if(!Product) throw 'Sản phẩm không tồn tại';
 
         if(link != Product.link){
             let Get = await ProductDB
@@ -198,6 +198,7 @@ export const EditInformation = async (req, res, next) => {
         await Product.save();
         
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -208,20 +209,21 @@ export const EditInformation = async (req, res, next) => {
 export const EditImages = async (req, res, next) => {
     let { _id, images } = req.body;
 
-    if(!_id || !images || !Array.isArray(images)) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || !images || !Array.isArray(images)) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Product = await ProductDB
         .findById(_id)
         .select('_id');
 
-        if(!Product) throw 'Product Data Not Found';
+        if(!Product) throw 'Sản phẩm không tồn tại';
 
         Product.images = images;
 
         await Product.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -232,20 +234,21 @@ export const EditImages = async (req, res, next) => {
 export const EditVisibility = async (req, res, next) => {
     let { _id, visibility } = req.body;
 
-    if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Product = await ProductDB
         .findById(_id)
         .select('_id');
 
-        if(!Product) throw 'Product Data Not Found';
+        if(!Product) throw 'Sản phẩm không tồn tại';
 
         Product.visibility = visibility;
 
         await Product.save();
 
         res.send(true);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

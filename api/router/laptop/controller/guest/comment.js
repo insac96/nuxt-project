@@ -1,4 +1,6 @@
 //FOR LAPTOP - GUEST
+
+import ProductDB from '../../model/product';
 import CommentDB from '../../model/comment';
 import ReplyDB from '../../model/commentReply';
 
@@ -6,7 +8,7 @@ import ReplyDB from '../../model/commentReply';
 export const GetListByProductID = async (req, res, next) => {
     let { product } = req.body;
 
-    if(!product) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!product) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Comments = await CommentDB
@@ -31,6 +33,7 @@ export const GetListByProductID = async (req, res, next) => {
             comments: Comments,
             countComment: countComment
         });
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -41,9 +44,15 @@ export const GetListByProductID = async (req, res, next) => {
 export const Add = async (req, res, next) => {
     let { company, trademark, product, content } = req.body;
 
-    if(!company || !trademark || !product || !content) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !content) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        let Product = await ProductDB
+        .findById(product)
+        .select('_id');
+
+        if(!Product) throw 'Sản phẩm gốc không tồn tại';
+
         let NewComment = new CommentDB({
             company: company,
             trademark: trademark,
@@ -55,6 +64,7 @@ export const Add = async (req, res, next) => {
         await NewComment.save();
 
         res.json(NewComment);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -65,7 +75,7 @@ export const Add = async (req, res, next) => {
 export const More = async (req, res, next) => {
     let { skip, product } = req.body;
 
-    if(!skip || !product) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!skip || !product) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let MoreComment = await CommentDB
@@ -84,6 +94,7 @@ export const More = async (req, res, next) => {
         .limit(5);
         
         res.json(MoreComment);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -94,9 +105,15 @@ export const More = async (req, res, next) => {
 export const AddReply = async (req, res, next) => {
     let { company, trademark, product, comment, content } = req.body;
 
-    if(!company || !trademark || !product || !comment || !content) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !comment || !content) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        let Comment = await CommentDB
+        .findById(comment)
+        .select('_id');
+
+        if(!Comment) throw 'Bình luận không tồn tại';
+
         let NewReply = new ReplyDB({
             company: company,
             trademark: trademark,
@@ -109,6 +126,7 @@ export const AddReply = async (req, res, next) => {
         await NewReply.save();
 
         res.json(NewReply);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

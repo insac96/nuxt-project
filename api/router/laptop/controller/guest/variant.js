@@ -2,7 +2,6 @@
 
 import VariantDB from '../../model/variant';
 
-
 //Get Variant Discount
 export const GetListByDiscount = async (req, res, next) => {
     let { skip, limit } = req.body;
@@ -60,7 +59,6 @@ export const GetListByDiscount = async (req, res, next) => {
                 'product.name': 1,
                 'product.link': 1,
                 'product.images': 1,
-                'n': 1
             }}
         ]);
 
@@ -74,8 +72,9 @@ export const GetListByDiscount = async (req, res, next) => {
 
         res.json({
             variants: Variants,
-            countComment: Count[0].number
+            countVariant: Count[0].number
         });
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));
@@ -86,7 +85,7 @@ export const GetListByDiscount = async (req, res, next) => {
 export const GetListByStatus = async (req, res, next) => {
     let { skip, limit, status } = req.body;
 
-    if(!status) next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!status) next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     let LookupProduct = { 
         $lookup: {
@@ -149,8 +148,9 @@ export const GetListByStatus = async (req, res, next) => {
 
         res.json({
             variants: Variants,
-            countComment: Count[0].number
+            countVariant: Count[0].number
         });
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

@@ -18,6 +18,9 @@
         <client-only>
             <GLaptopCart></GLaptopCart>
         </client-only>
+
+        <!--Dialog Status-->
+        <PDialogStatus></PDialogStatus>
     </v-app>
 </template>
 

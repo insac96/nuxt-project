@@ -35,7 +35,7 @@
 
         <!-- ELSE -->
         <LazyHydrate never :trigger-hydration="Variants.length > 0">
-            <v-sheet>
+            <v-sheet v-if="Variants.length > 0">
                 <!-- Configuration -->
                 <div class="px-4 mb-4">
                     <v-divider class="my-4"></v-divider>
@@ -126,22 +126,22 @@
                         <span class="text-subtitle-1 text-sm-h6 font-weight-bold">2. MÀU SẮC</span>
 
                         <v-chip 
-                            v-if="Select.color.export.upprice > 0"
+                            v-if="Select.color && Select.color.info.export.upprice > 0"
                             color="info"
                             class="font-weight-bold"
                         >
-                            + {{ $String.toPrice(Select.color.export.upprice) }}
+                            + {{ $String.toPrice(Select.color.info.export.upprice) }}
                         </v-chip>
                     </div>
 
                     <!-- Select Button -->
                     <v-btn-toggle>
                         <v-btn 
-                            v-for="(warehouseColor, indexColor) in Select.variant.warehouse.colors" :key="indexColor"    
-                            :color="warehouseColor.information.code" fab :ripple="false" active-class="active-select"
-                            @click="SelectColor(warehouseColor)"
+                            v-for="(color, indexColor) in Select.variant.colors" :key="indexColor"    
+                            :color="color.info.code" fab :ripple="false" active-class="active-select"
+                            @click="SelectColor(color)"
                         >
-                            <v-icon v-if="Select.color._id == warehouseColor._id" color="white">check</v-icon>
+                            <v-icon v-if="Select.color && (Select.color.info.warehouseColor == color.info.warehouseColor)">check</v-icon>
                         </v-btn>
                     </v-btn-toggle>
                 </div>
@@ -157,13 +157,13 @@
                     <div class="d-flex justify-space-between align-center mb-2">
                         Cấu Hình
 
-                        <span>{{ $String.toPrice(Select.variant['warehouse'].export.price) }}</span>
+                        <span>{{ $String.toPrice(Select.color['warehouse'].export.price) }}</span>
                     </div>
 
                     <!--Total Color UpPrice-->
                     <div class="d-flex justify-space-between align-center mb-2">
                         Màu Sắc
-                        <span>+ {{ $String.toPrice(Select.color['export'].upprice) }}</span>
+                        <span>+ {{ $String.toPrice(Select.color['info'].export.upprice) }}</span>
                     </div>
 
                     <!--Total Discount-->
@@ -222,14 +222,14 @@ export default {
 
     computed: {
         TotalPrice () {
-            let Price = this.Select.variant['warehouse'].export.price;
-            let ColorUpPrice = this.Select.color['export'].upprice;
+            let Price = this.Select.color['warehouse'].export.price;
+            let ColorUpPrice = this.Select.color['info'].export.upprice;
             let Discount = this.Select.variant['discount'];
 
             if(Discount.type) return this.$String.toPrice(Price + ColorUpPrice - Discount.amount);
 
             return this.$String.toPrice(Price + ColorUpPrice);
-        }
+        },
     },
 
     methods: {
@@ -238,20 +238,13 @@ export default {
 
             if(this.VariantQuery){
                 this.Select.variant = this.VariantQuery;
-
-                let Warehouse = this.VariantQuery.warehouse;
-                if(!Warehouse) return this.Select.color == null;
-
-                this.Select.color = Warehouse.colors.length > 0 ? Warehouse.colors[0] : null;
             }
             else {
                 this.Select.variant = this.Variants[0];
-
-                let Warehouse = this.Variants[0].warehouse;
-                if(!Warehouse) return this.Select.color == null;
-
-                this.Select.color = Warehouse.colors.length > 0 ? Warehouse.colors[0] : null;
             }
+
+            this.SetColorsForVariant();
+            this.Select.color = this.Select.variant.colors.length > 0 ? this.Select.variant.colors[0] : null;
         },
 
         GetListByType (type) {
@@ -265,6 +258,7 @@ export default {
             return List;
         },
 
+        //Variant
         SelectVariant (name, type) {
             let Check;
             let VariantQuery = [];
@@ -294,19 +288,47 @@ export default {
         SetNewSelectVariant (variant) {
             this.Select.variant = variant;
             
-            if(!variant.warehouse) return this.Select.color = null;
-
-            this.Select.color = variant.warehouse.colors.length > 0 ? variant.warehouse.colors[0] : null;
+            this.SetColorsForVariant();
+            this.Select.color = this.Select.variant.colors.length > 0 ? this.Select.variant.colors[0] : null;
         },
 
+        //Color
         SelectColor (color) {
             this.Select.color = color;
+        },
+
+        SetColorsForVariant () {
+            let warehouses = this.Select.variant.warehouses;
+            let colorsVariant = [];
+            
+            warehouses.forEach(warehouse => {
+                let warehouseColors = warehouse.colors;
+
+                warehouseColors.forEach(color => {
+                    colorsVariant.push({
+                        info: {
+                            warehouseColor: color._id,
+                            import: color.import,
+                            export: color.export,
+                            code: color.information.code,
+                            name: color.information.name
+                        },
+                        warehouse: {
+                            id: warehouse._id,
+                            import: warehouse.import,
+                            export: warehouse.export
+                        }
+                    });
+                });
+            });
+
+            this.Select.variant.colors = colorsVariant;
         },
 
         //Cart
         AddToCart () {
             let item = {
-                color: this.Select.color._id
+                color: this.Select.color.info.warehouseColor
             };
 
             this.$store.commit('laptop/addToCart', item);

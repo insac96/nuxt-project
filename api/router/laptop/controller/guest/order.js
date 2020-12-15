@@ -9,8 +9,8 @@ export const Create = async (req, res, next) => {
     let { vendor, pay, type, note, listProductOrder } = req.body;
     let NewOrder_ID;
 
-    if(!vendor || !pay || !type || !listProductOrder) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
-    if(listProductOrder.length < 1) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!vendor || !pay || !type || !listProductOrder) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
+    if(listProductOrder.length < 1) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let NewOrder = new OrderDB({
@@ -29,16 +29,21 @@ export const Create = async (req, res, next) => {
             
             let Product = await WarehouseColorDB
             .findOne({'_id': item.warehouseColor})
-            .select('_id');
+            .select('_id product import')
+            .populate({path: 'product', select: 'name'});
 
-            if(!Product) {
-                throw {
-                    type: true,
-                    productError: item.warehouseColor
-                };
-            }
+            if(!Product) throw {
+                type: true,
+                status: `Sản phẩm ${Product.product.name} không tồn tại`
+            };
+
+            if(item.whenOrder.amount > Product.import.amount) throw {
+                type: true,
+                status: `Sản phẩm ${Product.product.name} không đủ số lượng trong kho`
+            };
 
             let NewProductOrder = new ProductOrderDB({
+                warehouse: item.warehouse,
                 warehouseColor: item.warehouseColor,
                 order: NewOrder_ID,
                 whenOrder: item.whenOrder
@@ -55,7 +60,6 @@ export const Create = async (req, res, next) => {
         await ProductOrderDB.deleteMany({'order': NewOrder_ID});
 
         if(!e.type) return next(new ErrorHandler(500, e.toString()));
-
-        next(new ErrorHandler(500, `${e.productError} - Product Data Empty`));
+        next(new ErrorHandler(500, e.status));
     }
 };

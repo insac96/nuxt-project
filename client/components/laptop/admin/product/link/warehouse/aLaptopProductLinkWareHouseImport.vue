@@ -6,9 +6,10 @@
         <v-card-title class="font-weight-bold text-h4 create--text">Import WareHouse</v-card-title>
         <v-card-subtitle>Nhập kho sản phẩm</v-card-subtitle>
 
+        <!--Body-->
         <v-form class="px-6 pb-0" ref="form" v-model="Validate">
             <v-alert type="info" color="create" text class="rounded-xl mb-6" prominent>
-                Sau khi <strong>Nhập Kho</strong> sẽ không thể thay đổi hay xóa dữ liệu, duy nhất chỉ thay đổi được <strong>Giá Bán</strong> sản phẩm !!!
+                Sau khi <strong>Nhập Kho</strong> sẽ không thể chỉnh sửa màu sắc và xóa kho hàng nếu đã đơn hàng liên quan !!!
             </v-alert>
 
             <!--Import-->
@@ -163,8 +164,7 @@ export default {
         },
 
         AddColorToImport (color) {
-            let Get = this.NewImportWareHouse.colors.find(e => e.variantColor == color._id);
-
+            let Get = this.NewImportWareHouse.colors.find(e => e.information == color._id);
             if(Get) return false;
 
             this.NewImportWareHouse.colors.push({

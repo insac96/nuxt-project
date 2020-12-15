@@ -212,6 +212,8 @@ export default {
             this.Loading.get = true;
 
             try {
+                if(this.LaptopStore.cart.length < 1) return this.Loading.get = false;
+
                 let ListID = this.LaptopStore.cart.map(item => item.color);
                 let ListProduct = await this.$axios.$post(this.$api.laptop.guest.GetListItemInCart, ListID);
 
@@ -271,6 +273,7 @@ export default {
             let listProductOrder = this.ListProduct.map(item => {
                 let newItem = {};
 
+                newItem.warehouse = item.warehouse._id;
                 newItem.warehouseColor = item._id;
                 newItem.whenOrder = {
                     amount: item.amount,

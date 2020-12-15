@@ -10,6 +10,7 @@ export const GetListOnlyInfo = async (req, res, next) => {
         .select('name logo');
 
         res.json(Companyes);
+        res.end();
     }
     catch(e) {
         next(new ErrorHandler(500, e.toString()));

@@ -6,8 +6,8 @@ import WarehouseColorDB from '../../model/warehouseColor';
 export const Create = async (req, res, next) => {
     let { company, trademark, product, variant, warehouse, color_id} = req.body;
 
-    if(!company || !trademark || !product || !variant || !warehouse || !color_id || !req.body.import || !req.body.export) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
-    if(!req.body.import.amount || !req.body.export.upprice) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!company || !trademark || !product || !variant || !warehouse || !color_id || !req.body.import || !req.body.export) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
+    if(!req.body.import.amount || !req.body.export.upprice) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         let Get = await VariantDB
@@ -40,7 +40,7 @@ export const Create = async (req, res, next) => {
 export const Delete = async (req, res, next) => {
     let { _id } = req.body;
 
-    if(!_id) return next(new ErrorHandler(400, 'Unsuitable Upload Data'));
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
         await WarehouseColorDB.deleteOne({'_id': _id});

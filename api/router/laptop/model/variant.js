@@ -33,13 +33,6 @@ VariantSchema.virtual('colors', {
     foreignField: 'variant',
 });
 
-VariantSchema.virtual('warehouse', {
-    ref: 'LaptopWarehouse',
-    localField: '_id',
-    foreignField: 'variant',
-    justOne: true
-});
-
 VariantSchema.virtual('warehouses', {
     ref: 'LaptopWarehouse',
     localField: '_id',
