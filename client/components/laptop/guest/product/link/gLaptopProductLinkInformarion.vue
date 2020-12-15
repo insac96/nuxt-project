@@ -212,7 +212,7 @@ export default {
             ListType: ['screen', 'cpu', 'ram', 'harddrive', 'gpu'],
 
             //View
-            ViewListFormat: false
+            ViewListFormat: true
         }
     },
 

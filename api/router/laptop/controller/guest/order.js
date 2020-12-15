@@ -34,7 +34,7 @@ export const Create = async (req, res, next) => {
 
             if(!Product) throw {
                 type: true,
-                status: `Sản phẩm ${Product.product.name} không tồn tại`
+                status: `Có 1 sản phẩm không tồn tại`
             };
 
             if(item.whenOrder.amount > Product.import.amount) throw {
