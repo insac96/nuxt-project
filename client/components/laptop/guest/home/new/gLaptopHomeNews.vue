@@ -1,9 +1,9 @@
 <template>
     <!--News Top List-->
 
-    <v-card flat tile color="transparent">
+    <v-card flat tile>
         <!--Fetch Pendding-->
-        <v-card-text v-if="$fetchState.pending || $fetchState.error" class="px-4 px-md-0">
+        <v-card-text v-if="$fetchState.pending || $fetchState.error">
             <v-skeleton-loader type="image"></v-skeleton-loader>
         </v-card-text>
 
