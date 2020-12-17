@@ -19,7 +19,7 @@
         
         <!--Fetch Done-->
         <div v-else>
-            <v-card-text class="py-6 pb-1" v-if="Comments.length > 0">
+            <v-card-text class="py-6 pb-0" v-if="Comments.length > 0">
                 <v-sheet v-for="(comment, index) in CommentsMap" :key="index" class="d-flex mb-4">
                     <!--Avatar User - Left-->        
                     <v-avatar :size="SizeComment">
@@ -86,6 +86,17 @@
                         autocomplete="off"
                     ></v-text-field>
                 </v-form>
+            </div>
+
+            <div v-else class="d-flex justify-center pa-4">
+                <v-btn 
+                    rounded 
+                    elevation="0" 
+                    color="primary" 
+                    @click="$store.commit('user/changeDialogAuthentic', true)"
+                >
+                    Đăng Nhập Để Sử Dụng Tính Năng
+                </v-btn>
             </div>
         </div>
     </v-card>

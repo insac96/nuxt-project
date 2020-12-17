@@ -9,10 +9,10 @@
 
         <!--Body-->
         <v-card-text>
-            <v-chip>{{ product.company.name }}</v-chip>
-            <v-chip>{{ product.trademark.name }}</v-chip>
-            <v-chip>{{ product.name }}</v-chip>
-            <v-chip v-for="(variant, indexVariant) in product.variants" :key="indexVariant">
+            <v-chip class="my-1">{{ product.company.name }}</v-chip>
+            <v-chip class="my-1">{{ product.trademark.name }}</v-chip>
+            <v-chip class="my-1">{{ product.name }}</v-chip>
+            <v-chip v-for="(variant, indexVariant) in product.variants" :key="indexVariant" class="my-1">
                 {{ variant.code }}
             </v-chip>
         </v-card-text>
