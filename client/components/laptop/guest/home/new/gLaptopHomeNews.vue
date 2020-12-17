@@ -3,7 +3,7 @@
 
     <v-card flat tile color="transparent">
         <!--Fetch Pendding-->
-        <v-card-text v-if="$fetchState.pending || $fetchState.error">
+        <v-card-text v-if="$fetchState.pending || $fetchState.error" class="px-4 px-md-0">
             <v-skeleton-loader type="image"></v-skeleton-loader>
         </v-card-text>
 
