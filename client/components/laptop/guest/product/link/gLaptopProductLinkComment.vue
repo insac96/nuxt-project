@@ -8,12 +8,12 @@
         </v-sheet>
 
         <!--Fetch Pendding-->
-        <v-card-text v-if="$fetchState.pending" flat tile color="card">
+        <v-card-text v-if="$fetchState.pending">
             <v-skeleton-loader type="list-item-avatar-two-line" v-for="i in 3" :key="i"></v-skeleton-loader>
         </v-card-text>
 
         <!--Fetch Error-->
-        <v-card-text v-else-if="$fetchState.error" flat tile>
+        <v-card-text v-else-if="$fetchState.error">
             <v-alert type="error" class="BoxShadow"> {{$fetchState.error.message}} </v-alert>
         </v-card-text>
         
@@ -66,7 +66,7 @@
             </v-card-actions>
 
             <!--Input Comment-->
-            <v-sheet v-if="UserStore.authentic" color="heading" class="d-flex px-4 py-2 Sticky_Bottom">
+            <div v-if="UserStore.authentic" class="d-flex pa-4">
                 <v-avatar :size="SizeComment">
                     <v-img :src="UserStore.profile.avatar" :alt="UserStore.profile.name"></v-img>
                 </v-avatar>
@@ -78,7 +78,7 @@
                         placeholder="Để lại câu hỏi hoặc đánh giá của bạn"
                         :disabled="Loading.add"
                         rounded solo flat
-                        background-color="heading_input"
+                        background-color="box"
                         color="primary"
                         maxlength="200"
                         :height="SizeComment"
@@ -86,7 +86,7 @@
                         autocomplete="off"
                     ></v-text-field>
                 </v-form>
-            </v-sheet>
+            </div>
         </div>
     </v-card>
 </template>

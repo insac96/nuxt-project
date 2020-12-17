@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
     .Error {
-        height: calc(100vh - 60px);
+        height: calc(100vh - 60px - 108px);
 
         h1 {
             font-size: 6em;

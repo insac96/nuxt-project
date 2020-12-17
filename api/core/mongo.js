@@ -33,6 +33,8 @@ export const MongoInit = async () => {
         });
     }
     catch(e){
+        console.log(e);
+        
         global.DBConnect = false;
         global.StatusMongo = 'Database: Connection Error';
     }

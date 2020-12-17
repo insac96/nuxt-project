@@ -37,7 +37,7 @@
                     <v-subheader>Color</v-subheader>
                     <v-list-item class="justify-center">
                         <v-btn 
-                            color="primary" 
+                            color="primary" large
                             block elevation="0" tile
                             @click="DialogColor = true"
                         ></v-btn>
@@ -54,12 +54,12 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn tile elevation="0" color="primary" dark @click="ChangeColor(Color)">
-                        Thay Đổi
+                    <v-btn rounded elevation="0" @click="CloseDialogColor">
+                        Hủy
                     </v-btn>
 
-                    <v-btn tile elevation="0" class="mx-0" @click="CloseDialogColor">
-                        Hủy
+                    <v-btn rounded elevation="0" color="primary" dark @click="ChangeColor(Color)">
+                        Thay Đổi
                     </v-btn>
                 </v-card-actions>
             </v-card>

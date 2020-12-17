@@ -32,15 +32,15 @@
                 </v-sheet>
 
                 <!--Loading-->
-                <v-card-text v-if="Loading.get" flat tile>
+                <v-card-text v-if="Loading.get">
                     <v-skeleton-loader type="list-item-avatar-two-line" v-for="i in 3" :key="i"></v-skeleton-loader>
                 </v-card-text>
 
                 <!--End Loading-->
                 <v-card-text v-else class="OverflowY py-4 px-2 px-sm-4">
                     <!--List is Empty-->
-                    <v-alert v-if="ListProduct.length < 1" type="info" border="left" text color="primary" class="mb-0">
-                        Giỏ hàng trống
+                    <v-alert v-if="ListProduct.length < 1" type="info" color="primary" class="mb-0">
+                        Hiện tại chưa có sản phẩm trong giỏ hàng
                     </v-alert>
 
                     <!--Else-->

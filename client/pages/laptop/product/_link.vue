@@ -38,6 +38,11 @@
         <LazyHydrate when-visible>
             <GLaptopProductLinkComment :product="Product"></GLaptopProductLinkComment>
         </LazyHydrate>
+
+        <!--Product Tags-->
+        <LazyHydrate when-visible>
+            <GLaptopProductLinkTags :product="Product"></GLaptopProductLinkTags>
+        </LazyHydrate>
     </div>
 </template>
 

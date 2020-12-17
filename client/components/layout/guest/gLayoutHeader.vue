@@ -1,5 +1,5 @@
 <template>
-    <!--a-layout-header-->
+    <!--g-layout-header-->
 
     <v-app-bar app fixed color="header" height="60">
         <!--Logo-->

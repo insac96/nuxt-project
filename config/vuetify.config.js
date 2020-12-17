@@ -32,6 +32,7 @@ export default {
 
                 //Box
                 box: "#232323",
+                boxProduct: "#232323",
 
                 //Action Color
                 delete: "#ff5252",
@@ -69,6 +70,7 @@ export default {
 
                 //Box
                 box: "#f3f3f3",
+                boxProduct: "#ffffff",
 
                 //Action Color
                 delete: "#ff5252",

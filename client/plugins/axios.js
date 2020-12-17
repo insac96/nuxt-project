@@ -4,8 +4,9 @@ export default function ({ $axios, error, store }) {
         const data = err.response.data;
         
         store.commit('dialogStatus/show', {
+            type: 'error',
             icon: 'error',
-            code: code,
+            //code: code,
             text: data.message || data.error.message
         });
         

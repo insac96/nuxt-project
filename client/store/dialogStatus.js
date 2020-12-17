@@ -1,5 +1,6 @@
 export const state = () => ({
     show: false,
+    type: 'info',
     icon: 'check',
     text: '',
     code: null,
@@ -11,6 +12,7 @@ export const mutations = {
     //Close Dialog
     close (state) {
         state.show = false;
+        state.type = 'info';
         state.icon = 'check';
         state.text = '';
         state.code = null;
@@ -19,8 +21,9 @@ export const mutations = {
     },
 
     //Show Dialog 
-    show (state , {icon , text, code, textCloseButton, actionClose}) {
+    show (state , {icon , type, text, code, textCloseButton, actionClose}) {
         state.show = true;
+        state.type = type ? type : 'info';
         state.icon = icon ? icon : 'check';
         state.text = text;
         state.code = code ? code : null;

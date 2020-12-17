@@ -1,15 +1,17 @@
 <template>
-    <div id="HOME">
-        <GLaptopHomeNews class="mb-4"></GLaptopHomeNews>
+    <div class="BoxShadow">
+        <LazyHydrate when-visible>
+            <GLaptopHomeNews></GLaptopHomeNews>
+        </LazyHydrate>
 
         <!--<GLaptopCompanyesMini class="mb-6 mb-sm-8"></GLaptopCompanyesMini>-->
         
         <LazyHydrate when-visible>
-            <GLaptopHomeProductDiscount class="mb-6 mb-sm-8"></GLaptopHomeProductDiscount>
+            <GLaptopHomeProductDiscount></GLaptopHomeProductDiscount>
         </LazyHydrate>
         
         <LazyHydrate when-visible>
-            <GLaptopHomeProductNew class="mb-6 mb-sm-8"></GLaptopHomeProductNew>
+            <GLaptopHomeProductNew></GLaptopHomeProductNew>
         </LazyHydrate>
     </div>
 </template>

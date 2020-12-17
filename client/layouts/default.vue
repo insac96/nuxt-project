@@ -21,6 +21,11 @@
 
         <!--Dialog Status-->
         <PDialogStatus></PDialogStatus>
+
+        <!--Footer-->
+        <LazyHydrate when-visible>
+            <GLayoutFooter></GLayoutFooter>
+        </LazyHydrate>
     </v-app>
 </template>
 

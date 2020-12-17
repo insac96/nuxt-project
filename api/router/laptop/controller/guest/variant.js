@@ -68,11 +68,11 @@ export const GetListByDiscount = async (req, res, next) => {
             LookupWarehouse, { $unwind: '$warehouse' },
             Match,
             { $count: "number" }
-        ])
+        ]);
 
         res.json({
             variants: Variants,
-            countVariant: Count[0].number
+            countVariant: Count.length == 0 ? 0 : Count[0].number
         });
         res.end();
     }
@@ -148,7 +148,7 @@ export const GetListByStatus = async (req, res, next) => {
 
         res.json({
             variants: Variants,
-            countVariant: Count[0].number
+            countVariant: Count.length == 0 ? 0 : Count[0].number
         });
         res.end();
     }
