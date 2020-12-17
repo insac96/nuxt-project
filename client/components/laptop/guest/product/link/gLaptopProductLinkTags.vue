@@ -21,16 +21,6 @@
 
 <script>
 export default {
-    props: ['product'],
-
-    data () {
-        return {
-            
-        }
-    },
-
-    mounted(){
-        console.log(this.product)
-    }
+    props: ['product']
 }
 </script>
