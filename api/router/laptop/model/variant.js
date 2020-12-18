@@ -39,7 +39,14 @@ VariantSchema.virtual('warehouses', {
     foreignField: 'variant',
 });
 
-VariantSchema.index({ status: 'text' });
+VariantSchema.index({ 
+    status: 'text', 
+    screen: 'text', 
+    cpu: 'text', 
+    gpu: 'text', 
+    ram: 'text', 
+    harddrive: 'text' 
+});
 
 const Variant = mongoose.model('LaptopVariant', VariantSchema);
 
