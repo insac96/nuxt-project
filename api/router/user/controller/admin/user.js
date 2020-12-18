@@ -4,17 +4,14 @@ import UserDB from '../../model/user';
 
 //Get List User
 export const Get = async (req, res, next) => {
-    let { skip, role, key } = req.body;
+    let { skip, role, keySearch } = req.body;
     let Query = {};
 
     if(role)
         Query['role'] = role;
-    if(key){
-        let keyCase = StringPlugin.toConvert(key, '');
-
-        Query['$text'] = { 
-            $search: `\"${keyCase}\"`,
-            $caseSensitive: true
+    if(keySearch){
+        Query['auth.username'] = {
+            $regex: keySearch
         };
     }
 

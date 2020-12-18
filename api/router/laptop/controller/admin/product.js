@@ -9,19 +9,16 @@ import ReplyDB from '../../model/commentReply';
 
 //Get All Products
 export const Get = async (req, res, next) => {
-    let { skip, company, trademark, key } = req.body;
+    let { skip, company, trademark, keySearch } = req.body;
     let Query = {};
     
     if(company)
         Query['company'] = company;
     if(trademark)
         Query['trademark'] = trademark;
-    if(key){
-        let keyCase = StringPlugin.toConvert(key, '-');
-
-        Query['$text'] = { 
-            $search: `\"${keyCase}\"`,
-            $caseSensitive: false
+    if(keySearch){
+        Query['link'] = {
+            $regex: keySearch
         };
     }
 

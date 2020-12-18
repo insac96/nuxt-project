@@ -207,7 +207,7 @@ export default {
                 let Search = await this.$axios.$post(this.$api.user.admin.GetUsers, {
                     skip: (type === 'more') ? this.Users.length : 0,
                     role: this.RoleSelectShow ? this.RoleSelectShow : null,
-                    key: this.KeySearch ? this.KeySearch : null,
+                    keySearch: this.KeySearch ? this.$String.toConvert(this.KeySearch, '-') : this.KeySearch,
                 });
 
                 if(type === 'more') return this.Users = this.Users.concat(Search.users);

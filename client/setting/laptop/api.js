@@ -89,6 +89,7 @@ export default {
         //Variant
         GetListVariantByDiscount: '/laptop/variant/list/getByDiscount',
         GetListVariantByStatus: '/laptop/variant/list/getByStatus',
+        GetListSearchVariant: '/laptop/variant/list/search',
 
         //Product
         GetProductByLink: '/laptop/product/getByLink',
@@ -108,6 +109,6 @@ export default {
         GetListItemInCart: '/laptop/cart/list/get',
 
         //Order
-        CreateNewOrder: '/laptop/order/create'
+        CreateNewOrder: '/laptop/order/create',
     }
 }

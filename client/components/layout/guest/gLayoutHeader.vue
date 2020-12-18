@@ -12,7 +12,7 @@
         <!--Buttons Funciton-->
         <div class="d-flex">
             <!--Search-->
-            <v-btn fab elevation="0" small color="header_button" class="ml-1">
+            <v-btn fab elevation="0" small color="header_button" class="ml-1" @click="$router.push('/laptop/search')">
                 <v-icon>search</v-icon>
             </v-btn>
 

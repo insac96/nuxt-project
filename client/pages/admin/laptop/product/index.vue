@@ -288,7 +288,7 @@ export default {
                     skip: (type === 'more') ? this.Products.length : 0,
                     company: this.ComanySelectShow ? this.ComanySelectShow._id : null,
                     trademark: this.TrademarkSelectShow ? this.TrademarkSelectShow._id : null,
-                    key: this.KeySearch ? this.KeySearch : null,
+                    keySearch: this.KeySearch ? this.$String.toConvert(this.KeySearch, '-') : this.KeySearch,
                 });
 
                 if(type === 'more') return this.Products = this.Products.concat(Search.products);

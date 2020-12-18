@@ -28,9 +28,9 @@
 export default {
     data: () => ({
         links: [
-            'About Us',
-            'Services',
-            'Contact Us',
+            'Thông Tin',
+            'Dịch Vụ',
+            'Liên Hệ',
         ],
     }),
 }

@@ -17,6 +17,7 @@ Router.post("/product/getByLink", Controller_Guest.Product.GetByLink);
 //Variant - Guest
 Router.post("/variant/list/getByDiscount", Controller_Guest.Variant.GetListByDiscount);
 Router.post("/variant/list/getByStatus", Controller_Guest.Variant.GetListByStatus);
+Router.post("/variant/list/search", Controller_Guest.Variant.SearchVariant);
 
 //News - Guest
 Router.get("/news/list/getByTop", Controller_Guest.News.GetListByTop);
@@ -33,7 +34,6 @@ Router.post("/cart/list/get", Controller_Guest.Cart.GetList);
 
 //Order
 Router.post("/order/create", Authentic_Guest, Controller_Guest.Order.Create);
-
 /////////////////////END Guest - CONTROLLER//////////////////
 
 
@@ -120,7 +120,6 @@ Router.post('/admin/order/product/delete', Authentic_Admin, Controller_Admin.Ord
 Router.post('/admin/order/product/edit', Authentic_Admin, Controller_Admin.Order.EditProductOrder);
 Router.post('/admin/order/product/add', Authentic_Admin, Controller_Admin.Order.AddProductOrder);
 Router.post('/admin/order/product/add/search', Authentic_Admin, Controller_Admin.Order.SearchProductForOrder);
-
 /////////////////////END Admin - CONTROLLER//////////////////
 
 export default Router;
