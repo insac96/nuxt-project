@@ -31,8 +31,7 @@
                         <!--Content-->
                         <v-card flat class="rounded-xl py-2 px-6" color="box">
                             <div class="text-capitalize font-weight-bold">
-                                <span v-if="comment.user.role == 'ADMIN'" class="admin--text">{{comment.user.profile.name}}</span>
-                                <span v-else class="guest--text">{{comment.user.profile.name}}</span>
+                                <span :class="`${comment.user.role.toLowerCase()}--text`">{{comment.user.profile.name}}</span>
                             </div>
 
                             <span class="text-subtitle-1">{{comment.content}}</span>

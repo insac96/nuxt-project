@@ -201,7 +201,7 @@ export const SearchVariant = async (req, res, next) => {
     };
     if(filter.gpu.length > 0){
         let GPUs = filter.gpu.map(item => {
-            return { cpu: { $regex: item } };
+            return { gpu: { $regex: item } };
         });
 
         Filter['$or'] = GPUs;

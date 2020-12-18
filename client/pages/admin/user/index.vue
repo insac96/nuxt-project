@@ -84,13 +84,29 @@
                             <td class="text-uppercase font-weight-bold primary--text">{{ user.profile.name }}</td>
 
                             <!--3 - User Role-->
-                            <td class="text-center font-weight-bold">
-                                <v-chip
-                                    dark
-                                    :color="user.role == 'ADMIN' ? 'admin' : 'guest'"
-                                >
-                                    {{ user.role }}
-                                </v-chip>
+                            <td class="text-center">
+                                <v-menu offset-y left transition="slide-y-transition" min-width="170" max-width="300" nudge-bottom="5">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-chip 
+                                            :color="user.role.toLowerCase()" 
+                                            :disabled="Loading.role"
+                                            v-bind="attrs" v-on="on"
+                                            dark
+                                        >
+                                            <span class="font-weight-bold">{{ user.role }}</span>
+                                        </v-chip>
+                                    </template>
+
+                                    <v-list subheader class="pb-0">
+                                        <v-list-item
+                                            color="info"
+                                            v-for="(role, indexRole) in UserRoleSetting" :key="indexRole"
+                                            @click="EditRoleUser(user, role)"
+                                        >
+                                            <v-list-item-title>{{ role }}</v-list-item-title>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-menu>
                             </td>
 
                             <!--4 - User Verification-->
@@ -159,6 +175,8 @@
 </template>
 
 <script>
+import UserRoleSetting from '@/setting/user/role';
+
 export default {
     async asyncData({$axios, $api}){
         try {
@@ -184,11 +202,13 @@ export default {
             SelectRole: [
                 'GUEST', 'ADMIN'
             ],
+            UserRoleSetting: UserRoleSetting,
             RoleSelectShow: null,
             KeySearch: null,
             Loading: {
                 ban: false,
-                unban: false
+                unban: false,
+                role: false
             }
         }
     },
@@ -233,7 +253,6 @@ export default {
                 this.Loading.ban = false;
             }
             catch(e){
-                console.log(e)
                 this.Loading.ban = false;
             }
         },
@@ -251,8 +270,25 @@ export default {
                 this.Loading.unban = false;
             }
             catch(e){
-                console.log(e)
                 this.Loading.unban = false;
+            }
+        },
+
+        //Role Edit
+        async EditRoleUser (user, role) {
+            this.Loading.role = true;
+
+            try {
+                let Edit = await this.$axios.$post(this.$api.user.admin.ChangeRoleUser, {
+                    _id: user._id,
+                    role: role
+                });
+
+                user.role = Edit;
+                this.Loading.role = false;
+            }
+            catch(e){
+                this.Loading.role = false;
             }
         }
     }

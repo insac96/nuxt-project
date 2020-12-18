@@ -3,7 +3,7 @@
 import express from 'express';
 import Controller_Guest from './controller/guest'; 
 import Controller_Admin from './controller/admin';
-import { Authentic_Guest, Authentic_Admin } from '../../middleware/authentic';
+import { Authentic_Guest, Authentic_Smod, Authentic_Admin } from '../../middleware/authentic';
 
 let Router = express.Router();
 
@@ -23,10 +23,10 @@ Router.post('/contact/delete', Authentic_Guest, Controller_Guest.Contact.Delete)
 
 /////////////////////ADMIN - CONTROLLER/////////////////////
 //User
-Router.post('/admin/member/get', Authentic_Admin, Controller_Admin.User.Get);
-Router.post('/admin/member/ban', Authentic_Admin, Controller_Admin.User.Ban);
-Router.post('/admin/member/unban', Authentic_Admin, Controller_Admin.User.Unban);
-
+Router.post('/admin/member/get', Authentic_Smod, Controller_Admin.User.Get);
+Router.post('/admin/member/ban', Authentic_Smod, Controller_Admin.User.Ban);
+Router.post('/admin/member/unban', Authentic_Smod, Controller_Admin.User.Unban);
+Router.post('/admin/member/role/change', Authentic_Admin, Controller_Admin.User.ChangeRole);
 /////////////////////END Admin - CONTROLLER//////////////////
 
 export default Router;

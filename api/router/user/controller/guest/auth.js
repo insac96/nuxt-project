@@ -77,6 +77,10 @@ export const SignUp = async (req, res) => {
             }
         });
 
+        if(username == 'admin') {
+            NewUser.role = 'ADMIN';
+        };
+
         await NewUser.save();
 
         let NewToken = jwt.sign({

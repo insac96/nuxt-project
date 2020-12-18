@@ -14,8 +14,7 @@
                 <!--Content-->
                 <v-card flat class="rounded-xl py-2 px-4" color="box" min-height="40">
                     <div class="text-capitalize font-weight-bold">
-                        <span v-if="reply.user.role == 'ADMIN'" class="admin--text">{{reply.user.profile.name}}</span>
-                        <span v-else class="guest--text">{{reply.user.profile.name}}</span>
+                        <span :class="`${reply.user.role.toLowerCase()}--text`">{{reply.user.profile.name}}</span>
                     </div>
 
                     <span class="text-subtitle-1">{{reply.content}}</span>

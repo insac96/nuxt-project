@@ -37,7 +37,7 @@
                         <v-list-item-content>
                             <v-list-item-title class="text-capitalize text-h6 font-weight-bold">{{UserStore.profile.name}}</v-list-item-title>
                             <v-list-item-subtitle class="text-caption font-weight-bold">
-                                <span :class="UserStore.role == 'ADMIN' ? 'admin--text' : 'guest--text'">{{UserStore.role}}</span>
+                                <span :class="`${UserStore.role.toLowerCase()}--text`">{{UserStore.role}}</span>
                             </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
@@ -45,7 +45,7 @@
                     <v-divider></v-divider>
 
                     <!--Menu-->
-                    <v-list-item v-if="UserStore.role == 'ADMIN'" to="/admin">
+                    <v-list-item v-if="UserStore.role != 'GUEST'" to="/admin">
                         <v-list-item-icon><v-icon>admin_panel_settings</v-icon></v-list-item-icon>
                         <v-list-item-title>Admin Panel</v-list-item-title>
                     </v-list-item>

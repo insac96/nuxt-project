@@ -38,6 +38,8 @@ export const Get = async (req, res, next) => {
 export const Ban = async (req, res, next) => {
     let { _id } = req.body;
     
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
+
     try {
         let User = await UserDB
         .findById(_id)
@@ -61,7 +63,9 @@ export const Ban = async (req, res, next) => {
 //UnBan User 
 export const Unban = async (req, res, next) => {
     let { _id } = req.body;
-    
+
+    if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
+
     try {
         let User = await UserDB
         .findById(_id)
@@ -75,6 +79,31 @@ export const Unban = async (req, res, next) => {
         await User.save();
 
         res.json(User.ban);
+        res.end();
+    }
+    catch (e) {
+        next(new ErrorHandler(500, e.toString()));
+    }
+};
+
+//Change Role User 
+export const ChangeRole = async (req, res, next) => {
+    let { _id, role } = req.body;
+
+    if(!_id || !role) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
+    
+    try {
+        let User = await UserDB
+        .findById(_id)
+        .select('role');
+
+        if(!User) throw 'Tài Khoàn Không Tồn Tại'
+
+        User.role = role;
+
+        await User.save();
+
+        res.json(User.role);
         res.end();
     }
     catch (e) {
