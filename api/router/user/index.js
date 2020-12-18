@@ -24,6 +24,8 @@ Router.post('/contact/delete', Authentic_Guest, Controller_Guest.Contact.Delete)
 /////////////////////ADMIN - CONTROLLER/////////////////////
 //User
 Router.post('/admin/member/get', Authentic_Admin, Controller_Admin.User.Get);
+Router.post('/admin/member/ban', Authentic_Admin, Controller_Admin.User.Ban);
+Router.post('/admin/member/unban', Authentic_Admin, Controller_Admin.User.Unban);
 
 /////////////////////END Admin - CONTROLLER//////////////////
 

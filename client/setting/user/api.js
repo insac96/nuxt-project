@@ -1,6 +1,8 @@
 export default {
     admin: {
         'GetUsers': '/user/admin/member/get',
+        'BanUser': '/user/admin/member/ban',
+        'UnbanUser': '/user/admin/member/unban',
     },
 
     guest: {

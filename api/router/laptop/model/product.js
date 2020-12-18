@@ -52,7 +52,7 @@ ProductSchema.virtual('comments', {
     foreignField: 'product',
 });
 
-ProductSchema.index({ link: 'text' });
+ProductSchema.index({ link: 'text', name: 'text' });
 
 const Product = mongoose.model('LaptopProduct', ProductSchema);
 export default Product;

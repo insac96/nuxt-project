@@ -20,7 +20,8 @@ export const Get = async (req, res, next) => {
         let keyCase = StringPlugin.toConvert(key, '-');
 
         Query['$text'] = { 
-            $search: `\"${keyCase}\"`
+            $search: `\"${keyCase}\"`,
+            $caseSensitive: false
         };
     }
 

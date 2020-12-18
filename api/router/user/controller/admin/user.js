@@ -13,7 +13,8 @@ export const Get = async (req, res, next) => {
         let keyCase = StringPlugin.toConvert(key, '');
 
         Query['$text'] = { 
-            $search: `\"${keyCase}\"`
+            $search: `\"${keyCase}\"`,
+            $caseSensitive: true
         };
     }
 
@@ -29,10 +30,57 @@ export const Get = async (req, res, next) => {
             users: Users,
             count: Count
         });
+        res.end();
     }
     catch (e) {
         next(new ErrorHandler(500, e.toString()));
     }
 };
 
-//Get User By 
+//Ban User 
+export const Ban = async (req, res, next) => {
+    let { _id } = req.body;
+    
+    try {
+        let User = await UserDB
+        .findById(_id)
+        .select('ban');
+
+        if(!User) throw 'Tài Khoàn Không Tồn Tại'
+
+        User.ban.type = true;
+        User.ban.dateBan = new Date();
+
+        await User.save();
+
+        res.json(User.ban);
+        res.end();
+    }
+    catch (e) {
+        next(new ErrorHandler(500, e.toString()));
+    }
+};
+
+//UnBan User 
+export const Unban = async (req, res, next) => {
+    let { _id } = req.body;
+    
+    try {
+        let User = await UserDB
+        .findById(_id)
+        .select('ban');
+
+        if(!User) throw 'Tài Khoàn Không Tồn Tại'
+
+        User.ban.type = false;
+        User.ban.dateBan = null;
+
+        await User.save();
+
+        res.json(User.ban);
+        res.end();
+    }
+    catch (e) {
+        next(new ErrorHandler(500, e.toString()));
+    }
+};

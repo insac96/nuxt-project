@@ -20,7 +20,11 @@ const UserSchema = new Schema(
         },
         role: { type: String, default: 'GUEST' },
         verification: { type: Boolean, default: false },
-        block: { type: Boolean, default: false },
+        ban: {
+            type: { type: Boolean, default: false },
+            dateBan: { type: Date },
+            dateUnban:  { type: Date }
+        }
     }, 
     { 
         toJSON: { virtuals: true } 

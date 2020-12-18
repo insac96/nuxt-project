@@ -11,7 +11,7 @@
             <!--Option Search-->
             <v-sheet class="d-flex align-center pa-3" color="heading">
                 <!--Input Search-->
-                <v-form ref="form" @submit.prevent="ShowUserByQuery" >
+                <div>
                     <v-text-field
                         v-model="KeySearch"
                         outlined dense rounded
@@ -20,9 +20,9 @@
                         color="primary"
                         hide-details
                         autocomplete="off"
-                        @click:append="ShowUserByQuery"
+                        @keyup="ShowUserByQuery"
                     ></v-text-field>
-                </v-form>
+                </div>
 
                 <v-spacer></v-spacer>
 
@@ -68,6 +68,7 @@
                             <th>Tên Thành Viên</th>
                             <th class="text-center" width="120">Chức Vụ</th>
                             <th class="text-center" width="160">Trạng Thái</th>
+                            <th class="text-right" width="100">Khóa</th>
                         </tr>
                     </thead>
 
@@ -100,6 +101,29 @@
                                 >
                                     {{ user.verification ? 'Đã Xác Minh' : 'Chưa Xác Minh' }}
                                 </v-chip>
+                            </td>
+
+                            <!--5 - User Ban-->
+                            <td class="text-right">
+                                <v-btn 
+                                    v-if="!user.ban.type"
+                                    color="grey" 
+                                    icon small elevation="0"
+                                    :disabled="Loading.ban"
+                                    @click="BanUser(user)"
+                                >
+                                    <v-icon>lock_open</v-icon>
+                                </v-btn>
+
+                                <v-btn 
+                                    v-else
+                                    color="error" 
+                                    icon small elevation="0"
+                                    :disabled="Loading.unban"
+                                    @click="UnbanUser(user)"
+                                >
+                                    <v-icon>lock</v-icon>
+                                </v-btn>
                             </td>
                         </tr>
                     </tbody>
@@ -148,7 +172,6 @@ export default {
             }
         }
         catch(e){
-            console.log(e)
             return {
                 Users: [],
                 Count: 0
@@ -162,7 +185,11 @@ export default {
                 'GUEST', 'ADMIN'
             ],
             RoleSelectShow: null,
-            KeySearch: null
+            KeySearch: null,
+            Loading: {
+                ban: false,
+                unban: false
+            }
         }
     },
 
@@ -177,7 +204,7 @@ export default {
         //Search
         async ShowUserByQuery (type) {
             try {
-                let Search = await this.$axios.$post(UserAPI.admin.GetUsers, {
+                let Search = await this.$axios.$post(this.$api.user.admin.GetUsers, {
                     skip: (type === 'more') ? this.Users.length : 0,
                     role: this.RoleSelectShow ? this.RoleSelectShow : null,
                     key: this.KeySearch ? this.KeySearch : null,
@@ -190,6 +217,42 @@ export default {
             }
             catch(e){
                 return false;
+            }
+        },
+
+        //Ban
+        async BanUser (user) {
+            this.Loading.ban = true;
+
+            try {
+                let Ban = await this.$axios.$post(this.$api.user.admin.BanUser, {
+                    _id: user._id
+                });
+
+                user.ban = Ban;
+                this.Loading.ban = false;
+            }
+            catch(e){
+                console.log(e)
+                this.Loading.ban = false;
+            }
+        },
+
+        //Unban
+        async UnbanUser (user) {
+            this.Loading.unban = true;
+
+            try {
+                let Ban = await this.$axios.$post(this.$api.user.admin.UnbanUser, {
+                    _id: user._id
+                });
+
+                user.ban = Ban;
+                this.Loading.unban = false;
+            }
+            catch(e){
+                console.log(e)
+                this.Loading.unban = false;
             }
         }
     }

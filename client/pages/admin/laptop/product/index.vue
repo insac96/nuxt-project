@@ -30,7 +30,7 @@
                 <!--Option Search-->
                 <v-sheet class="d-flex align-center pa-3" color="heading">
                     <!--Input Search-->
-                    <v-form ref="form" @submit.prevent="ShowProductByQuery">
+                    <div>
                         <v-text-field
                             v-model="KeySearch"
                             outlined dense rounded
@@ -39,9 +39,9 @@
                             color="primary"
                             hide-details
                             autocomplete="off"
-                            @click:append="ShowProductByQuery"
+                            @keyup="ShowProductByQuery"
                         ></v-text-field>
-                    </v-form>
+                    </div>
 
                     <v-spacer></v-spacer>
 
@@ -295,6 +295,8 @@ export default {
 
                 this.Products = Search.products;
                 this.Count = Search.count;
+
+                console.log(this.Products)
             }
             catch(e){
                 return false;
