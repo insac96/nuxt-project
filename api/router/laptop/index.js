@@ -7,6 +7,7 @@ import { Authentic_Guest, Authentic_Smod, Authentic_Admin } from '../../middlewa
 
 let Router = express.Router();
 
+////////////////////////////////////////////////////////////
 /////////////////////GUEST - CONTROLLER/////////////////////
 //Company - Guest
 Router.get("/company/list/getInfo", Controller_Guest.Company.GetListOnlyInfo);
@@ -34,11 +35,12 @@ Router.post("/cart/list/get", Controller_Guest.Cart.GetList);
 
 //Order
 Router.post("/order/create", Authentic_Guest, Controller_Guest.Order.Create);
-/////////////////////END Guest - CONTROLLER//////////////////
+/////////////////////END Guest - CONTROLLER/////////////////
+////////////////////////////////////////////////////////////
 
 
-
-/////////////////////ADMIN - CONTROLLER//////////////////////
+////////////////////////////////////////////////////////////
+/////////////////////ADMIN - CONTROLLER/////////////////////
 //Company - Admin
 Router.get("/admin/company/list/get", Authentic_Smod, Controller_Admin.Company.Get);
 Router.get("/admin/company/list/getInfo", Authentic_Smod, Controller_Admin.Company.GetListOnlyInfo);
@@ -89,11 +91,8 @@ Router.post('/admin/variant/color/delete', Authentic_Admin, Controller_Admin.Var
 //WareHouse - Admin
 Router.post('/admin/warehouse/import', Authentic_Smod, Controller_Admin.Warehouse.Import);
 Router.post('/admin/warehouse/export/price/edit', Authentic_Smod, Controller_Admin.Warehouse.EditExportPrice);
+Router.post('/admin/warehouse/visibility/edit', Authentic_Smod, Controller_Admin.Warehouse.EditVisibility);
 Router.post('/admin/warehouse/delete', Authentic_Admin, Controller_Admin.Warehouse.Delete);
-
-//WareHouse Color - Admin
-Router.post('/admin/warehouse/color/create', Authentic_Smod, Controller_Admin.WarehouseColor.Create);
-Router.post('/admin/warehouse/color/delete', Authentic_Admin, Controller_Admin.WarehouseColor.Delete);
 
 //Article - Admin
 Router.post('/admin/article/create', Authentic_Smod, Controller_Admin.Article.Create);
@@ -115,11 +114,12 @@ Router.post('/admin/order/done/edit', Authentic_Smod, Controller_Admin.Order.Edi
 Router.post('/admin/order/information/edit', Authentic_Smod, Controller_Admin.Order.EditInformation);
 
 //ProductOrder - Admin
-Router.post('/admin/order/product/list/get', Authentic_Smod, Controller_Admin.Order.GetListProductOrder);
-Router.post('/admin/order/product/delete', Authentic_Smod, Controller_Admin.Order.DeleteProductOrder);
-Router.post('/admin/order/product/edit', Authentic_Smod, Controller_Admin.Order.EditProductOrder);
-Router.post('/admin/order/product/add', Authentic_Smod, Controller_Admin.Order.AddProductOrder);
-Router.post('/admin/order/product/add/search', Authentic_Smod, Controller_Admin.Order.SearchProductForOrder);
+Router.post('/admin/order/product/list/get', Authentic_Smod, Controller_Admin.ProductOrder.GetListProductOrder);
+Router.post('/admin/order/product/delete', Authentic_Smod, Controller_Admin.ProductOrder.DeleteProductOrder);
+Router.post('/admin/order/product/edit', Authentic_Smod, Controller_Admin.ProductOrder.EditProductOrder);
+Router.post('/admin/order/product/add', Authentic_Smod, Controller_Admin.ProductOrder.AddProductOrder);
+Router.post('/admin/order/product/add/search', Authentic_Smod, Controller_Admin.ProductOrder.SearchProductForOrder);
 /////////////////////END Admin - CONTROLLER//////////////////
+/////////////////////////////////////////////////////////////
 
 export default Router;

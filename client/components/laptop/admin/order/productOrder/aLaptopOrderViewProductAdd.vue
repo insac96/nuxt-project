@@ -24,71 +24,90 @@
         </v-form>
 
         <!--List Product Search-->
-        <v-card-text v-if="ProductsSearch">
-            <v-expansion-panels accordion focusable>
-                <v-expansion-panel
-                    class="elevation-0"
-                    v-for="(product, indexProduct) in ProductsSearch" :key="indexProduct"
-                >   
-                    <v-expansion-panel-header>{{ product.name }}</v-expansion-panel-header>
-                    
+        <v-expansion-panels accordion focusable v-if="ProductsSearch">
+            <v-expansion-panel v-for="(product, indexProduct) in ProductsSearch" :key="indexProduct">
+                <v-expansion-panel-header>{{ product.name }}</v-expansion-panel-header>
+                
+                <v-expansion-panel-content>
+                    <v-simple-table class="Table">
+                        <template v-slot:default>
+                            <thead>
+                                <tr v-for="(variant, indexVariant) in product.variants" :key="indexVariant">
+                                    <!-- Infor -->
+                                    <td class="pl-0 py-2" width="250">
+                                        <!--Code-->
+                                        <p class="text-subtitle-1 font-weight-bold mb-0 Text-Nowap">
+                                            {{variant.code}}
+                                        </p>
 
-                    <v-expansion-panel-content>
-                        <v-simple-table class="Table">
-                            <template v-slot:default>
-                                <thead>
-                                    <tr v-for="(variant, indexVariant) in product.variants" :key="indexVariant">
-                                        <!-- Infor -->
-                                        <td class="pl-0 py-2">
-                                            <!--Code-->
-                                            <p class="text-subtitle-1 font-weight-bold mb-0 Text-Nowap">
-                                                {{variant.code}}
-                                            </p>
+                                        <!--Configuration-->
+                                        <div class="mt-1">
+                                            <v-chip small class="mb-1">{{variant.screen}}</v-chip>
+                                            <v-chip small class="mb-1">{{variant.cpu}}</v-chip>
+                                            <v-chip small class="mb-1">{{variant.ram}}</v-chip>
+                                            <v-chip small class="mb-1">{{variant.harddrive}}</v-chip>
+                                            <v-chip small class="mb-1">{{variant.gpu}}</v-chip>
+                                        </div>
+                                    </td>
 
-                                            <!--Configuration-->
-                                            <div class="mt-1">
-                                                <v-chip small class="mb-1">{{variant.screen}}</v-chip>
-                                                <v-chip small class="mb-1">{{variant.cpu}}</v-chip>
-                                                <v-chip small class="mb-1">{{variant.ram}}</v-chip>
-                                                <v-chip small class="mb-1">{{variant.harddrive}}</v-chip>
-                                                <v-chip small class="mb-1">{{variant.gpu}}</v-chip>
-                                            </div>
-                                        </td>
+                                    <!-- Discount -->
+                                    <td width="150">
+                                        <v-chip :color="variant.discount.type ? 'error' : ''">
+                                            <span v-if="!variant.discount.type">Không Giảm Giá</span>
+                                            <span v-else> - {{ $String.toPrice(variant.discount.amount) }}đ</span>
+                                        </v-chip>
+                                    </td>
 
-                                        <!-- Price -->
-                                        <td>
-                                            <v-chip color="primary">{{ $String.toPrice(variant.warehouse.export.price) }}đ</v-chip>
-                                        </td>
+                                    <!-- Color -->
+                                    <td class="text-right pr-0">
+                                        <div v-for="(warehouse, indexWarehouse) in variant.warehouses" :key="indexWarehouse">
+                                            <v-menu 
+                                                v-for="(warehouseColor, indexColor) in warehouse.colors" :key="indexColor"
+                                                offset-y :nudge-width="250"
+                                                left :nudge-bottom="10"
+                                            >   
+                                                <!-- Menu Button -->
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-btn 
+                                                        small dark fab x-small 
+                                                        :ripple="false" elevation="0"
+                                                        :color="warehouseColor.information.code"
+                                                        v-on="on"
+                                                        v-bind="attrs"
+                                                    ></v-btn>
+                                                </template>
 
-                                        <!-- Discount -->
-                                        <td>
-                                            <v-chip :color="variant.discount.type ? 'error' : ''">
-                                                <span v-if="!variant.discount.type">Không Giảm Giá</span>
-                                                <span v-else> - {{ $String.toPrice(variant.discount.amount) }}đ</span>
-                                            </v-chip>
-                                        </td>
+                                                <!-- Menu Body -->
+                                                <v-card>
+                                                    <v-card-text class="d-flex justify-space-between align-center py-3">
+                                                        <span class="text-subtitle-1 font-weight-bold">Số Lượng</span>
+                                                        <v-chip>{{warehouseColor.import.amount}}</v-chip>
+                                                    </v-card-text>
 
-                                        <!-- Color -->
-                                        <td class="text-right pr-0">
-                                            <v-btn-toggle>
-                                                <v-btn 
-                                                    small dark
-                                                    v-for="(warehouseColor, indexColor) in variant.warehouse.colors" :key="indexColor"    
-                                                    :color="warehouseColor.information.code" fab :ripple="false"
-                                                    @click="AddProductOrder(warehouseColor, indexColor, variant, product)"
-                                                >
-                                                    {{warehouseColor.import.amount}}
-                                                </v-btn>
-                                            </v-btn-toggle>
-                                        </td>
-                                    </tr>
-                                </thead>
-                            </template>
-                        </v-simple-table>
-                    </v-expansion-panel-content>
-                </v-expansion-panel>
-            </v-expansion-panels>
-        </v-card-text>
+                                                    <v-card-text class="d-flex justify-space-between align-center py-3">
+                                                        <span class="text-subtitle-1 font-weight-bold">Giá Bán</span>
+                                                        <v-chip>{{ $String.toPrice(warehouse.export.price) }}đ</v-chip>
+                                                    </v-card-text>
+
+                                                    <v-card-actions class="px-4">
+                                                        <v-btn 
+                                                            rounded block
+                                                            color="primary"
+                                                            elevation="0"
+                                                            @click="AddProductOrder(warehouseColor)"
+                                                        >Thêm Sản Phẩm</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-menu>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </template>
+                    </v-simple-table>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+        </v-expansion-panels>
     </v-card>
 </template>
 
@@ -119,8 +138,6 @@ export default {
                     key: this.NewSearch
                 });
 
-                console.log(Products);
-
                 this.ProductsSearch = Products;
                 this.Loading.search = false;
             }
@@ -129,40 +146,34 @@ export default {
             }  
         },
 
-        async AddProductOrder (warehouseColor, indexColor, variant, product) {
+        async AddProductOrder (warehouseColor) {
             this.Loading.add = true;
             
             try {
                 let NewProductOrder = await this.$axios.$post(this.$api.laptop.admin.AddProductOrder, {
                     order: this.order._id,
                     warehouseColor: warehouseColor._id,
-                    whenOrder: {
-                        amount: 1,
-                        price: variant.warehouse.export.price,
-                        upprice: warehouseColor.export.upprice,
-                        discountAmount: variant.discount.amount
-                    }
                 });
 
                 this.Update(NewProductOrder);
+                warehouseColor.import.amount --;
 
                 this.Loading.add = false;
             }
             catch(e){
-                console.log(e)
                 this.Loading.add = false;
             }   
         },
 
         Update (NewProductOrder) {
             this.order.products.push(NewProductOrder);
-            
-            this.$emit('done');
-            this.Cancel();
-        },
 
-        Cancel () {
-            this.$emit('cancel');
+            this.$store.commit('dialogStatus/show', {
+                text: 'Đã Thêm Sản Phẩm Vào Đơn Hàng',
+                actionClose: this.DoneOrder
+            });
+            
+            this.$emit('update');
         }
     }
 }

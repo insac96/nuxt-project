@@ -11,12 +11,14 @@ export const Create = async (req, res, next) => {
     if(!company || !trademark || !product || !variant || !name || !code) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Variant
         let Variant = await VariantDB
         .findById(variant)
         .select('_id');
 
         if(!Variant) throw 'Biến thể không tồn tại';
 
+        //Create New Variant Color
         let NewVariantColor = new VariantColorDB({
             company: company,
             trademark: trademark,
@@ -27,8 +29,10 @@ export const Create = async (req, res, next) => {
             image: image
         });
 
+        //Save
         await NewVariantColor.save();
 
+        //End
         res.send(NewVariantColor);
         res.end();
     }
@@ -44,12 +48,14 @@ export const Edit = async (req, res, next) => {
     if(!_id || !name || !code) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Variant Color
         let Color = await VariantColorDB
         .findById(_id)
         .select('_id');
 
         if(!Color) throw 'Màu sắc không tồn tại';
 
+        //Update
         await VariantColorDB.updateOne({'_id': _id}, {
             name: name,
             code: code,
@@ -57,6 +63,7 @@ export const Edit = async (req, res, next) => {
             upprice: upprice ? upprice : 0
         });
 
+        //Save
         res.json(true);
         res.end();
     }
@@ -72,11 +79,14 @@ export const Delete = async (req, res, next) => {
     if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Count Color Of Warehouse
         let CountColorOfWarehouse = await WarehouseColorDB.countDocuments({'information': _id});
         if(CountColorOfWarehouse > 0) throw 'Không thể xóa vì màu sắc biến thể đã được nhập kho';
 
+        //Delete
         await VariantColorDB.deleteOne({'_id': _id});
 
+        //End
         res.json(true);
         res.end();
     }

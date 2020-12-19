@@ -5,7 +5,7 @@ export default {
         },
 
         themes: {
-            //Dark Time
+            //Dark
             dark: {
                 //Color
                 primary: "#1976d2",
@@ -45,6 +45,7 @@ export default {
                 guest: '#757575'
             },
             
+            //Light
             light: {
                 //Color
                 primary: "#1976d2",

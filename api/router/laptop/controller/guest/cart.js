@@ -7,7 +7,8 @@ export const GetList = async (req, res, next) => {
     if(!Array.isArray(req.body)) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
-        let List = await WarehouseColorDB
+        //Get Product (WarehouseColor)
+        let Products = await WarehouseColorDB
         .find({
             '_id': { 
                 $in: req.body
@@ -18,7 +19,8 @@ export const GetList = async (req, res, next) => {
         .populate({path: 'variant', select: 'screen cpu ram gpu harddrive discount'})
         .populate({path: 'warehouse', select: 'import export'});
 
-        res.json(List);
+        //End
+        res.json(Products);
         res.end();
     }
     catch(e) {

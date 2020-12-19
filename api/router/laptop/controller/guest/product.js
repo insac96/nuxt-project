@@ -8,6 +8,7 @@ export const GetByLink = async (req, res, next) => {
     if(!link) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findOne({'link': link})
         .populate({path: 'company', select: 'name logo'})
@@ -20,9 +21,15 @@ export const GetByLink = async (req, res, next) => {
                 { 
                     path: 'warehouses',
                     select: 'import export',
+                    match: { 
+                        'visibility': true,
+                        'import.amount': { $gte: 1 } 
+                    },
+
                     populate: { 
                         path: 'colors',
                         select: 'import export',
+                        match: { 'import.amount': { $gte: 1 } },
 
                         populate: { 
                             path: 'information',
@@ -35,6 +42,7 @@ export const GetByLink = async (req, res, next) => {
 
         if(!Product) return next(new ErrorHandler(404, 'Sản Phẩm Không Tồn Tại'));
         
+        //End
         res.json(Product);
         res.end();
     }

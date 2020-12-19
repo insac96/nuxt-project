@@ -12,6 +12,7 @@ export const Get = async (req, res, next) => {
     let { skip, company, trademark, keySearch } = req.body;
     let Query = {};
     
+    //Create Query Search
     if(company)
         Query['company'] = company;
     if(trademark)
@@ -20,9 +21,10 @@ export const Get = async (req, res, next) => {
         Query['link'] = {
             $regex: keySearch
         };
-    }
+    };
 
     try {
+        //Get Products
         let Products = await ProductDB
         .find(Query)
         .populate({path: 'company', select: 'name'})
@@ -31,8 +33,10 @@ export const Get = async (req, res, next) => {
         .skip((skip == 0 || !skip) ? null : Number(skip))
         .limit(10)
 
+        //Get Count Products
         let Count = await ProductDB.countDocuments(Query);
 
+        //End
         res.json({
             count: Count,
             products: Products
@@ -50,15 +54,17 @@ export const Create = async (req, res, next) => {
 
     if(!product.name || !product.company || !product.trademark || !configuration) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
+    //Convent Link
     let link = StringPlugin.toConvert(product.name, '-');
     product.link = link;
 
     try {
-        let Get = await ProductDB
+        //Get Product
+        let Product = await ProductDB
         .findOne({'link': link})
         .select('_id');
 
-        if(Get) return res.json({
+        if(Product) return res.json({
             error: true,
             status: 'name',
             message: 'Tên sản phẩm đã tồn tại'
@@ -75,6 +81,7 @@ export const Create = async (req, res, next) => {
         NewConfiguration.product = NewProduct._id;
         await NewConfiguration.save();
 
+        //End
         res.json(NewProduct);
         res.end();
     }
@@ -90,15 +97,18 @@ export const Delete = async (req, res, next) => {
     if(!_id) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Count Variant In Product
         let CountVariantInProduct = await VariantDB.countDocuments({'product': _id});
         if(CountVariantInProduct > 0) throw 'Không thể xóa vì sản phẩm đã tồn tại biến thể';
 
+        //Delete
         await ProductDB.deleteOne({ '_id': _id });
         await ConfigurationDB.deleteOne({ 'product': _id });
         await ArticleDB.deleteOne({ 'product': _id });
         await CommentDB.deleteMany({ 'product': _id });
         await ReplyDB.deleteMany({ 'product': _id });
 
+        //End
         res.send(true);
         res.end();
     }
@@ -114,6 +124,7 @@ export const GetByLink = async (req, res, next) => {
     if(!link) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findOne({'link': link})
         .populate({path: 'company', select: 'name'})
@@ -153,6 +164,7 @@ export const GetByLink = async (req, res, next) => {
 
         if(!Product) throw 'Sản phẩm không tồn tại';
         
+        //End
         res.json(Product);
         res.end();
     }
@@ -170,12 +182,14 @@ export const EditInformation = async (req, res, next) => {
     let link = StringPlugin.toConvert(name, '-');
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findById(_id)
         .select('_id link');
 
         if(!Product) throw 'Sản phẩm không tồn tại';
 
+        //Check Link
         if(link != Product.link){
             let Get = await ProductDB
             .findOne({'link': link})
@@ -188,6 +202,7 @@ export const EditInformation = async (req, res, next) => {
             });
         }
 
+        //Save
         Product.name = name;
         Product.company = company;
         Product.trademark = trademark;
@@ -195,6 +210,7 @@ export const EditInformation = async (req, res, next) => {
 
         await Product.save();
         
+        //End
         res.send(true);
         res.end();
     }
@@ -210,16 +226,18 @@ export const EditImages = async (req, res, next) => {
     if(!_id || !images || !Array.isArray(images)) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findById(_id)
         .select('_id');
 
         if(!Product) throw 'Sản phẩm không tồn tại';
 
+        //Save
         Product.images = images;
-
         await Product.save();
 
+        //End
         res.send(true);
         res.end();
     }
@@ -235,16 +253,18 @@ export const EditVisibility = async (req, res, next) => {
     if(!_id || visibility == null || typeof(visibility) != 'boolean') return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findById(_id)
         .select('_id');
 
         if(!Product) throw 'Sản phẩm không tồn tại';
 
+        //Save
         Product.visibility = visibility;
-
         await Product.save();
 
+        //End
         res.send(true);
         res.end();
     }

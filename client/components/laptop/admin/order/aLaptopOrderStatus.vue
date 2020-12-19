@@ -27,6 +27,7 @@
         <!--Footer-->
         <v-card-actions class="px-6 py-4 pt-0">
             <v-btn 
+                v-if="CloneOrder.verification.type"
                 color="error" dark
                 rounded elevation="0" 
                 class="mx-0" large
@@ -54,7 +55,7 @@
                 :loading="Loading.edit" 
                 @click="EditStatusOrder"
             >
-                {{ CloneOrder.status ? 'Cập Nhật' : 'Xác Minh'}}
+                {{ CloneOrder.verification.type ? 'Cập Nhật' : 'Xác Minh'}}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -121,6 +122,7 @@ export default {
         },
 
         UpdateStatus (newUpdateOrder) {
+            Object.assign(this.CloneOrder.verification, newUpdateOrder.verification);
             Object.assign(this.order.verification, newUpdateOrder.verification);
 
             this.Cancel();

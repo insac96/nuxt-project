@@ -51,6 +51,7 @@ export default {
         //WareHouse
         ImportWareHouse: '/laptop/admin/warehouse/import',
         EditWarehouseExportPrice: '/laptop/admin/warehouse/export/price/edit',
+        EditVisibilityWareHouse: '/laptop/admin/warehouse/visibility/edit',
         DeleteWarehouse: '/laptop/admin/warehouse/delete',
 
         //WareHouse Color

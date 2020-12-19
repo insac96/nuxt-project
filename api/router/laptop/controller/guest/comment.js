@@ -11,6 +11,7 @@ export const GetListByProductID = async (req, res, next) => {
     if(!product) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Comments
         let Comments = await CommentDB
         .find({'product': product})
         .select('user content create showInputReply')
@@ -26,9 +27,11 @@ export const GetListByProductID = async (req, res, next) => {
         .skip(0)
         .limit(5);
 
+        //Get Count All Comments
         let countComment = await CommentDB
         .countDocuments({'product': product});
 
+        //End
         res.json({
             comments: Comments,
             countComment: countComment
@@ -47,12 +50,14 @@ export const Add = async (req, res, next) => {
     if(!company || !trademark || !product || !content) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Product
         let Product = await ProductDB
         .findById(product)
         .select('_id');
 
         if(!Product) throw 'Sản phẩm gốc không tồn tại';
 
+        //Create New Comment
         let NewComment = new CommentDB({
             company: company,
             trademark: trademark,
@@ -61,8 +66,10 @@ export const Add = async (req, res, next) => {
             user: req.authentic.id,
         });
 
+        //Save
         await NewComment.save();
 
+        //End
         res.json(NewComment);
         res.end();
     }
@@ -78,6 +85,7 @@ export const More = async (req, res, next) => {
     if(!skip || !product) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Comments
         let MoreComment = await CommentDB
         .find({ 'product' : product })
         .select('user content create showInputReply')
@@ -93,6 +101,7 @@ export const More = async (req, res, next) => {
         .skip(skip)
         .limit(5);
         
+        //End
         res.json(MoreComment);
         res.end();
     }
@@ -108,12 +117,14 @@ export const AddReply = async (req, res, next) => {
     if(!company || !trademark || !product || !comment || !content) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Comment
         let Comment = await CommentDB
         .findById(comment)
         .select('_id');
 
         if(!Comment) throw 'Bình luận không tồn tại';
 
+        //Create New Reply
         let NewReply = new ReplyDB({
             company: company,
             trademark: trademark,
@@ -123,8 +134,10 @@ export const AddReply = async (req, res, next) => {
             user: req.authentic.id,
         })
         
+        //Save
         await NewReply.save();
 
+        //End
         res.json(NewReply);
         res.end();
     }

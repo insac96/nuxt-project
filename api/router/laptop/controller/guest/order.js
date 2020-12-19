@@ -13,6 +13,7 @@ export const Create = async (req, res, next) => {
     if(listProductOrder.length < 1) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Create New Order
         let NewOrder = new OrderDB({
             user: req.authentic.id,
             vendor: vendor,
@@ -22,11 +23,14 @@ export const Create = async (req, res, next) => {
         });
         NewOrder_ID = NewOrder._id;
 
+        //Save
         await NewOrder.save();
 
+        //Create New Product Order
         for (let i = 0; i < listProductOrder.length; i++) {
             let item = listProductOrder[i]
             
+            //Get Product (WarehouseColor)
             let Product = await WarehouseColorDB
             .findOne({'_id': item.warehouseColor})
             .select('_id product import')
@@ -42,6 +46,7 @@ export const Create = async (req, res, next) => {
                 status: `Sản phẩm ${Product.product.name} không đủ số lượng trong kho`
             };
 
+            //Save Product Order
             let NewProductOrder = new ProductOrderDB({
                 warehouse: item.warehouse,
                 warehouseColor: item.warehouseColor,
@@ -52,13 +57,16 @@ export const Create = async (req, res, next) => {
             await NewProductOrder.save();
         };
 
+        //End
         res.send(true);
         res.end();
     }
     catch (e) {
+        //Delete All
         await OrderDB.deleteOne({'_id': NewOrder_ID});
         await ProductOrderDB.deleteMany({'order': NewOrder_ID});
 
+        //Send Error
         if(!e.type) return next(new ErrorHandler(500, e.toString()));
         next(new ErrorHandler(500, e.status));
     }

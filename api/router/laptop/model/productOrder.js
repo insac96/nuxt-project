@@ -9,6 +9,8 @@ const ProductOrderSchema = new Schema(
         warehouseColor: { type: Schema.Types.ObjectId, ref: 'LaptopWarehouseColor', required: true },
         order: { type: Schema.Types.ObjectId, ref: 'LaptopOrder', required: true },
         
+        verification: { type: Boolean, default: false, required: true },
+        
         whenOrder: {
             amount: { type: Number , required: true },
             price: { type: Number , required: true },

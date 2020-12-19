@@ -18,7 +18,12 @@ const WarehouseColorSchema = new Schema(
         },
 
         export: {
+            amount: { type: Number, required: true, default: 0 },
             upprice: { type: Number, required: true, default: 0 },
+        },
+
+        orderWait: {
+            amount:  { type: Number, required: true, default: 0}
         }
     }, 
     { 

@@ -3,34 +3,37 @@
 import mongoose from 'mongoose';
 import VariantDB from '../../model/variant';
 
+const LookupProduct = { 
+    $lookup: {
+        from: 'laptopproducts',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'product',
+    }
+};
+
+const LookupWarehouse = {
+    $lookup: {
+        from: 'laptopwarehouses',
+        let: { 'variant': '$_id' },
+        pipeline: [
+            { $match: { 
+                'visibility': true, //Kho được hiển thị
+                'import.amount': { $gte: 1 }, //Số lượng sản phẩm trong kho >= 1
+                $expr: { $eq: [ "$variant",  "$$variant" ] },
+            }},
+            { $sort: { 'export.price': 1 } }, //Sắp xếp theo giá thấp đến cao
+            { $limit: 1 }, //Lấy giá trị đầu tiên
+        ],
+        as: 'warehouse',
+    }
+};
+
 //Get Variant Discount
 export const GetListByDiscount = async (req, res, next) => {
     let { skip, limit } = req.body;
 
-    let LookupProduct = { 
-        $lookup: {
-            from: 'laptopproducts',
-            localField: 'product',
-            foreignField: '_id',
-            as: 'product',
-        }
-    };
-
-    let LookupWarehouse = {
-        $lookup: {
-            from: 'laptopwarehouses',
-            let: { 'variant': '$_id' },
-            pipeline: [
-                { $match: { 
-                        $expr: { $eq: [ "$variant",  "$$variant" ] },
-                }},
-                { $sort: {  'import.date': 1 } },
-                { $limit: 1 },
-            ],
-            as: 'warehouse',
-        }
-    };
-
+    //Set Match
     let Match = {
         $match: { 
             'product.visibility': true,
@@ -43,6 +46,7 @@ export const GetListByDiscount = async (req, res, next) => {
     }
 
     try {
+        //Get Variants
         let Variants = await VariantDB
         .aggregate([
             LookupProduct, { $unwind: '$product' },
@@ -63,6 +67,7 @@ export const GetListByDiscount = async (req, res, next) => {
             }}
         ]);
 
+        //Get Count All Variant
         let Count = await VariantDB
         .aggregate([
             LookupProduct, { $unwind: '$product' },
@@ -71,6 +76,7 @@ export const GetListByDiscount = async (req, res, next) => {
             { $count: "number" }
         ]);
 
+        //End
         res.json({
             variants: Variants,
             countVariant: Count.length == 0 ? 0 : Count[0].number
@@ -88,30 +94,7 @@ export const GetListByStatus = async (req, res, next) => {
 
     if(!status) next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
-    let LookupProduct = { 
-        $lookup: {
-            from: 'laptopproducts',
-            localField: 'product',
-            foreignField: '_id',
-            as: 'product',
-        }
-    };
-
-    let LookupWarehouse = {
-        $lookup: {
-            from: 'laptopwarehouses',
-            let: { 'variant': '$_id' },
-            pipeline: [
-                { $match: { 
-                        $expr: { $eq: [ "$variant",  "$$variant" ] },
-                }},
-                { $sort: {  'import.date': 1 } },
-                { $limit: 1 },
-            ],
-            as: 'warehouse',
-        }
-    };
-
+    //Set Match
     let Match = {
         $match: { 
             'product.visibility': true,
@@ -120,6 +103,7 @@ export const GetListByStatus = async (req, res, next) => {
     }
     
     try {
+        //Get Variants
         let Variants = await VariantDB
         .aggregate([
             LookupProduct, { $unwind: '$product' },
@@ -139,6 +123,7 @@ export const GetListByStatus = async (req, res, next) => {
             }}
         ]);
 
+        //Get Count All Variants
         let Count = await VariantDB
         .aggregate([
             LookupProduct, { $unwind: '$product' },
@@ -147,6 +132,7 @@ export const GetListByStatus = async (req, res, next) => {
             { $count: "number" }
         ])
 
+        //End
         res.json({
             variants: Variants,
             countVariant: Count.length == 0 ? 0 : Count[0].number
@@ -207,31 +193,8 @@ export const SearchVariant = async (req, res, next) => {
         Filter['$or'] = GPUs;
     };
 
-    try {
-        let LookupProduct = { 
-            $lookup: {
-                from: 'laptopproducts',
-                localField: 'product',
-                foreignField: '_id',
-                as: 'product',
-            }
-        };
-
-        let LookupWarehouse = {
-            $lookup: {
-                from: 'laptopwarehouses',
-                let: { 'variant': '$_id' },
-                pipeline: [
-                    { $match: { 
-                            $expr: { $eq: [ "$variant",  "$$variant" ] },
-                    }},
-                    { $sort: {  'import.date': 1 } },
-                    { $limit: 1 },
-                ],
-                as: 'warehouse',
-            }
-        };
-        
+    try {     
+        //Set Match   
         let Match = {
             $match: {
                 'product.visibility': true,
@@ -239,13 +202,25 @@ export const SearchVariant = async (req, res, next) => {
             }
         };
 
+        //Get Variants
         let Variants = await VariantDB
         .aggregate([
             LookupProduct, { $unwind: '$product' },
             LookupWarehouse, { $unwind: '$warehouse' },
-            Match
+            Match,
+            { $project: {
+                '_id': 1,
+                'code': 1,
+                'discount': 1,
+                'status': 1,
+                'warehouse.export': 1,
+                'product.name': 1,
+                'product.link': 1,
+                'product.images': 1,
+            }}
         ]);
 
+        //End
         res.json(Variants);
         res.end();
     }

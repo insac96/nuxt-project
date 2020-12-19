@@ -37,6 +37,7 @@
                                 <tr>
                                     <th width="50">Màu</th>
                                     <th class="text-center">Tăng Giá</th>
+                                    <th width="130" class="text-center">Đang Order</th>
                                     <th width="120" class="text-center">Đã Bán</th>
                                     <th width="120" class="text-right">Tồn Kho</th>
                                 </tr>
@@ -50,7 +51,8 @@
                                     </td>
 
                                     <td class="text-center">{{$String.toPrice(warehouseColor.export.upprice)}}</td>
-                                    <td class="text-center">0</td>
+                                    <td class="text-center">{{warehouseColor.orderWait.amount}}</td>
+                                    <td class="text-center">{{warehouseColor.export.amount}}</td>
                                     <td class="text-right">{{warehouseColor.import.amount}}</td>
                                 </tr>
                             </tbody>
@@ -71,6 +73,21 @@
 
                 <!-- Setting -->
                 <v-tab-item>
+                    <!--Visibility-->
+                    <v-sheet class="d-flex justify-space-between mb-6 pl-2">
+                        <span class="text-subtitle-1 font-weight-bold">Ẩn/Hiện kho hàng</span>
+
+                        <v-switch 
+                            v-model="warehouse.visibility" 
+                            hide-details color="primary" 
+                            class="ma-0 pa-0"
+                            style="margin-right: -10px !important"
+                            inset
+                            @change="EditVisibilityWareHouse"
+                            :disabled="Loading.editVisibility"
+                        ></v-switch>
+                    </v-sheet>
+
                     <v-form ref="form" v-model="Validate">
                         <!--Export-->
                         <v-text-field
@@ -133,7 +150,8 @@ export default {
             Validate: true,
             Loading: {
                 edit: false,
-                delete: false
+                delete: false,
+                editVisibility: false
             }
         }
     },
@@ -189,6 +207,22 @@ export default {
             }
             catch (e) {
                 this.Loading.delete = false;
+            }
+        },
+
+        async EditVisibilityWareHouse () {
+            this.Loading.editVisibility = true;
+
+            try {
+                let Visibility = await this.$axios.$post(this.$api.laptop.admin.EditVisibilityWareHouse, {
+                    _id: this.CloneWareHouse._id
+                });
+
+                this.Loading.editVisibility = false;
+            }
+            catch (e) {
+                this.Loading.editVisibility = false;
+                this.CloneWareHouse.visibility = !this.CloneWareHouse.visibility;
             }
         },
 

@@ -67,6 +67,12 @@
                                         <v-chip small class="mb-1">{{product.warehouseColor.variant.ram}}</v-chip>
                                         <v-chip small class="mb-1">{{product.warehouseColor.variant.harddrive}}</v-chip>
                                         <v-chip small class="mb-1">{{product.warehouseColor.variant.gpu}}</v-chip>
+                                        <v-chip 
+                                            small class="mb-1" 
+                                            :color="product.warehouseColor.information.code"
+                                        >
+                                            {{product.warehouseColor.information.name}}
+                                        </v-chip>
                                     </div>
                                 </td>
                                 
@@ -127,8 +133,7 @@
                                     <v-btn 
                                         elevation="0" color="delete" 
                                         small icon 
-                                        :loading="Loading.delete"
-                                        :disabled="order.done.type"
+                                        :disabled="order.done.type || Loading.delete"
                                         @click="DeleteProductOrder(product, indexProduct)"
                                     >
                                         <v-icon>delete</v-icon>
@@ -163,6 +168,7 @@
             <!--Dialog Product Order Edit-->
             <v-dialog v-model="ProductOrderDialog.edit.type" persistent max-width="500">
                 <ALaptopOrderViewProductEdit 
+                    @update="$fetch()"
                     @cancel="ProductOrderDialog.edit.type = false" 
                     :product="ProductOrderDialog.edit.select"
                 ></ALaptopOrderViewProductEdit>
@@ -171,7 +177,7 @@
             <!--Dialog Product Order Add-->
             <v-dialog v-model="ProductOrderDialog.add.type" max-width="700">
                 <ALaptopOrderViewProductAdd 
-                    @done="$fetch()"
+                    @update="$fetch()"
                     @cancel="ProductOrderDialog.add.type = false" 
                     :order="ProductOrderDialog.add.order"
                 ></ALaptopOrderViewProductAdd>

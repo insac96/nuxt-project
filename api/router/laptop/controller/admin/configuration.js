@@ -9,16 +9,19 @@ export const EditDefault = async (req, res, next) => {
     if(!_id || !req.body.default) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
 
     try {
+        //Get Configuration
         let Configuration = await ConfigurationDB
         .findById(_id)
-        .select('_id');
+        .select('_id default');
 
         if(!Configuration) throw 'Dữ liệu cấu hình không tồn tại';
 
+        //Save
         Configuration.default = req.body.default;
 
         await Configuration.save();
 
+        //End
         res.send(true);
         res.end();
     }
@@ -34,16 +37,19 @@ export const EditUpgrade = async (req, res, next) => {
     if(!_id || !upgrade) return next(new ErrorHandler(400, 'Dữ Liệu Đầu Vào Không Đúng'));
     
     try {
+        //Get Configuration
         let Configuration = await ConfigurationDB
         .findById(_id)
-        .select('_id');
+        .select('_id upgrade');
 
         if(!Configuration) throw 'Dữ liệu cấu hình không tồn tại';
 
+        //Save
         Configuration.upgrade = upgrade;
 
         await Configuration.save();
 
+        //End
         res.send(true);
         res.end();
     }

@@ -7,6 +7,7 @@ import { Authentic_Guest, Authentic_Smod, Authentic_Admin } from '../../middlewa
 
 let Router = express.Router();
 
+////////////////////////////////////////////////////////////
 /////////////////////GUEST - CONTROLLER/////////////////////
 //Authentic
 Router.get('/authentic/get', Authentic_Guest, Controller_Guest.Authentic.Get);
@@ -18,15 +19,18 @@ Router.get('/contact/list/get', Authentic_Guest, Controller_Guest.Contact.Get);
 Router.post('/contact/create', Authentic_Guest, Controller_Guest.Contact.Create);
 Router.post('/contact/edit', Authentic_Guest, Controller_Guest.Contact.Edit);
 Router.post('/contact/delete', Authentic_Guest, Controller_Guest.Contact.Delete);
-/////////////////////END Guest - CONTROLLER/////////////////
+/////////////////////END GUEST - CONTROLLER/////////////////
+////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////////////////////
 /////////////////////ADMIN - CONTROLLER/////////////////////
 //User
 Router.post('/admin/member/get', Authentic_Smod, Controller_Admin.User.Get);
 Router.post('/admin/member/ban', Authentic_Smod, Controller_Admin.User.Ban);
 Router.post('/admin/member/unban', Authentic_Smod, Controller_Admin.User.Unban);
 Router.post('/admin/member/role/change', Authentic_Admin, Controller_Admin.User.ChangeRole);
-/////////////////////END Admin - CONTROLLER//////////////////
+/////////////////////END ADMIN - CONTROLLER//////////////////
+////////////////////////////////////////////////////////////
 
 export default Router;

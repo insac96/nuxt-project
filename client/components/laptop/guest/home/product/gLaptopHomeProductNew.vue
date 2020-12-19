@@ -33,6 +33,8 @@
 
         <!--Fetch Pendding-->
         <v-card-text v-if="$fetchState.pending || $fetchState.error">
+            <v-alert type="error" color="error" class="BoxShadow" v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+
             <v-row dense>
                 <v-col cols="6" sm="3" class="pa-1" v-for="i in 4" :key="i">
                     <div class="card BoxShadow">
@@ -44,7 +46,7 @@
 
         <!--Fetch Done-->
         <v-card-text v-else>
-            <v-alert type="info" color="primary" class="BoxShadow" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
+            <v-alert type="info" color="primary" class="BoxShadow mb-0" v-if="variants.length < 1">Hiện Tại Không Có Sản Phẩm Để Hiển Thị</v-alert>
 
             <v-row dense align="stretch" v-else>
                 <v-col 

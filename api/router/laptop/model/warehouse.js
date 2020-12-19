@@ -10,8 +10,11 @@ const WarehouseSchema = new Schema(
         product: { type: Schema.Types.ObjectId, ref: 'LaptopProduct', required: true },
         variant: { type: Schema.Types.ObjectId, ref: 'LaptopVariant', required: true },
 
+        visibility: { type: Boolean, default: false, required: true },
+        
         ///Import
         import: {
+            amount: { type: Number },
             price: { type: Number, required: true },
             date: { type: Date, default: Date.now },
         },

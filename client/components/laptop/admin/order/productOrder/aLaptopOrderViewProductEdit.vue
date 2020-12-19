@@ -39,7 +39,7 @@
 
                 <v-text-field
                     v-model.number="CloneProduct.whenOrder.upprice"
-                    :rules="[ $Rules.required, $Rules.price ]"
+                    :rules="[ $Rules.price ]"
                     label="Color Uprice"
                     filled rounded
                     placeholder="Tăng giá màu sắc sản phẩm"
@@ -106,6 +106,12 @@ export default {
         }
     },
 
+    watch: {
+        product (newVal) {
+            this.CloneProduct = JSON.parse(JSON.stringify(newVal))
+        }
+    },
+
     methods: {
         async EditProductOrder () {
             if(!this.$refs.form.validate()) return false;
@@ -128,7 +134,8 @@ export default {
 
         Update () {
             Object.assign(this.product.whenOrder, this.CloneProduct.whenOrder);
-
+            
+            this.$emit('update');
             this.Cancel();
         },
 
