@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Company
 
 import CompanyDB from '../../model/company';
 import TrademarkDB from '../../model/trademark';

@@ -21,6 +21,7 @@ const WarehouseSchema = new Schema(
 
         //Export
         export :{
+            amount: { type: Number, default: 0, required: true },
             price: { type: Number, required: true },
         }
     }, 
@@ -33,6 +34,17 @@ WarehouseSchema.virtual('colors', {
     ref: 'LaptopWarehouseColor',
     localField: '_id',
     foreignField: 'warehouse',
+});
+
+WarehouseSchema.virtual('statistical.price.funds').get(function() {
+    return (this.import.amount + this.export.amount) * this.import.price;
+});
+
+WarehouseSchema.virtual('statistical.product.stock').get(function() {
+    return this.import.amount;
+});
+WarehouseSchema.virtual('statistical.product.sold').get(function() {
+    return this.export.amount;
 });
 
 const Warehouse = mongoose.model('LaptopWarehouse', WarehouseSchema);

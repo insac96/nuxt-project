@@ -1,4 +1,5 @@
 //FOR LAPTOP - GUEST
+//Company
 
 import CompanyDB from '../../model/company';
 

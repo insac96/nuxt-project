@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//News
 
 import NewsDB from '../../model/news';
 

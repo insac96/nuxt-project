@@ -107,35 +107,35 @@
         <div>
             <!--Dialog Delete Order-->
             <v-dialog v-model="OrderDialog.delete.type" persistent max-width="450">
-                <ALaptopOrderDelete 
+                <AOrderDelete 
                     @delete="$delete(Orders, OrderDialog.delete.index)"
                     @cancel="OrderDialog.delete.type = false" 
                     :order="OrderDialog.delete.select"
-                ></ALaptopOrderDelete>
+                ></AOrderDelete>
             </v-dialog>
 
             <!--Dialog Edit Information Order-->
             <v-dialog v-model="OrderDialog.information.type" persistent max-width="450">
-                <ALaptopOrderInformation 
+                <AOrderInformation 
                     @cancel="OrderDialog.information.type = false" 
                     :order="OrderDialog.information.select"
-                ></ALaptopOrderInformation>
+                ></AOrderInformation>
             </v-dialog>
 
             <!--Dialog Verification Order-->
             <v-dialog v-model="OrderDialog.verification.type" persistent max-width="450">
-                <ALaptopOrderStatus 
+                <AOrderStatus 
                     @cancel="OrderDialog.verification.type = false" 
                     :order="OrderDialog.verification.select"
-                ></ALaptopOrderStatus>
+                ></AOrderStatus>
             </v-dialog>
 
             <!--Dialog View Product Order-->
             <v-dialog v-model="OrderDialog.viewProduct.type" max-width="800">
-                <ALaptopOrderViewProducts 
+                <AOrderViewProducts 
                     @cancel="OrderDialog.viewProduct.type = false" 
                     :order="OrderDialog.viewProduct.select"
-                ></ALaptopOrderViewProducts>
+                ></AOrderViewProducts>
             </v-dialog>
             
         </div>

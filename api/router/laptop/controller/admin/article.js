@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Article
 
 import ProductDB from '../../model/product';
 import ArticleDB from '../../model/article';

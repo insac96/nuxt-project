@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Warehouse
 
 import VariantDB from '../../model/variant';
 import WarehouseDB from '../../model/warehouse';

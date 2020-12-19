@@ -16,7 +16,7 @@
         
         <!--Cart Button-->
         <client-only>
-            <GLaptopCart></GLaptopCart>
+            <GCart></GCart>
         </client-only>
 
         <!--Dialog Status-->

@@ -80,7 +80,10 @@ export default {
         DeleteProductOrder: '/laptop/admin/order/product/delete',
         EditProductOrder: '/laptop/admin/order/product/edit',
         AddProductOrder: '/laptop/admin/order/product/add',
-        SearchProductForOrder: '/laptop/admin/order/product/add/search'
+        SearchProductForOrder: '/laptop/admin/order/product/add/search',
+
+        //Statistical
+        GetGeneralStatistical: '/laptop/admin/statistical/general/get'
     },
 
     guest: {

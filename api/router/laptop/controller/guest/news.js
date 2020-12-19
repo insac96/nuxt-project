@@ -1,4 +1,5 @@
 //FOR LAPTOP - GUEST
+//News
 
 import NewsDB from '../../model/news';
 

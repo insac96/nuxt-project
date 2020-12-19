@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Product
 
 import ProductDB from '../../model/product';
 import ConfigurationDB from '../../model/configuration';

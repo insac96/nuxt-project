@@ -1,5 +1,6 @@
 //FOR LAPTOP - ADMIN
 
+import * as News from './news';
 import * as Company from './company';
 import * as Trademark from './trademark';
 import * as Product from './product';
@@ -9,9 +10,9 @@ import * as VariantColor from './variantColor';
 import * as Warehouse from './warehouse';
 import * as Article from './article';
 import * as Comment from './comment';
-import * as News from './news';
 import * as Order from './order';
 import * as ProductOrder from './productOrder';
+import * as Statistical from './statistical';
 
 const ContollerAdmin = {
     News,
@@ -23,7 +24,8 @@ const ContollerAdmin = {
     Warehouse,
     Article, 
     Comment,
-    Order, ProductOrder
+    Order, ProductOrder,
+    Statistical
 }
 
 export default ContollerAdmin;

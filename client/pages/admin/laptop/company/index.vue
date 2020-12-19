@@ -143,19 +143,19 @@
 
             <!--Dialog Create Trademark-->
             <v-dialog v-model="TrademarkDialog.create.type" persistent max-width="450">
-                <ALaptopTrademarkCreate 
+                <ALaptopCompanyTrademarkCreate 
                     @cancel="TrademarkDialog.create.type = false" 
                     :company="TrademarkDialog.create.company"
-                ></ALaptopTrademarkCreate>
+                ></ALaptopCompanyTrademarkCreate>
             </v-dialog>
 
             <!--Dialog Edit Trademark-->
             <v-dialog v-model="TrademarkDialog.edit.type" persistent max-width="450">
-                <ALaptopTrademarkEdit 
+                <ALaptopCompanyTrademarkEdit 
                     @delete="$delete(TrademarkDialog.edit.company.trademarks, TrademarkDialog.edit.index)"
                     @cancel="TrademarkDialog.edit.type = false" 
                     :trademark="TrademarkDialog.edit.select"
-                ></ALaptopTrademarkEdit>
+                ></ALaptopCompanyTrademarkEdit>
             </v-dialog>
         </div>
     </div>

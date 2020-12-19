@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Order
 
 import OrderDB from '../../model/order';
 import ProductOrderDB from '../../model/productOrder';
@@ -157,17 +158,48 @@ export const EditDone = async (req, res, next) => {
     try {
         //Get Order
         let Order = await OrderDB.findById(_id)
-        .select('done verification pay');
+        .select('done verification');
 
         if(!Order) throw 'Đơn hàng không tồn tại';
         if(Order.done.type === true) throw 'Đơn hàng đã hoàn thành, không thể thay đổi dữ liệu';
         if(Order.verification.type === false) throw 'Đơn hàng chưa xác minh, không thể hoàn thành';
 
-        //Save
+        //Save Order
         Order.done.type = true;
         Order.done.date = new Date();
         Order.pay = 2;
         await Order.save();
+
+        //Get List Product Order
+        let ListProductOrder = await ProductOrderDB
+        .find({ 'order': Order._id })
+        .select('warehouse warehouseColor whenOrder')
+
+        //Save WareHouse
+        for (let i = 0; i < ListProductOrder.length; i++) {
+            let productOrder = ListProductOrder[i];
+            let warehouse = productOrder.warehouse;
+            let warehouseColor = productOrder.warehouseColor;
+            let whenOrder = productOrder.whenOrder;
+
+            await WarehouseDB.updateOne({ '_id': warehouse }, {
+                $inc: { 
+                    'export.amount': whenOrder.amount,
+                },
+            });
+
+            await WarehouseColorDB.updateOne({ '_id': warehouseColor }, {
+                $inc: { 
+                    'orderWait.amount': -whenOrder.amount,
+                    'export.amount': whenOrder.amount
+                }
+            });
+        };
+
+        //Save Product Order
+        await ProductOrderDB.updateMany({ 'order': Order._id }, {
+            'sold.type': true
+        });
 
         //End
         res.send(true);

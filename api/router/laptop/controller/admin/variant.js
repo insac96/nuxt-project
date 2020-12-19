@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Variant
 
 import ProductDB from '../../model/product';
 import VariantDB from '../../model/variant';

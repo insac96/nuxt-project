@@ -258,7 +258,7 @@
             </v-dialog>
 
             <!--Dialog WareHouse Information-->
-            <v-dialog v-model="VariantWareHouseDialog.info.type" persistent max-width="600">
+            <v-dialog v-model="VariantWareHouseDialog.info.type" persistent max-width="700">
                 <ALaptopProductLinkWareHouseInformation
                     @delete="$delete(VariantWareHouseDialog.info.variant.warehouses, VariantWareHouseDialog.info.indexWarehouse)"
                     @cancel="VariantWareHouseDialog.info.type = false" 

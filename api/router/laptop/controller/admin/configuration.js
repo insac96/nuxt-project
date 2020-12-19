@@ -1,4 +1,5 @@
 //FOR LAPTOP - ADMIN
+//Configuration
 
 import ConfigurationDB from '../../model/configuration';
 
