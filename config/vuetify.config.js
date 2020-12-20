@@ -42,7 +42,8 @@ export default {
                 //Role Color
                 admin: '#ff5252',
                 smod: '#009688',
-                guest: '#757575'
+                guest: '#757575',
+                view: '#E65100'
             },
             
             //Light
@@ -82,7 +83,8 @@ export default {
                 //Role Color
                 admin: '#ff5252',
                 smod: '#009688',
-                guest: '#757575'
+                guest: '#757575',
+                view: '#E65100'
             }
         }
     }

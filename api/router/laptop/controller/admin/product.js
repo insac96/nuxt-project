@@ -39,7 +39,7 @@ export const Get = async (req, res, next) => {
 
         //End
         res.json({
-            count: Count,
+            countProduct: Count,
             products: Products
         });
         res.end();

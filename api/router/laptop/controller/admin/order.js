@@ -57,7 +57,10 @@ export const Delete = async (req, res, next) => {
                 let whenOrder = ListProductOrder[i].whenOrder;
 
                 await WarehouseDB.updateOne({ '_id': warehouse }, {
-                    $inc: { 'import.amount': whenOrder.amount }
+                    $inc: { 
+                        'import.amount': whenOrder.amount,
+                        'orderWait.amount': -whenOrder.amount
+                    }
                 });
 
                 await WarehouseColorDB.updateOne({ '_id': warehouseColor }, {
@@ -125,6 +128,7 @@ export const EditStatus = async (req, res, next) => {
                 await WarehouseDB.updateOne({ '_id': warehouse }, {
                     $inc: { 
                         'import.amount': -whenOrder.amount,
+                        'orderWait.amount': whenOrder.amount
                     },
                 });
 
@@ -185,20 +189,30 @@ export const EditDone = async (req, res, next) => {
             await WarehouseDB.updateOne({ '_id': warehouse }, {
                 $inc: { 
                     'export.amount': whenOrder.amount,
+                    'orderWait.amount': -whenOrder.amount,
                 },
             });
 
             await WarehouseColorDB.updateOne({ '_id': warehouseColor }, {
                 $inc: { 
-                    'orderWait.amount': -whenOrder.amount,
-                    'export.amount': whenOrder.amount
+                    'export.amount': whenOrder.amount,
+                    'orderWait.amount': -whenOrder.amount
                 }
             });
         };
 
         //Save Product Order
+        let newDate = new Date();
+        let soldDate = {
+            full: newDate,
+            yy: newDate.getFullYear(),
+            mm: newDate.getMonth() + 1,
+            dd: newDate.getDate()
+        };
+
         await ProductOrderDB.updateMany({ 'order': Order._id }, {
-            'sold.type': true
+            'sold.type': true,
+            'sold.date': soldDate 
         });
 
         //End

@@ -37,6 +37,14 @@ export default {
                 { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1'}
             ],
         }
+    },
+
+    mounted () {
+        this.$store.commit('dialogStatus/show', {
+            icon: 'emoji_emotions',
+            code: 'Account Admin Test',
+            text: 'onlyview / 123456'
+        })
     }
 }
 </script>

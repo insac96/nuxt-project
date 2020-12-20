@@ -95,7 +95,7 @@
                         <span class="text-subtitle-1 font-weight-bold">Ẩn/Hiện kho hàng</span>
 
                         <v-switch 
-                            v-model="warehouse.visibility" 
+                            v-model="CloneWareHouse.visibility" 
                             hide-details color="primary" 
                             class="ma-0 pa-0"
                             style="margin-right: -10px !important"
@@ -236,6 +236,7 @@ export default {
                 });
 
                 this.Loading.editVisibility = false;
+                this.warehouse.visibility = Visibility;
             }
             catch (e) {
                 this.Loading.editVisibility = false;

@@ -6,8 +6,15 @@
         <v-card-title class="font-weight-bold text-h4 primary--text">Users</v-card-title>
         <v-card-subtitle>Danh sách tài khoản</v-card-subtitle>
 
-        <!--Body-->
-        <div>
+        <!--Fetch Pendding-->
+        <div v-if="$fetchState.pending || $fetchState.error">
+            <v-alert type="error" color="error" tile v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+            
+            <v-skeleton-loader type="table"></v-skeleton-loader>
+        </div>
+
+        <!--Fetch Done-->
+        <div v-else>
             <!--Option Search-->
             <v-sheet class="d-flex align-center pa-3" color="heading">
                 <!--Input Search-->
@@ -48,7 +55,7 @@
                             </v-list-item>
 
                             <v-list-item
-                                v-for="(role, index) in SelectRole" :key="index"
+                                v-for="(role, index) in UserRoleSetting" :key="index"
                                 @click="SetRoleSelect(role)"
                             >
                                 <v-list-item-title>{{ role }}</v-list-item-title>
@@ -74,7 +81,7 @@
 
                     <!--Table Body-->
                     <tbody>
-                        <tr v-for="(user, indexUser) in Users" :key="indexUser">
+                        <tr v-for="(user, indexUser) in ListUser" :key="indexUser">
                             <!--1 - User Avatar-->
                             <td class="py-2">
                                 <v-avatar size="50"><v-img :src="user.profile.avatar" :alt="user.profile.name"></v-img></v-avatar>
@@ -148,7 +155,7 @@
 
             <!--If List Product Empty-->
             <v-alert
-                v-if="Users.length < 1" 
+                v-if="ListUser.length < 1" 
                 class="mb-0" tile
             >
                 Không có thành viên nào hiển thị
@@ -158,13 +165,13 @@
             <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                 <!--Count-->
                 <v-chip> 
-                    <span>{{Users.length}} / {{Count}}</span>
+                    <span>{{ListUser.length}} / {{CountUser}}</span>
                 </v-chip>
 
                 <!--Button Next Previous-->
                 <v-btn 
                     elevation="0" rounded 
-                    v-if="(Users.length < Count)" 
+                    v-if="(ListUser.length < CountUser)" 
                     @click="ShowUserByQuery('more');"
                 >
                     More
@@ -178,30 +185,11 @@
 import UserRoleSetting from '@/setting/user/role';
 
 export default {
-    async asyncData({$axios, $api}){
-        try {
-            let Get = await $axios.$post($api.user.admin.GetUsers, {
-                skip: 0
-            });
-
-            return {
-                Users: Get.users,
-                Count: Get.count
-            }
-        }
-        catch(e){
-            return {
-                Users: [],
-                Count: 0
-            }
-        }
-    },
-
     data () {
         return {
-            SelectRole: [
-                'GUEST', 'ADMIN'
-            ],
+            ListUser: null,
+            CountUser: null,
+
             UserRoleSetting: UserRoleSetting,
             RoleSelectShow: null,
             KeySearch: null,
@@ -212,6 +200,22 @@ export default {
             }
         }
     },
+
+    async fetch(){
+        try {
+            let Get = await this.$axios.$post(this.$api.user.admin.GetUsers, {
+                skip: 0
+            });
+
+            this.ListUser = Get.users;
+            this.CountUser = Get.countUser;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
 
     methods : {
         //Set Query
@@ -232,8 +236,8 @@ export default {
 
                 if(type === 'more') return this.Users = this.Users.concat(Search.users);
 
-                this.Users = Search.users;
-                this.Count = Search.count;
+                this.ListUser = Search.users;
+                this.CountUser = Search.countUser;
             }
             catch(e){
                 return false;

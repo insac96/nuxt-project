@@ -8,8 +8,15 @@
             <v-card-title class="font-weight-bold text-h4 primary--text">Delivery</v-card-title>
             <v-card-subtitle>Danh sách đơn giao hàng</v-card-subtitle>
 
-            <!--Body-->
-            <div>
+            <!--Fetch Pendding-->
+            <div v-if="$fetchState.pending || $fetchState.error">
+                <v-alert type="error" color="error" tile v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+                
+                <v-skeleton-loader type="table"></v-skeleton-loader>
+            </div>
+
+            <!--Fetch Done-->
+            <div v-else>
                 <!--Table-->
                 <v-simple-table class="Table">
                     <template v-slot:default>
@@ -27,7 +34,7 @@
 
                         <!--Table Body-->
                         <tbody>
-                            <tr v-for="(order, indexOrder) of Orders" :key="indexOrder">
+                            <tr v-for="(order, indexOrder) of ListOrder" :key="indexOrder">
                                 <!--User Info-->
                                 <td class="py-2">
                                     <div class="font-weight-bold">
@@ -95,7 +102,7 @@
 
                 <!--If List Orders Empty-->
                 <v-alert
-                    v-if="Orders.length < 1" 
+                    v-if="ListOrder.length < 1" 
                     class="mb-0" tile
                 >
                     Không có đơn hàng nào hiển thị
@@ -144,26 +151,10 @@
 
 <script>
 export default {
-    async asyncData({$axios, $api}){
-        try {
-            let Get = await $axios.$post($api.laptop.admin.GetListOrderByType, {
-                skip: 0,
-                type: 1
-            });
-
-            return {
-                Orders: Get
-            }
-        }
-        catch(e){
-            return {
-                Orders: []
-            }
-        }
-    },
-
     data () {
         return {
+            ListOrder: null,
+
             OrderDialog : {
                 information: {
                     type: false,
@@ -185,6 +176,22 @@ export default {
             }
         }
     },
+
+    async fetch(){
+        try {
+            let Get = await this.$axios.$post(this.$api.laptop.admin.GetListOrderByType, {
+                skip: 0,
+                type: 1
+            });
+
+            this.ListOrder = Get;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
 
     methods : {
         ShowOrderDialogInformation (orderSelect) {

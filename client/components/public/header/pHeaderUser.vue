@@ -21,8 +21,12 @@
             nudge-bottom="3"
         >
             <template v-slot:activator="{ on }">
-                <v-btn fab elevation="0" small color="header_button" class="ml-1" v-on="on">
-                    <v-icon>person</v-icon>
+                <v-btn fab elevation="0" v-on="on" width="40" height="40" class="ml-1">
+                    <v-img
+                        width="40" height="40"
+                        :src="UserStore.profile.avatar"
+                        :alt="UserStore.profile.name"
+                    ></v-img>
                 </v-btn>
             </template>
 

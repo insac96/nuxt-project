@@ -1,7 +1,7 @@
 //FOR GUEST - INIT ROUTER
 
 import Controller_Guest from '../controller/guest';
-import { Authentic_Guest } from '../../../middleware/authentic';
+import { Authentic } from '../../../middleware/authentic';
 
 export default (Router) => {
     //Company - Guest
@@ -22,12 +22,12 @@ export default (Router) => {
     //Comment - Guest
     Router.post("/comment/list/getByProductID", Controller_Guest.Comment.GetListByProductID);
     Router.post("/comment/more", Controller_Guest.Comment.More);
-    Router.post("/comment/add", Authentic_Guest, Controller_Guest.Comment.Add);
-    Router.post("/comment/reply/add", Authentic_Guest, Controller_Guest.Comment.AddReply);
+    Router.post("/comment/add", Authentic, Controller_Guest.Comment.Add);
+    Router.post("/comment/reply/add", Authentic, Controller_Guest.Comment.AddReply);
 
     //Cart - Guest
     Router.post("/cart/list/get", Controller_Guest.Cart.GetList);
 
     //Order - Guest
-    Router.post("/order/create", Authentic_Guest, Controller_Guest.Order.Create);
+    Router.post("/order/create", Authentic, Controller_Guest.Order.Create);
 };

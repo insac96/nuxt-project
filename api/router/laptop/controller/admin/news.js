@@ -30,7 +30,7 @@ export const Get = async (req, res, next) => {
 
         //End
         res.json({
-            count: Count,
+            countNews: Count,
             news: News
         });
     }

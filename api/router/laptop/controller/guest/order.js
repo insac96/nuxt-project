@@ -28,6 +28,14 @@ export const Create = async (req, res, next) => {
         await NewOrder.save();
 
         //Create New Product Order
+        let newDate = new Date();
+        let dateOrder = {
+            full: newDate,
+            yy: newDate.getFullYear(),
+            mm: newDate.getMonth() + 1,
+            dd: newDate.getDate()
+        };
+
         for (let i = 0; i < listProductOrder.length; i++) {
             let item = listProductOrder[i]
             
@@ -52,7 +60,8 @@ export const Create = async (req, res, next) => {
                 warehouse: item.warehouse,
                 warehouseColor: item.warehouseColor,
                 order: NewOrder_ID,
-                whenOrder: item.whenOrder
+                whenOrder: item.whenOrder,
+                dateOrder: dateOrder
             });
 
             await NewProductOrder.save();

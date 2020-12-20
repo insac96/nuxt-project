@@ -25,8 +25,15 @@
                 </v-btn>
             </div>
 
-            <!--Body-->
-            <div>
+            <!--Fetch Pendding-->
+            <div v-if="$fetchState.pending || $fetchState.error">
+                <v-alert type="error" color="error" tile v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+                
+                <v-skeleton-loader type="table"></v-skeleton-loader>
+            </div>
+
+            <!--Fetch Done-->
+            <div v-else>
                 <!--Option Search-->
                 <v-sheet class="d-flex align-center pa-3" color="heading">
                     <!--Input Search-->
@@ -122,7 +129,7 @@
 
                         <!--Table Body-->
                         <tbody>
-                            <tr v-for="(product, indexProduct) in Products" :key="indexProduct">
+                            <tr v-for="(product, indexProduct) in ListProduct" :key="indexProduct">
                                 <!--1 - Company Name-->
                                 <td class="text-uppercase"><v-chip>{{ product.company.name }}</v-chip></td>
 
@@ -155,7 +162,7 @@
                                     <v-btn
                                         color="error"
                                         icon small elevation="0"  
-                                        @click="ShowDialogDeleteProduct(indexProduct)"
+                                        @click="ShowDialogDeleteProduct(indexProduct, product)"
                                     >
                                         <v-icon>delete</v-icon>
                                     </v-btn>
@@ -167,7 +174,7 @@
 
                 <!--If List Product Empty-->
                 <v-alert
-                    v-if="Products.length < 1" 
+                    v-if="ListProduct.length < 1" 
                     class="mb-0" tile
                 >
                     Không có sản phẩm nào hiển thị
@@ -177,14 +184,14 @@
                 <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                     <!--Count-->
                     <v-chip> 
-                        <span>{{Products.length}} / {{Count}}</span>
+                        <span>{{ListProduct.length}} / {{CountProduct}}</span>
                     </v-chip>
 
                     <!--Button Next Previous-->
                     <v-btn 
                         elevation="0" rounded 
                         color="primary"
-                        v-if="(Products.length < Count)" 
+                        v-if="(ListProduct.length < CountProduct)" 
                         @click="ShowProductByQuery('more');"
                     >
                         More
@@ -209,27 +216,11 @@
 
 <script>
 export default {
-    async asyncData({$axios, $api}){
-        try {
-            let Get = await $axios.$post($api.laptop.admin.GetListProduct, {
-                skip: 0
-            });
-            return {
-                Products: Get.products,
-                Count: Get.count
-            }
-        }
-        catch(e){
-            return {
-                Products: [],
-                Count: 0
-            }
-        }
-    },
-
     data () {
         return {
             Companyes: [],
+            ListProduct: null,
+            CountProduct: null,
 
             KeySearch: null,
             ComanySelectShow: null,
@@ -248,6 +239,22 @@ export default {
             }
         }
     },
+
+    async fetch(){
+        try {
+            let Get = await this.$axios.$post(this.$api.laptop.admin.GetListProduct, {
+                skip: 0
+            });
+
+            this.ListProduct = Get.products;
+            this.CountProduct = Get.countProduct;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
 
     methods : {
         //Get Companyes
@@ -293,10 +300,8 @@ export default {
 
                 if(type === 'more') return this.Products = this.Products.concat(Search.products);
 
-                this.Products = Search.products;
-                this.Count = Search.count;
-
-                console.log(this.Products)
+                this.ListProduct = Search.products;
+                this.CountProduct = Search.countProduct;
             }
             catch(e){
                 return false;
@@ -304,15 +309,15 @@ export default {
         },
 
         //Delete
-        ShowDialogDeleteProduct (index) {
+        ShowDialogDeleteProduct (index, product) {
             this.Dialog.delete.type = true;
             this.Dialog.delete.index = index;
-            this.Dialog.delete.select = this.Products[index];
+            this.Dialog.delete.select = product;
         },
 
         //Delete Done
         DeleteProductDone () {
-            this.$delete(this.Products, this.Dialog.delete.index);
+            this.$delete(this.ListProduct, this.Dialog.delete.index);
             this.Count--;
         },
 

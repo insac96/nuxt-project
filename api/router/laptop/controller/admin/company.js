@@ -16,7 +16,9 @@ export const Get = async (req, res, next) => {
         .populate({path: 'productCount'})
 
         //End
-        res.json(Companyes);
+        res.json({
+            companyes: Companyes
+        });
         res.end();
     }
     catch(e) {

@@ -3,8 +3,14 @@
 
     <v-card tile flat>
         <!--Header-->
-        <v-sheet class="px-4 py-2" color="heading">
+        <v-sheet class="d-flex align-center px-4 py-2" color="heading">
             <span class="text-h5 heading_text--text font-weight-bold">General</span>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon small @click="$fetch()">
+                <v-icon>cached</v-icon>
+            </v-btn>
         </v-sheet>
 
         <!--Fetch Pendding-->
@@ -145,8 +151,8 @@ export default {
         ProductOrderWait () {
             let number = 0;
 
-            this.warehouseColors.forEach(warehouseColor => {
-                number = number + warehouseColor.orderWait.amount;
+            this.warehouses.forEach(warehouse => {
+                number = number + warehouse.statistical.product.orderWait;
             });
 
             return number;
@@ -166,9 +172,8 @@ export default {
         try {
             let Get = await this.$axios.$get(this.$api.laptop.admin.GetGeneralStatistical);
             
-                this.warehouses = Get.warehouses;
-                this.warehouseColors = Get.warehouseColors;
-                this.productsOrder = Get.productsOrder;
+            this.warehouses = Get.warehouses;
+            this.productsOrder = Get.productsOrder;
         }
         catch(e){
             throw new Error(e.toString());

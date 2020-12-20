@@ -10,7 +10,13 @@ const ProductOrderSchema = new Schema(
         order: { type: Schema.Types.ObjectId, ref: 'LaptopOrder', required: true },
         
         sold: {
-            type: { type: Boolean, default: false, required: true }
+            type: { type: Boolean, default: false, required: true },
+            date: { 
+                full: { type: Date },
+                yy: { type: Number },
+                mm: { type: Number },
+                dd: { type: Number }
+            }
         },
         
         whenOrder: {
@@ -18,6 +24,13 @@ const ProductOrderSchema = new Schema(
             price: { type: Number , required: true },
             upprice: { type: Number , required: true },
             discountAmount: { type: Number , required: true },
+        },
+
+        dateOrder: { 
+            full: { type: Date },
+            yy: { type: Number },
+            mm: { type: Number },
+            dd: { type: Number }
         }
     }, 
     {
@@ -31,11 +44,13 @@ ProductOrderSchema.virtual('statistical.price.revenue').get(function() {
 
 ProductOrderSchema.virtual('statistical.price.real').get(function() {
     if(!this.warehouse.import || !this.warehouseColor.export) return null;
+
     return (this.warehouse.import.price + this.warehouseColor.export.upprice) * this.whenOrder.amount;
 });
 
 ProductOrderSchema.virtual('statistical.price.income').get(function() {
-    if(!this.statistical.price.real) return null;
+    if(!this.statistical.price.real || !this.statistical.price.revenue) return null;
+
     return (this.statistical.price.revenue - this.statistical.price.real);
 });
 

@@ -10,6 +10,9 @@
 
             <!--General -->
             <AStatisticalGeneral></AStatisticalGeneral>
+
+            <!--Revenue Analysis-->
+            <AStatisticalAnalysisRevenue></AStatisticalAnalysisRevenue>
         </v-card>
     </div>
 </template>

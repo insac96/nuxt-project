@@ -25,8 +25,15 @@
                 </v-btn>
             </div>
 
-            <!--Body-->
-            <div>
+            <!--Fetch Pendding-->
+            <div v-if="$fetchState.pending || $fetchState.error">
+                <v-alert type="error" color="error" tile v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+                
+                <v-skeleton-loader type="table"></v-skeleton-loader>
+            </div>
+
+            <!--Fetch Done-->
+            <div v-else>
                 <!--Table-->
                 <v-simple-table class="Table">
                     <template v-slot:default>
@@ -59,7 +66,8 @@
                                 <td class="text-center">
                                     <div class="d-flex justify-center">
                                         <v-switch 
-                                            hide-details
+                                            style="margin-right: -5px !important;"
+                                            hide-details inset
                                             v-model="news.top" :disabled="Loading.top"
                                             color="primary" class="ma-0 pa-0"
                                             @change="EditTopNews(news)"
@@ -103,14 +111,14 @@
                 <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                     <!--Count-->
                     <v-chip> 
-                        <span>{{ListNews.length}} / {{Count}}</span>
+                        <span>{{ListNews.length}} / {{CountNews}}</span>
                     </v-chip>
 
                     <!--Button Next Previous-->
                     <v-btn 
                         elevation="0" rounded 
                         color="primary"
-                        v-if="(ListNews.length < Count)" 
+                        v-if="(ListNews.length < CountNews)" 
                         @click="ShowNewsMore();"
                     >
                         More
@@ -135,26 +143,11 @@
 
 <script>
 export default {
-    async asyncData({$axios, $api}){
-        try {
-            let Get = await $axios.$post($api.laptop.admin.GetListNews, {
-                skip: 0
-            });
-            return {
-                ListNews: Get.news,
-                Count: Get.count
-            }
-        }
-        catch(e){
-            return {
-                ListNews: [],
-                Count: 0
-            }
-        }
-    },
-
     data () {
         return {
+            ListNews: null,
+            CountNews: null,
+
             KeySearch: null,
 
             Loading: {
@@ -172,6 +165,22 @@ export default {
         }
     },
 
+    async fetch(){
+        try {
+            let Get = await this.$axios.$post(this.$api.laptop.admin.GetListNews, {
+                skip: 0
+            });
+
+            this.ListNews = Get.news;
+            this.CountNews = Get.countNews;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
+
     methods : {
         //Delete
         ShowDialogDeleteNews (indexNews) {
@@ -183,7 +192,7 @@ export default {
         //Delete Done
         DeleteNewsDone () {
             this.$delete(this.ListNews, this.Dialog.delete.index);
-            this.Count--;
+            this.CountNews--;
         },
 
         //Change Visibility
@@ -230,7 +239,7 @@ export default {
                 });
 
                 this.ListNews = this.ListNews.concat(Get.news);
-                this.Count = Get.count;
+                this.CountNews = Get.countNews;
             }
             catch(e){
                 return false;

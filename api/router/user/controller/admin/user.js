@@ -21,6 +21,7 @@ export const Get = async (req, res, next) => {
         //Get List Users
         let Users = await UserDB
         .find(Query)
+        .select('profile ban role verification')
         .skip((skip == 0 || !skip) ? null : Number(skip))
         .limit(10);
 
@@ -30,7 +31,7 @@ export const Get = async (req, res, next) => {
         //End
         res.json({
             users: Users,
-            count: Count
+            countUser: Count
         });
         res.end();
     }

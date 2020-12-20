@@ -83,7 +83,8 @@ export default {
         SearchProductForOrder: '/laptop/admin/order/product/add/search',
 
         //Statistical
-        GetGeneralStatistical: '/laptop/admin/statistical/general/get'
+        GetGeneralStatistical: '/laptop/admin/statistical/general/get',
+        GetRevenueAnalysisStatistical: '/laptop/admin/statistical/analysis/revenue'
     },
 
     guest: {

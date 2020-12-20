@@ -25,8 +25,15 @@
                 </v-btn>
             </div>
 
-            <!--Body-->
-            <div>
+            <!--Fetch Pendding-->
+            <div v-if="$fetchState.pending || $fetchState.error">
+                <v-alert type="error" color="error" tile v-if="$fetchState.error">{{ $fetchState.error.message }}</v-alert>
+                
+                <v-skeleton-loader type="table"></v-skeleton-loader>
+            </div>
+
+            <!--Fetch Done-->
+            <div v-else>
                 <!--Table-->
                 <v-simple-table class="Table" fixed-header>
                     <template v-slot:default>
@@ -42,7 +49,7 @@
 
                         <!--Table Body-->
                         <tbody>
-                            <tr v-for="(company, indexCompany) in Companyes" :key="indexCompany">
+                            <tr v-for="(company, indexCompany) in ListCompany" :key="indexCompany">
                                 <!-- Company Logo -->
                                 <td>
                                     <v-card flat width="100">
@@ -96,9 +103,9 @@
                     </template>
                 </v-simple-table>
 
-                <!--If List Companyes Empty-->
+                <!--If List ListCompany Empty-->
                 <v-alert
-                    v-if="Companyes.length < 1" 
+                    v-if="ListCompany.length < 1" 
                     class="mb-0" tile
                 >
                     Không có công ty nào hiển thị
@@ -108,7 +115,7 @@
                 <v-sheet class="d-flex justify-space-between align-center py-2 px-4" color="heading">
                     <!--Count-->
                     <v-chip> 
-                        <span>{{Companyes.length}} / {{Companyes.length}}</span>
+                        <span>{{ListCompany.length}} / {{ListCompany.length}}</span>
                     </v-chip>
                 </v-sheet>
             </div>
@@ -120,7 +127,7 @@
             <v-dialog v-model="CompanyDialog.create" persistent max-width="450">
                 <ALaptopCompanyCreate 
                     @cancel="CompanyDialog.create = false" 
-                    :companyes="Companyes"
+                    :ListCompany="ListCompany"
                 ></ALaptopCompanyCreate>
             </v-dialog>
 
@@ -135,7 +142,7 @@
             <!--Dialog Delete Company-->
             <v-dialog v-model="CompanyDialog.delete.type" persistent max-width="450">
                 <ALaptopCompanyDelete 
-                    @delete="$delete(Companyes, CompanyDialog.delete.index)"
+                    @delete="$delete(ListCompany, CompanyDialog.delete.index)"
                     @cancel="CompanyDialog.delete.type = false" 
                     :company="CompanyDialog.delete.select"
                 ></ALaptopCompanyDelete>
@@ -163,23 +170,10 @@
 
 <script>
 export default {    
-    async asyncData({$axios, $api}){
-        try {
-            let Companyes = await $axios.$get($api.laptop.admin.GetListCompany);
-
-            return {
-                Companyes: Companyes
-            }
-        }
-        catch(e){
-            return {
-                Companyes: []
-            }
-        }
-    },
-
     data () {
         return {
+            ListCompany: null,
+
             CompanyDialog: {
                 create: false,
                 delete: {
@@ -208,6 +202,19 @@ export default {
             }
         }
     },
+
+    async fetch(){
+        try {
+            let Get = await this.$axios.$get(this.$api.laptop.admin.GetListCompany);
+
+            this.ListCompany = Get.companyes;
+        }
+        catch(e){
+            throw new Error(e.toString());
+        }
+    },
+
+    fetchOnServer: false,
 
     methods: {
         //Create Company
